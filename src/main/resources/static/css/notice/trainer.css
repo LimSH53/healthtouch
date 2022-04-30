@@ -1,0 +1,303 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+* {
+    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+}
+
+/**/
+
+.titlename{
+    margin-bottom: 20px;
+    padding: 8px;
+    background-color: #F7F6FB;
+}
+
+.titlename1{
+    margin-bottom: 0px;
+    color: black;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #eee;
+}
+
+.title{
+    padding: px 2px 3px 4px;
+    background: #e2e2e2;
+    color:black;
+
+}
+
+.title a{
+    text-decoration: none;
+    color: black;
+}
+
+
+.table-responsive{
+    margin:auto;
+    width: 80%;
+}
+
+
+#title{
+    text-align: left;
+}
+
+.flex {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto
+}
+
+.btn {
+    font-size: 10px;
+    background: #F7F6FB;
+    border-color: #1b1b55;
+    color: #1b1b55;
+}
+
+.btn:hover{
+    background: #1b1b55;
+    color: #F7F6FB;
+}
+
+
+.trainer{
+    padding: 0 10px;
+    background-color: #F7F6FB;
+}
+
+/* 트레이너 선택 */
+.profile {
+    margin: 50px 10px;
+    position: relative;
+    width: 150px;
+    height: 200px;
+    background: url("../img/사공유연.jpg");
+    background-size: cover;
+    cursor: pointer;
+    border: 12px;
+    border-radius: 6px
+}
+
+
+.profile2 {
+    margin: 50px 10px;
+    position: relative;
+    width: 150px;
+    height: 200px;
+    background: url("../img/곽머슬.jpg");
+    background-size: cover;
+    cursor: pointer;
+    border: 12px;
+    border-radius: 6px
+}
+
+
+
+.profile3 {
+    margin: 50px 10px;
+    position: relative;
+    width: 150px;
+    height: 200px;
+    background: url("../img/표로틴.png");
+    background-size: cover;
+    cursor: pointer;
+    border: 12px;
+    border-radius: 6px
+}
+
+
+
+.profile4 {
+    margin: 50px 10px;
+    position: relative;
+    width: 150px;
+    height: 200px;
+    background: url("../img/박단단.png");
+    background-size: cover;
+    cursor: pointer;
+    border: 12px;
+    border-radius: 6px
+}
+
+
+.overlay {
+    width: 150px;
+    height: 200px;
+    background: rgba(27, 27, 85, 0.8);
+    border-radius: 12px;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 1s;
+    border-radius: 6px
+}
+
+.profile:hover .overlay {
+    opacity: 1
+}
+.profile2:hover .overlay {
+    opacity: 1
+}
+.profile3:hover .overlay {
+    opacity: 1
+}
+.profile4:hover .overlay {
+    opacity: 1
+}
+
+.social-icons {
+    display: flex;
+    list-style: none;
+    bottom: 10px;
+    position: absolute;
+    text-align: center;
+    justify-content: center;
+    left: 22px
+}
+
+
+.overlay .about {
+    padding-left: 5px;
+    position: relative;
+    display: flex;
+    top: 60%;
+    color: #F7F6FB;
+    flex: column
+}
+
+/* 트레이너 정보 조회 */
+.trn{
+    background-color: #F7F6FB;
+}
+
+.section {
+    padding: 20px 0;
+    position: relative;
+}
+.gray-bg {
+    background-color: #f5f5f5;
+}
+img {
+    max-width: 50%;
+}
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+/* About Me 
+---------------------*/
+.about-text h3 {
+  font-size: 45px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+@media (max-width: 767px) {
+  .about-text h3 {
+    font-size: 35px;
+  }
+}
+.about-text h6 {
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+@media (max-width: 767px) {
+  .about-text h6 {
+    font-size: 18px;
+  }
+}
+.about-text p {
+  font-size: 18px;
+  max-width: 450px;
+}
+.about-text p mark {
+  font-weight: 600;
+  color: #20247b;
+}
+
+.about-list {
+  padding-top: 10px;
+}
+.about-list .media {
+  padding: 5px 0;
+}
+.about-list label {
+  color: #20247b;
+  font-weight: 600;
+  width: 88px;
+  margin: 0;
+  position: relative;
+}
+
+.about-list p {
+  margin: 0;
+  font-size: 15px;
+}
+
+@media (max-width: 991px) {
+  .about-avatar {
+    margin-top: 30px;
+  }
+}
+
+.about-section .counter {
+  padding: 22px 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(27, 27, 85, 0.125);
+}
+.about-section .counter .count-data {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.about-section .counter .count {
+  font-weight: 700;
+  color: #20247b;
+  margin: 0 0 5px;
+}
+.about-section .counter p {
+  font-weight: 600;
+  margin: 0;
+}
+mark {
+    background-size: 100% 3px;
+    background-repeat: no-repeat;
+    background-position: 0 bottom;
+    background-color: transparent;
+    padding: 0;
+    color: currentColor;
+}
+.theme-color {
+    color: rgba(27, 27, 85, 0.5);
+}
+.dark-color {
+    color: #20247b;
+}
+
+
+
+.table-fixed tbody {
+    height: 100px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+    display: block;
+}
+
+.table-fixed tbody td,
+.table-fixed tbody th,
+.table-fixed thead > tr > th {
+    float: left;
+    position: relative;
+
+}
+
