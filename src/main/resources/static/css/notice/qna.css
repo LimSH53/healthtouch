@@ -4,7 +4,7 @@
 font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
 }
 
-/* 검색 */
+/* 寃��깋 */
 .search{
     margin-bottom: 0;
     justify-content: center;
@@ -14,7 +14,7 @@ font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, '
     border-color: #1b1b55;
     outline: 0px
 }
-
+ 
 .form-control {
     height: 32px;
     border: 0.5px solid #1b1b55;
@@ -356,7 +356,7 @@ tbody td{
 margin-bottom: 20px;
 }
 
-/*토글*/
+/*�넗湲�*/
 
 
 

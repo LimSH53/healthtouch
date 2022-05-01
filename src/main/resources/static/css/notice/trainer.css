@@ -70,13 +70,13 @@ body {
     background-color: #F7F6FB;
 }
 
-/* 트레이너 선택 */
+/* �듃�젅�씠�꼫 �꽑�깮 */
 .profile {
     margin: 50px 10px;
     position: relative;
     width: 150px;
     height: 200px;
-    background: url("../img/사공유연.jpg");
+    background: url("/img/trainer-sagong.jpg");
     background-size: cover;
     cursor: pointer;
     border: 12px;
@@ -89,7 +89,7 @@ body {
     position: relative;
     width: 150px;
     height: 200px;
-    background: url("../img/곽머슬.jpg");
+    background: url("/img/trainer-qwak.jpg");
     background-size: cover;
     cursor: pointer;
     border: 12px;
@@ -103,7 +103,7 @@ body {
     position: relative;
     width: 150px;
     height: 200px;
-    background: url("../img/표로틴.png");
+    background: url("/img/trainer-pyo.png");
     background-size: cover;
     cursor: pointer;
     border: 12px;
@@ -117,7 +117,7 @@ body {
     position: relative;
     width: 150px;
     height: 200px;
-    background: url("../img/박단단.png");
+    background: url("/img/trainer-park.png");
     background-size: cover;
     cursor: pointer;
     border: 12px;
@@ -169,7 +169,7 @@ body {
     flex: column
 }
 
-/* 트레이너 정보 조회 */
+/* �듃�젅�씠�꼫 �젙蹂� 議고쉶 */
 .trn{
     background-color: #F7F6FB;
 }
