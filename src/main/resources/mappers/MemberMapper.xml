@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jaspa.healthtouch.member.model.dao.MemberMapper">
-	<resultMap type="com.jaspa.healthtouch.member.model.dto.MemberDTO" id="loginMemberResultMap">
+<mapper namespace="com.jaspa.healthtouch.login.model.dao.MemberMapper">
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberDTO" id="loginMemberResultMap">
 		<id property="id" column="MEMBER_ID"/>
 		<result property="pwd" column="MEMBER_PWD"/>
 		<result property="name" column="MEMBER_NAME"/>
@@ -17,14 +17,14 @@
 		<association property="memberRole" resultMap="memberRoleResultMap"/>
 	</resultMap>
 	
-	<resultMap type="com.jaspa.healthtouch.member.model.dto.MemberRoleDTO" id="memberRoleResultMap">
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberRoleDTO" id="memberRoleResultMap">
 		<id property="memberId" column="REF_MEMBER_ID"/>
 		<result property="authorityCode" column="REF_AUTHORITY_CODE"/>
 		
 		<association property="authority" resultMap="authorityResultMap"/>
 	</resultMap>
 	
-	<resultMap type="com.jaspa.healthtouch.member.model.dto.AuthorityDTO" id="authorityResultMap">
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.AuthorityDTO" id="authorityResultMap">
 		<id property="code" column="REF_AUTHORITY_CODE2"/>
 		<result property="name" column="AUTHORITY_NAME"/>
 		<result property="desc" column="AUTHORITY_DESC"/>

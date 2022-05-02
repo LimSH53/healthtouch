@@ -12,7 +12,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.jaspa.healthtouch.handler.LoginFailHandler;
 import com.jaspa.healthtouch.handler.LoginSuccessHandler;
-import com.jaspa.healthtouch.member.model.service.MemberService;
+import com.jaspa.healthtouch.login.model.service.MemberService;
 
 @EnableWebSecurity
 public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {

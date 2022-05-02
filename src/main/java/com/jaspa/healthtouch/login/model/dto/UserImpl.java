@@ -1,4 +1,4 @@
-package com.jaspa.healthtouch.member.model.dto;
+package com.jaspa.healthtouch.login.model.dto;
 
 import java.util.Collection;
 import java.util.Date;
