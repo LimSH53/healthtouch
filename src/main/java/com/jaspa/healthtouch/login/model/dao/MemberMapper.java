@@ -1,9 +1,9 @@
-package com.jaspa.healthtouch.member.model.dao;
+package com.jaspa.healthtouch.login.model.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.jaspa.healthtouch.member.model.dto.MemberDTO;
-import com.jaspa.healthtouch.member.model.dto.MemberRoleDTO;
+import com.jaspa.healthtouch.login.model.dto.MemberDTO;
+import com.jaspa.healthtouch.login.model.dto.MemberRoleDTO;
 
 @Mapper
 public interface MemberMapper {

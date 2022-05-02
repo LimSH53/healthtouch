@@ -1,4 +1,4 @@
-package com.jaspa.healthtouch.member.controller;
+package com.jaspa.healthtouch.login.controller;
 
 import java.util.Locale;
 
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.jaspa.healthtouch.member.model.dto.MemberDTO;
-import com.jaspa.healthtouch.member.model.dto.UserImpl;
-import com.jaspa.healthtouch.member.model.service.MemberService;
+import com.jaspa.healthtouch.login.model.dto.MemberDTO;
+import com.jaspa.healthtouch.login.model.dto.UserImpl;
+import com.jaspa.healthtouch.login.model.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,8 +1,8 @@
-package com.jaspa.healthtouch.member.model.service;
+package com.jaspa.healthtouch.login.model.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import com.jaspa.healthtouch.member.model.dto.MemberDTO;
+import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 
 public interface MemberService extends UserDetailsService {
 	

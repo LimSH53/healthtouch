@@ -1,4 +1,4 @@
-package com.jaspa.healthtouch.member.model.service;
+package com.jaspa.healthtouch.login.model.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +12,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jaspa.healthtouch.member.model.dao.MemberMapper;
-import com.jaspa.healthtouch.member.model.dto.AuthorityDTO;
-import com.jaspa.healthtouch.member.model.dto.MemberDTO;
-import com.jaspa.healthtouch.member.model.dto.MemberRoleDTO;
-import com.jaspa.healthtouch.member.model.dto.UserImpl;
+import com.jaspa.healthtouch.login.model.dao.MemberMapper;
+import com.jaspa.healthtouch.login.model.dto.AuthorityDTO;
+import com.jaspa.healthtouch.login.model.dto.MemberDTO;
+import com.jaspa.healthtouch.login.model.dto.MemberRoleDTO;
+import com.jaspa.healthtouch.login.model.dto.UserImpl;
 
 @Service
 public class MemberServiceImpl implements MemberService {
