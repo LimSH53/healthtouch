@@ -4,7 +4,13 @@
 font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
 }
 
-/* 寃��깋 */
+.snippet-body{
+	display: flex;
+    justify-content: center;
+    align-items:center;
+    min-height: 100vh;
+}
+
 .search{
     margin-bottom: 0;
     justify-content: center;
@@ -70,7 +76,7 @@ body {
 
 .table-responsive{
     margin:auto;
-    width: 80%;
+    width: 768px;
 }
 
 #line{
@@ -242,7 +248,7 @@ tbody td{
 
 #content{
     border: none;
-   width: 785px;
+  	width: 655px;
     background-color: #F7F6FB;
     border-bottom: #e2e2e2 solid 0.5px;
 }
@@ -270,7 +276,7 @@ tbody td{
 
 .btn-group{
     position: relative;
-    display: inline;
+    display: flex;
     vertical-align: middle;
 
 }
@@ -294,11 +300,10 @@ tbody td{
 }
 
 .regist-content {
-    border:#c4c4c4 solid 0.5px;
+    border:#c4c4c4 solid 0.5 px;
     margin: auto 0;
     display: grid;
-    width: 710px;
-    height: 300px;
+    height: 200px;
     margin-bottom: 20px;
 }
 
