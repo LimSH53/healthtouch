@@ -86,4 +86,9 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.insertMemberRole(memberRole);
 	}
 
+	@Override
+	public int checkId(String memberId) {
+		return memberMapper.checkId(memberId);
+	}
+
 }
