@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오류페이지</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/common/error.css}"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+</head>
+<body>
+    <section class="error-page section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3 col-12">
+                    <!-- Error Inner -->
+                    <div class="error-inner">
+                        <h1>접근 권한이 없습니다.
+                            <span>요청하신 페이지에 접근 권한이 없습니다.</span>
+                        </h1>
+                        <p>
+                            서비스 이용 및 사용권한에 관련 사항은 센터로 문의하여 주시기 바랍니다.
+                        </p>
+                        <form class="search-form">
+                            <button class="btn" onclick="location.href=''">메인으로 돌아가기</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
