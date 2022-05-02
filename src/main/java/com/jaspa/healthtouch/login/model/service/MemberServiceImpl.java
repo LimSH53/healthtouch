@@ -1,9 +1,6 @@
 package com.jaspa.healthtouch.login.model.service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,21 +60,6 @@ public class MemberServiceImpl implements MemberService {
 		member.setPwd(passwordEncoder.encode(member.getPwd()));
 		// 연락처 뒤 4자리가 출석번호 
 		member.setNum(member.getContact() % 10000);
-		// 만 나이 계산 
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-		String birthday = dateFormat.format(member.getBirthday());
-		String today = dateFormat.format(new Date());
-		int birthYear = Integer.parseInt(birthday.substring(0, 4));
-		int birthMD = Integer.parseInt(birthday.substring(4, 8));
-		int currentYear = Integer.parseInt(today.substring(0, 4));
-		int currentMD = Integer.parseInt(birthday.substring(4, 8));
-		
-		if(birthMD < currentMD) {
-			member.setAge(currentYear - birthYear);
-		} else {
-			member.setAge(currentYear - birthYear - 1);
-		}
-		
 		memberMapper.insertMember(member);
 		
 		MemberRoleDTO memberRole = new MemberRoleDTO();
