@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수강권 구매</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/member/product/order.css}"/>
+    <!-- replace head 부분 -->
+    <div th:replace="/common/centerHeader.html :: center-header"></div>
+    <!-- 제이쿼리 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <!-- 헤더 body 추가 -->
+	<div th:replace="/common/centerHeader.html :: center-body"></div>
+    <!-- 최대 크기 768 로 맞춰서 / 타이틀 <2> / 기본폰트 15px (표 상단은 bold 처리) / 참고문구는 12px -->
+    <div class="height-100 width-768">
+        <div class="title-box">
+            <h2>수강권 구매</h2>
+        </div>
+            <table>
+                <tr>
+                    <th class="width-40">
+                        상품명
+                    </th>
+                    <th>
+                        이용횟수
+                    </th>
+                    <th>
+                        희망 트레이너
+                    </th>
+                    <th>
+                        가격
+                    </th>
+                    <th>
+                        
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        PT 20회
+                    </td>
+                    <td>
+                        20회
+                    </td>
+                    <td>
+                        <select class="trn-option">
+                            <option>김머슬</option>
+                            <option>나튼튼</option>
+                            <option>근력왕</option>
+                        </select>
+                    </td>
+                    <td>
+                        360,000원
+                    </td>
+                    <td>
+                        <button>결제</button>
+                    </td>
+                </tr>
+            </table>
+            <div class="ord-guide">※ 트레이너 설정은 희망 트레이너 설정으로 센터 상담 진행시 변동될 수 있습니다.</div>
+        </div>
+</body>
+</html>

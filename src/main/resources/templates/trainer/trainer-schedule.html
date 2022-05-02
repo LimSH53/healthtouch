@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>트레이너 스케줄</title>
+
+
+    <!-- 트레이너 스케줄 css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/trainer/trainer-schedule.css}"/>
+    
+    <!-- replace head 부분 -->
+    <div th:replace="/common/trnHeader.html"></div>
+    
+    <!-- 제이쿼리 추가 -->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,700" rel="stylesheet">
+    
+     <!-- 스케줄용 제이쿼리 필수 -->
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
+     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>  
+     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" ></script>
+
+
+
+</head>
+
+<body>
+    
+    <!-- 헤더 body 추가 -->
+	<div th:replace="/common/centerHeader.html"></div>
+
+    
+		
+		<div class="height-100 bg-light">
+		
+		    <div class="container">
+		      
+		      <div class="popUp">
+		        <div class="triangle"></div>
+		     <!--  name   -->
+		        <input class="nameInput" type="text" placeholder="스케줄명을 입력하세요.">
+		     <!--  weekdays   --> 
+		        <div class="week">
+		          
+		          <div class="checkBox">일<input type="checkbox" value="100"></div>
+		          <div class="checkBox">월<input type="checkbox" value="200"></div>
+		          <div class="checkBox">화<input type="checkbox" value="300"></div>
+		           <div class="checkBox">수<input type="checkbox" value="400"></div>
+		           <div class="checkBox">목<input type="checkbox" value="500"></div>
+		           <div class="checkBox">금<input type="checkbox" value="600"></div>
+		           <div class="checkBox">토<input type="checkbox" value="700"></div>
+		          
+		               
+		        </div>
+		        
+		    <!--  time   -->    
+		    <div class="timeBox">   
+		        시작: <input id="fromTimeHour" class="fromTime enterTime hour" type="number" placeholder="0" min="1" max="23" >:
+		      <input id="fromTimeHalf" class="fromTime enterTime halfHour" type="number" placeholder="0" min="0" max="30" step="30" value="0">  
+		    
+		      
+		        종료: <input id="toTimeHour" class="toTime enterTime hour" type="number" placeholder="0" min="1" max="23" >:
+		      <input id="toTimeHalf" class="toTime enterTime halfHour" type="number" placeholder="00" min="0" max="30" step="30" value="0">  
+		    </div>  
+		    <!--  colors   -->
+		      
+		    <!--     <div class="colorSelect"> <input type="color" class="colorPick"> </div> -->
+		        <div class="colorContainer">
+		          <div class="color" id="colorRed"></div>
+		          <div class="color" id="colorBlue"></div>
+		          <div class="color" id="colorGreen"></div>
+		          <div class="color" id="colorOrange"></div>
+		          <div class="color" id="colorYellow"></div>
+		          <div class="color" id="colorPurple"></div>
+		          <div class="color" id="colorPink"></div>
+		          <div class="color" id="colorCyan"></div>
+		        </div>
+		        
+		        <button class="addButton">일정 추가</button>
+		        
+		
+		
+		
+		      </div>
+		      
+		
+		
+		      
+		      <div class="topHeader"> 
+		        <!-- Trainer Schedule 제목들어가던자리 / 없는게 깔끔해서 뺐음 -->
+		                  
+		        <h1> Trainer Schedule  
+		                 
+		        </h1>
+		
+		
+		        <!--일정 추가버튼-->
+		        <button class="addNew">
+		        일정추가
+		        </button>
+		
+		          
+		        <!--요일-->
+		        <table class = "tableHeader">
+		        <tr>
+		          <th>Time</th>
+		          <th>일요일</th>
+		          <th>월요일</th>
+		          <th>화요일</th>
+		          <th>수요일</th>
+		          <th>목요일</th>
+		          <th>금요일</th>
+		          <th>토요일</th>
+		        </tr> 
+		      </table>
+		      </div>
+		      
+		      
+		      <div class="scheduleArea">
+		        
+		        
+		      <!-- 시간 입력, 30분 단위는 생략 -->
+		      <table class="tableTimes">
+		        
+		        <tr>
+		          <th class="time">7:00</th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time "> </th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time">8:00</th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time"> </th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time">9:00</th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time"></th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time">10:00</th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time"> </th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time">11:00</th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time"> </th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time">12:00</th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time"> </th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time">13:00</th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time"> </th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time">14:00</th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time"> </th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time">15:00</th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time"> </th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time">16:00</th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time"> </th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time">17:00</th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time"> </th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time">18:00</th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		        
+		        <tr>
+		          <th class="time"> </th>
+		          <td class="sunday"></td>
+		          <td class="monday"></td>
+		          <td class="tuesday"></td>
+		          <td class="wednesday"></td>
+		          <td class="thursday"></td>
+		          <td class="friday"></td>
+		          <td class="saturday"></td>
+		        </tr>
+		
+		        <tr>
+		            <th class="time">19:00</th>
+		            <td class="sunday"></td>
+		            <td class="monday"></td>
+		            <td class="tuesday"></td>
+		            <td class="wednesday"></td>
+		            <td class="thursday"></td>
+		            <td class="friday"></td>
+		            <td class="saturday"></td>
+		          </tr>
+		
+		          <tr>
+		            <th class="time"> </th>
+		            <td class="sunday"></td>
+		            <td class="monday"></td>
+		            <td class="tuesday"></td>
+		            <td class="wednesday"></td>
+		            <td class="thursday"></td>
+		            <td class="friday"></td>
+		            <td class="saturday"></td>
+		          </tr>
+		        
+		
+		          <tr>
+		            <th class="time">20:00</th>
+		            <td class="sunday"></td>
+		            <td class="monday"></td>
+		            <td class="tuesday"></td>
+		            <td class="wednesday"></td>
+		            <td class="thursday"></td>
+		            <td class="friday"></td>
+		            <td class="saturday"></td>
+		          </tr>
+		
+		          <tr>
+		            <th class="time"> </th>
+		            <td class="sunday"></td>
+		            <td class="monday"></td>
+		            <td class="tuesday"></td>
+		            <td class="wednesday"></td>
+		            <td class="thursday"></td>
+		            <td class="friday"></td>
+		            <td class="saturday"></td>
+		          </tr>
+		         
+		          <tr>
+		            <th class="time">21:00</th>
+		            <td class="sunday"></td>
+		            <td class="monday"></td>
+		            <td class="tuesday"></td>
+		            <td class="wednesday"></td>
+		            <td class="thursday"></td>
+		            <td class="friday"></td>
+		            <td class="saturday"></td>
+		          </tr>
+		
+		          <tr>
+		            <th class="time"> </th>
+		            <td class="sunday"></td>
+		            <td class="monday"></td>
+		            <td class="tuesday"></td>
+		            <td class="wednesday"></td>
+		            <td class="thursday"></td>
+		            <td class="friday"></td>
+		            <td class="saturday"></td>
+		          </tr>
+		
+		          <tr>
+		            <th class="time">22:00</th>
+		            <td class="sunday"></td>
+		            <td class="monday"></td>
+		            <td class="tuesday"></td>
+		            <td class="wednesday"></td>
+		            <td class="thursday"></td>
+		            <td class="friday"></td>
+		            <td class="saturday"></td>
+		          </tr>
+		
+		          <tr>
+		            <th class="time"> </th>
+		            <td class="sunday"></td>
+		            <td class="monday"></td>
+		            <td class="tuesday"></td>
+		            <td class="wednesday"></td>
+		            <td class="thursday"></td>
+		            <td class="friday"></td>
+		            <td class="saturday"></td>
+		          </tr>
+		
+		          <tr>
+		            <th class="time">23:00</th>
+		            <td class="sunday"></td>
+		            <td class="monday"></td>
+		            <td class="tuesday"></td>
+		            <td class="wednesday"></td>
+		            <td class="thursday"></td>
+		            <td class="friday"></td>
+		            <td class="saturday"></td>
+		          </tr>
+		
+		      </table>
+		        
+		      <!-- 스케줄 저장버튼 -->
+		      <div class="infoUpdate">
+		        <a href="#"><input type="submit" id="info-Update" value="저장"></a>
+		        </div>
+		
+		
+		        
+		      </div>
+		    <!-- 스케줄 영역 끝   -->
+		     
+		    </div>
+		    <!--  컨테이너 끝  -->
+		
+		  </div>
+		
+		
+		    <script src="@{javascript/trainer/trainer-schedule.js}" rel="stylesheet" type="text/javascript"></script>
+		
+
+</body>
+</html>

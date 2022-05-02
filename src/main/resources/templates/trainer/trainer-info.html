@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+<meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>트레이너 정보</title>
+    <!-- 트레이너 정보 css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/trainer/trainer-info.css}"/>
+    <!-- replace head 부분 -->
+    <div th:replace="/common/trnHeader.html"></div>
+    <!-- 제이쿼리 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+
+<body>
+
+    <!-- 헤더 body 추가 -->
+	<div th:replace="/common/centerHeader.html"></div>
+
+
+    <!-- 본문 시작 -->
+    <body id="body-pd">
+
+
+    <!--Container Main start-->
+    <div class="height-100 bg-light">
+
+        <!-- main page -->
+        <div class="col-lg-9 main-box">
+            <div class="admin-page">
+        
+            <!--내정보 수정칸-->
+               
+                <div class="my-info">
+        
+        
+                        <!--이름-->
+                        <label id="la-userName"><b>이름</b></label>
+                        <span class="input_area"><input type="email" name="email" id="userName" placeholder="트레이너 성함을 입력해주세요."></span>
+                    
+                        <!--연락처-->
+                        <label id="phn"><b>연락처</b></label>
+                        <span class="input_area"><input type="tel" maxlength="11" name="phone" id="phoneNum" placeholder=" (-) 을 제외한 연락처를 입력해주세요. "></span>
+                
+                        <!--주소-->
+                        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        
+                        <label id="addr"><b>주소</b></label><br>
+                        <!--기본주소-->
+                        <span class="input_area"><input type="text" placeholder="우편 번호" id="basicAddr" name="zipCode" class="postcodify_postcode5" readonly></span>
+                        <button id="postcodify_search_button" type="button" onclick="openZipSearch()" >검색</button>
+                    
+                        <!--도로명 주소-->
+                        <span class="input_area"><input type="text" placeholder="도로명 주소" name="address1" id="addr1" class="postcodify_address" readonly></span>
+                    
+                        <!--상세 주소-->
+                        <span class="input_area"><input type="text" placeholder="상세 주소" name="address2" id="addr2" class="postcodify_details"></span>
+                        
+
+                        <!--생년월일-->
+                        <label id="la-birth"><b>생년월일</b></label>
+                        <span class="input_area"><input type="date" name="email" id="memberBirth" placeholder="8자리 생년월일을 입력하세요."></span>
+                    
+                    
+                        <!--경력-->
+                        <h4></h4>
+                        <label id="la-carrer"><b>경력(년)</b></label>
+                        <span class="input_area"><input type="number" name="email" id="memberCarrer" placeholder="숫자를 년 단위로 입력 해주세요." value="년"></span>
+                    
+
+
+                        <!-- 정보 수정버튼  -->   
+                        <div class="infoModify">
+                            <input type="submit" id="info-Modify" value="수정">
+                        </div>
+
+
+
+
+
+
+
+
+        
+                        <!--다음 도로명 우편번호 검색-->
+                        <script>
+                        function openZipSearch() {
+                            new daum.Postcode({
+                                oncomplete: function(data) {
+                                    $('[name=zipCode]').val(data.zonecode); // 우편번호 (5자리)
+                                    $('[name=address1]').val(data.address);
+                                    $('[name=address2]').val(data.buildingName);
+                                }
+                            }).open();
+                        }
+                        </script>
+        
+                      
+        
+                        
+        
+        
+        
+                    </div>
+            
+        
+        
+
+
+
+
+
+
+                  <br>
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+</body>
+</html>
