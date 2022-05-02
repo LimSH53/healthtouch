@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jaspa.healthtouch.login.model.dto.MemberDTO;
@@ -55,5 +56,11 @@ public class MemberController {
 	@PostMapping("/mypage")
 	public void mypage(@AuthenticationPrincipal UserImpl user) {
 		log.info("로그인 유저 : {}", user);
+	}
+	
+	@PostMapping("/checkId")
+	@ResponseBody
+	public int checkId(@RequestParam("memberId") String memberId) {
+		return memberService.checkId(memberId);
 	}
 }

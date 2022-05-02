@@ -96,4 +96,11 @@
 		, #{ authorityCode }
 		)
 	</insert>
+	
+	<select id="checkId" resultType="_int">
+		SELECT COUNT(*)
+		  FROM TBL_MEMBER
+		 WHERE MEMBER_ID = #{ id }
+		   AND MEMBER_STATUS = 'Y'
+	</select>
 </mapper>
