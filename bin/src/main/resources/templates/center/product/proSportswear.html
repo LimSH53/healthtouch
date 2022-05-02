@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원권 관리</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/center/product/product.css}"/>
+    <!-- replace head 부분 -->
+    <div th:replace="/common/centerHeader.html :: center-header"></div>
+    <!-- 제이쿼리 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <!-- 헤더 body 추가 -->
+	<div th:replace="/common/centerHeader.html :: center-body"></div>
+    <!-- 최대 크기 768 로 맞춰서 / 타이틀 <2> / 기본폰트 15px (표 상단은 bold 처리) / 참고문구는 12px -->
+    <div class="height-100 width-768">
+        <div class="title-box">
+            <h2>운동복 이용권 관리</h2>
+        </div>
+            <table>
+                <tr>
+                    <th class="width-40">
+                        상품명
+                    </th>
+                    <th>
+                        이용기간
+                    </th>
+                    <th>
+                        가격
+                    </th>
+                    <th>
+                        수정/삭제
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        운동복 12개월권
+                    </td>
+                    <td>
+                        12개월
+                    </td>
+                    <td>
+                        60,000원
+                    </td>
+                    <td>
+                        <button>수정</button>
+                        <button>삭제</button>
+                    </td>
+                </tr>
+            </table>
+            <div class="pro-regist"> 
+                <button>상품 등록</button>
+            </div>
+        </div>
+</body>
+</html>

@@ -1,0 +1,106 @@
+@charset "UTF-8";
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+* { 
+font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+}
+
+.width-768 {
+    width: 768px;
+}
+
+body {
+    font-family: Pretendard;
+    background-color: #e2e2e2;;
+}
+
+.font-15px {
+    font-size: 15px;
+}
+
+.font-12px {
+    font-size: 12px;
+}
+
+.title-box{
+    width: 100%;
+    height: 80px;
+    background-color: #F7F6FB;
+    padding-left: 3%;
+    margin-left: 5%;
+    margin-top: 100px;
+}
+
+.title-box h2{
+    padding-top: 25px;
+}
+
+table {
+    width: 790px;
+    margin-top: 20px;
+    margin-left: 5%;
+    background-color: #F7F6FB;
+}
+
+table th{
+    height: 50px;
+    background-color: #1b1b55;
+    color: #F7F6FB;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.width-40 {
+    width:40%
+}
+
+table td{
+    text-align: center;
+    height: 50px;
+    padding-left: 20px;
+}
+
+.table-left-input {
+    text-align: left;
+    padding-left: 20px;
+}
+
+button {
+    padding: 5px 15px;
+    background-color: #1b1b55;
+    color: #F7F6FB;
+    cursor:pointer;
+}
+
+.pro-regist {
+    position: relative;
+    left: 740px;
+    top: 20px;
+}
+
+.pro-category {
+    width: 200px;
+    height: 40px;
+    padding-left: 3%;
+    margin-left: 5%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.sub-title {
+    width: 100%;
+    height: 80px;
+    background-color: #F7F6FB;
+    padding-left: 3%;
+    margin-left: 5%;
+}
+
+td input {
+    width: 300px;
+    height: 30px;
+}
+
+
+
+
