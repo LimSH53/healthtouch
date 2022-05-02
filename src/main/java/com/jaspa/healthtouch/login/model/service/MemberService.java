@@ -8,4 +8,6 @@ public interface MemberService extends UserDetailsService {
 	
 	void regist(MemberDTO member);
 
+	int checkId(String memberId);
+
 }
