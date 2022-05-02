@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>트레이너 조회</title>
+    <!-- replace head 부분 -->
+    <div th:replace="/common/centerHeader.html :: center-header"></div>
+    <!-- 제이쿼리 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <!-- 헤더 body 추가 -->
+	<div th:insert="/common/centerHeader.html :: center-body"></div>
+    <!--Container Main start-->
+    <div class="height-100 bg-light">
+        <div class="content">
+            <div class="container">
+            <h2 class="mb-5">트레이너 조회</h2>
+
+            <div>
+                <!-- selectbox - 전체, 재직, 퇴사 -->
+                <select class="form-select" aria-label="Default select example" style="width: 10%;">
+                    <option selected>전체</option>
+                    <option value="1">재직</option>
+                    <option value="2">퇴사</option>
+                </select>
+
+            <div class="table-responsive custom-table-responsive">
+            <table class="table custom-table">
+            <thead>
+            <tr>
+            <th scope="col">
+            <label class="control control--checkbox">
+            <input type="checkbox" class="js-check-all" name="check" value="selectAll"
+             onclick="selectAll(this)">
+            <div class="control__indicator"></div>
+            </label>
+            </th>
+            <th scope="col">No</th>
+            <th scope="col">이름</th>
+            <th scope="col">ID</th>
+            <th scope="col">성별</th>
+            <th scope="col">연락처</th>
+            <th scope="col">재직여부</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr scope="row">
+                <th scope="row">
+                    <label class="control control--checkbox">
+                        <input type="checkbox" name="check">
+                        <div class="control__indicator"></div>
+                    </label>
+                </th>
+                <td>
+                    1
+                </td>
+                <td><a href="#">김헬스</a></td>
+                <td>
+                    health123
+                </td>
+                <td>남</td>
+                <td>010-1234-5678</td>
+                <td>재직</td>
+            </tr>
+            <tr scope="row">
+                <th scope="row">
+                    <label class="control control--checkbox">
+                        <input type="checkbox" name="check">
+                        <div class="control__indicator"></div>
+                    </label>
+                </th>
+                <td>
+                    1
+                </td>
+                <td><a href="#">김헬스</a></td>
+                <td>
+                    health123
+                </td>
+                <td>남</td>
+                <td>010-1234-5678</td>
+                <td>재직</td>
+            </tr>
+            <tr scope="row">
+                <th scope="row">
+                    <label class="control control--checkbox">
+                        <input type="checkbox" name="check">
+                        <div class="control__indicator"></div>
+                    </label>
+                </th>
+                <td>
+                    1
+                </td>
+                <td><a href="#">김헬스</a></td>
+                <td>
+                    health123
+                </td>
+                <td>남</td>
+                <td>010-1234-5678</td>
+                <td>재직</td>
+            </tr>
+            
+            </tbody>
+            </table><br>
+
+            <button type="button" class="btn btn-secondary">퇴사</button>
+            
+            <!-- 페이징-->
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" style="justify-content: center">
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            </div>
+            </div>
+    </div>
+    <!--Container Main end-->
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js'></script>
+    <script type='text/javascript' src=''></script>
+    <script type='text/javascript' src=''></script>
+    <script type='text/Javascript'>document.addEventListener("DOMContentLoaded", function(event) {
+
+const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+const toggle = document.getElementById(toggleId),
+nav = document.getElementById(navId),
+bodypd = document.getElementById(bodyId),
+headerpd = document.getElementById(headerId)
+/* 트레이너 목록 테이블 체크박스 변수*/
+const checkboxes = document.getElementsByName('check');
+
+// Validate that all variables exist
+if(toggle && nav && bodypd && headerpd){
+toggle.addEventListener('click', ()=>{
+// show navbar
+nav.classList.toggle('show')
+// change icon
+toggle.classList.toggle('bx-x')
+// add padding to body
+bodypd.classList.toggle('body-pd')
+// add padding to header
+headerpd.classList.toggle('body-pd')
+})
+}
+}
+
+showNavbar('header-toggle','nav-bar','body-pd','header')
+
+/*===== LINK ACTIVE =====*/
+const linkColor = document.querySelectorAll('.nav_link')
+
+function colorLink(){
+if(linkColor){
+linkColor.forEach(l=> l.classList.remove('active'))
+this.classList.add('active')
+}
+}
+linkColor.forEach(l=> l.addEventListener('click', colorLink))
+
+// Your code to run since DOM is loaded and ready
+});
+</script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+    $(".sub-menu ul").hide();
+$(".sub-menu a").click(function () {
+  $(this).parent(".sub-menu").children("ul").slideToggle("100");
+  $(this).find(".right").toggleClass("fa-caret-up fa-caret-down");
+});
+
+/* 트레이너 목록 테이블 체크박스 전체선택 함수 */
+function selectAll(selectAll)  {
+  const checkboxes 
+     = document.querySelectorAll('input[type="checkbox"]');
+  
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = selectAll.checked
+  })
+}
+
+</script>
+</body>
+</html>
