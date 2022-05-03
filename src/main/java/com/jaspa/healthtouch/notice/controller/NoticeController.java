@@ -67,7 +67,7 @@ public class NoticeController {
 		
 		return "notice/trainerprofile1";
 	}
-	
+	 
 	
 	@GetMapping("/trainerprofile2")
 	public String trainerProfile2() {		
