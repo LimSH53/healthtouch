@@ -11,7 +11,7 @@ public class MemberDTO {
 	private String id;
 	private String pwd;
 	private String name;
-	private int contact;
+	private String contact;
 	private int num;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date birthday;

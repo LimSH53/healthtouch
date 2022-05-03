@@ -10,4 +10,8 @@ public interface MemberService extends UserDetailsService {
 
 	int checkId(String memberId);
 
+	void certifiedPhoneNumnber(String phoneNumber, String numStr);
+
+	int isExistContact(String phoneNumber);
+
 }

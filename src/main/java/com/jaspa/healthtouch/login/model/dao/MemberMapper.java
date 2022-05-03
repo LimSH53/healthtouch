@@ -15,5 +15,7 @@ public interface MemberMapper {
 	void insertMemberRole(MemberRoleDTO memberRole);
 
 	int checkId(String memberId);
+
+	int isExistContact(String phoneNumber);
 	
 }

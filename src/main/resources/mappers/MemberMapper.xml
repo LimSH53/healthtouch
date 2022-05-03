@@ -103,4 +103,10 @@
 		 WHERE MEMBER_ID = #{ id }
 		   AND MEMBER_STATUS = 'Y'
 	</select>
+	
+	<select id="isExistContact" resultType="_int">
+		SELECT COUNT(*)
+		  FROM TBL_MEMBER
+		 WHERE MEMBER_CONTACT = #{ contact }
+	</select>
 </mapper>

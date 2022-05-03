@@ -11,6 +11,7 @@
     <link th:href="@{/css/common/header.css}" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
     <div class="container mx-auto" style="max-width: 700px; margin: 0 auto;">
@@ -19,12 +20,12 @@
             <div class="mb-3">
                 <label class="form-label">아이디</label>
                 <input type="text" class="form-control" name="id" id="memberId" placeholder="아이디" required>
-                <a id="checkId" type="button">중복 확인</a>
+                <a id="checkId" type="button" style="text-decoration: none; color: #6c757d;">중복 확인</a>
             </div>
             <div class="mb-3">
                 <label class="col-form-label">비밀번호</label>
                 <input type="password" class="pw form-control" name="pwd" id="memberPwd" placeholder="비밀번호" required onchange="checkPassword()">
-                <span class="helper" id="pwdHelper">8~16자리의 영문 대소문자, 숫자를 조합하여 설정</span>
+                <span class="helper" id="pwdHelper" style="color: #6c757d;">8~16자리의 영문 대소문자, 숫자를 조합하여 설정</span>
             </div>
             <div class="mb-3">
                 <label class="col-form-label">비밀번호 확인</label>
@@ -53,22 +54,21 @@
             <div class="mb-3">
                 <label class="form-label">주소</label>
                 <input type="text" class="form-control" name="address" id="address" placeholder="주소" required readonly>
-                <a id="findAddress" type="button" onclick="daumPostcode()">주소 찾기</a>
+                <a id="findAddress" type="button" onclick="daumPostcode()" style="text-decoration: none; color: #6c757d;">주소 찾기</a>
             </div>
             <div class="mb-3">
                 <label class="form-label">연락처</label>
                 <input type="text" class="form-control" name="contact" id="contact" placeholder="연락처" required>
-                <a id="phoneAuthBtn" type="button" style="text-decoration: none;">연락처 인증</a>
+                <a id="phoneAuthBtn" type="button" style="text-decoration: none; color: #6c757d;">연락처 인증</a>
             </div>
             <div class="mb-3">
                 <label class="form-label">인증 번호 입력</label>
                 <input type="text" class="form-control" name="authCode" id="inputAuthCode" placeholder="인증 번호 입력" readonly>
-                <a id="authCodeCheckBtn" type="button" style="text-decoration: none;">확인</a>
-                <input type="hidden" name="authPass" id="authPass" value="false">
+                <a id="authCodeCheckBtn" type="button" style="text-decoration: none; color: #6c757d;">확인</a>
             </div>
             <br>
             <div class="d-grid col-2 mx-auto">
-                <button class="btn btn-primary" type="submit" id="joinBtn">가입</button>
+                <button class="btn btn-primary" type="button" id="joinBtn">가입</button>
             </div>
             <br><br>
         </form>
@@ -76,15 +76,15 @@
     <script>
     	// 아이디 중복 확인 
     	var isUsable1 = false;
-    	// 연락처 확인 
-    	var isUsable2 = false;
     	
     	$("#checkId").click(function(){
-    		// 여기 잘 모르겠는데 수정 해야 할 듯 
     		const memberId = $("[name=id]");
     		
     		if(!memberId || memberId.val().length < 6) {
-    			alert("아이디는 최소 6자리 이상이어야 합니다.");
+    			Swal.fire({
+    				icon: 'warning',
+    				text: '아이디는 최소 6자리 이상이어야 합니다.',
+    			});
     			memberId.focus();
     		} else {
     			$.ajax({
@@ -93,17 +93,28 @@
     				data: { memberId : memberId.val() },
     				success: function(cnt) {
     					if(cnt > 0) {
-    						alert("사용할 수 없는 아이디입니다.");
+    						Swal.fire({
+    		    				icon: 'warning',
+    		    				text: '사용할 수 없는 아이디입니다.',
+    		    			});
     						memberId.focus();
     					} else {
-    						if(confirm("사용 가능한 아이디입니다. 사용하시겠습니까?")) {
-    							memberId.attr('readonly', true);
-    							isUsable1 = true;
-    						} else {
-    							memberId.attr('readonly', false);
-    							isUsable1 = false;
-    							memberId.focus();
-    						}
+    						Swal.fire({
+    							icon: 'question',
+    							text: '사용 가능한 아이디입니다. 사용하시겠습니까?',
+    							showDenyButton: true,
+    							confirmButtonText: '예',
+    							denyButtonText: '아니오',
+    						}).then((result) => {
+    							if(result.isConfirmed) {
+    								memberId.attr('readonly', true);
+        							isUsable1 = true;
+    							} else if(result.isDenied) {
+    								memberId.attr('readonly', false);
+        							isUsable1 = false;
+        							memberId.focus();
+    							}
+    						})
     					}
     				},
     				error: function(e) {
@@ -129,6 +140,82 @@
     			}
     		}).open();
     	}
+    </script>
+    <script>
+    	$('#phoneAuthBtn').click(function(){
+    		// 연락처 확인 
+        	var isUsable2 = false;
+    		var phonePattern = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+    		const phoneNumber = $("[name=contact]");
+    		
+    		if(phonePattern.test(phoneNumber.val())) {
+    			// 유효성 검사 통과 
+    			// 중복 확인 
+    			$.ajax({
+    				url: "/member/isExistContact",
+   					type: "post",
+       				data: { phoneNumber : phoneNumber.val() },
+       				success: function(cnt) {
+       					if(cnt > 0) {
+       						// 중복 확인 탈락 
+       						Swal.fire({
+       		    				icon: 'warning',
+       		    				text: '이미 사용된 연락처입니다.',
+       		    			});
+       						$('#contact').focus();
+       					} else {
+       						// 중복 확인 통과 
+       						Swal.fire('인증 번호가 전송되었습니다.');
+       						
+       						phoneNumber.attr('readonly', true);
+       						$("#inputAuthCode").attr('readonly', false);
+       						
+       						$.ajax({
+       			    			type: "GET",
+       			    			url: "/member/checkContact",
+       			    			data: { phoneNumber : phoneNumber.val() },
+       			    			success: function(res) {
+       			    				$('#authCodeCheckBtn').click(function(){
+       			    					if($.trim(res) == $('#inputAuthCode').val()){
+       			    						Swal.fire({
+       			    							icon: 'success',
+       			        		    			text: '휴대폰 인증이 정상적으로 완료되었습니다.',
+       			    						})
+       			    						isUsable2 = true;
+       			    						$("#inputAuthCode").attr('readonly', true);
+       			    					} else {
+       			    						Swal.fire({
+       			    							icon: 'error',
+       			    							text: '휴대폰 인증에 실패했습니다. 다시 시도해 주세요.',
+       			    						})
+       			    						phoneNumber.attr('readonly', false);
+       										isUsable2 = false;
+       										phoneNumber.focus();
+       			    					}
+       			    				})
+       			    			}
+       			    		})
+       					}
+       				},
+       				error: function(e) {
+       					console.log(e);
+       				}
+    			})
+    		} else {
+    			// 유효성 검사 탈락 
+    			Swal.fire({
+					icon: 'error',
+					text: '유효하지 않은 연락처입니다. 다시 입력해 주세요.',
+				})
+    		}
+    	});
+    </script>
+    <script>
+    	$("#joinBtn").click(function(){
+    		if((isUsable == true) && (isUsable == true)) {
+    			$("#joinBtn").attr("type", "submit");
+    		}
+    	});
     </script>
     <script src="/js/member/regist.js"></script>
 </body>
