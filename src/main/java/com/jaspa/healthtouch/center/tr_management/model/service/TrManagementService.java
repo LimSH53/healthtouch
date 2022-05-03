@@ -7,4 +7,4 @@ import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 public interface TrManagementService {
 
 	List<MemberDTO> selectAllTrainer();
-}
+} 

@@ -16,7 +16,7 @@
 		
 		<!-- <association property="trainerInfo" resultMap="trainerInfoResultMap"/> -->
 	</resultMap>
-	
+	 
 	<resultMap type="com.jaspa.healthtouch.center.tr_management.model.dto.TrainerInfoDTO" id="trainerInfoResultMap">
 		<id property="trNO" column="TRN_NUM"/>
 		<result property="career" column="TRN_CAREER"/>

@@ -8,7 +8,7 @@ import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 
 @Mapper
 public interface TrainerMapper {
-
+ 
 	List<MemberDTO> selectAllTrainer();
 
 }

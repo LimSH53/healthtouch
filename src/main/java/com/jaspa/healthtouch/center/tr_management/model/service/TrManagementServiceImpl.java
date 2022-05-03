@@ -21,7 +21,7 @@ public class TrManagementServiceImpl implements TrManagementService{
 		this.trainerMapper = trainerMapper;
 	}
 	
-	
+	 
 	@Override
 	public List<MemberDTO> selectAllTrainer() {
 		return trainerMapper.selectAllTrainer();

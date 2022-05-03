@@ -14,7 +14,7 @@ import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Controller
+@Controller 
 @RequestMapping("/center/trainer")
 public class CenterTrainerController {
 
