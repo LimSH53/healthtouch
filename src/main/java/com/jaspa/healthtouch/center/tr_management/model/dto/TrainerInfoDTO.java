@@ -1,5 +1,7 @@
 package com.jaspa.healthtouch.center.tr_management.model.dto;
 
+import com.jaspa.healthtouch.login.model.dto.MemberDTO;
+
 import lombok.Data;
 
 @Data
