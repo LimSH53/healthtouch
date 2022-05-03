@@ -13,5 +13,7 @@ public interface MemberMapper {
 	void insertMember(MemberDTO member);
 	
 	void insertMemberRole(MemberRoleDTO memberRole);
+
+	int checkId(String memberId);
 	
 }

@@ -1,0 +1,608 @@
+@charset "UTF-8";       /* 인코딩 문자 깨짐 방지 */
+
+
+
+/* 전체 창 크기 */
+.height-100 {
+    height: 150vh;
+}
+
+
+.bg-light {
+    background-color: #ffffff!important;
+}
+
+
+/* 메인 div 영역 사이즈 */
+.main-box{
+    border: 3px solid #F3EFEF;
+    /* background: #F3EFEF; */
+    border-radius: 5px;
+    margin: 150px 0 50px 100px;
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+/* ask-list 페이지 메인 영역 --------------------------------------------------------------------------*/
+
+/* 메인 div 콘텐츠 영역 설정*/
+.mypage{
+    margin: 50px;
+    width: 1000px;
+}
+
+
+
+/* Overall body and content */
+body { 
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    background: #fff;
+    font-family: Helvetica;
+} 
+
+/* 캘린더 틀 */
+.content {
+    overflow: none;
+    max-width: 800px;
+    padding: 0px 0;
+    height: 500px;
+    position: relative;
+    margin: 200px auto 50px auto;
+    background: #ffffff;  
+    border-radius: 3px;
+    box-shadow: 3px 8px 16px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    -moz-box-shadow: 3px 8px 16px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    -webkit-box-shadow: 3px 8px 16px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+/*  Events display */
+.events-container {
+    height: 100%;
+    float: right;
+    margin: 0px auto; 
+    font: 13px Helvetica, Arial, sans-serif; 
+    display: inline-block; 
+    padding: 0 10px;
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.events-container:after{
+    clear:both;
+}
+.event-card {
+    padding: 20px 0;
+    width: 380px;
+    margin: 20px auto;
+    display: block;
+    background: #fff;
+    border-left: 10px solid #1b1b55;
+    border-radius: 3px;
+    box-shadow: 3px 8px 16px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    -moz-box-shadow: 3px 8px 16px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    -webkit-box-shadow: 3px 8px 16px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.event-count, .event-name, .event-cancelled {
+    display: inline;
+    padding: 0 10px;
+    font-size: 1rem;
+}
+.event-count {
+    color: #1b1b55;
+    text-align: right;
+}
+.event-name {
+    padding-right:0;
+    text-align: left;
+}
+.event-cancelled {
+    color: #424141;
+    text-align: right;
+}
+
+/*  달력부분 */
+.calendar-container  { 
+    float: left;
+    position: relative;
+    margin: 0px auto 0px 5px; 
+    height: 100%;
+    background: rgb(255, 255, 255);
+    font: 13px Helvetica, Arial, san-serif; 
+    display: inline-block; 
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+    width:380px;
+}
+.calendar-container:after{
+    clear:both;
+}
+.calendar {
+    display: table;
+}
+
+/* Calendar Header */
+.year-header { 
+    background: #1b1b55;
+    font-family: Helvetica;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    -moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    height: 40px; 
+    text-align: center;
+    position: relative; 
+    color:#fff; 
+    border-top-left-radius: 3px;
+} 
+.year-header span { 
+    display:inline-block; 
+    font-size: 20px;
+    line-height:40px; 
+}
+.left-button, .right-button { 
+    cursor: pointer;
+    width:28px; 
+    text-align:center; 
+    position:absolute; 
+} 
+.left-button { 
+    left:0; 
+    -webkit-border-top-left-radius: 5px; 
+    -moz-border-radius-topleft: 5px; 
+    border-top-left-radius: 5px; 
+} 
+.right-button { 
+    right:0; 
+    top:0; 
+    -webkit-border-top-right-radius: 5px; 
+    -moz-border-radius-topright: 5px; 
+    border-top-right-radius: 5px; 
+} 
+.left-button:hover {
+    background: #1b1b55;
+}
+.right-button:hover { 
+    background: #1b1b55;
+}
+
+/* Buttons */
+.button{
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    font-size: 1rem;
+    border-radius: 25px;
+    padding: 0.65rem 1.9rem;
+    transition: .2s ease all;
+    color: white;
+    border: none;
+    box-shadow: -1px 10px 20px #9BC6FD;
+    background: #1b1b55;
+}
+
+
+#cancel-button {
+
+    background: #6e6d6d;
+}
+#add-button {
+    display: block;
+    position: absolute;
+    right:20px;
+    bottom: 20px;
+}
+#add-button:hover, #ok-button:hover, #cancel-button:hover {
+    transform: scale(1.03);
+}
+#add-button:active, #ok-button:active, #cancel-button:active {
+    transform: translateY(3px) scale(.97);
+}
+
+
+
+
+
+
+
+/* 날/월 테이블 */
+.days-table, .dates-table, .months-table { 
+    border-collapse:separate; 
+    text-align: center;
+    width:380px;
+} 
+.day { 
+    height: 26px;
+    width: 26px;
+    padding: 0 10px;
+    line-height: 26px; 
+    border: 2px solid transparent;
+    text-transform:uppercase; 
+    font-size:90%; 
+    color:#9e9e9e; 
+} 
+.month {
+    cursor: default;
+    height: 26px;
+    width: 26px;
+    padding: 0 2px;
+    padding-top:10px;
+    line-height: 26px; 
+    text-transform:uppercase; 
+    font-size: 11px; 
+    color:#9e9e9e; 
+    transition: all 250ms;
+}
+
+/* 현재 활성화 된 달 */
+.active-month {
+    font-weight: bold;
+    font-size: 14px;
+    color: #1b1b55;
+    text-shadow: 0 1px 4px #1b1b55;
+}
+
+/* 현재 선택중인 달 */
+.month:hover {
+    color: #1b1b55;
+    text-shadow: 0 1px 4px #1b1b55;
+}
+
+/*  Dates table */
+.table-date {
+    cursor: default;
+    color:#2b2b2b; 
+    height:26px;
+    width: 26px;
+    font-size: 15px;
+    padding: 10px;
+    line-height:26px; 
+    text-align:center; 
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: all 250ms;
+}
+.table-date:not(.nil):hover { 
+    border-color: #1b1b55;
+    box-shadow: 0 2px 6px #1b1b55;
+}
+.event-date {
+    border-color:#1b1b55;
+    box-shadow: 0 2px 8px #1b1b55;
+}
+.active-date{ 
+    background: #1b1b55;
+    box-shadow: 0 2px 8px #1b1b55;
+    color: #fff;
+}
+.event-date.active-date {
+    background: #1b1b55;
+    box-shadow: 0 2px 8px #1b1b55;
+}
+
+/* input dialog */
+.dialog{
+    z-index: 5;
+    background: #fff;
+    position:absolute;
+    width:415px;
+    height: 500px;
+    left:387px;
+    border-top-right-radius:3px;
+    border-bottom-right-radius: 3px;
+    display:none;
+}
+.dialog-header {
+    margin: 20px;
+    color:#333;
+    text-align: center;
+}
+.form-container {
+    margin-top:25%;
+}
+.form-label {
+    color:#333;
+}
+.input {
+    border:none;
+    background: none;
+    border-bottom: 1px #aaa solid;
+    display:block;
+    margin-bottom:50px;
+    width: 200px;
+    height: 20px;
+    text-align: center;
+    transition: border-color 250ms;
+}
+.input:focus {
+    outline:none;
+    border-color: #00C9FB;
+}
+.error-input {
+    border-color: #1b1b55;
+}
+
+/* Tablets and smaller */
+@media only screen and (max-width: 780px) {
+    .content {
+        overflow: visible;
+        position:relative;
+        max-width: 100%;
+        width: 370px;
+        height: 100%;
+        background: #52A0FD;
+        background: -moz-linear-gradient(left,  #52A0FD 0%, #00C9FB 80%, #00C9FB 100%);
+        background: -webkit-linear-gradient(left,  #52A0FD 0%, #00C9FB 80%, #00C9FB 100%);
+        background: linear-gradient(to right,  #52A0FD 0%, #00C9FB 80%, #00C9FB 100%);  
+    }
+    .dialog {
+        width:250px;
+        height: 450px;
+        border-radius: 3px;
+        top:0;
+        left:0;
+        margin-left: 10%;
+    }
+    .events-container {
+        float:none;
+        overflow: visible;
+        margin: 0 auto;
+        padding: 0;
+        display: block;
+        left: 0;
+        border-radius: 3px;
+    }
+
+    .calendar-container {
+        float: none;
+        padding: 0;
+        margin: 0 auto;
+        margin-right: 0;
+        display: block;
+        left: 0;
+        border-radius: 3px;
+        box-shadow: 3px 8px 16px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+        -moz-box-shadow: 3px 8px 16px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+        -webkit-box-shadow: 3px 8px 16px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    }
+}
+
+/* Small phone screens */
+@media only screen and (max-width: 400px) {
+    .content, .events-container, .year-header, .calendar-container {
+        width: 320px;
+    }
+    .dialog {
+        width: 320px;
+    }
+    .months-table {
+        display: block;
+        margin: 0 auto;
+        width: 320px;
+    }
+    .event-card {
+        width: 300px;
+    }
+    .day {
+        padding: 0 7px;
+    }
+    .month {
+        display: inline-block;
+        padding: 10px 10px;
+        font-size: .8rem;
+    }
+    .table-date {
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+    }
+    .event-name, .event-count, .event-cancelled {
+        font-size: .8rem;
+    }
+    .add-button{
+        bottom: 10px;
+        right: 10px;
+        padding: 0.5rem 1.5rem;
+    }
+} 
+
+
+
+
+
+
+
+
+
+
+
+/*모달 설정 !!------------------------------------------------------------------------------*/
+
+/* 모달 팝업시 뒷 배경 어둡게 처리 */
+#modal{
+    display:none;
+    position:fixed; 
+    width:100%; height:100%;
+    top:0; left:0; 
+    background:rgba(0,0,0,0.2);
+  }
+  
+  /* 모달 박스 크기 */
+  .modal-con{
+    display:none;
+    position:fixed;
+    top:50%; left:53%;
+    transform: translate(-50%,-50%);
+    max-width: 60%;
+    min-height: 30%;
+    background:rgba(255, 255, 255, 0.9);
+    border-radius: 25px;
+    width: 700px;
+    height: 400px;
+  }
+  
+  .modal4{
+    display:none;
+    position:fixed;
+    top:50%; left:53%;
+    transform: translate(-50%,-50%);
+    max-width: 60%;
+    min-height: 70%;
+    background:rgba(255, 255, 255, 0.9);
+    border-radius: 25px;
+    width: 500px;
+  }
+
+
+  /* 모달 제목 */
+  .modal-con .title{
+    font-size:1.5em;
+    text-align: center;
+    margin-top: 40px;
+    font-weight: 700;
+  }
+  
+
+
+
+
+/* 버튼 설정*/
+.btn-right1 {
+    text-align: center;
+    margin-left: 30%;
+    background-color: #1b1b55;
+    color:#ffffff;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.btn-right2 {
+    text-align: center;
+    margin-left: 15px;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+  /* 모달 컨텐츠 내용 */
+  .modal-con .con{
+    font-size:1em;
+    line-height:1.3;
+    text-align: center;
+    height: 200px;
+  }
+  
+  /* 휴가 신청 모달 내부 버튼(닫기/저장) 정렬 */
+  .modal-btn{
+      display:inline-flex;
+      position:absolute;
+      top:50%; left: 50%;
+      padding-left: 20px;
+      text-align:center;
+      float: center;
+      transform: translate(-50%, 70px);
+      height: 50px;
+  }
+
+ /* 휴가 신청내역 모달 내부 버튼(닫기/저장) 정렬 */
+ .modal-btn2{
+    display:inline-flex;
+    position:absolute;
+    top:70%; left: 50%;
+    padding-left: 20px;
+    text-align:center;
+    float: center;
+    transform: translate(-50%, 70px);
+    height: 50px;
+}
+
+
+
+  
+  /* 모달 내부 p 상단 여유주기*/
+  .con p{
+      margin-top: 40px;
+  }
+  
+  /* 버튼 설정 */
+  .button {
+      border-radius: 10px;
+      font-size: 1.15em;
+  }
+  
+  /* 버튼 호버시 효과 */
+  .madal-btn:hover{
+      font-weight: bold;
+  } 
+  
+  
+  /* 모달 내부 입력창 버튼 색 통일하기 (+호버) */
+  .madal-input-btn{
+
+      background-color: #ffffff;
+  }
+  
+  .madal-input-btn:hover{
+      background-color: #ffffff;
+      box-shadow: none;
+  }
+  
+
+/* 모달 내부 입령창 버튼 색 통일하기 (+호버) */
+.madal-input-btn{
+
+    background-color: #ffffff;
+}
+
+.madal-input-btn:hover{
+    background-color: #ffffff;
+    box-shadow: none;
+
+}
+
+
+/*모달창 내부 select input*/
+.input-select{
+    display:block;
+    position:absolute;
+    top:50%; left: 50%;
+    padding: 50px;
+    line-height: 30px;
+    text-align:center;
+    float: center;
+    transform: translate(-50%, -70px);
+}
+
+.form-control-plaintext{
+    border: 2px solid #d6741850;
+}
+
+
+.w-auto{
+    display: inline;
+}
+
+
+
+.input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    width: 100%;
+}
+
+
+.input-group modal-input2 {
+
+margin-top: 20px;
+
+}
