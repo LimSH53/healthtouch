@@ -46,6 +46,6 @@ public class QnaController {
 		return "notice/qnaregist";
 	}
 	  
-
+	
 	
 }

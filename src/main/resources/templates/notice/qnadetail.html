@@ -81,7 +81,7 @@
     
       <div style="display:-webkit-box ">
       <button type="button" class="list_btn btn btn-outline-secondary">목록</button>
-      <div class=" regist-btn pull-right" style="padding-right: 7px; margin-left: 550px;" >
+      <div sec:authorize="hasAnyRole('ROLE_CENTER', 'ROLE_TRAINER')" class=" regist-btn pull-right" style="padding-right: 7px; margin-left: 550px;" >
 
         <button type="button" class="btn btn-outline-secondary " value="수정">수정</button>
         <button type="button" class="btn btn-outline-secondary " value="삭제" data-bs-toggle="modal" data-bs-target="#qna_ADelete">삭제</button>
