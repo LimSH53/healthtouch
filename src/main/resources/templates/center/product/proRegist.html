@@ -19,12 +19,12 @@
         <div class="title-box">
             <h2>상품 등록</h2>
         </div>
-        <form>
-            <select class="pro-category">
-                <option>회원권 상품</option>
-                <option>수강권 상품</option>
-                <option>락커 이용권</option>
-                <option>운동복 이용권</option>
+        <form action="/center/product/proRegist" method="post">
+            <select class="pro-category" name="categoryNo" id="pro-category">
+                <option value="10">회원권 상품</option>
+                <option value="20">수강권 상품</option>
+                <option value="30">락커 이용권</option>
+                <option value="40">운동복 이용권</option>
             </select>
             <table>
                 <tr>
@@ -35,7 +35,7 @@
                         상품명
                     </td>
                     <td class="table-left-input">
-                        <input type="text" placeholder="등록할 상품명 입력"><br>
+                        <input type="text" name="name" placeholder="등록할 상품명 입력"><br>
                     </td>
                 </tr>
                 <tr>
@@ -43,7 +43,7 @@
                         상품가격
                     </td>
                     <td class="table-left-input">
-                        <input type="text" placeholder="등록할 상품 가격 등록">&nbsp;원<br>
+                        <input type="number" name="price" placeholder="등록할 상품 가격 등록">&nbsp;원<br>
                     </td>
                 </tr>
             </table>
@@ -55,24 +55,37 @@
                     <td>
                         이용기간
                     </td>
-                    <td class="table-left-input">
-                        <input type="text" placeholder="등록할 상품 기간 입력 (숫자만 입력)">&nbsp;개월<br>
+                    <td class="table-left-input" id="period">
+                        <input type="number" name="usePeriod" placeholder="등록할 상품 기간 입력 (숫자만 입력)" value="0">&nbsp;개월<br>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         이용횟수
                     </td>
-                    <td class="table-left-input">
-                        <input type="text" placeholder="등록할 상품 이용 횟수 입력 (숫자만 입력)">&nbsp;회<br>
+                    <td class="table-left-input" id="count">
+                        <input type="number" name="useCount" placeholder="등록할 상품 이용 횟수 입력 (숫자만 입력)" value="0">&nbsp;회<br>
                     </td>
                 </tr>
             </table>
-        </form> 
             <div class="pro-regist">
-                <button>상품 등록</button>
+                <button type="submit">상품 등록</button>
             </div>
+            </form>
         </div>
-
 </body>
+	<script>
+	$(document).ready(function() {
+		  $('#pro-category').change(function() {
+		    var result = $('#pro-category option:selected').val();
+		    if (result == '20') {
+		      $('#count').show();
+		      $('#period').hide();
+		    } else {
+		      $('#count').hide();
+		      $('#period').show();
+		    }
+		  }); 
+		}); 
+	</script>
 </html>

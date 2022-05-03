@@ -7,7 +7,8 @@ import com.jaspa.healthtouch.center.product.model.dto.ProductDTO;
 public interface ProductService {
 
 	List<ProductDTO> findAllMembership();
-	
+
+	boolean registProduct(ProductDTO product);
 	
 
 }

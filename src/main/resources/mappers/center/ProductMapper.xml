@@ -39,6 +39,29 @@
 		 WHERE PRO_CATE_NO = 10
 		   AND PRO_STATUS = 'Y'
 	</select>
+	
+	<!-- 상품 등록 -->
+	<insert id="registProduct">
+		INSERT
+		  INTO TBL_PRODUCT
+		(
+		  PRO_NO
+		, PRO_CATE_NO
+		, PRO_NAME
+		, PRO_PRICE
+		, PRO_USE_PERIOD
+		, PRO_USE_COUNT
+		)
+		VALUES
+		(
+		  SEQ_PRO_NO.NEXTVAL
+		, #{ categoryNo }
+		, #{ name }
+		, #{ price }
+		, #{ usePeriod }
+		, #{ useCount }
+		)
+	</insert>
 
 
 
