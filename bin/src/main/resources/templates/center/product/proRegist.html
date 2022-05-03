@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 등록</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/center/product/proRegist.css}"/>
+    <!-- replace head 부분 -->
+    <div th:replace="/common/centerHeader.html :: center-header"></div>
+    <!-- 제이쿼리 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body id="body-pd"> <!-- sidebar 적용위해 id 추가 -->
+	<!-- 헤더 body 추가 -->
+	<div th:replace="/common/centerHeader.html :: center-body"></div>
+    <!-- 최대 크기 768 로 맞춰서 / 타이틀 <2> / 기본폰트 15px (표 상단은 bold 처리) / 참고문구는 12px -->
+    <div class="height-100 width-768">
+        <div class="title-box">
+            <h2>상품 등록</h2>
+        </div>
+        <form>
+            <select class="pro-category">
+                <option>회원권 상품</option>
+                <option>수강권 상품</option>
+                <option>락커 이용권</option>
+                <option>운동복 이용권</option>
+            </select>
+            <table>
+                <tr>
+                    <th colspan="2">상품 기본 정보 입력</th>
+                </tr>
+                <tr>
+                    <td>
+                        상품명
+                    </td>
+                    <td class="table-left-input">
+                        <input type="text" placeholder="등록할 상품명 입력"><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        상품가격
+                    </td>
+                    <td class="table-left-input">
+                        <input type="text" placeholder="등록할 상품 가격 등록">&nbsp;원<br>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th colspan="2">이용기간/횟수 설정</th>
+                </tr>
+                <tr>
+                    <td>
+                        이용기간
+                    </td>
+                    <td class="table-left-input">
+                        <input type="text" placeholder="등록할 상품 기간 입력 (숫자만 입력)">&nbsp;개월<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        이용횟수
+                    </td>
+                    <td class="table-left-input">
+                        <input type="text" placeholder="등록할 상품 이용 횟수 입력 (숫자만 입력)">&nbsp;회<br>
+                    </td>
+                </tr>
+            </table>
+        </form> 
+            <div class="pro-regist">
+                <button>상품 등록</button>
+            </div>
+        </div>
+
+</body>
+</html>

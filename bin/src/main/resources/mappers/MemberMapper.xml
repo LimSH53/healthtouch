@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jaspa.healthtouch.login.model.dao.MemberMapper">
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberDTO" id="loginMemberResultMap">
+		<id property="id" column="MEMBER_ID"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="contact" column="MEMBER_CONTACT"/>
+		<result property="num" column="MEMBER_NUM"/>
+		<result property="birthday" column="MEMBER_BIRTHDAY"/>
+		<result property="age" column="MEMBER_AGE"/>
+		<result property="gender" column="MEMBER_GENDER"/>
+		<result property="address" column="MEMBER_ADDRESS"/>
+		<result property="type" column="MEMBER_TYPE"/>
+		<result property="status" column="MEMBER_STATUS"/>
+		
+		<association property="memberRole" resultMap="memberRoleResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberRoleDTO" id="memberRoleResultMap">
+		<id property="memberId" column="REF_MEMBER_ID"/>
+		<result property="authorityCode" column="REF_AUTHORITY_CODE"/>
+		
+		<association property="authority" resultMap="authorityResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.AuthorityDTO" id="authorityResultMap">
+		<id property="code" column="REF_AUTHORITY_CODE2"/>
+		<result property="name" column="AUTHORITY_NAME"/>
+		<result property="desc" column="AUTHORITY_DESC"/>
+	</resultMap>
+	
+	<select id="findMemberById" resultMap="loginMemberResultMap">
+		SELECT A.MEMBER_ID
+			 , A.MEMBER_PWD
+			 , A.MEMBER_NAME
+			 , A.MEMBER_CONTACT
+			 , A.MEMBER_NUM
+			 , A.MEMBER_BIRTHDAY
+			 , A.MEMBER_AGE
+			 , A.MEMBER_GENDER
+			 , A.MEMBER_ADDRESS
+			 , A.MEMBER_TYPE
+			 , A.MEMBER_STATUS
+			 , B.MEMBER_ID REF_MEMBER_ID
+			 , B.AUTHORITY_CODE REF_AUTHORITY_CODE
+			 , C.AUTHORITY_CODE REF_AUTHORITY_CODE2
+			 , C.AUTHORITY_NAME
+			 , C.AUTHORITY_DESC
+		  FROM TBL_MEMBER A
+		  LEFT JOIN TBL_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
+		  LEFT JOIN TBL_AUTHORITY C ON (B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+		 WHERE A.MEMBER_ID = #{ username }
+	</select>
+	
+	<insert id="insertMember">
+		INSERT INTO TBL_MEMBER
+		(
+		  MEMBER_ID
+		, MEMBER_PWD
+		, MEMBER_NAME
+		, MEMBER_CONTACT
+		, MEMBER_NUM
+		, MEMBER_BIRTHDAY
+		, MEMBER_AGE
+		, MEMBER_GENDER
+		, MEMBER_ADDRESS
+		, MEMBER_TYPE
+		, MEMBER_STATUS
+		)
+		VALUES
+		(
+		  #{ id }
+		, #{ pwd }
+		, #{ name }
+		, #{ contact }
+		, #{ num }
+		, #{ birthday }
+		, #{ age }
+		, #{ gender }
+		, #{ address }
+		, DEFAULT
+		, DEFAULT
+		)
+	</insert>
+	
+	<insert id="insertMemberRole">
+		INSERT INTO TBL_MEMBER_ROLE
+		(
+		  MEMBER_ID
+		, AUTHORITY_CODE
+		)
+		VALUES
+		(
+		  #{ memberId }
+		, #{ authorityCode }
+		)
+	</insert>
+</mapper>

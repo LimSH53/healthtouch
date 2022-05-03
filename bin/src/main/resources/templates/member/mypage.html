@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>마이페이지</h1>
+	<h3><span sec:authentication="principal.name"></span>님 환영합니다</h3>
+	<button onclick="location.href='/member/logout'">로그아웃</button>
+</body>
+</html>
