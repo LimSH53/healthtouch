@@ -10,6 +10,14 @@
     <div th:replace="/common/centerHeader.html :: center-header"></div>
     <!-- 제이쿼리 추가 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <script type="text/javascript">
+	const successMessage = '[[${successMessage}]]';
+	
+	if(successMessage){
+		alert(successMessage);
+	}
+	</script>
 </head>
 <body id="body-pd"> <!-- sidebar 적용위해 id 추가 -->
     <!-- 헤더 body 추가 -->
@@ -38,20 +46,20 @@
                     <td th:text="${ membership.name }">
                         상품명
                     </td>
-                    <td th:text="${ membership.usePeriod }">
+                    <td th:text="|${ membership.usePeriod } 개월|">
                         이용기간(개월)
                     </td>
-                    <td th:text="${ membership.price }">
+                    <td th:text="|${#numbers.formatInteger(membership.price, 0, 'COMMA')}원|">
                         가격
                     </td>
                     <td>
-                        <button>수정</button>
+                        <button onclick="location.href='/center/product/proModify'">수정</button>
                         <button>삭제</button>
                     </td>
                 </tr>
             </table>
             <div class="pro-regist">
-                <button>상품 등록</button>
+                <button onclick="location.href='/center/product/proRegist'">상품 등록</button>
             </div>
         </div>
 </body>

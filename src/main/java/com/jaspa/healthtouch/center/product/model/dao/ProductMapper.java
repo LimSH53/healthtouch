@@ -9,7 +9,11 @@ import com.jaspa.healthtouch.center.product.model.dto.ProductDTO;
 @Mapper
 public interface ProductMapper {
 
+	// 회원권 조회
 	List<ProductDTO> findAllMembership();
 
+	// 상품 등록
+	int registProduct(ProductDTO product);
+	
 
 }

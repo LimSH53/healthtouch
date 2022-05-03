@@ -25,4 +25,12 @@ public class ProductServiceImpl implements ProductService{
 		return productMapper.findAllMembership();
 	}
 
+	@Override
+	public boolean registProduct(ProductDTO product) {
+		
+		int result = productMapper.registProduct(product);
+		
+		return result > 0 ? true : false;
+	}
+
 }
