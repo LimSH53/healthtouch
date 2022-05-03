@@ -1,0 +1,294 @@
+<!doctype html>
+                       
+<html>
+                           
+<head>     
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>트레이너 조회 </title>
+    <link rel="icon" type="image/x-icon" href="../resource/img/헬스터치파비콘.ico">
+    
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
+    <link href="../resource/css/header.css" rel="stylesheet" type="text/css">
+    <link href="../resource/css/center_sg.css" rel="stylesheet" type="text/css">
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- Load icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    
+    <script type='text/javascript' src=''></script>
+   
+    </head>
+                                
+    <body id="body-pd">
+    <header class="header" id="header">
+        <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+        <a type="button" id="outbtn" class="btn btn-sm outline" style="color:#1b1b55 ; border-color: #1b1b55;">로그아웃</a>
+    </header>
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div> 
+                <a href="#" class="nav_logo"> 
+                    <img class='nav_logo-icon' src="../resource/img/헬스터치파비.png"></img> 
+                    <img class="nav_logo-name" src="../resource/img/health_touch_logo.png"></img> 
+                </a>
+            <div class="nav_list"> 
+                <li class='sub-menu'>
+                <a href="#" class="nav_link active"> 
+                    <i class='bx bx-group nav_icon'></i> 
+                    <span class="nav_name">회원 관리<div class=' fa-caret-down right'></div></span> 
+                </a> 
+                </li>
+                <li class='sub-menu'>
+                    <a href="#" class="nav_link"> 
+                        <i class='bx bx-dumbbell nav_icon'></i> 
+                        <span class="nav_name">트레이너 관리<div class=' fa-caret-down right'></div></span> 
+                    </a> 
+                    <ul class="toggle">
+                        <li><a href='#settings'>트레이너 조회</a></li>
+                        <li><a href='#settings'>급여 관리</a></li>
+                        <li><a href='#settings'>근태 조회</a></li>
+                        <li><a href='#settings'>휴가 관리</a></li>
+                    </ul>
+                </li>
+
+                <li class='sub-menu'>
+                    <a href="#" class="nav_link"> 
+                        <i class='bx bx-shopping-bag nav_icon'></i>
+                        <span class="nav_name">상품관리<div class=' fa-caret-down right'></div></span> 
+                    </a> 
+                    <ul class="toggle">
+                        <li><a href='#settings'>회원권 관리</a></li>
+                        <li><a href='#settings'>수강권 관리</a></li>
+                        <li><a href='#settings'>락커 이용권 관리</a></li>
+                        <li><a href='#settings'>운동복 이용권 관리</a></li>
+                    </ul>
+                </li>
+                
+                <li class='sub-menu'>
+                    <a href="#" class="nav_link"> 
+                        <i class='bx bx-columns nav_icon'></i>
+                        <span class="nav_name">락커 관리<div class=' fa-caret-down right'></div></span> 
+                    </a> 
+                </li>
+
+                <li class='sub-menu'>
+                    <a href="#" class="nav_link"> 
+                        <i class='bx bx-line-chart-down nav_icon'></i>
+                        <span class="nav_name">매출관리<div class=' fa-caret-down right'></div></span> 
+                    </a> 
+                    <ul class="toggle">
+                        <li><a href='#settings'>매출 전체 조회</a></li>
+                        <li><a href='#settings'>상품별 매출 조회</a></li>
+                    </ul>
+                </li>
+               
+                <li class='sub-menu'>
+                    <a href="#" class="nav_link"> 
+                        <i class='bx bx-book-open nav_icon'></i> 
+                        <span class="nav_name">게시판<div class=' fa-caret-down right'></div></span> 
+                    </a> 
+                    <ul class="toggle">
+                        <li><a href='#settings'>트레이너 소개</a></li>
+                        <li><a href='#settings'>공지사항</a></li>
+                        <li><a href='#settings'>1:1문의</a></li>
+                    </ul>
+                </li>
+            </div>
+            </div> 
+        
+        </nav>
+    </div>
+    
+    <!--Container Main start-->
+    <div class="height-100 bg-light">
+        <div class="content">
+            <div class="container">
+            <h2 class="mb-5">트레이너 조회</h2>
+
+            <div>
+                <!-- selectbox - 전체, 재직, 퇴사 -->
+                <select class="form-select" aria-label="Default select example" style="width: 10%;">
+                    <option selected>전체</option>
+                    <option value="1">재직</option>
+                    <option value="2">퇴사</option>
+                </select>
+
+            <div class="table-responsive custom-table-responsive">
+            <table class="table custom-table">
+            <thead>
+            <tr>
+            <th scope="col">
+            <label class="control control--checkbox">
+            <input type="checkbox" class="js-check-all" name="check" value="selectAll"
+             onclick="selectAll(this)">
+            <div class="control__indicator"></div>
+            </label>
+            </th>
+            <th scope="col">No</th>
+            <th scope="col">이름</th>
+            <th scope="col">ID</th>
+            <th scope="col">성별</th>
+            <th scope="col">연락처</th>
+            <th scope="col">재직여부</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr scope="row">
+                <th scope="row">
+                    <label class="control control--checkbox">
+                        <input type="checkbox" name="check">
+                        <div class="control__indicator"></div>
+                    </label>
+                </th>
+                <td>
+                    1
+                </td>
+                <td><a href="#">김헬스</a></td>
+                <td>
+                    health123
+                </td>
+                <td>남</td>
+                <td>010-1234-5678</td>
+                <td>재직</td>
+            </tr>
+            <tr scope="row">
+                <th scope="row">
+                    <label class="control control--checkbox">
+                        <input type="checkbox" name="check">
+                        <div class="control__indicator"></div>
+                    </label>
+                </th>
+                <td>
+                    1
+                </td>
+                <td><a href="#">김헬스</a></td>
+                <td>
+                    health123
+                </td>
+                <td>남</td>
+                <td>010-1234-5678</td>
+                <td>재직</td>
+            </tr>
+            <tr scope="row">
+                <th scope="row">
+                    <label class="control control--checkbox">
+                        <input type="checkbox" name="check">
+                        <div class="control__indicator"></div>
+                    </label>
+                </th>
+                <td>
+                    1
+                </td>
+                <td><a href="#">김헬스</a></td>
+                <td>
+                    health123
+                </td>
+                <td>남</td>
+                <td>010-1234-5678</td>
+                <td>재직</td>
+            </tr>
+            
+            </tbody>
+            </table><br>
+
+            <button type="button" class="btn btn-secondary">퇴사</button>
+            
+            <!-- 페이징-->
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" style="justify-content: center">
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            </div>
+            </div>
+    </div>
+    <!--Container Main end-->
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js'></script>
+    <script type='text/javascript' src=''></script>
+    <script type='text/javascript' src=''></script>
+    <script type='text/Javascript'>document.addEventListener("DOMContentLoaded", function(event) {
+
+const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+const toggle = document.getElementById(toggleId),
+nav = document.getElementById(navId),
+bodypd = document.getElementById(bodyId),
+headerpd = document.getElementById(headerId)
+/* 트레이너 목록 테이블 체크박스 변수*/
+const checkboxes = document.getElementsByName('check');
+
+// Validate that all variables exist
+if(toggle && nav && bodypd && headerpd){
+toggle.addEventListener('click', ()=>{
+// show navbar
+nav.classList.toggle('show')
+// change icon
+toggle.classList.toggle('bx-x')
+// add padding to body
+bodypd.classList.toggle('body-pd')
+// add padding to header
+headerpd.classList.toggle('body-pd')
+})
+}
+}
+
+showNavbar('header-toggle','nav-bar','body-pd','header')
+
+/*===== LINK ACTIVE =====*/
+const linkColor = document.querySelectorAll('.nav_link')
+
+function colorLink(){
+if(linkColor){
+linkColor.forEach(l=> l.classList.remove('active'))
+this.classList.add('active')
+}
+}
+linkColor.forEach(l=> l.addEventListener('click', colorLink))
+
+// Your code to run since DOM is loaded and ready
+});
+</script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+    $(".sub-menu ul").hide();
+$(".sub-menu a").click(function () {
+  $(this).parent(".sub-menu").children("ul").slideToggle("100");
+  $(this).find(".right").toggleClass("fa-caret-up fa-caret-down");
+});
+
+/* 트레이너 목록 테이블 체크박스 전체선택 함수 */
+function selectAll(selectAll)  {
+  const checkboxes 
+     = document.querySelectorAll('input[type="checkbox"]');
+  
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = selectAll.checked
+  })
+}
+
+</script>
+
+
+
+</body>
+</html> 
