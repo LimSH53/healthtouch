@@ -1,6 +1,7 @@
 package com.jaspa.healthtouch.login.controller;
 
 import java.util.Locale;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -62,5 +63,28 @@ public class MemberController {
 	@ResponseBody
 	public int checkId(@RequestParam("memberId") String memberId) {
 		return memberService.checkId(memberId);
+	}
+	
+	@PostMapping("/isExistContact")
+	@ResponseBody
+	public int isExistContact(@RequestParam("phoneNumber") String phoneNumber) {
+		return memberService.isExistContact(phoneNumber);
+	}
+	
+	@GetMapping("/checkContact")
+	public @ResponseBody String sendSMS(String phoneNumber) {
+		Random rand = new Random();
+		String numStr = "";
+		for(int i = 0; i < 6; i++) {
+			String ran = Integer.toString(rand.nextInt(10));
+			numStr += ran;
+		}
+		
+		log.info("수신자 번호 : {}", phoneNumber);
+		log.info("인증번호 : {}", numStr);
+		
+		memberService.certifiedPhoneNumnber(phoneNumber, numStr);
+		
+		return numStr;
 	}
 }

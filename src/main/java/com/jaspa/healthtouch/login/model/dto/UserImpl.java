@@ -15,7 +15,7 @@ public class UserImpl extends User {
 	private String id;
 	private String pwd;
 	private String name;
-	private int contact;
+	private String contact;
 	private int num;
 	private Date birthday;
 	private int age;
