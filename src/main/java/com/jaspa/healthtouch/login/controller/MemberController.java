@@ -53,7 +53,7 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	@PostMapping("/mypage")
+	@GetMapping("/mypage")
 	public void mypage(@AuthenticationPrincipal UserImpl user) {
 		log.info("로그인 유저 : {}", user);
 	}
