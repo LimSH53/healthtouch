@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.TrainerMapper">
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberDTO" id="loginMemberResultMap">
+		<id property="id" column="MEMBER_ID"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="contact" column="MEMBER_CONTACT"/>
+		<result property="num" column="MEMBER_NUM"/>
+		<result property="birthday" column="MEMBER_BIRTHDAY"/>
+		<result property="age" column="MEMBER_AGE"/>
+		<result property="gender" column="MEMBER_GENDER"/>
+		<result property="address" column="MEMBER_ADDRESS"/>
+		<result property="type" column="MEMBER_TYPE"/>
+		<result property="status" column="MEMBER_STATUS"/>
+		
+		<association property="trainerInfo" resultMap="trainerInfoResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.center.tr_management.model.dto.TrainerInfoDTO" id="trainerInfoResultMap">
+		<id property="trNO" column="TRN_NUM"/>
+		<result property="career" column="TRN_CAREER"/>
+		<result property="trStarus" column="TRN_HOLD"/>
+		<result property="trId" column="TRN_INFO_MEMBER_ID"/>
+	</resultMap>
+	
+	<!-- 센터-트레이너 목록 조회 -->
+	<select id="selectAllTraineR">
+		SELECT TI.TRN_NO
+			 , M.MEMBER_NAME
+			 , ID
+			 , MEMBER_GENDER
+			 , MEMBER_CONTACT
+			 , TRN_HOLD
+		  FROM TBL_MEMBER M
+		  JOIN TBL_TRN_INFO TI ON(M.MEMBER_ID = TI.TBL_INFO_MEMBER_ID)	
+	</select>
+
+
+</mapper>
+	

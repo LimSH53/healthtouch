@@ -1,114 +1,28 @@
 <!doctype html>
                        
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
                            
 <head>     
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>트레이너 조회 </title>
-    <link rel="icon" type="image/x-icon" href="../resource/img/헬스터치파비콘.ico">
     
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
     <link href="../resource/css/header.css" rel="stylesheet" type="text/css">
-    <link href="../resource/css/center_sg.css" rel="stylesheet" type="text/css">
-    <!-- MDB icon -->
-    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <!-- Load icon library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    
-    <script type='text/javascript' src=''></script>
+  
    
     </head>
                                 
     <body id="body-pd">
-    <header class="header" id="header">
-        <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-        <a type="button" id="outbtn" class="btn btn-sm outline" style="color:#1b1b55 ; border-color: #1b1b55;">로그아웃</a>
-    </header>
-    <div class="l-navbar" id="nav-bar">
-        <nav class="nav">
-            <div> 
-                <a href="#" class="nav_logo"> 
-                    <img class='nav_logo-icon' src="../resource/img/헬스터치파비.png"></img> 
-                    <img class="nav_logo-name" src="../resource/img/health_touch_logo.png"></img> 
-                </a>
-            <div class="nav_list"> 
-                <li class='sub-menu'>
-                <a href="#" class="nav_link active"> 
-                    <i class='bx bx-group nav_icon'></i> 
-                    <span class="nav_name">회원 관리<div class=' fa-caret-down right'></div></span> 
-                </a> 
-                </li>
-                <li class='sub-menu'>
-                    <a href="#" class="nav_link"> 
-                        <i class='bx bx-dumbbell nav_icon'></i> 
-                        <span class="nav_name">트레이너 관리<div class=' fa-caret-down right'></div></span> 
-                    </a> 
-                    <ul class="toggle">
-                        <li><a href='#settings'>트레이너 조회</a></li>
-                        <li><a href='#settings'>급여 관리</a></li>
-                        <li><a href='#settings'>근태 조회</a></li>
-                        <li><a href='#settings'>휴가 관리</a></li>
-                    </ul>
-                </li>
 
-                <li class='sub-menu'>
-                    <a href="#" class="nav_link"> 
-                        <i class='bx bx-shopping-bag nav_icon'></i>
-                        <span class="nav_name">상품관리<div class=' fa-caret-down right'></div></span> 
-                    </a> 
-                    <ul class="toggle">
-                        <li><a href='#settings'>회원권 관리</a></li>
-                        <li><a href='#settings'>수강권 관리</a></li>
-                        <li><a href='#settings'>락커 이용권 관리</a></li>
-                        <li><a href='#settings'>운동복 이용권 관리</a></li>
-                    </ul>
-                </li>
-                
-                <li class='sub-menu'>
-                    <a href="#" class="nav_link"> 
-                        <i class='bx bx-columns nav_icon'></i>
-                        <span class="nav_name">락커 관리<div class=' fa-caret-down right'></div></span> 
-                    </a> 
-                </li>
+	<!-- 헤더 body 추가 -->
+	<div th:replace="/common/centerHeader.html"></div>
 
-                <li class='sub-menu'>
-                    <a href="#" class="nav_link"> 
-                        <i class='bx bx-line-chart-down nav_icon'></i>
-                        <span class="nav_name">매출관리<div class=' fa-caret-down right'></div></span> 
-                    </a> 
-                    <ul class="toggle">
-                        <li><a href='#settings'>매출 전체 조회</a></li>
-                        <li><a href='#settings'>상품별 매출 조회</a></li>
-                    </ul>
-                </li>
-               
-                <li class='sub-menu'>
-                    <a href="#" class="nav_link"> 
-                        <i class='bx bx-book-open nav_icon'></i> 
-                        <span class="nav_name">게시판<div class=' fa-caret-down right'></div></span> 
-                    </a> 
-                    <ul class="toggle">
-                        <li><a href='#settings'>트레이너 소개</a></li>
-                        <li><a href='#settings'>공지사항</a></li>
-                        <li><a href='#settings'>1:1문의</a></li>
-                    </ul>
-                </li>
-            </div>
-            </div> 
-        
-        </nav>
-    </div>
     
     <!--Container Main start-->
     <div class="height-100 bg-light">
+    
         <div class="content">
             <div class="container">
             <h2 class="mb-5">트레이너 조회</h2>
