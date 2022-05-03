@@ -27,7 +27,6 @@ public class NoticeController {
 	}
 		
 	
-	
 	@GetMapping("/noticenone")
 	public String noticeNone() {
 		
