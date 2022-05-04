@@ -1,6 +1,7 @@
 <!doctype html>
                        
-<html xmlns:th="http://www.thymeleaf.org">     
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">     
                            
 <head th:fragment="member-header">    
     <meta charset='utf-8'>
@@ -18,7 +19,8 @@
     <!-- header -->
     <header class="header" id="header">
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-        <a type="button" id="outbtn" class="btn btn-sm outline" style="color:#1b1b55 ; border-color: #1b1b55;">로그아웃</a>
+        <h6 style="color: #6c757d;"><span sec:authentication="principal.name"></span>님 환영합니다</h6>
+        <a type="button" id="outbtn" class="btn btn-sm outline" style="color:#1b1b55 ; border-color: #1b1b55;" onclick="location.href='/member/logout'">로그아웃</a>
     </header>
     <!-- sidebar -->
     <div class="l-navbar" id="nav-bar">
@@ -31,7 +33,7 @@
                 <div class="nav_list">
                     <!-- 기본정보 관리 --> 
                     <li class='sub-menu'>
-                    <a href="#" class="nav_link active"> 
+                    <a href="/member/mypage" class="nav_link active"> 
                         <i class='bx bx-home-alt-2 nav_icon'></i> 
                         <span class="nav_name">기본정보 관리<div class=' fa-caret-down right'></div></span> 
                     </a> 

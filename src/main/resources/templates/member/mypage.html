@@ -3,11 +3,13 @@
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>healthtouch</title>
+<link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
+<div th:replace="/common/memberHeader.html :: member-header"></div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 </head>
-<body>
-	<h1>마이페이지</h1>
-	<h3><span sec:authentication="principal.name"></span>님 환영합니다</h3>
-	<button onclick="location.href='/member/logout'">로그아웃</button>
+<body id="body-pd">
+	<div th:replace="/common/memberHeader.html :: member-body"></div>
+	
 </body>
 </html>
