@@ -5,18 +5,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>healthtouch</title>
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
-    <link href="css/header.css" rel="stylesheet" type="text/css">
-    <script>
-    	const errorMessage = '[[${errorMessage}]]';
-    	if(errorMessage) {
-    		alert(errorMessage);
-    	}
-    </script>
+    <link href="/css/header.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
+	<script>
+    	const errorMessage = '[[${errorMessage}]]';
+    	const successMessage = '[[${successMessage}]]';
+    	if(errorMessage) {
+    		Swal.fire({
+				icon: 'error',
+    			text: errorMessage,
+			})
+    	}
+    	if(successMessage) {
+    		Swal.fire({
+				icon: 'success',
+    			text: successMessage,
+			})
+    	}
+    	
+    	const searchIdResult = '[[${searchIdResult}]]';
+    	if(searchIdResult) {
+    		if(searchIdResult == 'fail') {
+        		Swal.fire({
+    				icon: 'error',
+        			text: '존재하지 않는 정보입니다. 이름 혹은 연락처를 확인해 주세요.',
+    			});
+        	} else if(searchIdResult != null || searchIdResult != "" || searchIdResult != " ") {
+        		var str = '아이디는 ' + searchIdResult + '입니다.';
+        		Swal.fire({
+    				icon: 'success',
+        			text: `${str}`,
+    			});
+        	}
+    	}
+    </script>
     <div class="container mx-auto" style="max-width: 500px; margin: 0 auto;">
         <img class="mx-auto d-block" src="/images/color-logo.png" style="width: 250px;"><br><br>
         <form method="post" th:action="@{/member/login}">
@@ -30,9 +57,9 @@
             </div>
             <br>
             <div class="mb-3 row justify-content-evenly" style="color: #6c757d;">
-                <span class="col-3 text-center"><a href="#" style="text-decoration: none; color: #6c757d;">아이디 찾기</a></span>
+                <span class="col-3 text-center"><a href="/member/searchId" style="text-decoration: none; color: #6c757d;">아이디 찾기</a></span>
                 <span class="col-1 text-center" style="cursor: default">|</span>
-                <span class="col-4 text-center"><a href="#" style="text-decoration: none; color: #6c757d;">비밀번호 찾기</a></span>
+                <span class="col-4 text-center"><a href="/member/searchPwd" style="text-decoration: none; color: #6c757d;">비밀번호 찾기</a></span>
                 <span class="col-1 text-center" style="cursor: default">|</span>
                 <span class="col-3 text-center"><a href="/member/regist" style="text-decoration: none; color: #6c757d;">회원 가입</a></span>
             </div>

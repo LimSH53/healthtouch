@@ -30,6 +30,13 @@
 		<result property="desc" column="AUTHORITY_DESC"/>
 	</resultMap>
 	
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.LoginLogDTO" id="loginLogResultMap">
+		<id property="logNo" column="LOGIN_LOG_NO"/>
+		<result property="memberId" column="LOGIN_MEMBER_ID"/>
+		<result property="dateTime" column="LOGIN_DATETIME"/>
+		<result property="ip" column="LOGIN_IP"/>
+	</resultMap>
+	
 	<select id="findMemberById" resultMap="loginMemberResultMap">
 		SELECT A.MEMBER_ID
 			 , A.MEMBER_PWD
@@ -109,4 +116,29 @@
 		  FROM TBL_MEMBER
 		 WHERE MEMBER_CONTACT = #{ contact }
 	</select>
+	
+	<select id="searchId" resultType="java.lang.String">
+		SELECT MEMBER_ID
+		  FROM TBL_MEMBER
+		 WHERE MEMBER_NAME = #{ name }
+		   AND MEMBER_CONTACT = #{ contact }
+		   AND MEMBER_STATUS = 'Y'
+	</select>
+	
+	<insert id="insertLoginLog">
+		INSERT INTO TBL_LOGIN_LOG
+		(
+		  LOGIN_LOG_NO
+		, LOGIN_MEMBER_ID
+		, LOGIN_DATETIME
+		, LOGIN_IP
+		)
+		VALUES
+		(
+		  SEQ_LOGIN_LOG_NO.NEXTVAL
+		, #{ memberId }
+		, SYSDATE
+		, #{ ip }
+		)
+	</insert>
 </mapper>

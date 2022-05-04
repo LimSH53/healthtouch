@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jaspa.healthtouch.login.model.dao.MemberMapper;
 import com.jaspa.healthtouch.login.model.dto.AuthorityDTO;
+import com.jaspa.healthtouch.login.model.dto.LoginLogDTO;
 import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 import com.jaspa.healthtouch.login.model.dto.MemberRoleDTO;
 import com.jaspa.healthtouch.login.model.dto.UserImpl;
@@ -103,6 +104,23 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int isExistContact(String phoneNumber) {
 		return memberMapper.isExistContact(phoneNumber);
+	}
+
+	@Override
+	public String searchId(MemberDTO member) {
+		String result = memberMapper.searchId(member);
+		
+		if(result == "" || result == null) {
+			return "fail";
+		} else {
+			return result;
+		}
+	}
+
+	@Transactional
+	@Override
+	public void createLoginLog(LoginLogDTO loginLog) {
+		memberMapper.insertLoginLog(loginLog);
 	}
 
 }
