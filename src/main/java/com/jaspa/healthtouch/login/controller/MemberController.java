@@ -1,5 +1,7 @@
 package com.jaspa.healthtouch.login.controller;
 
+import java.security.SecureRandom;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
@@ -63,6 +65,53 @@ public class MemberController {
 		
 		rttr.addFlashAttribute("searchIdResult", result);
 		log.info("result : {}", result);
+		
+		return "redirect:/";
+	}
+	
+	@GetMapping("/searchPwd")
+	public void searchPwdForm() {}
+	
+	@PostMapping("/searchPwd")
+	public String searchPwd(MemberDTO member, RedirectAttributes rttr) {
+		// 입력한 아이디와 연락처 맞는지 확인 
+		// 둘 다 해당하는 회원 있으면 result == 1
+		int result = memberService.searchPwd(member);
+		
+		if(result > 0) {
+			// 임시 비밀번호 생성 
+			char[] charSet = new char[]{
+					'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+					'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+					'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+			};
+			
+			StringBuffer sb = new StringBuffer();
+			SecureRandom sr = new SecureRandom();
+			sr.setSeed(new Date().getTime());
+			
+			int idx = 0;
+			int len = charSet.length;
+			// 10글자 임시 비밀번호 
+			for(int i = 0; i < 10; i++) {
+				idx = sr.nextInt(len);
+				sb.append(charSet[idx]);
+			}
+			
+			// 임시 비밀번호로 비밀번호 변경 
+			memberService.setTempPwd(member, sb);
+			System.out.println("임시 비밀번호 : " + sb);
+			
+			// 임시 비밀번호 전송 
+			// 문자 진짜로 전송돼서 일단 주석 
+			// memberService.sendTempPwd(member, sb);
+			
+			// 결과 
+			rttr.addFlashAttribute("searchPwdResult", "success");
+		} else {
+			// 결과 
+			rttr.addFlashAttribute("searchPwdResult", "fail");
+		}
 		
 		return "redirect:/";
 	}

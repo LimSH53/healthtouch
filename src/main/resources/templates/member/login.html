@@ -43,6 +43,21 @@
     			});
         	}
     	}
+    	
+    	const searchPwdResult = '[[${searchPwdResult}]]';
+    	if(searchPwdResult) {
+    		if(searchPwdResult == 'success') {
+    			Swal.fire({
+    				icon: 'success',
+        			text: '임시 비밀번호를 연락처로 전송했습니다. 메시지를 확인해 주세요.',
+    			});
+    		} else if(searchPwdResult == 'fail') {
+    			Swal.fire({
+    				icon: 'error',
+        			text: '존재하지 않는 정보입니다. 아이디 혹은 연락처를 확인해 주세요.',
+    			});
+    		}
+    	}
     </script>
     <div class="container mx-auto" style="max-width: 500px; margin: 0 auto;">
         <img class="mx-auto d-block" src="/images/color-logo.png" style="width: 250px;"><br><br>

@@ -113,6 +113,13 @@
 		 WHERE MEMBER_CONTACT = #{ contact }
 	</select>
 	
+	<select id="searchPwd" resultType="_int">
+		SELECT COUNT(*)
+		  FROM TBL_MEMBER
+		 WHERE MEMBER_ID = #{ id }
+		   AND MEMBER_CONTACT = #{ contact }
+	</select>
+	
 	<select id="searchId" resultType="java.lang.String">
 		SELECT MEMBER_ID
 		  FROM TBL_MEMBER
@@ -137,4 +144,11 @@
 		, #{ ip }
 		)
 	</insert>
+	
+	<update id="modifyPwd">
+		UPDATE TBL_MEMBER
+		   SET MEMBER_PWD = #{ pwd }
+		 WHERE MEMBER_ID = #{ id }
+		   AND MEMBER_STATUS = 'Y'
+	</update>
 </mapper>

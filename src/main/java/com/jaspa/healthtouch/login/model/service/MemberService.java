@@ -19,4 +19,10 @@ public interface MemberService extends UserDetailsService {
 
 	void createLoginLog(LoginLogDTO loginLog);
 
+	int searchPwd(MemberDTO member);
+
+	void sendTempPwd(MemberDTO member, StringBuffer sb);
+
+	void setTempPwd(MemberDTO member, StringBuffer sb);
+
 }
