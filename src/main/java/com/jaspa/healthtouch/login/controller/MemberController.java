@@ -145,7 +145,8 @@ public class MemberController {
 		log.info("수신자 번호 : {}", phoneNumber);
 		log.info("인증번호 : {}", numStr);
 		
-		memberService.certifiedPhoneNumnber(phoneNumber, numStr);
+		// 잠깐 주석 처리 
+		// memberService.certifiedPhoneNumnber(phoneNumber, numStr);
 		
 		return numStr;
 	}
