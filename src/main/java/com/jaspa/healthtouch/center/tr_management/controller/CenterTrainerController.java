@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jaspa.healthtouch.center.tr_management.model.dto.TrainerInfoDTO;
 import com.jaspa.healthtouch.center.tr_management.model.service.TrManagementService;
-import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +28,7 @@ public class CenterTrainerController {
 	@GetMapping("/list")
 	public ModelAndView selectAllTrainerList(ModelAndView mv) {
 		
-		List<MemberDTO> trainerList = trManagementService.selectAllTrainer();
+		List<TrainerInfoDTO> trainerList = trManagementService.selectAllTrainer();
 		
 		mv.addObject("trainerList", trainerList);
 		mv.setViewName("center/tr_management/trainerList");

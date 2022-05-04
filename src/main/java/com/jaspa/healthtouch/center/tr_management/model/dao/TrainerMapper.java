@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.jaspa.healthtouch.login.model.dto.MemberDTO;
+import com.jaspa.healthtouch.center.tr_management.model.dto.TrainerInfoDTO;
 
 @Mapper
 public interface TrainerMapper {
  
-	List<MemberDTO> selectAllTrainer();
+	List<TrainerInfoDTO> selectAllTrainer();
 
 }

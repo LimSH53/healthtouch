@@ -5,7 +5,7 @@
 	<resultMap type="com.jaspa.healthtouch.center.tr_management.model.dto.TrainerInfoDTO" id="trainerInfoResultMap">
 		<id property="trNum" column="TRN_NUM"/>
 		<result property="career" column="TRN_CAREER"/>
-		<result property="trStarus" column="TRN_HOLD"/>
+		<result property="trStatus" column="TRN_HOLD"/>
 		<result property="trId" column="TRN_INFO_MEMBER_ID"/>
 		
 		<association property="member" resultMap="memberResultMap"/>
