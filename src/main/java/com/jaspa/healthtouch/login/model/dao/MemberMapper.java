@@ -22,5 +22,9 @@ public interface MemberMapper {
 	String searchId(MemberDTO member);
 
 	void insertLoginLog(LoginLogDTO loginLog);
+
+	int searchPwd(MemberDTO member);
+
+	void modifyPwd(MemberDTO member);
 	
 }
