@@ -54,6 +54,19 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("/searchId")
+	public void searchIdForm() {}
+	
+	@PostMapping("/searchId")
+	public String searchId(MemberDTO member, RedirectAttributes rttr) {
+		String result = memberService.searchId(member);
+		
+		rttr.addFlashAttribute("searchIdResult", result);
+		log.info("result : {}", result);
+		
+		return "redirect:/";
+	}
+	
 	@GetMapping("/mypage")
 	public void mypage(@AuthenticationPrincipal UserImpl user) {
 		log.info("로그인 유저 : {}", user);

@@ -40,7 +40,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.and()
 				.formLogin()
 				.loginPage("/member/login")
-				.successHandler(loginSuccessHandler())
+				.successHandler(loginSuccessHandler(memberService))
 				.failureHandler(loginFailHandler())
 			.and()
 				.logout()
@@ -59,8 +59,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Bean
-	public LoginSuccessHandler loginSuccessHandler() {
-		return new LoginSuccessHandler();
+	public LoginSuccessHandler loginSuccessHandler(MemberService memberService) {
+		return new LoginSuccessHandler(memberService);
 	}
 	
 	@Bean
