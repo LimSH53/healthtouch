@@ -1,6 +1,8 @@
 package com.jaspa.healthtouch.login.model.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -66,6 +68,30 @@ public class MemberServiceImpl implements MemberService {
 		member.setPwd(passwordEncoder.encode(member.getPwd()));
 		// 연락처 뒤 4자리가 출석번호 
 		member.setNum(Integer.parseInt(member.getContact()) % 10000);
+		
+		// 나이 계산 
+		int age = 0;
+		
+		SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+		SimpleDateFormat monthDayFormat = new SimpleDateFormat("MMdd");
+		
+		Date birthday = member.getBirthday();
+		Date today = new Date();
+		
+		int birthdayYear = Integer.parseInt(yearFormat.format(birthday));
+		int birthdayMonthDay = Integer.parseInt(monthDayFormat.format(birthday));
+		
+		int todayYear = Integer.parseInt(yearFormat.format(today));
+		int todayMonthDay = Integer.parseInt(monthDayFormat.format(today));
+		
+		if(birthdayMonthDay < todayMonthDay) {
+			age = todayYear - birthdayYear;
+		} else {
+			age = todayYear - birthdayYear - 1;
+		}
+		
+		member.setAge(age);
+		
 		memberMapper.insertMember(member);
 		
 		MemberRoleDTO memberRole = new MemberRoleDTO();
