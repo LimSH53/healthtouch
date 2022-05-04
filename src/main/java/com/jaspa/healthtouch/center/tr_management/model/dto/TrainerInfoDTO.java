@@ -7,9 +7,11 @@ import lombok.Data;
 @Data
 public class TrainerInfoDTO {
  
-	private int trNo;
+	private int trNum;
 	private int career;
 	private String trStatus;
 	private String trId;
+	
+	private MemberDTO member;
 	
 }
