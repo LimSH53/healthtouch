@@ -21,7 +21,6 @@ public class UserImpl extends User {
 	private int age;
 	private String gender;
 	private String address;
-	private String type;
 	private String status;
 	
 	private MemberRoleDTO memberRole;
@@ -40,7 +39,6 @@ public class UserImpl extends User {
 		this.age = member.getAge();
 		this.gender = member.getGender();
 		this.address = member.getAddress();
-		this.type = member.getType();
 		this.status = member.getStatus();
 		this.memberRole = member.getMemberRole();
 	}

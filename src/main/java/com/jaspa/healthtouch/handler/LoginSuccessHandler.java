@@ -33,7 +33,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		
 		memberService.createLoginLog(loginLog);
 		
-		if(user.getType().equals("회원")) {
+		// 회원이면 
+		if(user.getMemberRole().getAuthorityCode() == 1) {
 			response.sendRedirect("/member/mypage");
 		} else {
 			response.sendRedirect("/");

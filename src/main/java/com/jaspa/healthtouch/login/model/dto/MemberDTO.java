@@ -18,7 +18,6 @@ public class MemberDTO {
 	private int age;
 	private String gender;
 	private String address;
-	private String type;
 	private String status;
 	
 	private MemberRoleDTO memberRole;

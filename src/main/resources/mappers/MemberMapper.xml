@@ -11,7 +11,6 @@
 		<result property="age" column="MEMBER_AGE"/>
 		<result property="gender" column="MEMBER_GENDER"/>
 		<result property="address" column="MEMBER_ADDRESS"/>
-		<result property="type" column="MEMBER_TYPE"/>
 		<result property="status" column="MEMBER_STATUS"/>
 		
 		<association property="memberRole" resultMap="memberRoleResultMap"/>
@@ -47,7 +46,6 @@
 			 , A.MEMBER_AGE
 			 , A.MEMBER_GENDER
 			 , A.MEMBER_ADDRESS
-			 , A.MEMBER_TYPE
 			 , A.MEMBER_STATUS
 			 , B.MEMBER_ID REF_MEMBER_ID
 			 , B.AUTHORITY_CODE REF_AUTHORITY_CODE
@@ -72,7 +70,6 @@
 		, MEMBER_AGE
 		, MEMBER_GENDER
 		, MEMBER_ADDRESS
-		, MEMBER_TYPE
 		, MEMBER_STATUS
 		)
 		VALUES
@@ -86,7 +83,6 @@
 		, #{ age }
 		, #{ gender }
 		, #{ address }
-		, DEFAULT
 		, DEFAULT
 		)
 	</insert>
