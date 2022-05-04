@@ -8,8 +8,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -71,6 +73,66 @@ public class CenterProductController {
 		}
 		
 	}
+	
+	@GetMapping("proModify")
+	public ModelAndView modifyProductInfo(@RequestParam("no") int no, ModelAndView mv) {
+
+		log.info("no:{}", no);
+		
+		ProductDTO modProduct = productService.findModifyProduct(no);
+		
+		log.info("modProduct: {}", modProduct);
+		
+		mv.addObject("modProduct",modProduct);
+		mv.setViewName("center/product/proModify");
+		
+		return mv;
+	}
+	
+	@PostMapping("proModify")
+	public String modifyProduct(@ModelAttribute ProductDTO product, RedirectAttributes rttr, Locale locale) {
+		
+		int result = productService.updateProduct(product);
+		
+		log.info("product :{}", product);
+		
+		if(result > 0 && product.getCategoryNo() == 10) {
+			rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateProduct", null, locale));
+			return "redirect:/center/product/membership/list";
+		} else if(result > 0 && product.getCategoryNo() == 20) {
+			rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateProduct", null, locale));
+			return "redirect:/center/product/";
+		} else if(result > 0 && product.getCategoryNo() == 30) {
+			rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateProduct", null, locale));
+			return "redirect:/center/product/";
+		} else {
+			if(result > 0) {
+			rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateProduct", null, locale));
+			return "redirect:/center/product/";
+			} else {
+				rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateFailProduct", null, locale));
+				return "redirect:/center/product/membership/list";
+			}
+		}
+		
+	}
+	
+	@GetMapping("membershipDelete")
+	public String deleteMembership(@RequestParam("no") int no, RedirectAttributes rttr, Locale locale) {
+		
+		int result = productService.deleteProduct(no);
+		
+		if(result > 0) {
+			rttr.addAttribute("successMessage", messageSource.getMessage("deleteProduct", null, locale));
+			return "redirect:/center/product/membership/list";
+		} else {
+			rttr.addAttribute("successMessage", messageSource.getMessage("deleteFailProduct", null, locale));
+			return "redirect:/center/product/membership/list";
+		}
+		
+		
+	}
+
 	
 	
 	

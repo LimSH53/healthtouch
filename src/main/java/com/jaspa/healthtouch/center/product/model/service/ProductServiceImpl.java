@@ -33,4 +33,27 @@ public class ProductServiceImpl implements ProductService{
 		return result > 0 ? true : false;
 	}
 
+	@Override
+	public ProductDTO findModifyProduct(int proNo) {
+		return productMapper.findModifyProduct(proNo);
+	}
+
+	@Override
+	public int updateProduct(ProductDTO product) {
+		
+		int result = productMapper.updateProduct(product);
+		
+		return result;
+	}
+
+	@Override
+	public int deleteProduct(int no) {
+		
+		int result = productMapper.deleteProduct(no);
+		
+		return result;
+	}
+
+
+
 }

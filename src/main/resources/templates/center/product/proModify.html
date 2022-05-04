@@ -19,12 +19,12 @@
         <div class="title-box">
             <h2>상품 등록</h2>
         </div>
-        <form>
-            <select class="pro-category">
-                <option>회원권 상품 </option>
-                <option>수강권 상품</option>
-                <option>락커 이용권</option>
-                <option>운동복 이용권</option>
+        <form action="/center/product/proModify" method="post">
+            <select class="pro-category" name="categoryNo">
+                <option value="10">회원권 상품 </option>
+                <option value="20">수강권 상품</option>
+                <option value="30">락커 이용권</option>
+                <option value="40">운동복 이용권</option>
             </select>
             <table>
                 <tr>
@@ -35,7 +35,8 @@
                         상품명
                     </td>
                     <td class="table-left-input">
-                        <input type="text" placeholder="등록할 상품명 입력"><br>
+                    	<input type="hidden" name="no" th:value="${ modProduct.no }">
+                        <input type="text" name="name" th:value="${ modProduct.name }"><br>
                     </td>
                 </tr>
                 <tr>
@@ -43,7 +44,7 @@
                         상품가격
                     </td>
                     <td class="table-left-input">
-                        <input type="text" placeholder="등록할 상품 가격 등록">&nbsp;원<br>
+                        <input type="text" name="price" th:value="${#numbers.formatInteger(modProduct.price, 0, 'COMMA')}">&nbsp;원<br>
                     </td>
                 </tr>
             </table>
@@ -56,7 +57,7 @@
                         이용기간
                     </td>
                     <td class="table-left-input">
-                        <input type="text" readonly style="background-color: #e2e2e2;">&nbsp;개월<br>
+                        <input type="text" readonly name="usePeriod" style="background-color: #e2e2e2;" th:value="${modProduct.usePeriod}"> &nbsp;개월<br>
                     </td>
                 </tr>
                 <tr>
@@ -64,15 +65,15 @@
                         이용횟수
                     </td>
                     <td class="table-left-input">
-                        <input type="text" readonly style="background-color: #e2e2e2;">&nbsp;회<br>
+                        <input type="text" readonly name="useCount" style="background-color: #e2e2e2;" th:value="${modProduct.useCount}"> &nbsp;회<br>
                     </td>
                 </tr>
             </table>
             <div class="mod-guide">※ 이용 기간/횟수는 수정 불가 항목입니다.</div>
-        </form> 
             <div class="pro-regist">
-                <button>상품 등록</button>
+                <button type="submit">상품 등록</button>
             </div>
+        </form> 
         </div>
 </body>
 </html>

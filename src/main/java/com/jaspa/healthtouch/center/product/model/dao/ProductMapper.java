@@ -14,6 +14,15 @@ public interface ProductMapper {
 
 	// 상품 등록
 	int registProduct(ProductDTO product);
+
+	// 상품 수정을 위한 조회
+	ProductDTO findModifyProduct(int proNo);
+
+	// 상품 수정
+	int updateProduct(ProductDTO product);
+
+	// 상품 삭제
+	int deleteProduct(int no);
 	
 
 }

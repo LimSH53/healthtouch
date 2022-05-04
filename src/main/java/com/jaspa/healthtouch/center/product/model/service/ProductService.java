@@ -9,6 +9,12 @@ public interface ProductService {
 	List<ProductDTO> findAllMembership();
 
 	boolean registProduct(ProductDTO product);
+
+	ProductDTO findModifyProduct(int proNo);
+
+	int updateProduct(ProductDTO product);
+
+	int deleteProduct(int no);
 	
 
 }

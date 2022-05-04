@@ -36,8 +36,9 @@
 			  , B.CATE_NAME
 		  FROM TBL_PRODUCT A
 		  JOIN TBL_PRO_CATEGORY B ON(A.PRO_CATE_NO = B.CATE_NO)
-		 WHERE PRO_CATE_NO = 10
-		   AND PRO_STATUS = 'Y'
+		 WHERE A.PRO_CATE_NO = 10
+		   AND A.PRO_STATUS = 'Y'
+		 ORDER BY A.PRO_NO DESC
 	</select>
 	
 	<!-- 상품 등록 -->
@@ -62,8 +63,42 @@
 		, #{ useCount }
 		)
 	</insert>
-
-
+	
+	<!-- 수정할 상품 조회 -->
+	<select id="findModifyProduct" resultMap="productResultMap">
+	SELECT
+				A.PRO_NO
+			  , A.PRO_CATE_NO
+			  , A.PRO_NAME
+			  , A.PRO_PRICE
+			  , A.PRO_CONTENTS
+			  , A.PRO_USE_PERIOD
+			  , A.PRO_USE_COUNT
+			  , A.PRO_DATE
+			  , A.PRO_STATUS
+			  , B.CATE_NAME
+		  FROM TBL_PRODUCT A
+		  JOIN TBL_PRO_CATEGORY B ON(A.PRO_CATE_NO = B.CATE_NO)
+		 WHERE A.PRO_NO = #{ proNo }
+		   AND A.PRO_STATUS = 'Y'
+	</select>
+	
+	<!-- 상품 수정 -->
+	<update id="updateProduct">
+	UPDATE TBL_PRODUCT
+	SET 
+	PRO_NAME = #{ name },
+	PRO_PRICE = #{ price }
+	WHERE PRO_NO = #{ no }
+	</update>
+	
+	<!-- 상품 삭제 -->
+	<update id="deleteProduct">
+	UPDATE TBL_PRODUCT
+	SET 
+	PRO_STATUS = 'N'
+	WHERE PRO_NO = #{ no }
+	</update>
 
 
 </mapper>
