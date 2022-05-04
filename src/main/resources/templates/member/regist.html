@@ -30,7 +30,7 @@
             <div class="mb-3">
                 <label class="col-form-label">비밀번호 확인</label>
                 <input type="password" class="pw form-control" name="pwd2" id="memberPwd2" placeholder="비밀번호 확인" required onchange="isSame()">
-                <span class="same"></span>
+                <span class="helper" id="same"></span>
             </div>
             <div class="mb-3">
                 <label class="form-label">이름</label>
@@ -68,7 +68,7 @@
             </div>
             <br>
             <div class="d-grid col-2 mx-auto">
-                <button class="btn btn-primary" type="button" id="joinBtn">가입</button>
+                <button class="btn btn-primary" type="button" id="joinBtn" onclick="checkBeforeJoin()">가입</button>
             </div>
             <br><br>
         </form>
@@ -142,9 +142,10 @@
     	}
     </script>
     <script>
+ 		// 연락처 확인 
+		var isUsable2 = false;
+ 		
     	$('#phoneAuthBtn').click(function(){
-    		// 연락처 확인 
-        	var isUsable2 = false;
     		var phonePattern = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
     		const phoneNumber = $("[name=contact]");
     		
@@ -210,12 +211,26 @@
     		}
     	});
     </script>
-    <script>
-    	$("#joinBtn").click(function(){
-    		if((isUsable == true) && (isUsable == true)) {
-    			$("#joinBtn").attr("type", "submit");
+    <script>    
+    	function checkBeforeJoin() {
+    		if((isUsable1 == true) && (isUsable2 == true)) {
+    			$("#joinBtn").attr('type', 'submit');
+    		} else {
+    			if(isUsable1 != true) {
+        			Swal.fire({
+    					icon: 'error',
+    					text: '아이디 중복 확인해 주세요.',
+    				})
+    				$("#joinBtn").attr('type', 'button');
+        		} else if(isUsable2 != true) {
+        			Swal.fire({
+    					icon: 'error',
+    					text: '연락처를 인증해 주세요.',
+    				})
+    				$("#joinBtn").attr('type', 'button');
+        		}
     		}
-    	});
+    	}
     </script>
     <script src="/js/member/regist.js"></script>
 </body>
