@@ -10,12 +10,13 @@
     <div th:replace="/common/centerHeader.html :: center-header"></div>
     <!-- 제이쿼리 추가 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script type="text/javascript">
 	const successMessage = '[[${successMessage}]]';
 	
 	if(successMessage){
-		alert(successMessage);
+ 		alert(successMessage);
 	}
 	</script>
 </head>
@@ -53,8 +54,12 @@
                         가격
                     </td>
                     <td>
-                        <button onclick="location.href='/center/product/proModify'">수정</button>
+                    	<a th:href="@{'/center/product/proModify?no=' + ${ membership.no }}">
+                        <button>수정</button>
+                        </a>
+                        <a th:href="@{'/center/product/membershipDelete?no=' + ${ membership.no }}">
                         <button>삭제</button>
+                        </a>
                     </td>
                 </tr>
             </table>
