@@ -151,4 +151,15 @@
 		 WHERE MEMBER_ID = #{ id }
 		   AND MEMBER_STATUS = 'Y'
 	</update>
+	
+	<update id="modify">
+		UPDATE TBL_MEMBER
+		   SET MEMBER_NAME = #{ name }
+		     , MEMBER_CONTACT = #{ contact }
+		     , MEMBER_ADDRESS = #{ address }
+		     , MEMBER_BIRTHDAY = #{ birthday }
+		     , MEMBER_GENDER = #{ gender }
+		 WHERE MEMBER_ID = #{ id }
+		   AND MEMBER_STATUS = 'Y'
+	</update>
 </mapper>

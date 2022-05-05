@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -119,6 +120,19 @@ public class MemberController {
 	@GetMapping("/mypage")
 	public void mypage(@AuthenticationPrincipal UserImpl user) {
 		log.info("로그인 유저 : {}", user);
+	}
+	
+	@PostMapping("/mypage")
+	@ResponseBody
+	public void modify(@RequestBody MemberDTO member, @AuthenticationPrincipal UserImpl user) {
+		log.info("수정 정보 : {}", member);
+		memberService.modify(member);
+		
+		user.setName(member.getName());
+		user.setContact(member.getContact());
+		user.setAddress(member.getAddress());
+		user.setBirthday(member.getBirthday());
+		user.setGender(member.getGender());
 	}
 	
 	@PostMapping("/checkId")

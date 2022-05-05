@@ -25,4 +25,6 @@ public interface MemberService extends UserDetailsService {
 
 	void setTempPwd(MemberDTO member, StringBuffer sb);
 
+	void modify(MemberDTO member);
+
 }

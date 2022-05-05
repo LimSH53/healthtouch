@@ -26,5 +26,7 @@ public interface MemberMapper {
 	int searchPwd(MemberDTO member);
 
 	void modifyPwd(MemberDTO member);
-	
+
+	void modify(MemberDTO member);
+
 }
