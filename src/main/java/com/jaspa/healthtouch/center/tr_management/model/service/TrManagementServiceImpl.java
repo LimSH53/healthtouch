@@ -7,8 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jaspa.healthtouch.center.tr_management.model.dao.TrainerMapper;
-import com.jaspa.healthtouch.login.model.dao.MemberMapper;
-import com.jaspa.healthtouch.login.model.dto.MemberDTO;
+import com.jaspa.healthtouch.center.tr_management.model.dto.TrainerInfoDTO;
 
 @Service("trManagementService")
 @Transactional
@@ -23,7 +22,7 @@ public class TrManagementServiceImpl implements TrManagementService{
 	
 	 
 	@Override
-	public List<MemberDTO> selectAllTrainer() {
+	public List<TrainerInfoDTO> selectAllTrainer() {
 		return trainerMapper.selectAllTrainer();
 	}
 
