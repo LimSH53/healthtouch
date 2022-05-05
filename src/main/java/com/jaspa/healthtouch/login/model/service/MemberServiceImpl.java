@@ -183,4 +183,10 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.modifyPwd(member);
 	}
 
+	@Transactional
+	@Override
+	public void modify(MemberDTO member) {
+		memberMapper.modify(member);
+	}
+
 }
