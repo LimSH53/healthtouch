@@ -5,6 +5,10 @@ font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, '
 }
 
 
+.container{
+	max-width: 1786px;
+}
+
 .snippet-body{
 	display: flex;
     justify-content: center;

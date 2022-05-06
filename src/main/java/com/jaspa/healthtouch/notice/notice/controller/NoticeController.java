@@ -1,34 +1,38 @@
 package com.jaspa.healthtouch.notice.notice.controller;
 
 
-
-
-import java.io.File;
-import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
 import com.jaspa.healthtouch.notice.notice.model.service.NoticeService;
 
-import lombok.extern.slf4j.Slf4j;
 
 
-@Slf4j
 @Controller
 @RequestMapping("/notice/*")
 public class NoticeController {
 	private NoticeService noticeService;
+	
 	
 	@Value("${/Users/cota/spring/file/") 
 	private String fileDownloadDirectory;
@@ -42,23 +46,32 @@ public class NoticeController {
 	
 	
 	@GetMapping("/notice")
-	public String notice() throws Exception{
-		
+	public String noticeList(Model model) throws Exception{
+		  List<NoticeDTO> noticeList = noticeService.noticeList();
+		 
+		 model.addAttribute("noticeList", noticeList);
 		return "notice/notice";
 	}
 	
+	 
+
 	@GetMapping("/noticedetail")
 	public String noticeDetail() {
 		
 		return "notice/noticedetail";
 	}
 		
-	
-	@GetMapping("/noticenone")
-	public String noticeNone() {
+	@RequestMapping("/noticedetail")
+	public ModelAndView selectBoardDetail (@RequestParam int noticeNo) throws Exception {
+		ModelAndView mv = new ModelAndView("/notice/noticedetail");
 		
-		return "notice/noticenone";
+		NoticeDTO notice = noticeService.selectBoardDetail(noticeNo);
+		mv.addObject("notice", notice);
+		
+		return mv;
+		
 	}
+	
 	
 	
 	@GetMapping("/noticemodify")
@@ -83,8 +96,6 @@ public class NoticeController {
 			return "redirect:/notice/notice";
 		
 }
-
-	
 		
 	
 }

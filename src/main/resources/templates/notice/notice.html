@@ -7,14 +7,18 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>공지사항</title>
     <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
- 	<div th:replace="/common/centerHeader.html :: center-header"></div>
+ 	<div sec:authorize="hasRole('ROLE_CENTER')"  th:replace="/common/centerHeader.html :: center-header"></div>
+ 	<div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-header"></div>
+ 	<div sec:authorize="hasRole('ROLE_TRAINER')" th:replace="/common/trnHeader.html :: trn-header"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/notice/notice.css}"/>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     </head>     
    
   <body id="body-pd" class='snippet-body '  style="min-height:80vh">
   
-  <div th:replace="/common/centerHeader.html :: center-body"></div>
+ <div sec:authorize="hasRole('ROLE_CENTER')" th:replace="/common/centerHeader.html :: center-body"></div>
+  <div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-body"></div>
+  <div sec:authorize="hasRole('ROLE_TRAINER')"th:replace="/common/trnHeader.html :: trn-body"></div>
   
   <div class="container mt-5">
 <div class="d-flex justify-content-center row">
@@ -42,55 +46,22 @@
   <th>제목</th>
   <th>조회수</th>
   <th>작성일</th>
-  <th>작성자</th>
 </tr>
 </thead>
 <tbody class="table-body">
-<tr class="cell-1">
-  <td class="text-center">6</td>
-  <td class="col-md-auto" id="title" ><a href="#">2022년도 세계피트니스선수권대회 제1차 국가대표 선발전 개최 통보</a></td>
-  <td>6</td>
-  <td>22.04.15</td>
-  <td>센터</td>
+<tr class="cell-1" th:if="${not #lists.isEmpty( noticeList )}" th:each="list : ${noticeList}">
+  <td class="text-center"th:text="${list.noticeNo}"></td>
+ <td class="col-md-auto title" id="title"> <a href="/notice/noticedetail?noticeNo=" th:attrappend="href=${list.noticeNo}" th:text="${list.noticeTitle}"></a></td>
+  <td th:text="${list.noticeView}"></td>
+  <td th:text="${#temporals.format(list.noticeDate, 'yyyy-MM-dd')}"></td>
 </tr>
-<tr class="cell-1">
-  <td class="text-center">5</td>
-  <td class="col-md-auto" id="title" ><a href="#">코로나19 정부 지침 관련 운동기간 연장안내</a></td>
-  <td>5</td>
-  <td>22.04.15</td>
-  <td>센터</td>
+<tr class="cell-1" th:unless="${not #lists.isEmpty( noticeList )}">
+  <td colspan="4"> 조회된 결과가 없습니다. </td>
 </tr>
-<tr class="cell-1">
-  <td class="text-center">4</td>
-  <td class="col-md-auto" id="title" ><a href="#">운영시간 및 이용 수칙 안내</a></td>
-  <td>4</td>
-  <td>22.04.15</td>
-  <td>센터</td>
-</tr>
-<tr class="cell-1">
-  <td class="text-center">3</td>
-  <td class="col-md-auto"id="title"  ><a href="#">코로나19 관련 홀딩 및 시작일 연기 공지</a></td>
-  <td>3</td>
-  <td>22.04.15</td>
-  <td>센터</td>
-</tr>
-<tr class="cell-1">
-  <td class="text-center">2</td>
-  <td class="col-md-auto" id="title" ><a href="#">입사지원 안내</a></td>
-  <td>2</td>
-  <td>22.04.15</td>
-  <td>센터</td>
-</tr>
-<tr class="cell-1">
-  <td class="text-center">1</td>
-  <td class="col-md-auto" id="title" ><a href="#">2022년 4월 15일 헬스터치 런칭</a></td>
-  <td>1</td>
-  <td>22.04.15</td>
-  <td>센터</td>
-</tr>
+
 </tbody>
 </table>
-<button sec:authorize="hasRole('ROLE_CENTER')" type="button" class="btn btn-outline-secondary">글작성</button>
+<button sec:authorize="hasRole('ROLE_CENTER')" th:onclick="|location.href='@{/notice/noticeregist}'|" type="button" class="btn btn-outline-secondary">글작성</button>
  <!-- 공지사항 페이징 -->
 <nav>
   <ul class="pagination flex-wrap d-flex justify-content-center">

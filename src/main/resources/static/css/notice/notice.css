@@ -4,6 +4,11 @@
 font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
 }
 
+
+.container{
+	max-width: 1786px;
+}
+
 .snippet-body{
 	display: flex;
     justify-content: center;

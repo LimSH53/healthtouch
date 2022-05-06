@@ -84,12 +84,54 @@
         VALUES
         (
           SEQ_NOT_NO.NEXTVAL
-        , #{ memberId }
+        , '관리자'
         , #{ noticeTitle }
         , #{ noticeContent }
        	, 'N'
         , SYSDATE
         )
 	</insert>
+	
+	
+	<select id="noticeList" resultMap="noticeResultMap">
+	SELECT 
+			include refid="noticeColumns"
+	  FROM  TBL_NOTICE 
+	 WHERE  NOT_DELETE = 'N'
+	    ORDER BY NOT_NO DESC
+	    	  
+	    
+	</select>
+	
+	<select id="selectNoticeTotalCount" resultMap="noticeResultMap" resultType="int">
+  SELECT
+  	COUNT(*)
+  FROM
+  	TBL_NOTICE
+  WHERE
+   NOT_DELETE = 'N'
+</select>
+	
+	
+	
+	<update id="updateHitCount" parameterType="int">
+	UPDATE 
+			TBL_NOTICE 
+	SET
+			NOT_VIEW = NOT_VIEW + 1
+	WHERE  
+			NOT_NO = #{noticeNo}
+	</update>
+	
+	<select id="selectBoardDetail" resultMap="noticeResultMap">
+	SELECT 
+			*
+	  FROM  TBL_NOTICE 
+	 WHERE  NOT_NO = #{noticeNo}
+	 AND	 NOT_DELETE = 'N'
+	</select>
+	
+	
+	
 	
 </mapper>
