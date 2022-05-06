@@ -6,14 +6,18 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>1:1문의</title>
- 	<div th:replace="/common/centerHeader.html :: center-header"></div>
+ 	<div sec:authorize="hasRole('ROLE_CENTER')"  th:replace="/common/centerHeader.html :: center-header"></div>
+ 	<div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-header"></div>
+ 	<div sec:authorize="hasRole('ROLE_TRAINER')" th:replace="/common/trnHeader.html :: trn-header"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/notice/qna.css}"/>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     </head>     
-  
+   
   <body id="body-pd" class='snippet-body ' style="min-height:90vh">
   
-  <div th:replace="/common/centerHeader.html :: center-body"></div>
+   <div sec:authorize="hasRole('ROLE_CENTER')" th:replace="/common/centerHeader.html :: center-body"></div>
+  <div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-body"></div>
+  <div sec:authorize="hasRole('ROLE_TRAINER')"th:replace="/common/trnHeader.html :: trn-body"></div>
   
   <div class="container mt-5">
 <div class="d-flex justify-content-center row">
@@ -23,7 +27,7 @@
  <div class="titlename rounded">
     <h2 class="titlename1">1:1문의</h2>
  </div>
-
+  <!-- 1:1문의 검색 -->
  <div  >
   <div class="row search">
       <div class="col-md-12" >
@@ -33,7 +37,7 @@
       </div>
   </div>
 </div>
-
+ <!-- 1:1문의 목록 -->
 <table class="table">
 <thead>
 <tr>
@@ -116,7 +120,8 @@
 </tr>
 </tbody>
 </table>
-<button type="button" class="btn btn-outline-secondary">글작성</button>
+<button sec:authorize="hasRole('ROLE_MEMBER')" type="button" class="btn btn-outline-secondary">글작성</button>
+ <!-- 1:1문의 페이징 -->
 <nav>
    <ul class="pagination flex-wrap d-flex justify-content-center">
       <li class="page-item"><a class="page-link" href="#" data-abc="true"><i class="bx bxs-chevron-left"></i></a></li>
@@ -132,10 +137,6 @@
 </div>
 </div>
 </div>
-    <!--Container Main end-->
-
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js'></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
+ 
 </body>
 </html> 

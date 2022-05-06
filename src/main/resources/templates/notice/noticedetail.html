@@ -6,14 +6,20 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>공지사항 상세조회</title>
- 	<div th:replace="/common/centerHeader.html :: center-header"></div>
+ 	<div sec:authorize="hasRole('ROLE_CENTER')"  th:replace="/common/centerHeader.html :: center-header"></div>
+ 	<div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-header"></div>
+ 	<div sec:authorize="hasRole('ROLE_TRAINER')" th:replace="/common/trnHeader.html :: trn-header"></div>
+  	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+  	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/notice/notice.css}"/>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    </head>     
+    </head>      
   
   <body id="body-pd" class='snippet-body ' style='min-height: 130vh;'>
   
-  <div th:replace="/common/centerHeader.html :: center-body"></div>
+ <div sec:authorize="hasRole('ROLE_CENTER')" th:replace="/common/centerHeader.html :: center-body"></div>
+  <div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-body"></div>
+  <div sec:authorize="hasRole('ROLE_TRAINER')"th:replace="/common/trnHeader.html :: trn-body"></div>
   
   <div class="container mt-5">
 <div class="d-flex justify-content-center row">
@@ -23,7 +29,7 @@
  <div class="titlename rounded">
     <h2 class="titlename1">공지사항</h2>
  </div>
-
+ <!-- 공지사항 상세조회 -->
 <div class="notice rounded">
   <div>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3">
@@ -52,11 +58,28 @@
   </section>
   <hr id="line">
   
+   <!-- 공지사항 댓글등록 -->
   <section id="comment">
-    <div id="comment1">
-      <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
-      <button type="submit" class="btn btn-outline-secondary" style="font-size: 15px;">등록</button>
-    </div>
+    <form id="comment1">
+      <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요." required>
+      <button type="submit" class="btn btn-outline-secondary" id="cmtregist" style="font-size: 15px;">등록</button>
+      <script>
+			$().ready(function () {
+            $("#cmtregist").click(function () {
+                Swal.fire({
+					  title: '댓글등록',
+					  text: "댓글이 등록되었습다.",
+				      imageUrl: '../images/successicon.png',
+					  imageWidth: 100,
+				      imageHeight: 100,
+				      imageAlt: 'Custom image',
+					  confirmButtonColor: '#1b1b55',
+                });
+            });
+        });
+      </script>
+    </form>
+       <!-- 공지사항 댓글내역 -->
     <ul class="media-list">
       <li class="media">
           <div class="media-body row">
@@ -71,53 +94,80 @@
               </p>
               <div class="btn-group col">
                 <a class="nav-link cm_btn pull-right " href="modal" data-toggle="modal" >수정</a>
-                <a class="nav-link cm_btn pull-right" href="deletecheck" data-toggle="modal" >삭제</a>
+                <a  type="button" id="cmtdelete" class="nav-link cm_btn pull-right" >삭제</a>
+             
+		        <script>
+			                $().ready(function () {
+			            $("#cmtdelete").click(function () {
+									            Swal.fire({
+						  title: '댓글 삭제',
+						  text: "댓글을 삭제하시겠습니까?",
+						  imageUrl: '../images/checkicon.png',
+						  imageWidth: 100,
+						  imageHeight: 100,
+						  imageAlt: 'Custom image',
+						  showCancelButton: true,
+						  confirmButtonColor: '#1b1b55',
+						  cancelButtonColor: '#e2e2e2',
+						  confirmButtonText: '삭제'
+						}).then((result) => {
+						  if (result.isConfirmed) {
+						       Swal.fire({
+						      title:'댓글 삭제',
+						   	  text: '삭제되었습니다.',
+						      imageUrl: '../images/successicon.png',
+							  imageWidth: 100,
+						      imageHeight: 100,
+						      imageAlt: 'Custom image',
+							  confirmButtonColor: '#1b1b55'
+			         })
+                    }
+                })
+            });
+        });
+	            </script>
+                
               </div>
           </div>
       </li>
     </ul>
-
-    <ul class="media-list">
-      <li class="media">
-          <div class="media-body row">
-            <div class="col cm" >
-              <span class="cm_writer">헬스헬스****</span>
-              <span class="text-muted">
-                  <small class="text-muted">2022.04.15</small>
-              </span>
-            </div>
-              <p class="cm_content col-6">
-                잘부탁 드립니다!
-              </p>
-              <div class="btn-group col">
-                <a class="nav-link cm_btn pull-right " href="modal" data-toggle="modal" >수정</a>
-                <a class="nav-link cm_btn pull-right" href="deletecheck" data-toggle="modal" >삭제</a>
-              </div>
-          </div>
-      </li>
-    </ul>
+	  <!-- 공지사항 목록, 수정,삭제 버튼 -->
     <div style="display:-webkit-box ">
       <button type="button" class="list_btn btn btn-outline-secondary">목록</button>
-      <div class=" regist-btn" style="padding-right: 7px; margin-left: 550px; ">
+      <div sec:authorize="hasRole('ROLE_CENTER')" class=" regist-btn" style="padding-right: 7px; margin-left: 550px; ">
         <button type="button" class="btn btn-outline-secondary " value="수정">수정</button>
-        <button type="button" class="btn btn-outline-secondary " value="삭제" data-bs-toggle="modal" data-bs-target="#notDelete">삭제</button>
-        <div class="modal fade" id="notDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">게시물 삭제</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                게시물을 삭제하시겠습니까?
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-outline-secondary">삭제</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <button type="button" class="btn btn-outline-secondary " value="삭제" id="noticedelete">삭제</button>
+     	    
+		        <script>
+			                $().ready(function () {
+			            $("#noticedelete").click(function () {
+									            Swal.fire({
+						  title: '게시글 삭제',
+						  text: "게시글을 삭제하시겠습니까?",
+						  imageUrl: '../images/checkicon.png',
+						  imageWidth: 100,
+						  imageHeight: 100,
+						  imageAlt: 'Custom image',
+						  showCancelButton: true,
+						  confirmButtonColor: '#1b1b55',
+						  cancelButtonColor: '#e2e2e2',
+						  confirmButtonText: '삭제'
+						}).then((result) => {
+						  if (result.isConfirmed) {
+						       Swal.fire({
+						     title: '게시글 삭제',
+						 	 text: "게시글이 삭제되었습니다",
+						      imageUrl: '../images/successicon.png',
+							  imageWidth: 100,
+						      imageHeight: 100,
+						      imageAlt: 'Custom image',
+							  confirmButtonColor: '#1b1b55'
+			         })
+                    }
+                })
+            });
+        });
+	            </script>
       
       
       </div>

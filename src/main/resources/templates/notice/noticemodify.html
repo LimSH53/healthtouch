@@ -10,18 +10,19 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/notice/notice.css}"/>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     </head>     
-   
+    
   <body id="body-pd" class='snippet-body ' >
   
   <div th:replace="/common/centerHeader.html :: center-body"></div>
-  
+   
 <div class="d-flex justify-content-center row">
 <div class="rounded">
 <div class="table-responsive table-borderless">
  <div class="titlename rounded">
     <h2 class="titlename1">공지사항</h2>
  </div>
-
+ 
+   <!-- 공지사항 수정페이지 -->
 <div class="notice rounded">
   <div class="regist">
     <form class="needs-validation" validate>
@@ -40,8 +41,23 @@
           내용을 입력하세요
       </div>
   </div>
-  <button type="submit" class="btn btn-outline-secondary ">등록</button>
+  <button type="submit" class="btn btn-outline-secondary" id="noticemodify">등록</button>
   <button type="button" class="btn btn-outline-secondary ">취소</button>
+      <script>
+			$().ready(function () {
+            $("#noticemodify").click(function () {
+                Swal.fire({
+					  title: '게시글 수정',
+					  text: "게시글이 수정되었습다.",
+				      imageUrl: '../images/successicon.png',
+					  imageWidth: 100,
+				      imageHeight: 100,
+				      imageAlt: 'Custom image',
+					  confirmButtonColor: '#1b1b55',
+                });
+            });
+        });
+      </script>
     </form>
   </div>
 </div>

@@ -1,4 +1,4 @@
-package com.jaspa.healthtouch.notice.model.dto;
+package com.jaspa.healthtouch.notice.notice.model.dto;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ public class AttachmentDTO {
 	private int noticeNo;
 	private String root;
 	private String thumbRoot;
-	private String File;
+	private String file;
 	private String editFile;
-	private String fileType;
+	private long fileType;
 }
