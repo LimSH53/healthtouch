@@ -11,10 +11,7 @@
 		<result property="noticeEditDate" column="NOT_EDIT_DATE"/>
 		<result property="noticeView" column="NOT_VIEW"/>
 		
-		<association property="member" resultMap="userResultMap"/>
-		<collection property="commentList" resultMap="commentResultMap"/>
-		<collection property="attachmentList" resultMap="attachmentResultMap"/>
-		
+		<association property="memberId" resultMap="memberResultMap"/>
 	</resultMap >
 	  
 	<resultMap type="com.jaspa.healthtouch.notice.notice.model.dto.AttachmentDTO" id="attachmentResultMap" >
@@ -59,17 +56,24 @@
 	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberRoleDTO" id="memberRoleResultMap">
 		<id property="memberId" column="REF_MEMBER_ID"/>
 		<result property="authorityCode" column="REF_AUTHORITY_CODE"/>
-		
-		<association property="authority" resultMap="authorityResultMap"/>
-	</resultMap>
 	
-	<resultMap type="com.jaspa.healthtouch.login.model.dto.AuthorityDTO" id="authorityResultMap">
-		<id property="code" column="REF_AUTHORITY_CODE2"/>
-		<result property="name" column="AUTHORITY_NAME"/>
-		<result property="desc" column="AUTHORITY_DESC"/>
 	</resultMap>
 	
 	
+	
+	<!-- 공지사항 조회 -->
+	<select id="noticeList" resultMap="noticeResultMap">
+	SELECT 
+			*
+	  FROM  TBL_NOTICE 
+	 WHERE  NOT_DELETE = 'N'
+	    ORDER BY NOT_NO DESC
+	    	  
+	    
+	</select>
+	
+	
+	<!-- 공지사항 등록 -->
 	<insert id="registNotice" >
         INSERT 
           INTO TBL_NOTICE 
@@ -84,12 +88,31 @@
         VALUES
         (
           SEQ_NOT_NO.NEXTVAL
-        , #{ memberId }
+        , '관리자'
         , #{ noticeTitle }
         , #{ noticeContent }
        	, 'N'
         , SYSDATE
         )
 	</insert>
+	
+	
+	<select id="selectNoticeDetail" resultMap="noticeResultMap">
+	SELECT 
+			*
+	  FROM  TBL_NOTICE 
+	 WHERE  NOT_NO = #{noticeNo}
+	 AND	 NOT_DELETE = 'N'
+	</select>
+	
+		<update id="viewCount" parameterType="int">
+	UPDATE 
+			TBL_NOTICE 
+	SET
+			NOT_VIEW = NOT_VIEW + 1
+	WHERE  
+			NOT_NO = #{noticeNo}
+	</update>
+	
 	
 </mapper>
