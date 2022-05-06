@@ -7,10 +7,11 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>트레이너 조회 </title>
     
+    
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
     <link href="@{/css/header.css}" rel="stylesheet" type="text/css">
-  
+
    
     </head>
                                 
@@ -41,7 +42,7 @@
             <tr>
             <th scope="col">
             <label class="control control--checkbox">
-            <input type="checkbox" class="js-check-all" name="check" value="selectAll"
+            <input type="checkbox" class="js-check-all" name="checkAll" value="selectAll"
              onclick="selectAll(this)">
             <div class="control__indicator"></div>
             </label>
@@ -74,7 +75,7 @@
             </tbody>
             </table><br>
 
-            <button type="button" class="btn btn-secondary">퇴사</button>
+            <button type="button" class="btn btn-secondary" onclick="resignTrainer">퇴사</button>
             
             <!-- 페이징-->
             <nav aria-label="Page navigation example">
@@ -107,8 +108,8 @@ const checkboxes = document.getElementsByName('check');
 </script>
 
 
-
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 <script>
 
 
@@ -122,7 +123,25 @@ function selectAll(selectAll)  {
   })
 }
 
+/* function resignTrainer(){
+	
+	var cnt = $("input[name='check']:checked").length;
+	var arr = new Array();
+	
+	
+    if(cnt == 0){
+        alert("선택된 트레이너가 없습니다.");
+    }
+} */
+function resignTrainer(resignTrainer){
+	
+        alert("선택된 트레이너가 없습니다.");
+    
+}
+
 </script>
+
+
 
 
 
