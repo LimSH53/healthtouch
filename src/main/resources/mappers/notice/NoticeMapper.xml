@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jaspa.healthtouch.notice.model.dao.NoticeMapper">
-	<resultMap type="com.jaspa.healthtouch.notice.model.dto.NoticeDTO" id="noticeResultMap">
+<mapper namespace="com.jaspa.healthtouch.notice.notice.model.dao.NoticeMapper">
+	<resultMap type="com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO" id="noticeResultMap">
 		<id property="noticeNo" column="NOT_NO"/>
 		<result property="memberId" column="NOT_MEMBER_ID"/>
 		<result property="noticeTitle" column="NOT_TITLE"/>
@@ -16,8 +16,8 @@
 		<collection property="attachmentList" resultMap="attachmentResultMap"/>
 		
 	</resultMap >
-	
-	<resultMap type="com.jaspa.healthtouch.notice.model.dto.AttachmentDTO" id="attachmentResultMap" >
+	  
+	<resultMap type="com.jaspa.healthtouch.notice.notice.model.dto.AttachmentDTO" id="attachmentResultMap" >
 		<id property="attachNo" column="ATC_NO"/>
 		<result property="noticeNo" column="ATC_NOT_NO"/>
 		<result property="root" column="ATC_ROOT"/>
@@ -29,7 +29,7 @@
 		<association property="notice" resultMap="noticeResultMap"/>
 	</resultMap>
 
-	<resultMap 	type="com.jaspa.healthtouch.notice.model.dto.CommentDTO" id="commentResultMap"  >
+	<resultMap 	type="com.jaspa.healthtouch.notice.notice.model.dto.CommentDTO" id="commentResultMap"  >
 		<id property="no" column="COM_NO"/>
 		<result property="id" column="COM_MEMBER_ID"/>
 		<result property="noticeNo" column="COM_NOT_NO"/>
@@ -40,7 +40,7 @@
 		
 	</resultMap>
 	
-		<resultMap type="com.jaspa.healthtouch.notice.model.dto.MemberDTO" id="memberResultMap">
+		<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberDTO" id="memberResultMap">
 		<id property="id" column="MEMBER_ID"/>
 		<result property="pwd" column="MEMBER_PWD"/>
 		<result property="name" column="MEMBER_NAME"/>
@@ -56,53 +56,25 @@
 		<association property="memberRole" resultMap="memberRoleResultMap"/>
 	</resultMap>
 	
-	<resultMap type="com.jaspa.healthtouch.notice.model.dto.MemberRoleDTO" id="memberRoleResultMap">
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberRoleDTO" id="memberRoleResultMap">
 		<id property="memberId" column="REF_MEMBER_ID"/>
 		<result property="authorityCode" column="REF_AUTHORITY_CODE"/>
 		
 		<association property="authority" resultMap="authorityResultMap"/>
 	</resultMap>
 	
-	<resultMap type="com.jaspa.healthtouch.notice.model.dto.AuthorityDTO" id="authorityResultMap">
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.AuthorityDTO" id="authorityResultMap">
 		<id property="code" column="REF_AUTHORITY_CODE2"/>
 		<result property="name" column="AUTHORITY_NAME"/>
 		<result property="desc" column="AUTHORITY_DESC"/>
 	</resultMap>
 	
 	
-	<insert id="registNoticeFileList" parameterType="notice.notice.model.dto.AttachmentDTO">
-      <![CDATA[
-        INSERT 
-          INTO TBL_ATTACHMENT 
-        (
-          ATC_NOT_NO
-        , ATC_ROOT
-        , ATC_ORIGIN_FILE
-        , ATC_EDIT_FILE
-        , ATC_FILE_TYPE
-        , 
-        )
-        VALUES 
-        	]]>
-		<foreach collection="list" item="item" separator=",">
-        
-        (
-        , #{ item.noticeNo }
-        , #{ item.root }
-        , #{ item.file }
-        , #{ item.editFile }
-        , #{ item.fileType }
-        )
-        	</foreach>
-	</insert>
-
-	
-	<insert id="registNotice" parameterType="notice.notice.model.dto.NoticeDTO"
-        useGeneratedKeys="true" keyProperty="noticeNo">
-        <![CDATA[
+	<insert id="registNotice" >
         INSERT 
           INTO TBL_NOTICE 
-        (
+        ( 
+          NOT_NO
         , NOT_MEMBER_ID  
         , NOT_TITLE
         , NOT_CONTENT
@@ -111,13 +83,13 @@
         )
         VALUES
         (
+          SEQ_NOT_NO.NEXTVAL
         , #{ memberId }
         , #{ noticeTitle }
         , #{ noticeContent }
        	, 'N'
         , SYSDATE
         )
-        ]]>
 	</insert>
 	
 </mapper>

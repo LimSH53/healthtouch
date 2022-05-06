@@ -8,16 +8,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
 import com.jaspa.healthtouch.notice.notice.model.service.NoticeService;
 
 
-
+ 
 @Controller
 @RequestMapping("/notice/*")
 public class NoticeController {
@@ -70,8 +69,8 @@ public class NoticeController {
 	
 	// multipartHttpServletRequest 사용해 인터페이스에 업로드된 파일을 처리
 	@GetMapping("/registnotice")
-		public String registNotice(NoticeDTO notice,MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
-			noticeService.registNotice(notice, multipartHttpServletRequest);
+		public String registNotice(@ModelAttribute NoticeDTO notice) throws Exception {
+			noticeService.registNotice(notice);
 			
 			return "redirect:/notice/notice";
 		
