@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/notice/notice.css}"/>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     </head>     
-  
+   
   <body id="body-pd" class='snippet-body '  style="min-height:80vh">
   
   <div th:replace="/common/centerHeader.html :: center-body"></div>
@@ -24,17 +24,17 @@
  <div class="titlename rounded">
     <h2 class="titlename1">공지사항</h2>
  </div>
-
+ <!-- 공지사항 검색 -->
  <div >
   <div class="row search">
       <div class="col-md-12" >
-          <div class="input-group mb-3" > <input type="text" class="form-control input-text" placeholder="검색" aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <form  class="input-group mb-3" > <input type="text" class="form-control input-text" placeholder="검색" aria-label="Recipient's username" aria-describedby="basic-addon2">
               <div class="search_btn input-group-append"> <button class="btn btn-sm" type="button"><i class="bx bx-search"></i></button> </div>
-          </div>
+          </form>
       </div>
   </div>
 </div>
-
+ <!-- 공지사항 목록 -->
 <table class="table">
 <thead>
 <tr>
@@ -90,7 +90,8 @@
 </tr>
 </tbody>
 </table>
-<button type="button" class="btn btn-outline-secondary">글작성</button>
+<button sec:authorize="hasRole('ROLE_CENTER')" type="button" class="btn btn-outline-secondary">글작성</button>
+ <!-- 공지사항 페이징 -->
 <nav>
   <ul class="pagination flex-wrap d-flex justify-content-center">
       <li class="page-item"><a class="page-link" href="#" data-abc="true"><i class="bx bxs-chevron-left"></i></a></li>
