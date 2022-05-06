@@ -26,14 +26,24 @@ public class CenterTrainerController {
 	}
 	
 	@GetMapping("/list")
+	
 	public ModelAndView selectAllTrainerList(ModelAndView mv) {
 		
 		List<TrainerInfoDTO> trainerList = trManagementService.selectAllTrainer();
 		
+		log.info("trainerList : {}", trainerList);
+		
+//		List<TrainerInfoDTO> trainerList = new ArrayList<>();
+//		trainerList.add(new TrainerInfoDTO());
+		
 		mv.addObject("trainerList", trainerList);
 		mv.setViewName("center/tr_management/trainerList");
 		
+		
+		
+		
 		return mv;
 	}
+	
 	
 }
