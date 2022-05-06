@@ -3,6 +3,11 @@ package com.jaspa.healthtouch.notice.notice.controller;
 
 
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -10,13 +15,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
 import com.jaspa.healthtouch.notice.notice.model.service.NoticeService;
 
+import lombok.extern.slf4j.Slf4j;
 
- 
+
+@Slf4j
 @Controller
 @RequestMapping("/notice/*")
 public class NoticeController {
@@ -75,7 +83,8 @@ public class NoticeController {
 			return "redirect:/notice/notice";
 		
 }
-		
+
+	
 		
 	
 }
