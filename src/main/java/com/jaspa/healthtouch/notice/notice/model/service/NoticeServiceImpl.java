@@ -20,7 +20,7 @@ public class NoticeServiceImpl implements NoticeService{
 	public void registNotice(NoticeDTO notice)throws Exception  {
 		noticeMapper.registNotice(notice);
 		
-
+ 
 		}
 	}
 	

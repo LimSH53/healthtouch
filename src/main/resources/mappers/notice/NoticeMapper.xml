@@ -16,7 +16,7 @@
 		<collection property="attachmentList" resultMap="attachmentResultMap"/>
 		
 	</resultMap >
-	
+	  
 	<resultMap type="com.jaspa.healthtouch.notice.notice.model.dto.AttachmentDTO" id="attachmentResultMap" >
 		<id property="attachNo" column="ATC_NO"/>
 		<result property="noticeNo" column="ATC_NOT_NO"/>
@@ -73,7 +73,7 @@
 	<insert id="registNotice" >
         INSERT 
           INTO TBL_NOTICE 
-        (
+        ( 
           NOT_NO
         , NOT_MEMBER_ID  
         , NOT_TITLE

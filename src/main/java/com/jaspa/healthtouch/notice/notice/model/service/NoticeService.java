@@ -11,3 +11,4 @@ public interface NoticeService {
 		void registNotice(NoticeDTO notice) throws Exception;
 	
 }
+ 
