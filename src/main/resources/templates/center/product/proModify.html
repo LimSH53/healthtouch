@@ -20,12 +20,8 @@
             <h2>상품 등록</h2>
         </div>
         <form action="/center/product/proModify" method="post">
-            <select class="pro-category" name="categoryNo">
-                <option value="10">회원권 상품 </option>
-                <option value="20">수강권 상품</option>
-                <option value="30">락커 이용권</option>
-                <option value="40">운동복 이용권</option>
-            </select>
+            <input type="hidden" name="categoryNo" th:value="${ modProduct.categoryNo }"><br>
+            <input type="text" class="category" name="categoryName" th:value="${ modProduct.category.categoryName }" readonly="readonly"><br>           
             <table>
                 <tr>
                     <th colspan="2">상품 기본 정보 입력</th>
@@ -44,7 +40,7 @@
                         상품가격
                     </td>
                     <td class="table-left-input">
-                        <input type="text" name="price" th:value="${#numbers.formatInteger(modProduct.price, 0, 'COMMA')}">&nbsp;원<br>
+                        <input type="text" name="price" th:value="${ modProduct.price }">&nbsp;원<br>
                     </td>
                 </tr>
             </table>

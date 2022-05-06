@@ -99,6 +99,26 @@
 	PRO_STATUS = 'N'
 	WHERE PRO_NO = #{ no }
 	</update>
+	
+	<!-- PT(20) 상품 조회 -->
+	<select id="findAllPT" resultMap="productResultMap">
+		SELECT
+				A.PRO_NO
+			  , A.PRO_CATE_NO
+			  , A.PRO_NAME
+			  , A.PRO_PRICE
+			  , A.PRO_CONTENTS
+			  , A.PRO_USE_PERIOD
+			  , A.PRO_USE_COUNT
+			  , A.PRO_DATE
+			  , A.PRO_STATUS
+			  , B.CATE_NAME
+		  FROM TBL_PRODUCT A
+		  JOIN TBL_PRO_CATEGORY B ON(A.PRO_CATE_NO = B.CATE_NO)
+		 WHERE A.PRO_CATE_NO = 20
+		   AND A.PRO_STATUS = 'Y'
+		 ORDER BY A.PRO_NO DESC
+	</select>
 
 
 </mapper>

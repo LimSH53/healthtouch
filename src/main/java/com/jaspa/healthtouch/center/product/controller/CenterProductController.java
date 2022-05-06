@@ -8,11 +8,9 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -65,11 +63,11 @@ public class CenterProductController {
 		if(product.getCategoryNo() == 10) {
 			return "redirect:/center/product/membership/list";
 		} else if(product.getCategoryNo() == 20) {
-			return "redirect:/center/product/";
+			return "redirect:/center/product/PT/list";
 		} else if(product.getCategoryNo() == 30) {
-			return "redirect:/center/product/";
+			return "redirect:/center/product/rocker/list";
 		} else {
-			return "redirect:/center/product/";
+			return "redirect:/center/product/sportswear/list";
 		}
 		
 	}
@@ -95,20 +93,21 @@ public class CenterProductController {
 		int result = productService.updateProduct(product);
 		
 		log.info("product :{}", product);
+		log.info("getCategoryNO : {}", product.getCategoryNo());
 		
 		if(result > 0 && product.getCategoryNo() == 10) {
 			rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateProduct", null, locale));
 			return "redirect:/center/product/membership/list";
 		} else if(result > 0 && product.getCategoryNo() == 20) {
 			rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateProduct", null, locale));
-			return "redirect:/center/product/";
+			return "redirect:/center/product/PT/list";
 		} else if(result > 0 && product.getCategoryNo() == 30) {
 			rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateProduct", null, locale));
-			return "redirect:/center/product/";
+			return "redirect:/center/product/rocker/list";
 		} else {
 			if(result > 0) {
 			rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateProduct", null, locale));
-			return "redirect:/center/product/";
+			return "redirect:/center/product/sportswear/list";
 			} else {
 				rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateFailProduct", null, locale));
 				return "redirect:/center/product/membership/list";
@@ -123,11 +122,42 @@ public class CenterProductController {
 		int result = productService.deleteProduct(no);
 		
 		if(result > 0) {
-			rttr.addAttribute("successMessage", messageSource.getMessage("deleteProduct", null, locale));
+			rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteProduct", null, locale));
 			return "redirect:/center/product/membership/list";
 		} else {
-			rttr.addAttribute("successMessage", messageSource.getMessage("deleteFailProduct", null, locale));
+			rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteFailProduct", null, locale));
 			return "redirect:/center/product/membership/list";
+		}
+		
+		
+	}
+	
+	@GetMapping("/PT/list")
+	public ModelAndView selectPTList(ModelAndView mv) {
+		
+		List<ProductDTO> selectPTList = productService.findAllPT();
+		
+		log.info("selectPTList : {}", selectPTList);
+		
+		/* addObject 키값 안넣어줘서 html로 값이 안넘어감 */
+		mv.addObject("selectPTList",selectPTList);
+		mv.setViewName("center/product/proPT");
+		
+		return mv;
+		
+	}
+	
+	@GetMapping("PTDelete")
+	public String deletePT(@RequestParam("no") int no, RedirectAttributes rttr, Locale locale) {
+		
+		int result = productService.deleteProduct(no);
+		
+		if(result > 0) {
+			rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteProduct", null, locale));
+			return "redirect:/center/product/PT/list";
+		} else {
+			rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteFailProduct", null, locale));
+			return "redirect:/center/product/PT/list";
 		}
 		
 		
