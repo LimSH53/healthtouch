@@ -10,12 +10,15 @@ import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
 
 public interface NoticeService {
 		
-
-		void registNotice(NoticeDTO notice) throws Exception;
-
+		//공지사항 조회
 		List<NoticeDTO> noticeList() throws Exception ;
 
-		NoticeDTO selectBoardDetail(int noticeNo) throws Exception ;
+		
+		//공지사항 등록
+		void registNotice(NoticeDTO notice) throws Exception;
+
+
+		NoticeDTO selectNoticeDetail(int noticeNo) throws Exception ;
 
 
 
