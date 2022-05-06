@@ -1,16 +1,13 @@
-package com.jaspa.healthtouch.notice.controller;
+package com.jaspa.healthtouch.notice.qna.controller;
 
-import java.util.Locale;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
-@RequestMapping("/notice")
+@RequestMapping("/notice/*")
 public class QnaController {
 
 	@GetMapping("/qna")
@@ -45,7 +42,6 @@ public class QnaController {
 		
 		return "notice/qnaregist";
 	}
-	
-
+	  
 	
 }

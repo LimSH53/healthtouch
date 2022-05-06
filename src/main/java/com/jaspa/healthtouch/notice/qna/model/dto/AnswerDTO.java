@@ -1,4 +1,4 @@
-package com.jaspa.healthtouch.notice.model.dto;
+package com.jaspa.healthtouch.notice.qna.model.dto;
 
 import java.util.Date;
 

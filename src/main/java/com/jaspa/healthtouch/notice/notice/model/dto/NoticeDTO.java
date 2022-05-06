@@ -1,6 +1,7 @@
-package com.jaspa.healthtouch.notice.model.dto;
+package com.jaspa.healthtouch.notice.notice.model.dto;
 
 import java.util.Date;
+
 
 import lombok.Data;
 
