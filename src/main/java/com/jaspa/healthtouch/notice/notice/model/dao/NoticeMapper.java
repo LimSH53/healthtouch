@@ -16,7 +16,8 @@ public interface NoticeMapper {
 	List<NoticeDTO> noticeList()throws Exception;
 	
 	
-	//공지사항 등록
+
+	//공지사항 등록 
 	void registNotice(NoticeDTO notice) throws Exception;
 
 	
