@@ -54,6 +54,11 @@ public class ProductServiceImpl implements ProductService{
 		return result;
 	}
 
+	@Override
+	public List<ProductDTO> findAllPT() {
+		return productMapper.findAllPT();
+	}
+
 
 
 }

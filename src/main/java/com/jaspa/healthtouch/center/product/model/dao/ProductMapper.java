@@ -23,6 +23,9 @@ public interface ProductMapper {
 
 	// 상품 삭제
 	int deleteProduct(int no);
+
+	//PT 상품 조회
+	List<ProductDTO> findAllPT();
 	
 
 }

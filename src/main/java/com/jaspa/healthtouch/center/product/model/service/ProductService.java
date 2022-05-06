@@ -15,6 +15,8 @@ public interface ProductService {
 	int updateProduct(ProductDTO product);
 
 	int deleteProduct(int no);
+
+	List<ProductDTO> findAllPT();
 	
 
 }
