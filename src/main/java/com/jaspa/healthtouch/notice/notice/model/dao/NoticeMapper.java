@@ -12,8 +12,7 @@ public interface NoticeMapper {
 	
 	void registNotice(NoticeDTO notice) throws Exception;
 	
-	
-	void registNoticeFileList(List<AttachmentDTO> list) throws Exception;
+
 	
 	
 }

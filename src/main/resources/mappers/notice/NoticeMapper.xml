@@ -29,7 +29,7 @@
 		<association property="notice" resultMap="noticeResultMap"/>
 	</resultMap>
 
-	<resultMap 	type="com.jaspa.healthtouch.login.model.dto.CommentDTO" id="commentResultMap"  >
+	<resultMap 	type="com.jaspa.healthtouch.notice.notice.model.dto.CommentDTO" id="commentResultMap"  >
 		<id property="no" column="COM_NO"/>
 		<result property="id" column="COM_MEMBER_ID"/>
 		<result property="noticeNo" column="COM_NOT_NO"/>
@@ -74,6 +74,7 @@
         INSERT 
           INTO TBL_NOTICE 
         (
+          NOT_NO
         , NOT_MEMBER_ID  
         , NOT_TITLE
         , NOT_CONTENT
@@ -82,6 +83,7 @@
         )
         VALUES
         (
+          SEQ_NOT_NO.NEXTVAL
         , #{ memberId }
         , #{ noticeTitle }
         , #{ noticeContent }
