@@ -29,4 +29,8 @@ public interface MemberMapper {
 
 	void modify(MemberDTO member);
 
+	String selectEncryptedPwd(String id);
+
+	void removeMember(String id);
+
 }
