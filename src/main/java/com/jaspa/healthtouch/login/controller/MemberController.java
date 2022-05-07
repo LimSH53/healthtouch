@@ -2,7 +2,9 @@ package com.jaspa.healthtouch.login.controller;
 
 import java.security.SecureRandom;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,6 +128,7 @@ public class MemberController {
 	@ResponseBody
 	public void modify(@RequestBody MemberDTO member, @AuthenticationPrincipal UserImpl user) {
 		log.info("수정 정보 : {}", member);
+		member.setNum(Integer.parseInt(member.getContact()) % 10000);
 		memberService.modify(member);
 		
 		user.setName(member.getName());
@@ -133,6 +136,7 @@ public class MemberController {
 		user.setAddress(member.getAddress());
 		user.setBirthday(member.getBirthday());
 		user.setGender(member.getGender());
+		user.setNum(member.getNum());
 	}
 	
 	@PostMapping("/checkId")
@@ -163,5 +167,25 @@ public class MemberController {
 		// memberService.certifiedPhoneNumnber(phoneNumber, numStr);
 		
 		return numStr;
+	}
+	
+	@PostMapping("/modifyPwd")
+	@ResponseBody
+	public int modifyPwd(@RequestBody Map<String, Object> modifyPwdMap, @AuthenticationPrincipal UserImpl user) {		
+		// log.info("받은 정보 : {}", modifyPwdMap);
+		MemberDTO requestMember = new MemberDTO();
+		requestMember.setId(user.getId());
+		requestMember.setPwd((String)modifyPwdMap.get("checkPwd"));
+		
+		String pwd = (String)modifyPwdMap.get("pwd");
+		
+		return memberService.modifyPwd(requestMember, pwd);
+	}
+	
+	@GetMapping("/remove")
+	public String removeMember(@AuthenticationPrincipal UserImpl user) {
+		memberService.removeMember(user.getId());
+		
+		return "redirect:/";
 	}
 }
