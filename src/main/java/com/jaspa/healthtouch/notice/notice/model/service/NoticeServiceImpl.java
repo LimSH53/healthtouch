@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.jaspa.healthtouch.notice.notice.model.dao.NoticeMapper;
+import com.jaspa.healthtouch.notice.notice.model.dto.AttachmentDTO;
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
 
 
@@ -43,6 +44,11 @@ public class NoticeServiceImpl implements NoticeService{
 		
 
 		}
+	
+	//공시사항 파일 등록(파일 업로드)
+	public int insertFile(AttachmentDTO file) throws Exception{
+		return noticeMapper.insertFile(file);
+	}
 	
 	//공지사항 수정
 	@Override
