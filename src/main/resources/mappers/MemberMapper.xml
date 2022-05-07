@@ -56,6 +56,7 @@
 		  LEFT JOIN TBL_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
 		  LEFT JOIN TBL_AUTHORITY C ON (B.AUTHORITY_CODE = C.AUTHORITY_CODE)
 		 WHERE A.MEMBER_ID = #{ username }
+		   AND A.MEMBER_STATUS = 'Y'
 	</select>
 	
 	<insert id="insertMember">
@@ -159,6 +160,21 @@
 		     , MEMBER_ADDRESS = #{ address }
 		     , MEMBER_BIRTHDAY = #{ birthday }
 		     , MEMBER_GENDER = #{ gender }
+		     , MEMBER_NUM = #{ num }
+		 WHERE MEMBER_ID = #{ id }
+		   AND MEMBER_STATUS = 'Y'
+	</update>
+	
+	<select id="selectEncryptedPwd" resultType="java.lang.String">
+		SELECT MEMBER_PWD
+		  FROM TBL_MEMBER
+		 WHERE MEMBER_ID = #{ id }
+		   AND MEMBER_STATUS = 'Y'
+	</select>
+	
+	<update id="removeMember">
+		UPDATE TBL_MEMBER
+		   SET MEMBER_STATUS = 'N'
 		 WHERE MEMBER_ID = #{ id }
 		   AND MEMBER_STATUS = 'Y'
 	</update>

@@ -166,7 +166,10 @@
        						$('#contact').focus();
        					} else {
        						// 중복 확인 통과 
-       						Swal.fire('인증 번호가 전송되었습니다.');
+       						Swal.fire({
+       							icon: 'success',
+	        		    		text: '인증 번호가 전송되었습니다.',
+       						});
        						
        						phoneNumber.attr('readonly', true);
        						$("#inputAuthCode").attr('readonly', false);

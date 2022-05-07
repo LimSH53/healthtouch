@@ -189,4 +189,26 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.modify(member);
 	}
 
+	@Transactional
+	@Override
+	public int modifyPwd(MemberDTO requestMember, String pwd) {
+		int result = 0;
+		
+		String encPwd = memberMapper.selectEncryptedPwd(requestMember.getId());
+		
+		if(passwordEncoder.matches(requestMember.getPwd(), encPwd)) {
+			requestMember.setPwd(passwordEncoder.encode(pwd));
+			memberMapper.modifyPwd(requestMember);
+			result = 1;
+		}
+		
+		return result;
+	}
+
+	@Transactional
+	@Override
+	public void removeMember(String id) {
+		memberMapper.removeMember(id);
+	}
+
 }
