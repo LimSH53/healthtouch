@@ -111,5 +111,13 @@ td section{
     width: 200px;
 }
 
+.category {
+	width: 200px;
+    height: 40px;
+    padding-left: 3%;
+    margin-left: 5%;
+    border: 2px solid #1b1b55;
+    border-radius: 10px;
+}
 
 

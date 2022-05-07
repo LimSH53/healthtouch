@@ -17,6 +17,10 @@ public interface ProductService {
 	int deleteProduct(int no);
 
 	List<ProductDTO> findAllPT();
+
+	List<ProductDTO> findAllRocker();
+
+	List<ProductDTO> findAllSportswear();
 	
 
 }

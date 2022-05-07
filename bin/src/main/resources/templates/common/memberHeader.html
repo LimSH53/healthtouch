@@ -1,23 +1,26 @@
 <!doctype html>
                        
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">     
                            
-<head>     
+<head th:fragment="member-header">    
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>헬스터치 헤더 - 회원 </title>
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
-    <link href="css/common/header.css" rel="stylesheet" type="text/css">
+     <link rel="stylesheet" type="text/css" th:href="@{/css/common/header.css}"/>
     <script type='text/javascript' src=''></script>
 </head>
-                                
+                                 
 <body id="body-pd">
+	<div th:fragment="member-body">
     <!-- header -->
     <header class="header" id="header">
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-        <a type="button" id="outbtn" class="btn btn-sm outline" style="color:#1b1b55 ; border-color: #1b1b55;">로그아웃</a>
+        <h6 style="color: #6c757d;"><span sec:authentication="principal.name"></span>님 환영합니다</h6>
+        <a type="button" id="outbtn" class="btn btn-sm outline" style="color:#1b1b55 ; border-color: #1b1b55;" onclick="location.href='/member/logout'">로그아웃</a>
     </header>
     <!-- sidebar -->
     <div class="l-navbar" id="nav-bar">
@@ -25,12 +28,12 @@
             <div> 
                 <a href="#" class="nav_logo"> 
                     <img class='nav_logo-icon' src="/images/white-icon.png"></img> 
-                    <img class="nav_logo-name" src="/images/color-logo.png"></img>
+                    <img class="nav_logo-name" src="/images/white-logo.png"></img> 
                 </a>
                 <div class="nav_list">
                     <!-- 기본정보 관리 --> 
                     <li class='sub-menu'>
-                    <a href="#" class="nav_link active"> 
+                    <a href="/member/mypage" class="nav_link active"> 
                         <i class='bx bx-home-alt-2 nav_icon'></i> 
                         <span class="nav_name">기본정보 관리<div class=' fa-caret-down right'></div></span> 
                     </a> 
@@ -74,23 +77,16 @@
                             <i class='bx bx-book-open nav_icon'></i> 
                             <span class="nav_name">게시판<div class=' fa-caret-down right'></div></span> 
                         </a> 
-                        <ul class="toggle">
-                            <li><a href='#settings'>트레이너 소개</a></li>
-                            <li><a href='#settings'>공지사항</a></li>
-                            <li><a href='#settings'>1:1문의</a></li>
+                           <ul class="toggle">
+                            <li><a href='/notice/trainerintro'>트레이너 소개</a></li>
+                            <li><a href='/notice/notice'>공지사항</a></li>
+                            <li><a href='/notice/qna'>1:1문의</a></li>
                         </ul>
                     </li>
                 </div>
             </div> 
         </nav>
     </div>
-
-    <!--Container Main start-->
-    <div class="height-100 bg-light">
-        <h4>내용을 솔짜쿵</h4>
-    </div>
-    <!--Container Main end-->
-
     <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js'></script>
     <script type='text/javascript' src=''></script>
     <script type='text/javascript' src=''></script>
@@ -142,5 +138,6 @@
             $(this).find(".right").toggleClass("fa-caret-up fa-caret-down");
         });
     </script>
+     </div>
 </body>
 </html> 

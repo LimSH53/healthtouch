@@ -59,6 +59,16 @@ public class ProductServiceImpl implements ProductService{
 		return productMapper.findAllPT();
 	}
 
+	@Override
+	public List<ProductDTO> findAllRocker() {	
+		return productMapper.findAllRocker();
+	}
+
+	@Override
+	public List<ProductDTO> findAllSportswear() {
+		return productMapper.findAllSportswear();
+	}
+
 
 
 }
