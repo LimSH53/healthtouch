@@ -1,43 +1,35 @@
 <!doctype html>
                        
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
                            
 <head>     
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>1:1문의 등록</title>
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet'>
-    <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
-    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-    <link href="css/notice/notice.css" rel="stylesheet" type="text/css">
-       <!-- include libraries(jQuery, bootstrap) --> <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet"> 
-       <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-       <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-       <!-- include summernote css/js--> <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet"> 
-       <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-   
-</head>     
+    <title>1:1문의 수정</title>
+ 	<div th:replace="/common/memberHeader.html :: member-header"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/notice/notice.css}"/>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    </head>     
   
-  <body class='snippet-body'>
-  <div class="container mt-5">
+  <body id="body-pd" class='snippet-body ' >
+   
+  <div th:replace="/common/memberHeader.html :: member-body"></div>
+   
 <div class="d-flex justify-content-center row">
-<div class="col-md-10">
 <div class="rounded">
 <div class="table-responsive table-borderless">
  <div class="titlename rounded">
     <h2 class="titlename1">1:1문의</h2>
  </div>
-
+    <!-- 1:1문의 등록페이지 -->
 <div class="notice rounded">
   <div class="regist">
-    <form class="needs-validation" validate>
+   <form class="needs-validation" validate>
     <div id="regist-title">
       <label for="firstName" class="form-label" style="font-size: 15px;" >제목</label>
       <div style="display: flex;">
-        <input type="text" class="form-control" id="content1" name="content" placeholder="내용을 입력하세요." required>
-        <select class="form-select" aria-label="Default select example" required>
+        <input type="text" class="form-control" id="content1" name="content"  placeholder="내용을 입력하세요." required>
+        <select class="form-select" style="height: 33px;" aria-label="Default select example" required>
           <option selected>문의</option>
           <option value="1">이용문의</option>
           <option value="2">가격문의</option>
@@ -47,26 +39,30 @@
     </div>
     <div class="contentwritebox">
       <label for="firstName" class="form-label"><strong>내용</strong></label>
-      <textarea name="content" id="summernote" class="summernote" required></textarea>
+   	  <textarea class="regist-content form-control" type="text" placeholder="Tell us about yourself" required> </textarea> 
       <div class="invalid-feedback">
           내용을 입력하세요
       </div>
   </div>
-  <script> 
-  $('.summernote').summernote({ height: 300, minHeight: null, maxHeight: null, lang : 'ko-KR', onImageUpload: function(files, editor, welEditable) { sendFile(files[0], editor, welEditable); } });</script>
-  <button type="submit" class="btn btn-outline-secondary " >등록</button>
+  <button type="submit" class="btn btn-outline-secondary" id="qnaregist">등록</button>
   <button type="button" class="btn btn-outline-secondary ">취소</button>
+      <script>
+			$().ready(function () {
+            $("#qnaregist").click(function () {
+                Swal.fire({
+					  title: '문의글 등록',
+					  text: "문의글이 등록되었습다.",
+				      imageUrl: '../images/successicon.png',
+					  imageWidth: 100,
+				      imageHeight: 100,
+				      imageAlt: 'Custom image',
+					  confirmButtonColor: '#1b1b55',
+                });
+            });
+        });
+      </script>
+    </form>
   </div>
 </div>
-    
-  </div>
-          
-</div>
-
-
-    <!--Container Main end-->
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js'></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
 </body>
 </html> 

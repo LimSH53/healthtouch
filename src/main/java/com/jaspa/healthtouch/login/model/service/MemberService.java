@@ -27,4 +27,8 @@ public interface MemberService extends UserDetailsService {
 
 	void modify(MemberDTO member);
 
+	int modifyPwd(MemberDTO requestMember, String pwd);
+
+	void removeMember(String id);
+
 }

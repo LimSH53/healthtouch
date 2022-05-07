@@ -12,15 +12,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script type="text/javascript">
+</head>
+<body id="body-pd"> <!-- sidebar 적용위해 id 추가 -->
+	<script type="text/javascript">
 	const successMessage = '[[${successMessage}]]';
 	
 	if(successMessage){
- 		alert(successMessage);
+		Swal.fire({
+            icon: 'success',
+            title: successMessage
+        });
 	}
 	</script>
-</head>
-<body id="body-pd"> <!-- sidebar 적용위해 id 추가 -->
     <!-- 헤더 body 추가 -->
 	<div th:replace="/common/centerHeader.html :: center-body"></div>
     <!-- 최대 크기 768 로 맞춰서 / 타이틀 <2> / 기본폰트 15px (표 상단은 bold 처리) / 참고문구는 12px -->
@@ -43,24 +46,28 @@
                         수정/삭제
                     </th>
                 </tr>
-                <tr>
-                    <td>
-                        락커이용 12개월권
+                <tr th:each="rocker : ${ rockerList }"><!-- th:each 이용 -->
+                    <td th:text="${ rocker.name }">
+                        상품명
+                    </td>
+                    <td th:text="|${ rocker.usePeriod } 개월|">
+                        이용기간(개월)
+                    </td>
+                    <td th:text="|${#numbers.formatInteger(rocker.price, 0, 'COMMA')}원|">
+                        가격
                     </td>
                     <td>
-                        12개월
-                    </td>
-                    <td>
-                        60,000원
-                    </td>
-                    <td>
+                    	<a th:href="@{'/center/product/proModify?no=' + ${ rocker.no }}">
                         <button>수정</button>
+                        </a>
+                        <a th:href="@{'/center/product/rockerDelete?no=' + ${ rocker.no }}">
                         <button>삭제</button>
+                        </a>
                     </td>
                 </tr>
             </table>
             <div class="pro-regist">
-                <button>상품 등록</button>
+                <button onclick="location.href='/center/product/proRegist'">상품 등록</button>
             </div>
         </div>
 </body>

@@ -123,11 +123,11 @@ public class CenterProductController {
 		
 		if(result > 0) {
 			rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteProduct", null, locale));
-			return "redirect:/center/product/membership/list";
 		} else {
 			rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteFailProduct", null, locale));
-			return "redirect:/center/product/membership/list";
 		}
+		
+		return "redirect:/center/product/membership/list";
 		
 		
 	}
@@ -158,6 +158,68 @@ public class CenterProductController {
 		} else {
 			rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteFailProduct", null, locale));
 			return "redirect:/center/product/PT/list";
+		}
+		
+		
+	}
+	
+	@GetMapping("/rocker/list")
+	public ModelAndView selectRockerList(ModelAndView mv) {
+		
+		List<ProductDTO> rockerList = productService.findAllRocker();
+		
+		log.info("rockerList : {}", rockerList);
+		
+		/* addObject 키값 안넣어줘서 html로 값이 안넘어감 */
+		mv.addObject("rockerList",rockerList);
+		mv.setViewName("center/product/proRocker");
+		
+		return mv;
+		
+	}
+	
+	@GetMapping("rockerDelete")
+	public String deleteRocker(@RequestParam("no") int no, RedirectAttributes rttr, Locale locale) {
+		
+		int result = productService.deleteProduct(no);
+		
+		if(result > 0) {
+			rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteProduct", null, locale));
+			return "redirect:/center/product/rocker/list";
+		} else {
+			rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteFailProduct", null, locale));
+			return "redirect:/center/product/rocker/list";
+		}
+		
+		
+	}
+	
+	@GetMapping("/sportswear/list")
+	public ModelAndView selectSportswearList(ModelAndView mv) {
+		
+		List<ProductDTO> sportswearList = productService.findAllSportswear();
+		
+		log.info("sportswearList : {}", sportswearList);
+		
+		/* addObject 키값 안넣어줘서 html로 값이 안넘어감 */
+		mv.addObject("sportswearList", sportswearList);
+		mv.setViewName("center/product/proSportswear");
+		
+		return mv;
+		
+	}
+	
+	@GetMapping("sportswearDelete")
+	public String deleteSportswear(@RequestParam("no") int no, RedirectAttributes rttr, Locale locale) {
+		
+		int result = productService.deleteProduct(no);
+		
+		if(result > 0) {
+			rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteProduct", null, locale));
+			return "redirect:/center/product/sportswear/list";
+		} else {
+			rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteFailProduct", null, locale));
+			return "redirect:/center/product/sportswear/list";
 		}
 		
 		
