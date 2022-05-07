@@ -32,8 +32,9 @@ public interface NoticeService {
 		int modifyNotice(NoticeDTO notice) throws Exception;
 		
 		//공지사항 삭제
-		int deleteNotice(int noticeNo) throws Exception;
+		boolean deleteNotice(int noticeNo) throws Exception;
 		
+	
 
 
 	

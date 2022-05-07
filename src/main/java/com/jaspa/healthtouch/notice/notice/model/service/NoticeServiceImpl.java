@@ -26,7 +26,7 @@ public class NoticeServiceImpl implements NoticeService{
 		public List<NoticeDTO> noticeList() throws Exception {
 		        return noticeMapper.noticeList();
 		    }
-	 
+	
 	//공지사항 상세조회
 	  @Override
 	  public NoticeDTO selectNoticeDetail(int noticeNo) throws Exception {
@@ -67,17 +67,20 @@ public class NoticeServiceImpl implements NoticeService{
 	
 	//공지사항 삭제
 		@Override
-		public int deleteNotice(int noticeNo)throws Exception  {
-			return noticeMapper.deleteNotice(noticeNo);
+		public boolean deleteNotice(int noticeNo)throws Exception  {
+			int queryResult = 0;
+			NoticeDTO notice = noticeMapper.selectNoticeDetail(noticeNo);
+			
+			if ( notice != null && "N".equals(notice.getNoticeDelete()) ) {
+				  queryResult = noticeMapper.deleteNotice(noticeNo);
+				 }
+			 
+			 return (queryResult == 1) ? true : false;
+		}
 			
 
 			}
 	
-	
-
-	
-	  
-}
 	
  
 	 

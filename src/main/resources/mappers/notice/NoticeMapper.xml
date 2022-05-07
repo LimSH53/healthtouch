@@ -60,6 +60,14 @@
 	</resultMap>
 	
 	
+	<!-- 총 게시글 갯수 출력 -->
+	<select id="countNotice" resultMap="noticeResultMap">
+		SELECT 
+		COUNT(*) 
+		FROM  TBL_NOTICE 
+	</select>
+	
+	
 	
 	<!-- 공지사항 조회 -->
 	<select id="noticeList" resultMap="noticeResultMap">
@@ -147,7 +155,7 @@
 	SELECT *
 	FROM TBL_ATTACHMENT		
 	WHERE  
-		NOT_NO = #{noticeNo}
+		ATC_NOT_NO = #{noticeNo}
 		
 	</select>
 	
@@ -163,11 +171,13 @@
 	</update>
 	
 	<!-- 공지사항 삭제 -->
-	<delete id="deleteNotice" >
-	DELETE 
+	<update  id="deleteNotice" parameterType="int">
+	 UPDATE 
+	  SET
+      	 NOT_DELETE = 'Y'
 	FROM TBL_NOTICE
 	WHERE NOT_NO=#{noticeNo}
 	
-	</delete>
+	</update>
 	
 </mapper>

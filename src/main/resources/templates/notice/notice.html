@@ -48,10 +48,10 @@
   <th>작성일</th>
 </tr> 
 </thead>
-<tbody class="table-body">
-<tr class="cell-1" th:if="${not #lists.isEmpty( noticeList )}" th:each="list : ${noticeList}">
+<tbody class="table-body" >
+<tr class="cell-1" th:if="${not #lists.isEmpty( noticeList )}" th:each="list : ${noticeList}"  >
   <td class="text-center"th:text="${list.noticeNo}"></td>
- <td class="col-md-auto title" id="title"> <a href="/notice/noticedetail?noticeNo=" th:attrappend="href=${list.noticeNo}" th:text="${list.noticeTitle}"></a></td>
+ <td class="col-md-auto title" id="title"><a th:href="'/notice/noticedetail/'+${list.noticeNo}" th:text="${list.noticeTitle}"></a></td>
   <td th:text="${list.noticeView}"></td>
   <td th:text="${#dates.format(list.noticeDate,'yyyy-MM-dd')}"></td>
 </tr>
@@ -61,7 +61,7 @@
 
 </tbody>
 </table>
-<button sec:authorize="hasRole('ROLE_CENTER')" th:onclick="|location.href='@{/notice/noticeregist}'|" type="button" class="btn btn-outline-secondary">글작성</button>
+<button sec:authorize="hasRole('ROLE_CENTER')" th:onclick="'location.href=\''+@{/notice/noticeregist} + '\''" type="button" class="btn btn-outline-secondary">글작성</button>
  <!-- 공지사항 페이징 -->
 <nav>
   <ul class="pagination flex-wrap d-flex justify-content-center">

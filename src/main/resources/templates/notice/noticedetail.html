@@ -6,7 +6,7 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>공지사항 상세조회</title>
- 	<div sec:authorize="hasRole('ROLE_CENTER')"  th:replace="/common/centerHeader.html :: center-header"></div>
+<div sec:authorize="hasRole('ROLE_CENTER')"  th:replace="/common/centerHeader.html :: center-header"></div>
  	<div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-header"></div>
  	<div sec:authorize="hasRole('ROLE_TRAINER')" th:replace="/common/trnHeader.html :: trn-header"></div>
   	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -15,11 +15,11 @@
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     </head>      
   
-  <body id="body-pd" class='snippet-body ' style='min-height: 130vh;'>
-  
+  <body id="body-pd" class='snippet-body ' style='min-height: 80vh;'>
  <div sec:authorize="hasRole('ROLE_CENTER')" th:replace="/common/centerHeader.html :: center-body"></div>
   <div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-body"></div>
   <div sec:authorize="hasRole('ROLE_TRAINER')"th:replace="/common/trnHeader.html :: trn-body"></div>
+  
   
   <div class="container mt-5">
 <div class="d-flex justify-content-center row">
@@ -37,17 +37,17 @@
       <span th:text="${notice.noticeTitle}" class="bd_title" style="font-size: 15px;"></span>
     </div>
     <div class="justify-content-md-center">
-      <span th:text="${notice.memberId}" class="mr-1"><i class='bx bx-user'></i></span> 
-      <span th:text="${#notice.format(detail.noticeDate, 'yyyy-MM-dd')}"class="mr-1"><i class='bx bx-time-five' ></i> </span>
-      <span  th:text="${notice.noticeView}"class="mr-1"><i class='bx bx-show-alt'></i> Views</span>　
+     <i class='bx bx-user' style="font-size: 12px;"><span th:text="${notice.memberId}" class="mr-1"></span> </i> 
+     <i class='bx bx-time-five'  style="font-size: 12px;"><span th:text="${#dates.format(notice.noticeDate, 'yyyy-MM-dd')}"class="mr-1"> </span></i> 
+     <i class='bx bx-show-alt' style="font-size: 12px;"> <span th:text="${notice.noticeView}"class="mr-1"></span> Views　</i> 
     </div>
   </div>
   <hr id="line">
     <div  th:text="${notice.noticeContent}" id="bo_v_con" style="font-size: 12px;">
     </div>
   <hr id="line">
-       <div id="regist-file" >
-        <label for="firstName" class="form-label" style="font-size: 15px;">첨부파일</label>
+       <div id="regist-file1" >
+        <label for="firstName" class="form-label" style="font-size: 10px;">첨부파일</label>
         <a th:if="${file}" th:href="@{/notice/fileDown/{noticeNo} (noticeNo=${file.noticeNo})}">
         [[${file.file}]]
         </a>
@@ -56,10 +56,10 @@
     
 	  <!-- 공지사항 목록, 수정,삭제 버튼 -->
     <div style="display:-webkit-box ">
-      <button th:formaction="@{/notice/notice}" type="button" class="list_btn btn btn-outline-secondary">목록</button>
-      <div sec:authorize="hasRole('ROLE_CENTER')" class=" regist-btn" style="padding-right: 7px; margin-left: 550px; ">
-        <button th:formaction="@{/notice/noticeModify/{noticeNo}(noticeNo=${notice.noticeNo})}" type="button" class="btn btn-outline-secondary " value="수정">수정</button>
-        <button  th:formaction="@{/notice/delete/{noticeNo}(noticeNo=${notice.noticeNo})}" type="button" class="btn btn-outline-secondary " value="삭제" id="noticedelete">삭제</button>
+      <button th:onclick="'location.href=\''+@{/notice/notice} + '\''"type="button" class="list_btn btn btn-outline-secondary">목록</button>
+      <div sec:authorize="hasRole('ROLE_CENTER')" class=" regist-btn" style="margin-left: 565px; ">
+        <button th:onclick="'location.href=\''+ @{/notice/noticemodify/{noticeNo}(noticeNo=${notice.noticeNo})}+ '\''" type="button" class="btn btn-outline-secondary " value="수정">수정</button>
+        <button th:onclick="deleteNotice([[ ${notice.noticeNo}]])" type="button" class="btn btn-outline-secondary " value="삭제" id="noticedelete">삭제</button>
      	    
 		        <script>
 			                $().ready(function () {
@@ -67,7 +67,7 @@
 									            Swal.fire({
 						  title: '게시글 삭제',
 						  text: "게시글을 삭제하시겠습니까?",
-						  imageUrl: '../images/checkicon.png',
+						  imageUrl: '/images/checkicon.png',
 						  imageWidth: 100,
 						  imageHeight: 100,
 						  imageAlt: 'Custom image',
@@ -75,12 +75,13 @@
 						  confirmButtonColor: '#1b1b55',
 						  cancelButtonColor: '#e2e2e2',
 						  confirmButtonText: '삭제'
+						  
 						}).then((result) => {
 						  if (result.isConfirmed) {
 						       Swal.fire({
 						     title: '게시글 삭제',
 						 	 text: "게시글이 삭제되었습니다",
-						      imageUrl: '../images/successicon.png',
+						      imageUrl: '/images/successicon.png',
 							  imageWidth: 100,
 						      imageHeight: 100,
 						      imageAlt: 'Custom image',
@@ -98,20 +99,19 @@
 </form>
   
 
-  <hr id="line">
   
    <!-- 공지사항 댓글등록 -->
   <section id="comment">
     <form id="comment1">
       <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요." required>
-      <button type="submit" class="btn btn-outline-secondary" id="cmtregist" style="font-size: 15px;">등록</button>
+      <button type="submit" class="btn btn-outline-secondary" id="cmtregist" style="font-size: 10px;">등록</button>
       <script>
 			$().ready(function () {
             $("#cmtregist").click(function () {
                 Swal.fire({
 					  title: '댓글등록',
 					  text: "댓글이 등록되었습다.",
-				      imageUrl: '../images/successicon.png',
+				      imageUrl: '/images/successicon.png',
 					  imageWidth: 100,
 				      imageHeight: 100,
 				      imageAlt: 'Custom image',

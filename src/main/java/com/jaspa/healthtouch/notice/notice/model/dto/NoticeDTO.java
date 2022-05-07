@@ -10,7 +10,7 @@ import com.jaspa.healthtouch.login.model.dto.MemberRoleDTO;
 import lombok.Data;
 
 @Data
-public class NoticeDTO {
+public class NoticeDTO  {
 	private int noticeNo;
 	private String memberId;
 	private String noticeTitle;

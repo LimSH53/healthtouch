@@ -18,12 +18,14 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -64,29 +66,21 @@ public class NoticeController {
 	
 	//공지사항 상세조회 
 	@RequestMapping("/noticedetail/{noticeNo}")
-	public String selectBoardDetail (@PathVariable("noticeNo") int noticeNo,Model model) throws Exception {
+	public String selectNoticeDetail (@PathVariable("noticeNo") int noticeNo,Model model) throws Exception {
 		model.addAttribute("notice", noticeService.selectNoticeDetail(noticeNo));
 	
 		if(noticeService.fileDetail(noticeNo)== null) {
-			return "notice/detail";
+			return "notice/noticedetail";
 		}else {
 		model.addAttribute("file", noticeService.fileDetail(noticeNo));
-			return "notice/detail";	
+			return "notice/noticedetail";	
 		}
 	
 		
 	}
 	
-	
-	//공지사항 등록 페이지 연결
-	@GetMapping("/noticeregist")
-	public String noticeRegist() {
-		
-		return "notice/noticeregist";
-	}
-	
-	//공지사항 파일 업로드
-	@RequestMapping("/registnotice")
+	//공지사항 등록및 파일 업로드
+	@RequestMapping("/noticeregist")
 	public String insertFile(@ModelAttribute NoticeDTO notice, @RequestPart MultipartFile file, HttpServletRequest request ) throws IllegalStateException, IOException, Exception { 
 		
 		if(file.isEmpty()) {
@@ -202,18 +196,17 @@ public class NoticeController {
 
 	}	
 	
-	
 
 	//공지사항 수정 페이지 연결
 	@RequestMapping("/noticemodify/{noticeNo}")
 	public String noticeModify(@PathVariable("noticeNo") int noticeNo, Model model)throws Exception  {
-		model.addAttribute("detail", noticeService.selectNoticeDetail(noticeNo));
+		model.addAttribute("notice", noticeService.selectNoticeDetail(noticeNo));
 		
 		return "notice/noticemodify";
 	}
 	
 	//공지사항 수정
-	@GetMapping("/modifyNotice")
+	@GetMapping("/noticemodify")
 	public String modifyNotice(@ModelAttribute NoticeDTO notice) throws Exception {
 		noticeService.modifyNotice(notice);
 		int notNo = notice.getNoticeNo();
@@ -223,14 +216,34 @@ public class NoticeController {
 	}
 
 	//공지사항 삭제
-	@RequestMapping("/delete/{noticeNo}")
-	public String deleteNotice (@PathVariable("noticeNo") int noticeNo) throws Exception {
-		
-		noticeService.deleteNotice(noticeNo);
-		return "redirect:/notice/notice";
-		
-	}
-		
+	@RequestMapping("/delete")
+	public String deleteNotice (@RequestParam(value ="noticeNo", required = false) int noticeNo) throws Exception {
+		  System.out.println("/delete 접근. noticeNo = " + noticeNo);
+		  // 올바르지 않은 접근 시
+		  if (noticeNo == 0) {
+		  	// TODO => 올바르지 않은 접근이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
+		  	return "redirect:/notice/notice";
+		  }
+
+		  try {
+		    System.out.println("try 접근. noticeNo = " + noticeNo);
+		    boolean isDeleted = noticeService.deleteNotice(noticeNo);
+		    System.out.println("deleteBoard 실행 후. isDeleted = " + isDeleted);
+
+		    // false면 이미 게시글이 삭제된 상태
+		    if (isDeleted == false) {
+		    	// TODO => 게시글 삭제에 실패하였다는 메시지를 전달
+		    }
+		  } catch (DataAccessException e) {
+		  	// TODO => 데이터베이스 처리 과정에 문제가 발생하였다는 메시지를 전달
+
+		  } catch (Exception e) {
+		  	// TODO => 시스템에 문제가 발생하였다는 메시지를 전달
+		  }
+
+		  return "redirect:/notice/notice";
+		}	
+	
 		
 }
 		
