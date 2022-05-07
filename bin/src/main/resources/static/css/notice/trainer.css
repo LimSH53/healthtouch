@@ -4,7 +4,24 @@
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
 }
 
-/**/
+
+.nav1{
+	display: flex;
+    overflow: hidden;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+	
+}
+
+.snippet-body{
+	display: flex;
+    justify-content: center;
+    align-items:center;
+    min-height: 100vh;
+}
+
+
 
 .titlename{
     margin-bottom: 20px;
@@ -76,7 +93,7 @@ body {
     position: relative;
     width: 150px;
     height: 200px;
-    background: url("/img/trainer-sagong.jpg");
+    background: url("/images/trainer-sagong.jpg");
     background-size: cover;
     cursor: pointer;
     border: 12px;
@@ -89,7 +106,7 @@ body {
     position: relative;
     width: 150px;
     height: 200px;
-    background: url("/img/trainer-qwak.jpg");
+    background: url("/images/trainer-qwak.jpg");
     background-size: cover;
     cursor: pointer;
     border: 12px;
@@ -103,7 +120,7 @@ body {
     position: relative;
     width: 150px;
     height: 200px;
-    background: url("/img/trainer-pyo.png");
+    background: url("/images/trainer-pyo.png");
     background-size: cover;
     cursor: pointer;
     border: 12px;
@@ -117,7 +134,7 @@ body {
     position: relative;
     width: 150px;
     height: 200px;
-    background: url("/img/trainer-park.png");
+    background: url("/images/trainer-park.png");
     background-size: cover;
     cursor: pointer;
     border: 12px;

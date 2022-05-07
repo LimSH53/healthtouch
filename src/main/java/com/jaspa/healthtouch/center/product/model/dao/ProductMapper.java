@@ -27,5 +27,11 @@ public interface ProductMapper {
 	//PT 상품 조회
 	List<ProductDTO> findAllPT();
 	
+	// 락커 이용권 조회
+	List<ProductDTO> findAllRocker();
+
+	// 운동복 이용권 조회
+	List<ProductDTO> findAllSportswear();
+	
 
 }

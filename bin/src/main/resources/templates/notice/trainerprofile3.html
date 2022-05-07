@@ -1,21 +1,19 @@
 <!doctype html>
                        
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
                            
 <head>     
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>트레이너 소개 - 박단단</title>
-   <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet'>
-    <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
-    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-    <link href="css/notice/trainer.css" rel="stylesheet" type="text/css">
+ 	<div th:replace="/common/memberHeader.html :: member-header"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/notice/trainer.css}"/>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    </head>     
+    </head>         
   
-  <body class='snippet-body'>
+  <body id="body-pd" class='snippet-body '>
+  
+  <div th:replace="/common/memberHeader.html :: member-body"></div>
   <div class="container mt-5">
 <div class="d-flex justify-content-center row">
 <div class="col-md-10">
@@ -24,20 +22,22 @@
  <div class="titlename rounded">
     <h2 class="titlename1">트레이너 소개</h2>
  </div>
- <ul class="nav nav-tabs">
+     <!-- 트레이너 선택 -->
+ <ul class="nav1 nav-tabs">
     <li class="nav-item">
-        <a class="nav-link " style=" color: #1b1b55; background-color: #F7F6FB;" aria-current="page" href="../healthtouch/trainerprofile.html">사공유연</a>
+        <a class="nav-link " style=" color: #1b1b55; background-color: #F7F6FB;" aria-current="page" href="/notice/trainerprofile">사공유연</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link " style=" color: #1b1b55; background-color: #F7F6FB;" aria-current="page" href="../healthtouch/trainerprofile1.html">곽머슬</a>
+        <a class="nav-link " style=" color: #1b1b55; background-color: #F7F6FB;" aria-current="page" href="/notice/trainerprofile1">곽머슬</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " style=" color: #1b1b55; background-color: #F7F6FB;" aria-current="page" href="../healthtouch/trainerprofile2.html">표로틴</a>
+         <a class="nav-link " style=" color: #1b1b55; background-color: #F7F6FB;" aria-current="page" href="/notice/trainerprofile2">표로틴</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active " style=" background-color: #1b1b55; color: #F7F6FB;" aria-current="page"  href="../healthtouch/trainerprofile3.html">박단단</a>
+       <a class="nav-link active " style=" background-color: #1b1b55; color: #F7F6FB;" aria-current="page" href="/notice/trainerprofile3">박단단</a>
       </li>
   </ul>
+    <!-- 트레이너 정보조회 -->
  <div class="trn rounded">
   
     <section class="section about-section gray-bg" id="about">
@@ -48,7 +48,7 @@
                         <div style="display: grid;">
                             <span class="dark-color" style="font-size: 20px; font-weight: bolder;">박단단</span>
                             <pan class="theme-color lead" style="font-size: 15px; font-weight:bold;">마이네임! 이즈! 박단단!</pan>
-                        </div>
+                        </div> 
                         <div class="row about-list">
                             <div class="col-md-10">
                                 <div class="media">
@@ -72,10 +72,11 @@
                 </div>
                 <div class="col-lg-5 text-center">
                     <div class="about-avatar">
-                    	<img class="rounded" src="images/trainer-park.png"></img> 
+                    	<img class="rounded" src="../images/trainer-park.png"></img> 
                     </div>
                 </div>
             </div>
+                  <!-- 트레이너 후기조회 -->
             <div class="counter">
                 <div class="row">
                     <div >
@@ -109,7 +110,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div><!-- End -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -118,11 +119,6 @@
 
 </div>
 
-
-
-    <!--Container Main end-->
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js'></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 </body>
 </html> 
