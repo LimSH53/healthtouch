@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,6 +29,7 @@ public class NoticeController {
 	private String fileDownloadDirectory;
 	
 	
+	
 	@Autowired
 	public NoticeController(NoticeService noticeService) {
 		this.noticeService= noticeService;
@@ -44,16 +47,9 @@ public class NoticeController {
 		return mv;
 	}
 	
-	 
-
-	@GetMapping("/noticedetail")
-	public String noticeDetail() {
-		
-		return "notice/noticedetail";
-	}
-		
-	@RequestMapping("/noticedetail")
-	public ModelAndView selectBoardDetail (@RequestParam int noticeNo) throws Exception {
+	//공지사항 상세조회 
+	@RequestMapping("/noticedetail/{noticeNo}")
+	public ModelAndView selectBoardDetail (@PathVariable("noticeNo") @RequestParam int noticeNo) throws Exception {
 		ModelAndView mv = new ModelAndView("/notice/noticedetail");
 		
 		NoticeDTO notice = noticeService.selectNoticeDetail(noticeNo);
@@ -64,14 +60,6 @@ public class NoticeController {
 	}
 	
 	
-	
-	@GetMapping("/noticemodify")
-	public String noticeModify() {
-		
-		return "notice/noticemodify";
-	}
-	
-	
 	//공지사항 등록 페이지 연결
 	@GetMapping("/noticeregist")
 	public String noticeRegist() {
@@ -79,15 +67,45 @@ public class NoticeController {
 		return "notice/noticeregist";
 	}
 	
-	// multipartHttpServletRequest 사용해 인터페이스에 업로드된 파일을 처리
-	@GetMapping("/registnotice")
+	//공지사항 등록
+	@RequestMapping("/registnotice")
 		public String registNotice(@ModelAttribute NoticeDTO notice) throws Exception {
 			noticeService.registNotice(notice);
 			
-			return "redirect:/notice/notice";
+			//객제 재사용
+			return "forward:/notice/notice";  
+			
+	}
+	
+	//공지사항 수정 페이지 연결
+	@RequestMapping("/noticemodify/{noticeNo}")
+	public String noticeModify(@PathVariable("noticeNo") int noticeNo, Model model)throws Exception  {
+		model.addAttribute("detail", noticeService.selectNoticeDetail(noticeNo));
+		
+		return "notice/noticemodify";
+	}
+	
+	//공지사항 수정
+	@GetMapping("/modifyNotice")
+	public String modifyNotice(@ModelAttribute NoticeDTO notice) throws Exception {
+		noticeService.modifyNotice(notice);
+		int notNo = notice.getNoticeNo();
+		String noticeNo =Integer.toString(notNo);
+		
+		return "redirect:/notice/noticedetail/"+noticeNo;
+	}
+
+	//공지사항 삭제
+	@RequestMapping("/delete/{noticeNo}")
+	public String deleteNotice (@PathVariable("noticeNo") int noticeNo) throws Exception {
+		
+		noticeService.deleteNotice(noticeNo);
+		return "redirect:/notice/notice";
+		
+	}
+		
 		
 }
 		
 	
-}
 		

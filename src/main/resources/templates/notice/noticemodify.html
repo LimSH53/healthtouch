@@ -25,24 +25,24 @@
    <!-- 공지사항 수정페이지 -->
 <div class="notice rounded">
   <div class="regist">
-    <form class="needs-validation" validate>
+    <form class="needs-validation" th:object=${NoticeDTO} th:action="@{/notice/notice}" method="post"validate>
     <div id="regist-title">
-      <label for="firstName" class="form-label" style="font-size: 15px;">제목</label>
-        <input type="text" class="form-control" id="content1" name="content" placeholder="내용을 입력하세요." required>
+      <label for="title" class="form-label" style="font-size: 15px;">제목</label>
+        <input th:value="{detail.noticeTitle}" type="text" class="form-control" id="content1" name="title" placeholder="내용을 입력하세요." required>
     </div>
       <div id="regist-file" >
         <label for="firstName" class="form-label" style="font-size: 15px;">첨부파일</label>
         <input type="file" name="FileName">
     </div>
     <div class="contentwritebox">
-      <label for="firstName" class="form-label"><strong>내용</strong></label>
-   	  <textarea class="regist-content form-control" type="text" placeholder="Tell us about yourself" required> </textarea> 
+      <label for="content" class="form-label"><strong>내용</strong></label>
+   	  <textarea th:value="{detail.noticeContent}"  class="regist-content form-control" type="text" placeholder="Tell us about yourself" name="content" required> </textarea> 
       <div class="invalid-feedback">
           내용을 입력하세요
       </div>
   </div>
   <button type="submit" class="btn btn-outline-secondary" id="noticemodify">등록</button>
-  <button type="button" class="btn btn-outline-secondary ">취소</button>
+  <button type="submit" class="btn btn-outline-secondary ">취소</button>
       <script>
 			$().ready(function () {
             $("#noticemodify").click(function () {

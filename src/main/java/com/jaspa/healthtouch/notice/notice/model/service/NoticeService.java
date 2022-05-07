@@ -12,14 +12,21 @@ public interface NoticeService {
 		
 		//공지사항 조회
 		List<NoticeDTO> noticeList() throws Exception ;
+		
+		//공지사항 상세 
+		NoticeDTO selectNoticeDetail(int noticeNo) throws Exception ;
 
 		
 		//공지사항 등록
-		void registNotice(NoticeDTO notice) throws Exception;
-
-
-		NoticeDTO selectNoticeDetail(int noticeNo) throws Exception ;
-
+		int registNotice(NoticeDTO notice) throws Exception;
+	
+		
+		//공지사항 수정  
+		int modifyNotice(NoticeDTO notice) throws Exception;
+		
+		//공지사항 삭제
+		int deleteNotice(int noticeNo) throws Exception;
+		
 
 
 	

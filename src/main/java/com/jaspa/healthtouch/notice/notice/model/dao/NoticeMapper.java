@@ -15,14 +15,22 @@ public interface NoticeMapper {
 	//공지사항 조회
 	List<NoticeDTO> noticeList()throws Exception;
 	
+	//공지사항 상세조회
+	NoticeDTO selectNoticeDetail(int noticeNo)throws Exception;
+	
+	//공지사항 조회수
+	void viewCount(int noticeNo)throws Exception;
+	
 	
 	//공지사항 등록 
-	void registNotice(NoticeDTO notice) throws Exception;
-
+	int registNotice(NoticeDTO notice) throws Exception;
 	
-	NoticeDTO selectNoticeDetail(int noticeNo)throws Exception;
-
-	void viewCount(int noticeNo)throws Exception;
+	//공지사항 수정  
+	int modifyNotice(NoticeDTO notice) throws Exception;
+	
+	//공지사항 삭제
+	int deleteNotice(int noticeNo) throws Exception;
+	
 
 	
 	

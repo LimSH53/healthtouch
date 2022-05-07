@@ -4,6 +4,9 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.jaspa.healthtouch.login.model.dto.MemberDTO;
+import com.jaspa.healthtouch.login.model.dto.MemberRoleDTO;
+
 import lombok.Data;
 
 @Data
@@ -18,5 +21,6 @@ public class NoticeDTO {
 	private Date noticeEditDate;
 	private int noticeView;
 
+	private MemberDTO member;
 }
  

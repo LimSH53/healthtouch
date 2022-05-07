@@ -24,22 +24,23 @@
      <!-- 공지사항 등록페이지 -->
 <div class="notice rounded">
   <div class="regist">
-    <form class="needs-validation" method="post" action="/notice/registnotice"  validate>
+    <form th:object=${NoticeDTO} th:action="@{/notice/registnotice}" class="needs-validation" method="post"enctype="multipart/form-data" validate>
     <div id="regist-title">
-      <label for="firstName" class="form-label" style="font-size: 15px;">제목</label>
-        <input type="text" class="form-control" id="content1" name="title" placeholder="제목을 입력하세요." required>
-    </div>
-      <div id="regist-file" >
-        <label for="firstName" class="form-label" style="font-size: 15px;">첨부파일</label>
-        <input type="file"  name="FileName">
-    </div>
+      <label for="title" class="form-label" style="font-size: 15px;"  name="title">제목</label>
+        <input th:field="*{noticeTitle}" type="text" class="form-control" id="content1" name="title" placeholder="제목을 입력하세요." required>
+  
     <div class="contentwritebox">
       <label for="firstName" class="form-label"><strong>내용</strong></label>
-   	  <textarea class="regist-content form-control" type="text" name="content" placeholder="내용을 입력하세요." required> </textarea> 
-      <div class="invalid-feedback">
-          내용을 입력하세요
-      </div>
+   	  <textarea th:field="*{noticeContent}" class="regist-content form-control" name="content" placeholder="내용을 입력하세요." required> </textarea> 
   </div>  
+  <hr id="line">
+    </div>
+       <div id="regist-file" >
+        <label for="firstName" class="form-label" style="font-size: 15px;">첨부파일</label>
+        <input type="file" name="file">
+        <a href="#this" class="btn" id="delete" name="delete">삭제</a>
+    </div>
+    <hr id="line">
    <button type="submit" class="btn btn-outline-secondary" value="등록"  name="submit"  id="noticeregist">등록</button>
   <button type="button" class="btn btn-outline-secondary "value="취소"  name="cancel"  >취소</button>
       <script>
