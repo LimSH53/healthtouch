@@ -46,8 +46,15 @@ public class NoticeServiceImpl implements NoticeService{
 		}
 	
 	//공시사항 파일 등록(파일 업로드)
+	@Override
 	public int insertFile(AttachmentDTO file) throws Exception{
 		return noticeMapper.insertFile(file);
+	}
+	
+	//공시사항 파일 등록(파일 다운로드)
+	@Override
+	public AttachmentDTO fileDetail(int noticeNo)throws Exception{
+		return noticeMapper.fileDetail(noticeNo);
 	}
 	
 	//공지사항 수정

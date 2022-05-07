@@ -141,6 +141,17 @@
         )
 	</insert>
 	
+	<!-- 공지사항 파일 다운로드 -->
+	<select id="fileDetail" parameterType="int"  resultMap="attachmentResultMap" >
+	
+	SELECT *
+	FROM TBL_ATTACHMENT		
+	WHERE  
+		NOT_NO = #{noticeNo}
+		
+	</select>
+	
+	
 	<!-- 공지사항 수정 -->
 	<update id="modifyNotice" >
 	UPDATE TBL_NOTICE

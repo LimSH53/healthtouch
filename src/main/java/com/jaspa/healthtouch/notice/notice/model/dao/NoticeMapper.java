@@ -20,15 +20,15 @@ public interface NoticeMapper {
 	
 	//공지사항 조회수
 	void viewCount(int noticeNo)throws Exception;
-	
-	
+	 
 	//공지사항 등록 
 	int registNotice(NoticeDTO notice) throws Exception;
 	
-	
 	//공시사항 파일 등록(파일 업로드)
 	int insertFile(AttachmentDTO file) throws Exception;
-	
+		
+	//공시사항 파일 등록(파일 다운로드)
+	AttachmentDTO fileDetail(int noticeNo)throws Exception;
 	
 	//공지사항 수정  
 	int modifyNotice(NoticeDTO notice) throws Exception;

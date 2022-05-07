@@ -45,6 +45,15 @@
   <hr id="line">
     <div  th:text="${notice.noticeContent}" id="bo_v_con" style="font-size: 12px;">
     </div>
+  <hr id="line">
+       <div id="regist-file" >
+        <label for="firstName" class="form-label" style="font-size: 15px;">첨부파일</label>
+        <a th:if="${file}" th:href="@{/notice/fileDown/{noticeNo} (noticeNo=${file.noticeNo})}">
+        [[${file.file}]]
+        </a>
+    </div>
+    <hr id="line">
+    
 	  <!-- 공지사항 목록, 수정,삭제 버튼 -->
     <div style="display:-webkit-box ">
       <button th:formaction="@{/notice/notice}" type="button" class="list_btn btn btn-outline-secondary">목록</button>
