@@ -7,13 +7,19 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.jaspa.healthtouch.notice.notice.model.dto.AttachmentDTO;
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
+import com.jaspa.healthtouch.paging.SearchCriteria;
 
 @Mapper
 public interface NoticeMapper {
 	
 	
 	//공지사항 조회
-	List<NoticeDTO> noticeList()throws Exception;
+	List<NoticeDTO> noticeList(SearchCriteria scri)throws Exception;
+	
+	
+	//공지사항 페이지 조회
+	int listNoticeCount(SearchCriteria scri) throws Exception;
+	
 	
 	//공지사항 상세조회
 	NoticeDTO selectNoticeDetail(int noticeNo)throws Exception;

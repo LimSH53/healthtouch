@@ -10,6 +10,7 @@
 		<result property="noticeDate" column="NOT_DATE"/>
 		<result property="noticeEditDate" column="NOT_EDIT_DATE"/>
 		<result property="noticeView" column="NOT_VIEW"/>
+		<result property="noticeCategory" column="NOT_CATEGORY"/>
 		
 		<association property="memberId" resultMap="memberResultMap"/>
 	</resultMap >
@@ -60,33 +61,39 @@
 	</resultMap>
 	
 	
-	<!-- 총 게시글 갯수 출력 -->
-	<select id="countNotice" resultMap="noticeResultMap">
-		SELECT 
-		COUNT(*) 
-		FROM  TBL_NOTICE 
-	</select>
-	
-	
-	
 	<!-- 공지사항 조회 -->
-	<select id="noticeList" resultMap="noticeResultMap">
-	SELECT 
-			*
-	  FROM  TBL_NOTICE 
-	 WHERE  NOT_DELETE = 'N'
-	    ORDER BY NOT_NO DESC
-	    	  
-	    
+	<select id="noticeList" resultMap="noticeResultMap" parameterType="com.jaspa.healthtouch.paging.SearchCriteria">
+  SELECT
+  	 *
+    FROM  TBL_NOTICE 
+    
+    WHERE NOT_DELETE = 'N'
+ 	<include refid="CommonMapper.search" />
+    ORDER BY  
+       NOT_NO DESC,
+       NOT_DATE DESC
+	<include refid="CommonMapper.paging" />
+  </select>
+
+	
+	<!-- 총 게시글 갯수 출력 -->
+	<select id="listNoticeCount" resultMap="noticeResultMap" parameterType="com.jaspa.healthtouch.paging.SearchCriteria" resultType="int">
+
+		SELECT 
+			COUNT(*) 
+		FROM  TBL_NOTICE 
+		WHERE NOT_DELETE = 'N'
+  	<include refid="CommonMapper.search" />
 	</select>
 	
+
 	<!-- 공지사항 상세조회 -->
 	<select id="selectNoticeDetail" resultMap="noticeResultMap">
 	SELECT 
-			*
+			
 	  FROM  TBL_NOTICE 
 	 WHERE  NOT_NO = #{noticeNo}
-	 AND	 NOT_DELETE = 'N'
+	 AND    NOT_DELETE = 'N'
 	</select>
 	
 	

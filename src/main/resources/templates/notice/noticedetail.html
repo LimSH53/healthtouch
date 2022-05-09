@@ -34,7 +34,7 @@
 <form th:object=${NoticeDTO} th:action="@{/notice/notice}" method="post">
 <div>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3">
-      <span th:text="${notice.noticeTitle}" class="bd_title" style="font-size: 15px;"></span>
+      <span th:text="${selectNoticeDetail.noticeTitle}" class="bd_title" style="font-size: 15px;"></span>
     </div>
     <div class="justify-content-md-center">
      <i class='bx bx-user' style="font-size: 12px;"><span th:text="${notice.memberId}" class="mr-1"></span> </i> 
@@ -43,7 +43,7 @@
     </div>
   </div>
   <hr id="line">
-    <div  th:text="${notice.noticeContent}" id="bo_v_con" style="font-size: 12px;">
+    <div  th:text="${selectNoticeDetail.noticeContent}" id="bo_v_con" style="font-size: 12px;">
     </div>
   <hr id="line">
        <div id="regist-file1" >

@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +18,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,11 +28,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.jaspa.healthtouch.login.model.dto.UserImpl;
 import com.jaspa.healthtouch.notice.notice.model.dto.AttachmentDTO;
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
 import com.jaspa.healthtouch.notice.notice.model.service.NoticeService;
+import com.jaspa.healthtouch.paging.Criteria;
+import com.jaspa.healthtouch.paging.PageMaker;
+import com.jaspa.healthtouch.paging.SearchCriteria;
+
 
 
 
@@ -53,20 +57,23 @@ public class NoticeController {
 	
 	}
 	
+	
 	//공지사항 조회 
-	@RequestMapping("/notice")
-	 public ModelAndView  noticeList() throws Exception{
-		 ModelAndView mv = new ModelAndView("/notice/notice");
-		
-		List<NoticeDTO> noticeList = noticeService.noticeList();
-		 
-		 mv.addObject("noticeList", noticeList);
-		return mv;
-	}
+	@GetMapping("/notice")
+	 public void  noticeList(Model model, @ModelAttribute("cri") SearchCriteria scri)throws Exception {
+
+			model.addAttribute("list", noticeService.noticeList(scri));
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCri(scri);
+			pageMaker.setTotalCount(noticeService.listNoticeCount(scri));
+
+			model.addAttribute("pageMaker", pageMaker);
+		}
+
 	
 	//공지사항 상세조회 
 	@RequestMapping("/noticedetail/{noticeNo}")
-	public String selectNoticeDetail (@PathVariable("noticeNo") int noticeNo,Model model) throws Exception {
+	public String selectNoticeDetail (@PathVariable("noticeNo") int noticeNo,Model model,@AuthenticationPrincipal UserImpl user) throws Exception {
 		model.addAttribute("notice", noticeService.selectNoticeDetail(noticeNo));
 	
 		if(noticeService.fileDetail(noticeNo)== null) {

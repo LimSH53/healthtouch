@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.jaspa.healthtouch.notice.notice.model.dao.NoticeMapper;
 import com.jaspa.healthtouch.notice.notice.model.dto.AttachmentDTO;
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
+import com.jaspa.healthtouch.paging.SearchCriteria;
+
 
 
 @Service("noticeService")
@@ -23,9 +25,16 @@ public class NoticeServiceImpl implements NoticeService{
 		
 	//공지사항 조회
 	  @Override
-		public List<NoticeDTO> noticeList() throws Exception {
-		        return noticeMapper.noticeList();
+		public List<NoticeDTO> noticeList(SearchCriteria scri) throws Exception {
+		        return noticeMapper.noticeList(scri);
 		    }
+	  
+	//공지사항 페이지 조회
+	  @Override
+	  public int listNoticeCount(SearchCriteria scri) throws Exception{
+		  return noticeMapper.listNoticeCount(scri);
+	  }
+	  
 	
 	//공지사항 상세조회
 	  @Override
