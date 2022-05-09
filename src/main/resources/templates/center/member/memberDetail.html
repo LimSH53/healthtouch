@@ -61,13 +61,15 @@
 		                </div>
 		            </div>
 		            <br>
-		            <div class="form-group row">
-		                <label class="col-sm-2 col-form-label">담당 트레이너</label>
-		                <div class="col-sm-10">
-		                	<input type="text" class="form-control" name="trainer" id="trainer" value="김헬스" required readonly>
-		                </div>
-		            </div>
-		            <br>
+		            <th:block th:if="*{memberRole.authorityCode == 1}">
+			            <div class="form-group row">
+			                <label class="col-sm-2 col-form-label">담당 트레이너</label>
+			                <div class="col-sm-10">
+			                	<input type="text" class="form-control" name="trainer" id="trainer" value="김헬스" required readonly>
+			                </div>
+			            </div>
+			            <br>
+		            </th:block>
 		            <div class="form-group">
 		            	<div class="row">
 			            	<label class="col-sm-2 col-form-label pt-0" for="gender">성별</label>
@@ -96,6 +98,7 @@
 		            	</div>
 		            </div>
 				<br>
+				<th:block th:if="*{memberRole.authorityCode == 1}">
 				<hr>
 				<br>
 				<h4>잔여 기간 및 횟수</h4>
@@ -142,6 +145,7 @@
 		                </div>
 		            </div>
 		            <br>
+		            </th:block>
 		            <br>
 		            <br>
 					<div class="d-grid col-2 mx-auto">
