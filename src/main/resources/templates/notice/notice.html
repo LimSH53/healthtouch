@@ -30,7 +30,7 @@
  </div>
  <!-- 공지사항 검색 -->
  <th:block layout:fragment="search">
- <form id="searchForm" th:action="@{/center/member/memberInfo}" method="get" class="input-group mb-3 " role="form">
+ <form id="searchForm" th:action="@{/notice/notice}" method="get" class="input-group mb-3 " role="form">
   <div class="row search">
       <div class="col-md-12" >
       	<input type="hidden" name="currentPageNo" value="1"/>
@@ -41,16 +41,9 @@
           <option value="content" th:selected="${#strings.equals(params.searchType, 'content')}">내용</option>
         </select>
           <div  class="input-group mb-3" >
-           <input type="text" name="keyword" id="keyword"  th:value="${params.searchKeyword}"  class="form-control input-text" placeholder="검색" >
+           <input type="text" name="searchKeyword" id="searchKeyword"  th:value="${params.searchKeyword}"  class="form-control input-text" placeholder="검색" >
               <div class="search_btn input-group-append"> <button class="btn btn-sm"  id="searchBtn" type="button" style="height: 32px;"><i class="bx bx-search"></i></button> </div>
           </div>
-		    <script th:inline="javascript">
-		      $(function(){
-		        $('#searchBtn').click(function() {
-		          self.location = "list" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
-		        });
-		      });   
-		    </script>
       </div>
   </div>
   </form>
@@ -69,7 +62,7 @@
 <tbody class="table-body" >
 <tr class="cell-1" th:if="${not #lists.isEmpty( noticeList )}" th:each="list : ${noticeList}"  >
   <td class="text-center"th:text="${list.noticeNo}"></td>
- <td class="col-md-auto title" id="title"><a th:href="@{/notice/noticedetail/{noticeNo}}" th:text="${list.title}"></a></td>
+ <td class="col-md-auto title" id="title"><a th:href="@{/notice/noticedetail/{noticeNo}}" th:text="${list.noticeTitle}"></a></td>
   <td th:text="${list.noticeView}"></td>
   <td th:text="${#dates.format(list.noticeDate,'yyyy-MM-dd')}"></td>
 </tr>
@@ -83,19 +76,19 @@
 <button sec:authorize="hasRole('ROLE_CENTER')" th:onclick="'location.href=\''+@{/notice/noticeregist} + '\''" type="button" class="btn btn-outline-secondary">글작성</button>
  <!-- 공지사항 페이징 -->
 <th:block layout:fragment="paging">
-<nav>
+<nav th:fragment="pagination" th:if="${params != null and params.paginationInfo.totalRecordCount > 0}" th:object="${params.paginationInfo}" th:with="info=${params.paginationInfo}" aria-label="Page navigation" class="text-center">
   <ul class="pagination flex-wrap d-flex justify-content-center">
       <li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.firstPage - 1)} ]])"> 
-      	<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true"><i class="bx bxs-chevron-left"></i></a>
+      	<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true"><i class="bx bxs-chevron-left"></i></span></a>
       </li>
       <li class="page-item"  th:each="pageNo : *{#numbers.sequence( firstPage, lastPage )}" th:class="${pageNo == params.currentPageNo} ? 'active'" > 
       	<a class="page-link" href="javascript:void(0)" th:text="${pageNo}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(pageNo)} ]])"></a>
       </li>
       <li class="page-item"  th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.lastPage + 1)} ]])"> 	
-      	<a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true" ><i class='bx bxs-chevron-right'></i></a>
+      	<a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true" ><i class='bx bxs-chevron-right'></i></span></a>
       </li>
   </ul>
-</nav>
+</nav >
 </th:block>
 </div>
 </div>

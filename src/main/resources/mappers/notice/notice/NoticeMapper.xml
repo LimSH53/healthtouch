@@ -90,14 +90,14 @@
 				  	 	,C.NOT_EDIT_DATE
 				  	 	,C.NOT_VIEW
   	 	
-    FROM  TBL_NOTICE C
+    			FROM  TBL_NOTICE C
     	<if test="searchKeyword != null and searchKeyword != ''">
 							<where>
 								<if test="searchType == 'title'">
-									A.NOT_TITLE LIKE '%' || #{searchKeyword} || '%'
+									C.NOT_TITLE LIKE '%' || #{searchKeyword} || '%'
 								</if>
 								<if test="searchType == 'content'">
-									A.NOT_CONTENT LIKE '%' || #{searchKeyword} || '%'
+									C.NOT_CONTENT LIKE '%' || #{searchKeyword} || '%'
 								</if>
 							</where>
 						</if>
@@ -106,20 +106,20 @@
 		  		  WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
 		  		  ]]>
 		  		 )A
-    JOIN  TBL_MEMBER D ON(A.NOT_MEMBER_ID = D.MEMBER_ID)
+	JOIN TBL_MEMBER D ON (A.NOT_MEMBER_ID = D.MEMBER_ID)
     WHERE A.RNUM >  #{ paginationInfo.firstRecordIndex }
-    AND   NOT_DELETE = 'N'
+    AND  A.NOT_DELETE = 'N'
     ORDER BY A.RNUM
   </select>
 
 	
 	<!-- 총 게시글 갯수 출력 -->
-	<select id="listNoticeCount" parameterType="com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO" resultType="int">
+	<select id="noticeFind" parameterType="com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO" resultType="int">
 
 		SELECT 
 			COUNT(*) 
-		FROM  TBL_NOTICE 
-		WHERE NOT_DELETE = 'N'
+		FROM TBL_NOTICE A 
+		WHERE A.NOT_DELETE = 'N'
   			<if test="searchKeyword != null and searchKeyword != ''">
 			<choose>
 				<when test="searchType != null and searchType != ''">
