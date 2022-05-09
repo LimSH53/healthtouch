@@ -1,5 +1,7 @@
 package com.jaspa.healthtouch.login.model.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.jaspa.healthtouch.login.model.dto.LoginLogDTO;
@@ -32,5 +34,9 @@ public interface MemberMapper {
 	String selectEncryptedPwd(String id);
 
 	void removeMember(String id);
+
+	List<MemberDTO> findAllMember(MemberDTO params);
+	
+	int findAllMemberTotalCount(MemberDTO params);
 
 }
