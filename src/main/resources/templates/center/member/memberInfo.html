@@ -81,7 +81,7 @@
 						<ul class="pagination flex-wrap d-flex justify-content-center" style="display: flex; border-radius: 0.25rem;">
 							<li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(1)} ]])">
 								<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-							</li>
+							</li>      
 							<li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.firstPage - 1)} ]])">
 								<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&lsaquo;</span></a>
 							</li>
