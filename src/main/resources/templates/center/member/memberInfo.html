@@ -19,7 +19,7 @@
 				<br>
 				<th:block layout:fragment="search">
 					<div id="adv-search" class="input-group">
-						<form id="searchForm" th:action="@{/center/member/memberInfo}" method="get" class="input-group mb-3 " role="form">
+						<form id="searchForm" th:action="@{/center/member/memberInfo}" method="get" class="input-group mb-3" role="form">
 							<input type="hidden" name="currentPageNo" value="1"/>
 							<input type="hidden" name="recordsPerPage" th:value="${params.recordsPerPage}"/>
 							<input type="hidden" name="pageSize" th:value="${params.pageSize}"/>
@@ -49,21 +49,26 @@
 								<th>성별</th>
 								<th>연령</th>
 								<th>연락처</th>
-								<th>회원권 종료일</th>
-								<th>담당 트레이너</th>
+								<th>회원 유형</th>
 								<th>상태</th>
 							</tr>
 						</thead>
 						<tbody class="table-body">
 							<tr class="cell-1 text-center" th:each="member : ${ memberList }">
 								<td th:text="${ member.name }"></td>
-								<td th:text="${ member.id }"></td>
+								<td>
+									<a th:href="|@{/center/member/memberDetail}${params.makeQueryString(params.currentPageNo)}&id=${ member.id }|" th:text="${ member.id }" style="color: #1b1b55"></a>
+								</td>
 								<td th:text="${ member.num }"></td>
 								<td th:text="${ member.gender }"></td>
 								<td th:text="${ member.age }"></td>
 								<td th:text="${ member.contact }"></td>
-								<td>2022-05-08</td>
-								<td>김헬스</td>
+								<th:block th:if="${ member.memberRole.authorityCode == 1 }">
+									<td>회원</td>
+								</th:block>
+								<th:block th:if="${ member.memberRole.authorityCode == 2 }">
+									<td>트레이너</td>
+								</th:block>
 								<td th:text="${ member.status }"></td>
 							</tr>
 						</tbody>
@@ -102,18 +107,6 @@
 			function movePage(uri, queryString) {
 				location.href = uri + queryString;
 			}
-			
-			/* function searchMemberInfo(form) {
-				var searchKeyword = document.getElementById("searchKeyword");
-				if(isEmpty(searchKeyword.value) == true) {
-					Swal.fire({
-	    				icon: 'warning',
-	    				text: '키워드를 입력해 주세요',
-		    		})
-		    		searchKeyword.focus();
-					return false;
-				}
-			} */
 			/*[- end of function -]*/
 			
 			/*]]>*/
