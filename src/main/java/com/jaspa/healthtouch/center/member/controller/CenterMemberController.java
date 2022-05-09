@@ -7,7 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jaspa.healthtouch.center.member.model.service.CenterMemberService;
 import com.jaspa.healthtouch.login.model.dto.MemberDTO;
@@ -32,5 +35,20 @@ public class CenterMemberController {
 		model.addAttribute("memberList", memberList);
 		
 		return "center/member/memberInfo";
+	}
+	
+	@GetMapping("/memberDetail")
+	public String memberDetail(@ModelAttribute("params") MemberDTO params, @RequestParam("id") String id, Model model) {
+		MemberDTO member = centerMemberService.getMemberDetail(id);
+		
+		model.addAttribute("member", member);
+		
+		return "center/member/memberDetail";
+	}
+	
+	@PostMapping("/modifyMemberType")
+	@ResponseBody
+	public void modifyMemberType(@RequestParam("memberId") String id) {
+		centerMemberService.modifyMemberType(id);
 	}
 }

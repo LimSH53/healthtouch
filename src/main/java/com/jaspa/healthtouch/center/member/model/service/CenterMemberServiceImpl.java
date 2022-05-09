@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jaspa.healthtouch.common.paging.PaginationInfo;
 import com.jaspa.healthtouch.login.model.dao.MemberMapper;
@@ -35,6 +36,17 @@ public class CenterMemberServiceImpl implements CenterMemberService {
 		}
 		
 		return memberList;
+	}
+
+	@Override
+	public MemberDTO getMemberDetail(String id) {
+		return memberMapper.findMemberById(id);
+	}
+
+	@Transactional
+	@Override
+	public void modifyMemberType(String id) {
+		memberMapper.modifyMemberType(id);
 	}
 
 }
