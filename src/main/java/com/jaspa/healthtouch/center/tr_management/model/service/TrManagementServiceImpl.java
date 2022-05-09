@@ -1,6 +1,7 @@
 package com.jaspa.healthtouch.center.tr_management.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,4 +27,14 @@ public class TrManagementServiceImpl implements TrManagementService{
 		return trainerMapper.selectAllTrainer();
 	}
 
+
+	@Override
+	public int deleteTrainer(Map<String, Object> commandMap) {
+		
+		return trainerMapper.deleteTrainer();
+	}
+
+
+	
+	
 }
