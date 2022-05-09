@@ -5,6 +5,10 @@ font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, '
 }
 
 
+.container{
+	max-width: 1786px;
+}
+
 .snippet-body{
 	display: flex;
     justify-content: center;
@@ -83,7 +87,7 @@ body {
 }
 
 #line{
-    border: #c4c4c4 solid 1px;
+    border: #e2e2e2 solid 1px;
     
 }
 
@@ -139,7 +143,7 @@ tbody td{
 }
 
 .btn {
-    font-size: 15px;
+    font-size: 10px;
     background: #F7F6FB;
     border-color: #1b1b55;
     color: #1b1b55;
@@ -262,6 +266,7 @@ tbody td{
 }
 
 #bo_v_con1{
+	min-height: 120px;
     white-space: break-spaces;
     font-size: 12px;
     line-height: 26px;

@@ -11,4 +11,9 @@ public class AttachmentDTO {
 	private String file;
 	private String editFile;
 	private long fileType;
+
+	private NoticeDTO notice;
+	
 }
+
+

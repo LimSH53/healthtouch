@@ -5,6 +5,10 @@
 }
 
 
+.container{
+	max-width: 1786px;
+}
+
 .nav1{
 	display: flex;
     overflow: hidden;
