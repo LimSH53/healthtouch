@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,11 +34,6 @@ import com.jaspa.healthtouch.login.model.dto.UserImpl;
 import com.jaspa.healthtouch.notice.notice.model.dto.AttachmentDTO;
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
 import com.jaspa.healthtouch.notice.notice.model.service.NoticeService;
-import com.jaspa.healthtouch.paging.Criteria;
-import com.jaspa.healthtouch.paging.PageMaker;
-import com.jaspa.healthtouch.paging.SearchCriteria;
-
-
 
 
 @Controller
@@ -60,14 +56,12 @@ public class NoticeController {
 	
 	//공지사항 조회 
 	@GetMapping("/notice")
-	 public void  noticeList(Model model, @ModelAttribute("cri") SearchCriteria scri)throws Exception {
+	 public String noticeList(Model model, @ModelAttribute("params") NoticeDTO params)throws Exception {
+			List<NoticeDTO> noticeList = noticeService.noticeList(params);
 
-			model.addAttribute("list", noticeService.noticeList(scri));
-			PageMaker pageMaker = new PageMaker();
-			pageMaker.setCri(scri);
-			pageMaker.setTotalCount(noticeService.listNoticeCount(scri));
-
-			model.addAttribute("pageMaker", pageMaker);
+			model.addAttribute("noticeList", noticeList);
+			
+			return "notice/notice";
 		}
 
 	

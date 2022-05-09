@@ -4,12 +4,13 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.jaspa.healthtouch.common.model.dto.CommonDTO;
 import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 
 import lombok.Data;
 
 @Data
-public class NoticeDTO  {
+public class NoticeDTO extends CommonDTO {
 
 	private int noticeNo;
 	private String memberId;

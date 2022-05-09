@@ -12,7 +12,7 @@
 		<result property="noticeView" column="NOT_VIEW"/>
 		<result property="noticeCategory" column="NOT_CATEGORY"/>
 		
-		<association property="memberId" resultMap="memberResultMap"/>
+		<association property="member" resultMap="memberResultMap"/>
 	</resultMap >
 	  
 	<resultMap type="com.jaspa.healthtouch.notice.notice.model.dto.AttachmentDTO" id="attachmentResultMap" >
@@ -62,28 +62,78 @@
 	
 	
 	<!-- 공지사항 조회 -->
-	<select id="noticeList" resultMap="noticeResultMap" parameterType="com.jaspa.healthtouch.paging.SearchCriteria">
-  SELECT
-  	 *
-    FROM  TBL_NOTICE 
-    
-    WHERE NOT_DELETE = 'N'
- 	<include refid="CommonMapper.search" />
-    ORDER BY  
-       NOT_NO DESC,
-       NOT_DATE DESC
-	<include refid="CommonMapper.paging" />
+	<select id="noticeList" resultMap="noticeResultMap" parameterType="com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO" >
+  SELECT A.RNUM
+  		,A.NOT_NO
+  	 	,A.NOT_MEMBER_ID
+  	 	,A.NOT_TITLE
+  	 	,A.NOT_CONTENT
+  	 	,A.NOT_DELETE
+  	 	,A.NOT_DATE
+  	 	,A.NOT_EDIT_DATE
+  	 	,A.NOT_VIEW
+  	FROM(SELECT ROWNUM RNUM
+  				,B.NOT_NO
+		  	 	,B.NOT_MEMBER_ID
+		  	 	,B.NOT_TITLE
+		  	 	,B.NOT_CONTENT
+		  	 	,B.NOT_DELETE
+		  	 	,B.NOT_DATE
+		  	 	,B.NOT_EDIT_DATE
+		  	 	,B.NOT_VIEW
+		   	FROM(SELECT  C.NOT_NO
+				  	 	,C.NOT_MEMBER_ID
+				  	 	,C.NOT_TITLE
+				  	 	,C.NOT_CONTENT
+				  	 	,C.NOT_DELETE
+				  	 	,C.NOT_DATE
+				  	 	,C.NOT_EDIT_DATE
+				  	 	,C.NOT_VIEW
+  	 	
+    FROM  TBL_NOTICE C
+    	<if test="searchKeyword != null and searchKeyword != ''">
+							<where>
+								<if test="searchType == 'title'">
+									A.NOT_TITLE LIKE '%' || #{searchKeyword} || '%'
+								</if>
+								<if test="searchType == 'content'">
+									A.NOT_CONTENT LIKE '%' || #{searchKeyword} || '%'
+								</if>
+							</where>
+						</if>
+					)B
+		  		  <![CDATA[
+		  		  WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
+		  		  ]]>
+		  		 )A
+    JOIN  TBL_MEMBER D ON(A.NOT_MEMBER_ID = D.MEMBER_ID)
+    WHERE A.RNUM >  #{ paginationInfo.firstRecordIndex }
+    AND   NOT_DELETE = 'N'
+    ORDER BY A.RNUM
   </select>
 
 	
 	<!-- 총 게시글 갯수 출력 -->
-	<select id="listNoticeCount" resultMap="noticeResultMap" parameterType="com.jaspa.healthtouch.paging.SearchCriteria" resultType="int">
+	<select id="listNoticeCount" parameterType="com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO" resultType="int">
 
 		SELECT 
 			COUNT(*) 
 		FROM  TBL_NOTICE 
 		WHERE NOT_DELETE = 'N'
-  	<include refid="CommonMapper.search" />
+  			<if test="searchKeyword != null and searchKeyword != ''">
+			<choose>
+				<when test="searchType != null and searchType != ''">
+					<choose>
+						<when test="searchType == 'title'">
+							AND A.NOT_TITLE LIKE '%' || #{searchKeyword} || '%'
+						</when>
+						<when test="searchType == 'content'">
+							AND A.NOT_CONTENT LIKE '%' || #{searchKeyword} || '%'
+						</when>
+					</choose>
+				</when>
+			</choose>
+		</if>
 	</select>
 	
 
