@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jaspa.healthtouch.login.model.dao.MemberMapper">
-	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberDTO" id="loginMemberResultMap">
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberDTO" id="memberResultMap">
 		<id property="id" column="MEMBER_ID"/>
 		<result property="pwd" column="MEMBER_PWD"/>
 		<result property="name" column="MEMBER_NAME"/>
@@ -36,7 +36,7 @@
 		<result property="ip" column="LOGIN_IP"/>
 	</resultMap>
 	
-	<select id="findMemberById" resultMap="loginMemberResultMap">
+	<select id="findMemberById" resultMap="memberResultMap">
 		SELECT A.MEMBER_ID
 			 , A.MEMBER_PWD
 			 , A.MEMBER_NAME
@@ -178,4 +178,104 @@
 		 WHERE MEMBER_ID = #{ id }
 		   AND MEMBER_STATUS = 'Y'
 	</update>
+	
+	<select id="findAllMember" parameterType="com.jaspa.healthtouch.login.model.dto.MemberDTO" resultMap="memberResultMap">
+		SELECT A.RNUM
+			 , A.MEMBER_ID
+			 , A.MEMBER_NAME
+			 , A.MEMBER_CONTACT
+			 , A.MEMBER_NUM
+			 , A.MEMBER_BIRTHDAY
+			 , A.MEMBER_AGE
+			 , A.MEMBER_GENDER
+			 , A.MEMBER_ADDRESS
+			 , A.MEMBER_STATUS
+			 , D.MEMBER_ID REF_MEMBER_ID
+			 , D.AUTHORITY_CODE REF_AUTHORITY_CODE
+			 , E.AUTHORITY_CODE REF_AUTHORITY_CODE2
+			 , E.AUTHORITY_NAME
+			 , E.AUTHORITY_DESC
+		  FROM (SELECT ROWNUM RNUM
+		  			 , B.MEMBER_ID
+		  			 , B.MEMBER_NAME
+		  			 , B.MEMBER_CONTACT
+		  			 , B.MEMBER_NUM
+		  			 , B.MEMBER_BIRTHDAY
+		  			 , B.MEMBER_AGE
+		  			 , B.MEMBER_GENDER
+		  			 , B.MEMBER_ADDRESS
+		  			 , B.MEMBER_STATUS
+		  		  FROM (SELECT C.MEMBER_ID
+		  		  			 , C.MEMBER_NAME
+		  		  			 , C.MEMBER_CONTACT
+		  		  			 , C.MEMBER_NUM
+		  		  			 , C.MEMBER_BIRTHDAY
+		  		  			 , C.MEMBER_AGE
+		  		  			 , C.MEMBER_GENDER
+		  		  			 , C.MEMBER_ADDRESS
+		  		  			 , C.MEMBER_STATUS
+		  		  		  FROM TBL_MEMBER C
+		  		  		<if test="searchKeyword != null and searchKeyword != ''">
+							<where>
+								<if test="searchType == 'name'">
+									C.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+								</if>
+								<if test="searchType == 'id'">
+									C.MEMBER_ID LIKE '%' || #{searchKeyword} || '%'
+								</if>
+								<if test="searchType == 'num'">
+									C.MEMBER_NUM LIKE '%' || #{searchKeyword} || '%'
+								</if>
+								<if test="searchType == 'contact'">
+									C.MEMBER_CONTACT LIKE '%' || #{searchKeyword} || '%'
+								</if>
+								<!-- <when test="'trainer'.equals(searchType)">
+									AND MEMBER_ID LIKE CONCAT('%', #{searchKeyword}, '%')
+								</when> -->
+							</where>
+						</if>
+		  		  ) B
+		  		  <![CDATA[
+		  		  WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
+		  		  ]]>
+		         ) A
+		    LEFT JOIN TBL_MEMBER_ROLE D ON (A.MEMBER_ID = D.MEMBER_ID)
+		    LEFT JOIN TBL_AUTHORITY E ON (D.AUTHORITY_CODE = E.AUTHORITY_CODE)
+		   WHERE A.RNUM > #{ paginationInfo.firstRecordIndex }
+		     AND A.MEMBER_STATUS = 'Y'
+		     AND E.AUTHORITY_CODE != 3
+		   ORDER BY A.RNUM
+	</select>
+	
+	<select id="findAllMemberTotalCount" parameterType="com.jaspa.healthtouch.login.model.dto.MemberDTO" resultType="int">
+		SELECT COUNT(*)
+		  FROM TBL_MEMBER A
+		  LEFT JOIN TBL_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
+		  LEFT JOIN TBL_AUTHORITY C ON (B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+		 WHERE A.MEMBER_STATUS = 'Y'
+		   AND C.AUTHORITY_CODE != 3
+		<if test="searchKeyword != null and searchKeyword != ''">
+			<choose>
+				<when test="searchType != null and searchType != ''">
+					<choose>
+						<when test="searchType == 'name'">
+							AND A.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+						</when>
+						<when test="searchType == 'id'">
+							AND A.MEMBER_ID LIKE '%' || #{searchKeyword} || '%'
+						</when>
+						<when test="searchType == 'num'">
+							AND A.MEMBER_NUM LIKE '%' || #{searchKeyword} || '%'
+						</when>
+						<when test="searchType == 'contact'">
+							AND A.MEMBER_CONTACT LIKE '%' || #{searchKeyword} || '%'
+						</when>
+						<!-- <when test="'trainer'.equals(searchType)">
+							AND MEMBER_ID LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when> -->
+					</choose>
+				</when>
+			</choose>
+		</if>
+	</select>
 </mapper>
