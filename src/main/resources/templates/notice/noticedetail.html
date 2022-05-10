@@ -31,26 +31,19 @@
  </div>
  <!-- 공지사항 상세조회 -->
 <div class="notice rounded">
-<form th:object=${NoticeDTO} th:action="@{/notice/notice}" method="post">
+<form th:object=${detail} th:action="@{/notice/noticedetail}" method="get">
 <div>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3">
-      <span th:text="${selectNoticeDetail.noticeTitle}" class="bd_title" style="font-size: 15px;"></span>
+      <span  name="title"  th:value="*{noticeTitle}" class="bd_title" style="font-size: 15px;"></span>
     </div>
     <div class="justify-content-md-center">
-     <i class='bx bx-user' style="font-size: 12px;"><span th:text="${notice.memberId}" class="mr-1"></span> </i> 
+     <i class='bx bx-user' style="font-size: 12px;"><span th:text="${notice.memberId}" th:value class="mr-1"></span> </i> 
      <i class='bx bx-time-five'  style="font-size: 12px;"><span th:text="${#dates.format(notice.noticeDate, 'yyyy-MM-dd')}"class="mr-1"> </span></i> 
-     <i class='bx bx-show-alt' style="font-size: 12px;"> <span th:text="${notice.noticeView}"class="mr-1"></span> Views　</i> 
+     <i class='bx bx-show-alt' style="font-size: 12px;"> <span th:text="${notice.noticeView}" class="mr-1"></span> Views　</i> 
     </div>
   </div>
   <hr id="line">
-    <div  th:text="${selectNoticeDetail.noticeContent}" id="bo_v_con" style="font-size: 12px;">
-    </div>
-  <hr id="line">
-       <div id="regist-file1" >
-        <label for="firstName" class="form-label" style="font-size: 10px;">첨부파일</label>
-        <a th:if="${file}" th:href="@{/notice/fileDown/{noticeNo} (noticeNo=${file.noticeNo})}">
-        [[${file.file}]]
-        </a>
+    <div name="content"  th:value="*{noticeContent}" id="bo_v_con" style="font-size: 12px;">
     </div>
     <hr id="line">
     
@@ -58,8 +51,8 @@
     <div style="display:-webkit-box ">
       <button th:onclick="'location.href=\''+@{/notice/notice} + '\''"type="button" class="list_btn btn btn-outline-secondary">목록</button>
       <div sec:authorize="hasRole('ROLE_CENTER')" class=" regist-btn" style="margin-left: 565px; ">
-        <button th:onclick="'location.href=\''+ @{/notice/noticemodify/{noticeNo}(noticeNo=${notice.noticeNo})}+ '\''" type="button" class="btn btn-outline-secondary " value="수정">수정</button>
-        <button th:onclick="deleteNotice([[ ${notice.noticeNo}]])" type="button" class="btn btn-outline-secondary " value="삭제" id="noticedelete">삭제</button>
+        <a  th:href="@{/notice/noticemodify/{noticeNo}(noticeNo=${notice.noticeNo})}"  type="button" class="btn btn-outline-secondary " value="수정">수정</a>
+        <a  th:href="@{/notice/delete/{noticeNo}(noticeNo=${notice.noticeNo})}" type="button" class="btn btn-outline-secondary " value="삭제" id="noticedelete">삭제</a>
      	    
 		        <script>
 			                $().ready(function () {

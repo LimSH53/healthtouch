@@ -57,18 +57,7 @@ private final NoticeMapper noticeMapper;
 
 		}
 	
-	//공시사항 파일 등록(파일 업로드)
-	@Override
-	public int insertFile(AttachmentDTO file){
-		return noticeMapper.insertFile(file);
-	}
-	
-	//공시사항 파일 등록(파일 다운로드)
-	@Override
-	public AttachmentDTO fileDetail(int noticeNo){
-		return noticeMapper.fileDetail(noticeNo);
-	}
-	
+
 	//공지사항 수정
 	@Override
 	public int modifyNotice(NoticeDTO notice){
