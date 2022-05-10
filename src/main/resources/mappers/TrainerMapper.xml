@@ -52,11 +52,20 @@
 	</select>
 	
 	 
-	 <update id=" deleteTrainer">
-	 UPDATE TBL_TRN_INFO
-	    SET TRN_HOLD ="퇴사"
-	  WHERE TRN_NUM = #{ trNum}
-	 </update>
+	<!-- 트레이너 상세정보 -->
+	<select id="detailTrainerById" resultMap="trainerInfoResultMap">
+		SELECT
+				M.MEMBER_NAME
+			  , M.MEMBER_GENDER
+			  , M.MEMBER_ID
+			  , M.MEMBER_CONTACT
+			  , TI.TRN_CAREER
+			  , TI.TRN_HOLD
+		 FROM TBL_MEMBER M
+		 JOIN TBL_TRN_INFO TI ON(M.MEMBER_ID = TI.TRN_INFO_MEMBER_ID)
+		 JOIN TBL_MEMBER_ROLE MR ON(M.MEMBER_ID = MR.MEMBER_ID)
+		 WHERE M.MEMBER_ID = #{ trId }
+	</select>
 	 
 	 
 

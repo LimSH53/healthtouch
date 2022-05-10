@@ -29,10 +29,13 @@ public class TrManagementServiceImpl implements TrManagementService{
 
 
 	@Override
-	public int deleteTrainer(Map<String, Object> commandMap) {
+	public TrainerInfoDTO trainerDetail(String trId) {
 		
-		return trainerMapper.deleteTrainer();
+		return trainerMapper.detailTrainerById(trId);
 	}
+
+
+	
 
 
 	

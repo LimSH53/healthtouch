@@ -10,7 +10,7 @@ public interface TrManagementService {
 
 	List<TrainerInfoDTO> selectAllTrainer();
 
-	int deleteTrainer(Map<String, Object> commandMap);
+	TrainerInfoDTO trainerDetail(String trId);
 
 
 	
