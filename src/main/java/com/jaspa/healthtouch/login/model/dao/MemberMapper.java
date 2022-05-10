@@ -40,4 +40,5 @@ public interface MemberMapper {
 	int findAllMemberTotalCount(MemberDTO params);
 
 	void modifyMemberType(String id);
+
 }
