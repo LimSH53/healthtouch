@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jaspa.healthtouch.center.product.model.dto.ProductDTO;
 import com.jaspa.healthtouch.center.tr_management.model.dto.TrainerInfoDTO;
 import com.jaspa.healthtouch.center.tr_management.model.service.TrManagementService;
 
@@ -63,6 +64,7 @@ public class CenterTrainerController {
 //        }
 //        return result;
 //       }
+	
 	@GetMapping("/trainerDetail")
 	public String trainerDetail(@ModelAttribute("params") TrainerInfoDTO params, @RequestParam("id") String id, Model model) {
 		
@@ -72,6 +74,7 @@ public class CenterTrainerController {
 		
 		return "center/tr_management/trainerDetail";
 	}
+	
 	
 	
 	
