@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jaspa.healthtouch.member.product.model.dao.MemberProMapper">
+	
+	<resultMap type="com.jaspa.healthtouch.center.product.model.dto.ProductDTO" id="productResultMap">
+		<id property="no" column="PRO_NO"/>
+		<result property="categoryNo" column="PRO_CATE_NO"/>
+		<result property="name" column="PRO_NAME"/>
+		<result property="price" column="PRO_PRICE"/>
+		<result property="contents" column="PRO_CONTENTS"/>
+		<result property="usePeriod" column="PRO_USE_PERIOD"/>
+		<result property="useCount" column="PRO_USE_COUNT"/>
+		<result property="date" column="PRO_DATE"/>
+		<result property="status" column="PRO_STATUS"/>
+		
+		<association property="category" resultMap="categoryResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.center.product.model.dto.ProCategoryDTO" id="categoryResultMap">
+		<id property="categoryNo" column="CATE_NO"/>
+		<result property="categoryName" column="CATE_NAME"/>
+	</resultMap>
+	
+	<!-- 회원권(10) 상품 조회 -->
+	<select id="findAllMembership" resultMap="productResultMap">
+		SELECT
+				A.PRO_NO
+			  , A.PRO_CATE_NO
+			  , A.PRO_NAME
+			  , A.PRO_PRICE
+			  , A.PRO_CONTENTS
+			  , A.PRO_USE_PERIOD
+			  , A.PRO_USE_COUNT
+			  , A.PRO_DATE
+			  , A.PRO_STATUS
+			  , B.CATE_NAME
+		  FROM TBL_PRODUCT A
+		  JOIN TBL_PRO_CATEGORY B ON(A.PRO_CATE_NO = B.CATE_NO)
+		 WHERE A.PRO_CATE_NO = 10
+		   AND A.PRO_STATUS = 'Y'
+		 ORDER BY A.PRO_NO DESC
+	</select>
+	
+
+
+</mapper>
