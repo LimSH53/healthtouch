@@ -2,6 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jaspa.healthtouch.member.product.model.dao.MemberProMapper">
 	
+	<resultMap type="com.jaspa.healthtouch.member.product.model.dto.PaymentDTO" id="paymentResultMap">
+		<id property="no" column="PAY_NO"></id>
+		<result property="ordNo" column="PAY_ORD_NO"/>
+		<result property="date" column="PAY_DATE"/>
+		<result property="status" column="PAY_STATUS"/>
+		<result property="amount" column="PAY_AMOUNT"/>
+		
+		<association property="order" resultMap="orderResultMap"></association>
+	</resultMap>
+		
+	<resultMap type="com.jaspa.healthtouch.member.product.model.dto.OrderDTO" id="orderResultMap">
+		<id property="no" column="ORD_NO"></id>
+		<result property="proNo" column="ORD_PRO_NO"/>
+		<result property="memberId" column="ORD_MEMBER_ID"/>
+		<result property="trnId" column="ORD_TRN_ID"/>
+		<result property="startDate" column="ORD_START_DATE"/>
+		<result property="remainCount" column="ORD_REMAIN_COUNT"/>
+		<result property="endDate" column="ORD_END_DATE"/>
+		<result property="modEndDate" column="ORD_MOD_END_DATE"/>
+		<result property="modReason" column="ORD_MOD_REASON"/>
+		
+		<association property="product" resultMap="productResultMap"></association>
+		<association property="member" resultMap="memberResultMap"></association>
+		<association property="trainer" resultMap="memberResultMap"></association>
+	</resultMap>
+	
 	<resultMap type="com.jaspa.healthtouch.center.product.model.dto.ProductDTO" id="productResultMap">
 		<id property="no" column="PRO_NO"/>
 		<result property="categoryNo" column="PRO_CATE_NO"/>
@@ -19,6 +45,19 @@
 	<resultMap type="com.jaspa.healthtouch.center.product.model.dto.ProCategoryDTO" id="categoryResultMap">
 		<id property="categoryNo" column="CATE_NO"/>
 		<result property="categoryName" column="CATE_NAME"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberDTO" id="memberResultMap">
+		<id property="id" column="MEMBER_ID"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="contact" column="MEMBER_CONTACT"/>
+		<result property="num" column="MEMBER_NUM"/>
+		<result property="birthday" column="MEMBER_BIRTHDAY"/>
+		<result property="age" column="MEMBER_AGE"/>
+		<result property="gender" column="MEMBER_GENDER"/>
+		<result property="address" column="MEMBER_ADDRESS"/>
+		<result property="status" column="MEMBER_STATUS"/>
 	</resultMap>
 	
 	<!-- 회원권(10) 상품 조회 -->
@@ -41,6 +80,48 @@
 		 ORDER BY A.PRO_NO DESC
 	</select>
 	
-
+	<!-- 구매 등록 -->
+	<insert id="insertOrder">
+		INSERT
+		  INTO TBL_ORDER
+		(
+		 ORD_NO,
+		 ORD_PRO_NO,
+		 ORD_MEMBER_ID,
+		 ORD_END_DATE
+		)
+		VALUES
+		(
+		 SEQ_ORD_NO.NEXTVAL,
+		 #{ order.proNo },
+		 #{ order.memberId },
+		 ADD_MONTHS(SYSDATE, #{ period })
+		)
+		
+		<selectKey keyProperty="no" resultType="Integer" order="AFTER"><!-- select에 설정한 값을 위에 행 진행 후에 no에 넣어라! -->
+        	SELECT
+        	       SEQ_ORD_NO.CURRVAL
+        	  FROM DUAL
+       	</selectKey>
+	</insert>
+	
+	<!-- 결제 정보 -->
+	<insert id="insertPayment">
+		INSERT
+		  INTO TBL_PAYMENT
+		(
+		 PAY_NO,
+		 PAY_ORD_NO,
+		 PAY_AMOUNT
+		)
+		VALUES
+		(
+		 SEQ_PAY_NO.NEXTVAL,
+		 SEQ_ORD_NO.CURRVAL,
+		 #{ amount }
+		)
+		
+	
+	</insert>
 
 </mapper>
