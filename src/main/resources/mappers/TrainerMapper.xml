@@ -67,8 +67,14 @@
 		 WHERE M.MEMBER_ID = #{ trId }
 	</select>
 	 
+	 <!-- 트레이너 퇴사 -->
+	 <update id=" deleteTrainer">
+	 	UPDATE TBL_TRAINER
+	 	   SET TRN_HOLD = 'N'
+	 	 WHERE TRN_INFO_MEMBER_ID = #{ trId }
+	 	   AND TRN_STATUS = 'Y' 
+	 </update>
 	 
-
 
 </mapper>
 	

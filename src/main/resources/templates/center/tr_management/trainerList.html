@@ -68,7 +68,7 @@
                 </td>
                 <td th:text="${trainer.trNum}"> </td>
           		<td>
-                	<a th:href="|@{/center/trainer/trainerDetail?id={id}(id=${ trainer.member.id })}|" th:text="${ trainer.member.id }" ></a>
+                	<a th:href="|@{/center/trainer/detail?id={id}(id=${ trainer.member.id })}|" th:text="${ trainer.member.id }" ></a>
                 </td>   
                 <td th:text="${trainer.member.name}"></td>           
                 <td th:text="${trainer.member.gender}"></td>
