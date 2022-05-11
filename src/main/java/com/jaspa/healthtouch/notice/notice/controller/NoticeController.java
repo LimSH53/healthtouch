@@ -53,7 +53,7 @@ public class NoticeController {
 			return "/notice/noticedetail";	
 		}
 	
-	
+	 
 	
 	
 	//공지사항 등록페이지 연결 

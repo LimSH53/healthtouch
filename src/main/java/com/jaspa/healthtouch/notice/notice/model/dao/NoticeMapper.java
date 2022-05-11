@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.jaspa.healthtouch.notice.notice.model.dto.AttachmentDTO;
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
 
 
