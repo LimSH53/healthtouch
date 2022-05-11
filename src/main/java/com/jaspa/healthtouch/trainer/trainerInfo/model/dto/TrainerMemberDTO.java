@@ -15,8 +15,8 @@ import lombok.ToString;
 public class TrainerMemberDTO {
 
 
-	private int trNum;
-	private String name;
+	private int trNum; 							// 트레이너 번호
+	private String name;						// 트레이너 이름 (회원이름)
 	private String contact;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date birthday;
