@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>healthtouch</title>
+<link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
+<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+<div th:replace="/common/centerHeader.html :: center-header"></div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body id="body-pd" class="snippet-body" style="min-height: 80vh">
+	<div th:replace="/common/centerHeader.html :: center-body"></div>
+	<div class="container mt-5">
+		<div class="d-flex justify-content-center row">
+			<div class="col-md-10">
+				<br>
+				<h4>기본 정보</h4>
+				<br>
+				<form th:object="${member}">
+					<div class="form-group row">
+		                <label class="col-sm-2 col-form-label">아이디</label>
+		                <div class="col-sm-10">
+		                	<input type="text" class="form-control" name="id" id="id" th:value="*{id}" required readonly>
+		                </div>
+		            </div>
+		            <br>
+					<div class="form-group row">
+		                <label class="col-sm-2 col-form-label">이름</label>
+		                <div class="col-sm-10">
+		                	<input type="text" class="form-control" name="name" id="name" th:value="*{name}" required readonly>
+		                </div>
+		            </div>
+		            <br>
+		            <div class="form-group row">
+		                <label class="col-sm-2 col-form-label">출석번호</label>
+		                <div class="col-sm-10">
+		                	<input type="text" class="form-control" name="num" id="num" th:value="*{num}" required readonly>
+		                </div>
+		            </div>
+		            <br>
+		            <div class="form-group row">
+		                <label class="col-sm-2 col-form-label">연락처</label>
+		                <div class="col-sm-10">
+		                	<input type="text" class="form-control" name="contact" id="contact" th:value="*{contact}" required readonly>
+		                </div>
+		            </div>
+		            <br>
+		            <div class="form-group row">
+		                <label class="col-sm-2 col-form-label">주소</label>
+		                <div class="col-sm-10">
+		                	<input type="text" class="form-control" name="address" id="address" th:value="*{address}" required readonly>
+		                </div>
+		            </div>
+		            <br>
+		            <div class="form-group row">
+		                <label class="col-sm-2 col-form-label">생년월일</label>
+		                <div class="col-sm-10">
+		                	<input type="date" class="form-control" name="birthday" id="birthday" th:value="*{#dates.format(birthday, 'yyyy-MM-dd')}" required readonly>
+		                </div>
+		            </div>
+		            <br>
+		            <th:block th:if="*{memberRole.authorityCode == 1}">
+			            <div class="form-group row">
+			                <label class="col-sm-2 col-form-label">담당 트레이너</label>
+			                <div class="col-sm-10">
+			                	<input type="text" class="form-control" name="trainer" id="trainer" value="김헬스" required readonly>
+			                </div>
+			            </div>
+			            <br>
+		            </th:block>
+		            <div class="form-group">
+		            	<div class="row">
+			            	<label class="col-sm-2 col-form-label pt-0" for="gender">성별</label>
+			                <div class="col-sm-10">
+			                	<th:block th:if="*{gender == 'F'}">
+			                		<div class="form-check form-check-inline">
+					                    <input class="form-check-input" type="radio" name="gender" id="female" value="F" checked onclick="return false;">
+					                    <label class="form-check-label" for="female">여성</label>
+					                </div>
+					                <div class="form-check form-check-inline">
+					                    <input class="form-check-input" type="radio" name="gender" id="male" value="M" onclick="return false;">
+					                    <label class="form-check-label" for="male">남성</label>
+					                </div>
+			                	</th:block>
+			                	<th:block th:if="*{gender == 'M'}">
+			                		<div class="form-check form-check-inline">
+					                    <input class="form-check-input" type="radio" name="gender" id="female" value="F" onclick="return false;">
+					                    <label class="form-check-label" for="female">여성</label>
+					                </div>
+					                <div class="form-check form-check-inline">
+					                    <input class="form-check-input" type="radio" name="gender" id="male" value="M" checked onclick="return false;">
+					                    <label class="form-check-label" for="male">남성</label>
+					                </div>
+			                	</th:block>
+			                </div>
+		            	</div>
+		            </div>
+				<br>
+				<th:block th:if="*{memberRole.authorityCode == 1}">
+				<hr>
+				<br>
+				<h4>잔여 기간 및 횟수</h4>
+				<br>
+				<!-- 가데이터 생기면 수정 -->
+					<div class="form-group row">
+						<!-- 아이콘 삽입하기 -->
+		                <label class="col-sm-2 col-form-label">회원권</label>
+		                <div class="col-sm-4">
+		                	<input type="text" class="form-control" name="something" id="something" value="헬스12개월" required readonly>
+		                </div>
+		                <div class="col-sm-6">
+		                	<input type="text" class="form-control" name="something" id="something" value="2022-04-15 ~ 2023-04-14" required readonly>
+		                </div>
+		            </div>
+		            <br>
+		            <div class="form-group row">
+		                <label class="col-sm-2 col-form-label">수강권</label>
+		                <div class="col-sm-4">
+		                	<input type="text" class="form-control" name="something" id="something" value="PT 20회" required readonly>
+		                </div>
+		                <div class="col-sm-6">
+		                	<input type="text" class="form-control" name="something" id="something" value="잔여 횟수 3회" required readonly>
+		                </div>
+		            </div>
+		            <br>
+		            <div class="form-group row">
+		                <label class="col-sm-2 col-form-label">락커</label>
+		                <div class="col-sm-4">
+		                	<input type="text" class="form-control" name="something" id="something" value="락커" required readonly>
+		                </div>
+		                <div class="col-sm-6">
+		                	<input type="text" class="form-control" name="something" id="something" value="2022-04-15 ~ 2023-04-14" required readonly>
+		                </div>
+		            </div>
+		            <br>
+		            <div class="form-group row">
+		                <label class="col-sm-2 col-form-label">운동복</label>
+		                <div class="col-sm-4">
+		                	<input type="text" class="form-control" name="something" id="something" value="운동복 12개월" required readonly>
+		                </div>
+		                <div class="col-sm-6">
+		                	<input type="text" class="form-control" name="something" id="something" value="2022-04-15 ~ 2023-04-14" required readonly>
+		                </div>
+		            </div>
+		            <br>
+		            </th:block>
+		            <br>
+		            <br>
+					<div class="d-grid col-2 mx-auto">
+		                <button class="btn btn-sm outline" type="button" id="modifyPwdBtn" style="color:#1b1b55 ; border-color: #1b1b55;" onclick="modifyPwd()">기간 정보 수정</button>
+		            </div>
+		            <br>
+		            <br>
+		            <th:block th:if="*{memberRole.authorityCode == 1}">
+			            <div class="d-grid col-2 mx-auto">
+			                <button class="btn btn-sm outline" type="button" id="modifyMemberTypeBtn" style="color:#1b1b55 ; border-color: #1b1b55;" th:onclick="modifyMemberType([[ ${member.id} ]])">회원 유형 변경</button>
+			            </div>
+		            </th:block>
+		            <br>
+		            <br>
+	            </form>
+			</div>
+		</div>
+	</div>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		function modifyMemberType(id) {
+			Swal.fire({
+				icon: 'question',
+				text: '회원 유형을 변경하시겠습니까?',
+				showDenyButton: true,
+				confirmButtonText: '예',
+				denyButtonText: '아니오',
+			}).then((result) => {
+				var memberId = id;
+				if(result.isConfirmed) {
+					$.ajax({
+						url: "/center/member/modifyMemberType",
+						type: "post",
+						data: { memberId : memberId },
+						success: function() {
+							Swal.fire({
+								icon: 'success',
+								text: '변경이 완료되었습니다.',
+								confirmButtonText: '확인',
+							}).then((result) => {
+								location.reload();
+							})
+						},
+						error: function(e) {
+							console.log(e);
+						}
+					});
+				}
+			})
+		}
+		/*]]>*/
+	</script>
+</body>
+</html>

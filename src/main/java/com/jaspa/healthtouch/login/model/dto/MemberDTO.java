@@ -4,10 +4,14 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.Data;
+import com.jaspa.healthtouch.common.model.dto.CommonDTO;
 
-@Data
-public class MemberDTO {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class MemberDTO extends CommonDTO {
 	private String id;
 	private String pwd;
 	private String name;
@@ -19,6 +23,6 @@ public class MemberDTO {
 	private String gender;
 	private String address;
 	private String status;
-	
+		
 	private MemberRoleDTO memberRole;
 }

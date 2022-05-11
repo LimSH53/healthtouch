@@ -121,7 +121,7 @@
 	</select>
 	
 	<!-- 락커이용권(30) 상품 조회 -->
-	<select id="findAllRocker" resultMap="productResultMap">
+	<select id="findAllLocker" resultMap="productResultMap">
 		SELECT
 				A.PRO_NO
 			  , A.PRO_CATE_NO

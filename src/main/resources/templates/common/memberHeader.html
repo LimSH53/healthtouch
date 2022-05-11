@@ -18,7 +18,9 @@
 	<div th:fragment="member-body">
     <!-- header -->
     <header class="header" id="header">
-        <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+        <div class="header_toggle"> 
+        	<i class='bx bx-menu' id="header-toggle"></i> 
+        </div>
         <h6 style="color: #6c757d;"><span sec:authentication="principal.name"></span>님 환영합니다</h6>
         <a type="button" id="outbtn" class="btn btn-sm outline" style="color:#1b1b55 ; border-color: #1b1b55;" onclick="location.href='/member/logout'">로그아웃</a>
     </header>
@@ -45,10 +47,10 @@
                             <span class="nav_name">구매관리<div class=' fa-caret-down right'></div></span> 
                         </a> 
                         <ul class="toggle">
-                            <li><a href='#settings'>회원권 구매</a></li>
-                            <li><a href='#settings'>수강권 구매</a></li>
-                            <li><a href='#settings'>락커 이용권 구매</a></li>
-                            <li><a href='#settings'>운동복 이용권 구매</a></li>
+                            <li><a href='/member/product/membership'>회원권 구매</a></li>
+                            <li><a href='/member/product/PT'>수강권 구매</a></li>
+                            <li><a href='/member/product/locker'>락커 이용권 구매</a></li>
+                            <li><a href='/member/product/membership'>운동복 이용권 구매</a></li>
                             <li><a href='#settings'>구매내역 조회</a></li>
                             <li><a href='#settings'>락커 위치 관리</a></li>
                         </ul>
@@ -60,8 +62,8 @@
                             <span class="nav_name">예약관리<div class=' fa-caret-down right'></div></span> 
                         </a> 
                         <ul class="toggle">
-                            <li><a href='#settings'>캘린더</a></li>
-                            <li><a href='#settings'>예약조회</a></li>
+                            <li><a href='/member/reservation/calendar'>캘린더</a></li>
+                            <li><a href='/member/reservation/reservation'>예약조회</a></li>
                         </ul>
                     </li>
                     <!-- 수업관리 -->

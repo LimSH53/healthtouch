@@ -2,7 +2,6 @@ package com.jaspa.healthtouch.login.controller;
 
 import java.security.SecureRandom;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;

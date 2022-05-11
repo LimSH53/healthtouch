@@ -7,13 +7,17 @@
     <title>회원권 구매</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/member/product/order.css}"/>
     <!-- replace head 부분 -->
-    <div th:replace="/common/centerHeader.html :: center-header"></div>
+    <div th:replace="/common/memberHeader.html :: member-header"></div>
     <!-- 제이쿼리 추가 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- alert cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!-- 아임포트 -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
 <body id="body-pd"> <!-- sidebar 적용위해 id 추가 -->
     <!-- 헤더 body 추가 -->
-	<div th:replace="/common/centerHeader.html :: center-body"></div>
+	<div th:replace="/common/memberHeader.html :: member-body"></div>
     <!-- 최대 크기 768 로 맞춰서 / 타이틀 <2> / 기본폰트 15px (표 상단은 bold 처리) / 참고문구는 12px -->
     <div class="height-100 width-768">
         <div class="title-box">
@@ -21,6 +25,9 @@
         </div>
             <table>
                 <tr>
+                	<td class="hidden">
+                        상품번호
+                    </td>                
                     <th class="width-40">
                         상품명
                     </th>
@@ -34,22 +41,89 @@
                         
                     </th>
                 </tr>
-                <tr>
-                    <td>
-                        12개월권
+                <tr th:each="membership : ${ membershipList }">
+                	<td name="no" class="hidden" th:text="${ membership.no }">
+                        상품번호
                     </td>
-                    <td>
+                    <td name="name" th:text="${ membership.name }">
+                        락커이용 12개월권
+                    </td>
+                    <td name="period" th:text="|${ membership.usePeriod } 개월|">
                         12개월
                     </td>
-                    <td>
-                        360,000원
+                    <td name="price" th:text="|${#numbers.formatInteger(membership.price, 0, 'COMMA')}원|" onclick="payApi">
+                        60,000원
                     </td>
                     <td>
-                        <button>결제</button>
+                    	<a>
+                        <button onclick="payApi()">결제</button>
+                        </a>
                     </td>
                 </tr>
             </table>
         </div>
-
+<script>
+	function payApi(){
+        var IMP = window.IMP; // 생략가능
+        IMP.init('imp75129533'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+        var msg;
+        
+        IMP.request_pay({
+            pg : 'html5_inicis',
+            pay_method : 'card',
+            merchant_uid : 'merchant_' + new Date().getTime(),
+            name : '헬스터치',
+            amount : $('[name=price]').val(),
+            buyer_email : '123',
+            buyer_name : '${#authentication.principal.name}',
+            buyer_tel : '${#authentication.principal.contact}',
+            buyer_addr : '${#authentication.principal.address}',
+            buyer_postcode : '123-456',
+        }, function(rsp) {
+            if ( rsp.success ) {
+                //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+                jQuery.ajax({
+                    url: "/member/product/payment", //cross-domain error가 발생하지 않도록 주의해주세요
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        imp_uid : rsp.imp_uid,
+                        pro_no : $('#no').val(),//상품번호
+                      	use_period : $('#period').val(),//이용기간
+                        price : $('#price').val()//총 결제 금액
+                    }
+                }).done(function(data) {
+                    //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+                    if ( everythings_fine ) {
+                        msg = '결제가 완료되었습니다.';
+                        msg += '\n고유ID : ' + rsp.imp_uid;
+                        msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+                        msg += '\결제 금액 : ' + rsp.paid_amount;
+                        msg += '카드 승인번호 : ' + rsp.apply_num;
+                        
+                        alert(msg);
+                    } else {
+                    	Swal.fire({
+                      	  icon: 'error',
+                      	  title: '결제실패',
+                      	  text: '결제에 실패하였습니다!',
+                      	})
+                    }
+                });
+                //성공시 이동할 페이지
+                location.href="${ pageContext.servletContext.contextPath }/member/product/membership";
+            } else {
+                //실패시 이동할 페이지
+                location.href="${ pageContext.servletContext.contextPath }/member/product/membership";
+                Swal.fire({
+                	  icon: 'error',
+                	  title: '결제실패',
+                	  text: '결제에 실패하였습니다!',
+                	})
+            }
+        });
+        
+    };
+    </script>
 </body>
 </html>

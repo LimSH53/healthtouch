@@ -33,14 +33,12 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		
 		memberService.createLoginLog(loginLog);
 		
-		// 회원이면 
-		if(user.getMemberRole().getAuthorityCode() == 1) {
+		if(user.getMemberRole().getAuthorityCode() == 1) {	// 회원이면 
 			response.sendRedirect("/member/mypage");
-		} else if(user.getMemberRole().getAuthorityCode() == 2) {
-			response.sendRedirect("/trainer/trainer-info");
-		}
-		else {
-			response.sendRedirect("/");
+		} else if(user.getMemberRole().getAuthorityCode() == 2) { // 트레이너면 
+			response.sendRedirect("/trainer/trainer-info")
+		} else if(user.getMemberRole().getAuthorityCode() == 3) {	// 센터면 
+			response.sendRedirect("/center/member/memberInfo");
 		}
 	}
 	

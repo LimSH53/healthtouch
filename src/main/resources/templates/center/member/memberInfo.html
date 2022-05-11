@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>healthtouch</title>
+<link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
+<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+<div th:replace="/common/centerHeader.html :: center-header"></div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body id="body-pd" class="snippet-body" style="min-height: 80vh">
+	<div th:replace="/common/centerHeader.html :: center-body"></div>
+	<div class="container mt-5">
+		<div class="d-flex justify-content-center row">
+			<div class="col-md-10">
+				<!-- 검색 -->
+				<br>
+				<th:block layout:fragment="search">
+					<div id="adv-search" class="input-group">
+						<form id="searchForm" th:action="@{/center/member/memberInfo}" method="get" class="input-group mb-3" role="form">
+							<input type="hidden" name="currentPageNo" value="1"/>
+							<input type="hidden" name="recordsPerPage" th:value="${params.recordsPerPage}"/>
+							<input type="hidden" name="pageSize" th:value="${params.pageSize}"/>
+							<select name="searchType" class="form-control">
+								<option value="name" th:selected="${#strings.equals(params.searchType, 'name')}">이름</option>
+								<option value="id" th:selected="${#strings.equals(params.searchType, 'id')}">아이디</option>
+								<option value="num" th:selected="${#strings.equals(params.searchType, 'num')}">출석번호</option>
+								<option value="contact" th:selected="${#strings.equals(params.searchType, 'contact')}">연락처</option>
+								<!-- <option value="trainer" th:selected="${#strings.equals(params.searchType, 'trainer')}">담당 트레이너</option> -->
+							</select>
+							<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-text" th:value="${params.searchKeyword}" placeholder="검색어를 입력해 주세요"/>
+							<div class="search_btn input-group-append">
+								<button type="submit" class="btn btn-primary"><i class="bx bx-search"></i></button>
+							</div>
+						</form>
+					</div>
+				</th:block>
+				<!-- 회원 목록 -->
+				<br>
+				<th:block layout:fragment="content">
+					<table class="table">
+						<thead>
+							<tr class="text-center">
+								<th>이름</th>
+								<th>아이디</th>
+								<th>출석번호</th>
+								<th>성별</th>
+								<th>연령</th>
+								<th>연락처</th>
+								<th>회원 유형</th>
+								<th>상태</th>
+							</tr>
+						</thead>
+						<tbody class="table-body">
+							<tr class="cell-1 text-center" th:each="member : ${ memberList }">
+								<td th:text="${ member.name }"></td>
+								<td>
+									<a th:href="|@{/center/member/memberDetail}${params.makeQueryString(params.currentPageNo)}&id=${ member.id }|" th:text="${ member.id }" style="color: #1b1b55"></a>
+								</td>
+								<td th:text="${ member.num }"></td>
+								<td th:text="${ member.gender }"></td>
+								<td th:text="${ member.age }"></td>
+								<td th:text="${ member.contact }"></td>
+								<th:block th:if="${ member.memberRole.authorityCode == 1 }">
+									<td>회원</td>
+								</th:block>
+								<th:block th:if="${ member.memberRole.authorityCode == 2 }">
+									<td>트레이너</td>
+								</th:block>
+								<td th:text="${ member.status }"></td>
+							</tr>
+						</tbody>
+					</table>
+				</th:block>
+				<!-- 페이지네이션 -->
+				<th:block layout:fragment="paging">
+				<br>
+					<nav th:fragment="pagination" th:if="${params != null and params.paginationInfo.totalRecordCount > 0}" th:object="${params.paginationInfo}" th:with="info=${params.paginationInfo}" aria-label="Page navigation" class="text-center">
+						<ul class="pagination flex-wrap d-flex justify-content-center" style="display: flex; border-radius: 0.25rem;">
+							<li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(1)} ]])">
+								<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+							</li>
+							<li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.firstPage - 1)} ]])">
+								<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&lsaquo;</span></a>
+							</li>
+							<li class="page-item" th:each="pageNo : *{#numbers.sequence( firstPage, lastPage )}" th:class="${pageNo == params.currentPageNo} ? 'active'">
+								<a class="page-link" href="javascript:void(0)" th:text="${pageNo}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(pageNo)} ]])"></a>
+							</li>
+							<li class="page-item" th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.lastPage + 1)} ]])">
+								<a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&rsaquo;</span></a>
+							</li>
+							<li class="page-item" th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.totalPageCount)} ]])">
+								<a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+							</li>
+						</ul>
+					</nav>
+				</th:block>
+				<br>
+			</div>
+		</div>
+	</div>
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			function movePage(uri, queryString) {
+				location.href = uri + queryString;
+			}
+			/*[- end of function -]*/
+			
+			/*]]>*/
+		</script>
+	</th:block>
+</body>
+</html>
