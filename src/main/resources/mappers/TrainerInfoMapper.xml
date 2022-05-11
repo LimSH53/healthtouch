@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jaspa.healthtouch.trainer.trainerInfo.model.dao.TrainerInfoMapper">
+
+
+	<resultMap type="com.jaspa.healthtouch.trainer.trainerInfo.model.dto.TrainerMemberDTO" id="trainerResultMap">
+		<id property="trNum" column="TRN_NUM"/>
+		<result property="career" column="TRN_CAREER"/>		
+		<association property="member" resultMap="memberResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberDTO" id="memberResultMap">
+		<id property="id" column="MEMBER_ID"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="contact" column="MEMBER_CONTACT"/>
+		<result property="num" column="MEMBER_NUM"/>
+		<result property="birthday" column="MEMBER_BIRTHDAY"/>
+		<result property="age" column="MEMBER_AGE"/>
+		<result property="gender" column="MEMBER_GENDER"/>
+		<result property="address" column="MEMBER_ADDRESS"/>
+		<result property="type" column="MEMBER_TYPE"/>
+		<result property="status" column="MEMBER_STATUS"/>
+
+		<association property="memberRole" resultMap="memberRoleResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberRoleDTO" id="memberRoleResultMap">
+		<id property="memberId" column="MEMBER_ID"/>
+		<result property="authorityCode" column="AUTHORITY_CODE"/>
+		
+	</resultMap>
+	
+	
+	<!-- 트레이너 정보 조회 -->
+		<select id="selectTrainer" resultMap="trainerResultMap">
+		SELECT 
+			   M.MEMBER_NAME
+			 , M.MEMBER_CONTACT
+			 , M.MEMBER_ADDRESS
+			 , M.MEMBER_BIRTHDAY
+			 , TI.TRN_CAREER
+		  FROM TBL_MEMBER M
+		  JOIN TBL_TRN_INFO TI ON(M.MEMBER_ID = TI.TRN_INFO_MEMBER_ID)
+		 WHERE MR.AUTHORITY_CODE = 2
+		 
+	</select>
+	
+	
+	<!-- 트레이너 정보 수정 -->
+	<update id="updateTrainer">
+		UPDATE TBL_MEMBER A INNER JOIN TBL_TRN_INFO B ON
+		    ON A.MEMBER_ID = B.TRN_INFO_MEMBER_ID
+		   SET A.MEMBER_NAME = #{ name }
+		     , A.MEMBER_CONTACT = #{ contact }
+		     , A.MEMBER_ADDRESS = #{ address }
+		     , A.MEMBER_BIRTHDAY = #{ birthday }
+		     , B.TRN_CARRER = #{ carrer }
+		 WHERE MEMBER_ID = #{ id }
+		   AND MEMBER_STATUS = 'Y'
+	</update>
+	
+	<!-- ? JOIN 된 업데이트 구문은 resultMap구문이 안필요한지 -->
+	
+	
+	
+	</mapper>
