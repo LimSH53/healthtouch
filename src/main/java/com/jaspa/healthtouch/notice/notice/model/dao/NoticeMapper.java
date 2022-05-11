@@ -25,9 +25,9 @@ public interface NoticeMapper {
 	
 	//공지사항 조회수
 	void viewCount(int noticeNo);
-	 
+	  
 	//공지사항 등록 
-	void registNotice(NoticeDTO notice);
+	void registNotice(NoticeDTO notice)throws Exception;
 	
 	
 	//공지사항 수정  

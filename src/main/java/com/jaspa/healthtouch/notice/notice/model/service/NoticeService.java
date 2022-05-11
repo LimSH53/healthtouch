@@ -15,7 +15,7 @@ public interface NoticeService {
 		NoticeDTO selectNoticeDetail(int noticeNo);
 		
 		//공지사항 등록
-		void registNotice(NoticeDTO notice);
+		void registNotice(NoticeDTO notice)throws Exception;
 		
 		//공지사항 수정  
 		int modifyNotice(NoticeDTO notice);

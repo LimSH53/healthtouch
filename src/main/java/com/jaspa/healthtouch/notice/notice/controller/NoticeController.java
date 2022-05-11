@@ -64,10 +64,10 @@ public class NoticeController {
 	
 	//공지사항 등록
 	@PostMapping("/noticeregist")
-	public String registNotice(@ModelAttribute NoticeDTO notice ) throws Exception { 
+	public String registNotice(NoticeDTO notice) throws Exception { 
 			noticeService.registNotice(notice);
 			
-			return "/notice/notice"; 
+			return "redirect:/notice/notice"; 
 		}
 	
 	
