@@ -5,10 +5,10 @@ server:
 # datasource config
 spring:
   datasource:
-    url: jdbc:oracle:thin:@DB202203221231_high?TNS_ADMIN=/Users/cota/Downloads/Wallet_DB202203221231
-    driver-class-name: oracle.jdbc.OracleDriver
-    username: HEALTHTOUCH
-    password: Taekyung9988
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@192.168.123.102:1521:xe
+    username: C##HEALTHTOUCH
+    password: HEALTHTOUCH
     
 # mybatis config
 mybatis:
