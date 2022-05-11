@@ -43,6 +43,7 @@ public class TrainerInfoController {
 		trainer.setContact(trainer.getContact());
 		trainer.setAddress(trainer.getAddress());
 		trainer.setBirthday(trainer.getBirthday());
+		trainer.setCareer(trainer.getCareer());
 	}
 	
 	

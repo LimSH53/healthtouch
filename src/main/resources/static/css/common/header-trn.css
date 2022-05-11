@@ -7,6 +7,27 @@
 font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
 }
 
+
+
+
+
+	/*  1. 헤더랑 중첩된 기능이 있는지 html에서 안먹혀서 
+		2. 기존 헤더 css 적용시 전체 높이 조정이 안돼서
+		헤어 css 따로 만들었습니다 ㅠㅠ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 :root {
     --header-height: 3rem;
     --nav-width: 68px;
