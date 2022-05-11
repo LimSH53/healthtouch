@@ -1,5 +1,3 @@
-@charset "utf-8";
-
 
 @charset "UTF-8";       /* 인코딩 문자 깨짐 방지 */
 
@@ -12,26 +10,13 @@ html {
     font-size : 100%;
 }
 
-body {
-    line-height: 2.0;
-    color : #432;
-    font-family: 'Roboto', 'Noto Sans KR', sans-serif;
-}
 
-
-img {
-    border: 0 none;
-    vertical-align: top;
-}
 
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, blockquote, th, td, input, select, textarea, button {
     margin: 0;
     padding: 0;
 }
 
-div {
-    display: block;
-}
 
 dl, ul, ol, li {
     list-style: none;
@@ -47,20 +32,24 @@ label {
 
 /* 전체 창 크기 */
 .height-100 {
-    height: 200vh;
+    height: 500vh;
+    background-color: #ffffff !important;
+}
+
+@media (max-width: 1500px){
+.col-lg-9 {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
 }
 
 
-/* 메인박스 배경화면 */
 .main-box {
     background-color: #ffffff;
     width: 100%;
     height: 100%;
 }
-
-
-
-
 
 
 
@@ -71,11 +60,11 @@ label {
     position: absolute;
     background-color: #f8f8f8;
     padding: 100px 50px 150px 10px;
-    margin: 300px 450px;
+    margin: 200px 250px 1500px 250px;
     border-radius: 30px;
     min-width: 100px;
     max-width: 1000px;
-    height: 750px;
+    height: 1000px;
 }
 
 
@@ -85,8 +74,8 @@ label {
 /* 입력창 전체*/
 .input_area {
     border-radius: 20px;
-    margin: 50px 10px 0px 150px;
-	padding: 17px 60px 17px 20px;
+    margin: 50px 10px 0px 120px;
+	padding: 17px 90px 17px 20px;
 	background: white;
 
 
@@ -126,7 +115,7 @@ label {
 }
 
 /* 경력 입력 창 */
-.input_area #memberCarrer {
+.input_area #memberCareer {
     margin-top: 10px;
     margin-left: 10px;
     margin-bottom: 30px;
@@ -183,15 +172,14 @@ label {
 .input_area #addr2 {
     margin-top: 30px;
     margin-left: 8px;
-    margin-bottom: 40px;
 
 }
 
 
 /* 생년월일 라벨 */
 #la-birth {
-    margin-top: 100px;
-    margin-bottom: 30px;
+    margin-top: 60px;
+    margin-bottom: 20px;
     margin-left: 150px;
     font-size: 17px;
     color: gray;
@@ -200,8 +188,8 @@ label {
 
 
 /* 경력 라벨 */
-#la-carrer {
-    margin-top: 150px;
+#la-career {
+    margin-top: 30px;
     margin-bottom: 30px;
     margin-left: 150px;
     font-size: 17px;
@@ -256,8 +244,8 @@ button {
 }
 
 
-/* 아이디 찾기 버튼 */
-/* 회원가입 */
+
+/* 수정 */
 #info-Modify {
     width:150px;
     height: 50px;
@@ -266,16 +254,33 @@ button {
     color : white;
     text-align: center;
     font-size: 1.2em;
-    font-weight:900;
+    font-weight:700;
     letter-spacing: 0.7px;
     padding: 7px auto 12px auto;
     border-radius: 30px;
     margin-top: 70px;
-    margin-left: 700px;
+    margin-left: 50px;
 
 }
 
 
+/* 비밀번호 수정 */
+#info-Modify1 {
+    width:150px;
+    height: 50px;
+	background:#1b1b55;
+	border: 0px;
+    color : white;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight:700;
+    letter-spacing: 0.7px;
+    padding: 7px auto 12px auto;
+    border-radius: 30px;
+    margin-top: 70px;
+    margin-left: 500px;
+
+}
 
 
 
@@ -283,23 +288,3 @@ button {
 
 /*--------------------------------------------------------------------------------------*/
 
-
-
-/* a 설정 (위치 css 가장 아래에 두기)-----------------------------------------------------*/
-
-/* a 링크 설정 변경 */
-.container-fluid li a {
-    text-decoration: none;
-    color : #432;
-    line-height: 2.5em;
-}
-
-/* a 링크 호버시 글자 굵게 */
-.container-fluid a:hover{
-    font-weight: bolder;
-}
-
-.admin-page a{
-    text-decoration: none;
-    color : #432;
-}
