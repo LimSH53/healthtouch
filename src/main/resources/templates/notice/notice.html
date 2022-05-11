@@ -69,7 +69,7 @@
 </tbody>
 </table>
 </th:block>
-<button sec:authorize="hasRole('ROLE_CENTER')" onclick="location.href='/notice/regist'" type="button" class="btn btn-outline-secondary">글작성</button>
+<button sec:authorize="hasRole('ROLE_CENTER')" onclick="location.href='/notice/noticeregist'" type="button" class="btn btn-outline-secondary">글작성</button>
  <!-- 공지사항 페이징 -->
 <th:block layout:fragment="paging">
 <nav th:fragment="pagination" th:if="${params != null and params.paginationInfo.totalRecordCount > 0}" th:object="${params.paginationInfo}" th:with="info=${params.paginationInfo}" aria-label="Page navigation" class="text-center">

@@ -2,6 +2,7 @@ package com.jaspa.healthtouch.notice.notice.model.service;
 
 import java.util.List;
 
+
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
 
 
@@ -14,13 +15,19 @@ public interface NoticeService {
 		NoticeDTO selectNoticeDetail(int noticeNo);
 		
 		//공지사항 등록
-		int registNotice(NoticeDTO notice);
+		void registNotice(NoticeDTO notice);
 		
 		//공지사항 수정  
 		int modifyNotice(NoticeDTO notice);
 		
 		//공지사항 삭제
 		boolean deleteNotice(int noticeNo);
+
+		
+
+
+
+	
 
 
 

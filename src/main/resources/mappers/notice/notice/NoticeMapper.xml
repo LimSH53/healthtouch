@@ -164,7 +164,7 @@
           INTO TBL_NOTICE 
         ( 
           NOT_NO
-        , NOT_MEMBER_ID  
+        , NOT_MEMBER_ID
         , NOT_TITLE
         , NOT_CONTENT
         , NOT_DELETE
@@ -173,7 +173,7 @@
         VALUES
         (
           SEQ_NOT_NO.NEXTVAL
-        , '관리자'
+        , #{ memberId } 
         , #{ noticeTitle }
         , #{ noticeContent }
        	, 'N'

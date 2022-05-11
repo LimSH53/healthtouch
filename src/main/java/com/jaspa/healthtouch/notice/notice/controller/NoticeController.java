@@ -4,9 +4,8 @@ package com.jaspa.healthtouch.notice.notice.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 
 import org.springframework.stereotype.Controller;
@@ -25,13 +24,12 @@ import com.jaspa.healthtouch.notice.notice.model.service.NoticeService;
 @RequestMapping("/notice")
 public class NoticeController {
 	private NoticeService noticeService;
-	
+
 	
 	
 	@Autowired
-	public NoticeController(NoticeService noticeService) {
+	public NoticeController(NoticeService noticeService, MessageSource messageSource) {
 		this.noticeService= noticeService;
-	
 	}
 	
 	
@@ -59,18 +57,16 @@ public class NoticeController {
 	
 	
 	//공지사항 등록페이지 연결 
-	@GetMapping("/regist")
-	public String noticeregist(@ModelAttribute NoticeDTO notice) throws Exception { 
-
-			return "/notice/noticeregist"; 
+	@GetMapping("/noticeregist")
+	public void noticeregist() {
 			}
 	
 	
 	//공지사항 등록
-	@PostMapping("/regist")
-	public String registNotice(@ModelAttribute NoticeDTO notice, HttpServletRequest request ) throws Exception { 
+	@PostMapping("/noticeregist")
+	public String registNotice(@ModelAttribute NoticeDTO notice ) throws Exception { 
 			noticeService.registNotice(notice);
-	
+			
 			return "/notice/notice"; 
 		}
 	
@@ -86,12 +82,13 @@ public class NoticeController {
 	
 	//공지사항 수정
 	@PostMapping("/modify")
-	public String modifyNotice(@ModelAttribute NoticeDTO notice) throws Exception {
+	public String modifyNotice(NoticeDTO notice) throws Exception {
 		noticeService.modifyNotice(notice);
-		int notNo = notice.getNoticeNo();
-		String noticeNo =Integer.toString(notNo);
+		NoticeDTO noticedto = new NoticeDTO();
+		noticedto.setNoticeTitle(notice.getNoticeTitle());
+		noticedto.setNoticeContent(notice.getNoticeContent());
 		
-		return "redirect:/notice/noticedetail/"+noticeNo;
+		return "/notice/notice";
 	}
 
 	//공지사항 삭제
