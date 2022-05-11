@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jaspa.healthtouch.common.paging.PaginationInfo;
-import com.jaspa.healthtouch.login.model.dao.MemberMapper;
 import com.jaspa.healthtouch.notice.notice.model.dao.NoticeMapper;
-import com.jaspa.healthtouch.notice.notice.model.dto.AttachmentDTO;
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
 
 

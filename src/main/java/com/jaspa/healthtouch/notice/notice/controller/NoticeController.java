@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 
 import org.springframework.stereotype.Controller;
@@ -15,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -48,27 +48,28 @@ public class NoticeController {
 
 	
 	//공지사항 상세조회 
-	@RequestMapping("/noticedetail")
+	@GetMapping("/detail")
 	public String selectNoticeDetail (@ModelAttribute("params") NoticeDTO params, @RequestParam("noticeNo") int noticeNo, Model model) throws Exception {
 		NoticeDTO notice = noticeService.selectNoticeDetail(noticeNo);
 		
-		model.addAttribute("detail", notice);
+		model.addAttribute("notice", notice);
 	
 			return "/notice/noticedetail";	
 		}
 	
 	
 	
+	
 	//공지사항 등록페이지 연결 
-		@RequestMapping("/regist")
-		public String noticeregist(@ModelAttribute NoticeDTO notice) throws Exception { 
+	@GetMapping("/regist")
+	public String noticeregist(@ModelAttribute NoticeDTO notice) throws Exception { 
 
-				return "/notice/noticeregist"; 
+			return "/notice/noticeregist"; 
 			}
 	
 	
 	//공지사항 등록
-	@RequestMapping("/noticeregist")
+	@PostMapping("/regist")
 	public String registNotice(@ModelAttribute NoticeDTO notice, HttpServletRequest request ) throws Exception { 
 			noticeService.registNotice(notice);
 	
@@ -78,7 +79,7 @@ public class NoticeController {
 	
 
 	//공지사항 수정 페이지 연결
-	@RequestMapping("/noticemodify/{noticeNo}")
+	@GetMapping("/modify")
 	public String noticeModify(@PathVariable("noticeNo") int noticeNo, Model model)throws Exception  {
 		model.addAttribute("notice", noticeService.selectNoticeDetail(noticeNo));
 		
@@ -86,7 +87,7 @@ public class NoticeController {
 	}
 	
 	//공지사항 수정
-	@GetMapping("/noticemodify")
+	@PostMapping("/modify")
 	public String modifyNotice(@ModelAttribute NoticeDTO notice) throws Exception {
 		noticeService.modifyNotice(notice);
 		int notNo = notice.getNoticeNo();
@@ -96,7 +97,7 @@ public class NoticeController {
 	}
 
 	//공지사항 삭제
-	@RequestMapping("/delete")
+	@GetMapping("/delete")
 	public String deleteNotice (@RequestParam(value ="noticeNo", required = false) int noticeNo) throws Exception {
 		  System.out.println("/delete 접근. noticeNo = " + noticeNo);
 		  // 올바르지 않은 접근 시

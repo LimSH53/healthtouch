@@ -2,7 +2,6 @@ package com.jaspa.healthtouch.notice.notice.model.service;
 
 import java.util.List;
 
-import com.jaspa.healthtouch.notice.notice.model.dto.AttachmentDTO;
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
 
 
