@@ -109,7 +109,7 @@
 	JOIN TBL_MEMBER D ON (A.NOT_MEMBER_ID = D.MEMBER_ID)
     WHERE A.RNUM >  #{ paginationInfo.firstRecordIndex }
     AND  A.NOT_DELETE = 'N'
-    ORDER BY A.RNUM
+    ORDER BY A.RNUM ASC
   </select>
 
 	
@@ -173,9 +173,9 @@
         VALUES
         (
           SEQ_NOT_NO.NEXTVAL
-        , #{ memberId } 
-        , #{ noticeTitle }
-        , #{ noticeContent }
+        , 'admin01'
+        , #{noticeTitle}
+        , #{noticeContent}
        	, 'N'
         , SYSDATE
         )

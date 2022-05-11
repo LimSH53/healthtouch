@@ -49,8 +49,8 @@ private final NoticeMapper noticeMapper;
 	   
 	//공지사항 등록
 	@Override
-	public void registNotice(NoticeDTO notice)throws Exception{
-		 noticeMapper.registNotice(notice);
+	public int registNotice(NoticeDTO notice)throws Exception{
+		 return noticeMapper.registNotice(notice);
 		
 
 		}
