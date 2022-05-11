@@ -11,14 +11,17 @@ public class OrderDTO {
 	private int no;
 	private int proNo;
 	private String memberId;
-	private String  TrnId;
+	private String  trnId;
 	private java.util.Date startDate;
 	private int remainCount;
 	private java.util.Date endDate;
 	private java.util.Date modEndDate;
 	private String modReason;
 	
+	// 회원정보
 	private MemberDTO member;
+	// 트레이너 정보
+	private MemberDTO trainer;
 	private ProductDTO product;
 	
 
