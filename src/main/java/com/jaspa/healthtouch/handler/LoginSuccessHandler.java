@@ -36,7 +36,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		// 회원이면 
 		if(user.getMemberRole().getAuthorityCode() == 1) {
 			response.sendRedirect("/member/mypage");
-		} else {
+		} else if(user.getMemberRole().getAuthorityCode() == 2) {
+			response.sendRedirect("/trainer/trainer-info");
+		}
+		else {
 			response.sendRedirect("/");
 		}
 	}
