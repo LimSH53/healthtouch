@@ -4,6 +4,8 @@ package com.jaspa.healthtouch.notice.notice.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
@@ -58,18 +60,19 @@ public class NoticeController {
 	
 	//공지사항 등록페이지 연결 
 	@GetMapping("/noticeregist")
-	public void noticeregist() {
+	public String noticeRegist(@ModelAttribute NoticeDTO notice) {
+		return "notice/noticeregist";
 			}
 	
 	
 	//공지사항 등록
 	@PostMapping("/noticeregist")
-	public String registNotice(NoticeDTO notice) throws Exception { 
+	public String registNotice(@ModelAttribute NoticeDTO notice,HttpServletRequest request ) throws Exception { 
 			noticeService.registNotice(notice);
+			
 			
 			return "redirect:/notice/notice"; 
 		}
-	
 	
 
 	//공지사항 수정 페이지 연결
