@@ -65,7 +65,7 @@ public class CenterProductController {
 		} else if(product.getCategoryNo() == 20) {
 			return "redirect:/center/product/PT/list";
 		} else if(product.getCategoryNo() == 30) {
-			return "redirect:/center/product/rocker/list";
+			return "redirect:/center/product/locker/list";
 		} else {
 			return "redirect:/center/product/sportswear/list";
 		}
@@ -103,7 +103,7 @@ public class CenterProductController {
 			return "redirect:/center/product/PT/list";
 		} else if(result > 0 && product.getCategoryNo() == 30) {
 			rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateProduct", null, locale));
-			return "redirect:/center/product/rocker/list";
+			return "redirect:/center/product/locker/list";
 		} else {
 			if(result > 0) {
 			rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateProduct", null, locale));
@@ -163,32 +163,32 @@ public class CenterProductController {
 		
 	}
 	
-	@GetMapping("/rocker/list")
-	public ModelAndView selectRockerList(ModelAndView mv) {
+	@GetMapping("/locker/list")
+	public ModelAndView selectlockerList(ModelAndView mv) {
 		
-		List<ProductDTO> rockerList = productService.findAllRocker();
+		List<ProductDTO> lockerList = productService.findAllLocker();
 		
-		log.info("rockerList : {}", rockerList);
+		log.info("lockerList : {}", lockerList);
 		
 		/* addObject 키값 안넣어줘서 html로 값이 안넘어감 */
-		mv.addObject("rockerList",rockerList);
-		mv.setViewName("center/product/proRocker");
+		mv.addObject("lockerList",lockerList);
+		mv.setViewName("center/product/proLocker");
 		
 		return mv;
 		
 	}
 	
-	@GetMapping("rockerDelete")
+	@GetMapping("lockerDelete")
 	public String deleteRocker(@RequestParam("no") int no, RedirectAttributes rttr, Locale locale) {
 		
 		int result = productService.deleteProduct(no);
 		
 		if(result > 0) {
 			rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteProduct", null, locale));
-			return "redirect:/center/product/rocker/list";
+			return "redirect:/center/product/locker/list";
 		} else {
 			rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteFailProduct", null, locale));
-			return "redirect:/center/product/rocker/list";
+			return "redirect:/center/product/locker/list";
 		}
 		
 		

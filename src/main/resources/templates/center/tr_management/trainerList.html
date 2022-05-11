@@ -6,18 +6,18 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>트레이너 조회 </title>
-    
+        
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet'>
-    <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>  
     <link href="@{/css/header.css}" rel="stylesheet" type="text/css">
-  
+	<div th:replace="/common/centerHeader.html :: center-header"></div>
    
-    </head>
+</head>
                                 
-    <body id="body-pd">
+<body id="body-pd">
 
 	<!-- 헤더 body 추가 -->
-	<div th:replace="/common/centerHeader.html"></div>
+	<div th:replace="/common/centerHeader.html :: center-body"></div>
 
     
     <!--Container Main start-->
@@ -35,27 +35,31 @@
                     <option value="2">퇴사</option>
                 </select>
 
+			<!-- 트레이너 목록 테이블 -->
             <div class="table-responsive custom-table-responsive">
             <table class="table custom-table">
             <thead>
             <tr>
             <th scope="col">
             <label class="control control--checkbox">
-            <input type="checkbox" class="js-check-all" name="check" value="selectAll"
+            <input type="checkbox" class="js-check-all" name="checkAll" value="selectAll"
              onclick="selectAll(this)">
             <div class="control__indicator"></div>
             </label>
             </th>
             <th>No</th>
-            <th>이름</th>
             <th>ID</th>
+            <th>이름</th>            
             <th>성별</th>
             <th>연락처</th>
+            <th>경력</th>
             <th>재직여부</th>
+            
+          
             </tr>
             </thead>
             <tbody>
-            <tr th:each="trainer : ${ trainerList}">
+            <tr class="table_tr" th:each="trainer : ${ trainerList}">
                 <td scope="row">
                     <label class="control control--checkbox">
                         <input type="checkbox" name="check">
@@ -63,52 +67,67 @@
                     </label>
                 </td>
                 <td th:text="${trainer.trNum}"> </td>
-                <td th:text="${trainer.member.name}"> </td>
-                <td th:text="${trainer.member.id}"></td>
+          		<td>
+                	<a th:href="|@{/center/trainer/trainerDetail?id={id}(id=${ trainer.member.id })}|" th:text="${ trainer.member.id }" ></a>
+                </td>   
+                <td th:text="${trainer.member.name}"></td>           
                 <td th:text="${trainer.member.gender}"></td>
                 <td th:text="${trainer.member.contact}"></td>
+                <td th:text="|${trainer.career}년|"></td>
                 <td th:text="${trainer.trStatus}"></td>
+    			
+    			
+    		
+    	
             </tr>
-		
-            
+    
             </tbody>
             </table><br>
-
-            <button type="button" class="btn btn-secondary">퇴사</button>
-            
-            <!-- 페이징-->
-            <nav aria-label="Page navigation example">
-                <ul class="pagination" style="justify-content: center">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+             <nav th:if="${params != null and params.paginationInfo.totalRecordCount > 0}" th:object="${params.paginationInfo}" th:with="info=${params.paginationInfo}" aria-label="Page navigation" class="text-center">
+						<ul class="pagination flex-wrap d-flex justify-content-center" style="display: flex; border-radius: 0.25rem;">
+							<li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(1)} ]])">
+								<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+							</li>
+							<li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.firstPage - 1)} ]])">
+								<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&lsaquo;</span></a>
+							</li>
+							<li class="page-item" th:each="pageNo : *{#numbers.sequence( firstPage, lastPage )}" th:class="${pageNo == params.currentPageNo} ? 'active'">
+								<a class="page-link" href="javascript:void(0)" th:text="${pageNo}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(pageNo)} ]])"></a>
+							</li>
+							<li class="page-item" th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.lastPage + 1)} ]])">
+								<a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&rsaquo;</span></a>
+							</li>
+							<li class="page-item" th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.totalPageCount)} ]])">
+								<a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+							</li>
+						</ul>
+					</nav>
+           
             </div>
             </div>
             </div>
     </div>
+    <script th:inline="javascript">
+			/*<![CDATA[*/
+			function movePage(uri, queryString) {
+				location.href = uri + queryString;
+			}
+			/*[- end of function -]*/
+			
+			/*]]>*/
+	</script>
     
- <script type='text/Javascript'>document.addEventListener("DOMContentLoaded", function(event) {
+
+<!--  <script type='text/Javascript'>
+ document.addEventListener("DOMContentLoaded", function(event) {
 /* 트레이너 목록 테이블 체크박스 변수*/
 const checkboxes = document.getElementsByName('check');
+
 
  }
 </script>
 
-
-
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>   
 <script>
 
 
@@ -120,11 +139,50 @@ function selectAll(selectAll)  {
   checkboxes.forEach((checkbox) => {
     checkbox.checked = selectAll.checked
   })
+   
 }
 
-</script>
+function deleteTrainer(){
+    var cnt = $("input[name='check']:checked").length;
+    var arr = new Array();
+    $("input[name='check']:checked").each(function() {
+        arr.push($(this).attr('id'));
+    });
+    if(cnt == 0){
+        alert("선택된 트레이너가 없습니다.");
+    }
+    else{
+        $.ajax = {
+            type: "POST",
+            url: "OOOO.do",
+            data: "TRN_NUM=" + arr + "&CNT=" + cnt,
+            dataType:"json",
+            success: function(jdata){
+                if(jdata != 1) {
+                    alert("삭제 오류");
+                }
+                else{
+                    alert("삭제 성공");
+                }
+            },
+            error: function(){alert("서버통신 오류");}
+        };
+    }
+}
+
+	
+	
 
 
 
+
+
+
+</script> -->
+
+
+
+<!-- 
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
 </body>
 </html> 

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>락커이용권 구매</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/member/product/order.css}"/>
+    <!-- replace head 부분 -->
+    <div th:replace="/common/centerHeader.html :: member-header"></div>
+    <!-- 제이쿼리 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body id="body-pd"> <!-- sidebar 적용위해 id 추가 -->
+    <!-- 헤더 body 추가 -->
+	<div th:replace="/common/centerHeader.html :: member-body"></div>
+    <!-- 최대 크기 768 로 맞춰서 / 타이틀 <2> / 기본폰트 15px (표 상단은 bold 처리) / 참고문구는 12px -->
+    <div class="height-100 width-768">
+        <div class="title-box">
+            <h2>락커이용권 구매</h2>
+        </div>
+            <table>
+                <tr>
+                    <th class="width-40">
+                        상품명
+                    </th>
+                    <th>
+                        이용기간
+                    </th>
+                    <th>
+                        가격
+                    </th>
+                    <th>
+                        구매
+                    </th>
+                </tr>
+                <tr th:each="membership : ${ membershipList }">
+                    <td th:text="${ membership.name }">
+                        락커이용 12개월권
+                    </td>
+                    <td th:text="|${ membership.usePeriod } 개월|">
+                        12개월
+                    </td>
+                    <td th:text="|${#numbers.formatInteger(membership.price, 0, 'COMMA')}원|">
+                        60,000원
+                    </td>
+                    <td>
+                    	<a>
+                        <button>결제</button>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+</body>
+</html>

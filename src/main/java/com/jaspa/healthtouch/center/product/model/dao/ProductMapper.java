@@ -28,7 +28,7 @@ public interface ProductMapper {
 	List<ProductDTO> findAllPT();
 	
 	// 락커 이용권 조회
-	List<ProductDTO> findAllRocker();
+	List<ProductDTO> findAllLocker();
 
 	// 운동복 이용권 조회
 	List<ProductDTO> findAllSportswear();

@@ -18,7 +18,7 @@ public interface ProductService {
 
 	List<ProductDTO> findAllPT();
 
-	List<ProductDTO> findAllRocker();
+	List<ProductDTO> findAllLocker();
 
 	List<ProductDTO> findAllSportswear();
 	
