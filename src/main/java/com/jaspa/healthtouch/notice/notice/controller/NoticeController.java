@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +22,7 @@ import com.jaspa.healthtouch.notice.notice.model.service.NoticeService;
 
 
 @Controller
-@RequestMapping("/notice/*")
+@RequestMapping("/notice")
 public class NoticeController {
 	private NoticeService noticeService;
 	
@@ -48,10 +47,9 @@ public class NoticeController {
 
 	
 	//공지사항 상세조회 
-	@GetMapping("/detail")
+	@GetMapping("/noticedetail")
 	public String selectNoticeDetail (@ModelAttribute("params") NoticeDTO params, @RequestParam("noticeNo") int noticeNo, Model model) throws Exception {
 		NoticeDTO notice = noticeService.selectNoticeDetail(noticeNo);
-		
 		model.addAttribute("notice", notice);
 	
 			return "/notice/noticedetail";	
@@ -80,7 +78,7 @@ public class NoticeController {
 
 	//공지사항 수정 페이지 연결
 	@GetMapping("/modify")
-	public String noticeModify(@PathVariable("noticeNo") int noticeNo, Model model)throws Exception  {
+	public String noticeModify(@RequestParam("noticeNo") int noticeNo, Model model)throws Exception  {
 		model.addAttribute("notice", noticeService.selectNoticeDetail(noticeNo));
 		
 		return "/notice/noticemodify";

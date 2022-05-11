@@ -6,14 +6,15 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>공지사항 등록</title>
- 	<div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-header"></div>
+ 	<div sec:authorize="hasRole('ROLE_CENTER')"  th:replace="/common/centerHeader.html :: center-header"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/notice/notice.css}"/>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     </head>     
   
   <body id="body-pd" class='snippet-body ' >
-  
-    <div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-body"></div>
+
+ <div sec:authorize="hasRole('ROLE_CENTER')" th:replace="/common/centerHeader.html :: center-body"></div>
+ 
    
 <div class="d-flex justify-content-center row">
 <div class="rounded">
@@ -24,20 +25,20 @@
      <!-- 공지사항 등록페이지 -->
 <div class="notice rounded">
   <div class="regist">
-    <form role="form" th:object=${NoticeDTO} th:action="@{/notice/noticeregist}" class="needs-validation" method="post"enctype="multipart/form-data" >
+    <form role="form" action="/notice/regist" class="needs-validation" method="post"enctype="multipart/form-data" >
     <div id="regist-title">
       <label for="title" class="form-label" style="font-size: 15px;"  name="title">제목</label>
-        <input th:field="*{noticeTitle}" type="text" class="form-control" id="content1" name="title" placeholder="제목을 입력하세요." required>
+        <input  type="text" class="form-control" id="content1" name="title" placeholder="제목을 입력하세요." required>
   
     <div class="contentwritebox">
       <label for="firstName" class="form-label"><strong>내용</strong></label>
-   	  <textarea th:field="*{noticeContent}" class="regist-content form-control" name="content" placeholder="내용을 입력하세요." required> </textarea> 
+   	  <textarea class="regist-content form-control" name="content" placeholder="내용을 입력하세요." required> </textarea> 
   </div>  
     </div>
 
     <hr id="line">
    <button type="submit" class="btn btn-outline-secondary" value="등록"  name="submit"  id="noticeregist">등록</button>
-  <button type="button" class="btn btn-outline-secondary "value="취소"  name="cancel"  >취소</button>
+  <button th:onclick="'location.href=\''+@{/notice/notice} + '\''"type="button" class="btn btn-outline-secondary "value="취소"  name="cancel"  >취소</button>
       <script>
 			$().ready(function () {
             $("#noticeregist").click(function () {

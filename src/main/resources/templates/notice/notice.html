@@ -58,7 +58,7 @@
 <tbody class="table-body" >
 <tr class="cell-1" th:if="${not #lists.isEmpty( noticeList )}" th:each="list : ${noticeList}"  >
   <td class="text-center"th:text="${list.noticeNo}"></td>
- <td class="col-md-auto title" id="title"><a th:href="|@{/notice/noticedetail}${params.makeQueryString(params.currentPageNo)}&noticeNo=${ list.noticeNo }|" th:text="${list.noticeTitle}"></a></td>
+ <td class="col-md-auto title" id="title"><a th:href="|@{/notice/noticedetail?noticeNo={no}(no=${ list.noticeNo })}|" th:text="${list.noticeTitle}"></a></td>
   <td th:text="${list.noticeView}"></td>
   <td th:text="${#dates.format(list.noticeDate,'yyyy-MM-dd')}"></td>
 </tr>
