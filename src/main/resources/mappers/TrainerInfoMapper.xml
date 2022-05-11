@@ -6,6 +6,7 @@
 	<resultMap type="com.jaspa.healthtouch.trainer.trainerInfo.model.dto.TrainerMemberDTO" id="trainerResultMap">
 		<id property="trNum" column="TRN_NUM"/>
 		<result property="career" column="TRN_CAREER"/>		
+		
 		<association property="member" resultMap="memberResultMap"/>
 	</resultMap>
 	
@@ -28,9 +29,14 @@
 	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberRoleDTO" id="memberRoleResultMap">
 		<id property="memberId" column="MEMBER_ID"/>
 		<result property="authorityCode" column="AUTHORITY_CODE"/>
-		
+				<association property="authority" resultMap="authorityResultMap"/>
 	</resultMap>
 	
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.AuthorityDTO" id="authorityResultMap">
+		<id property="code" column="REF_AUTHORITY_CODE2"/>
+		<result property="name" column="AUTHORITY_NAME"/>
+		<result property="desc" column="AUTHORITY_DESC"/>
+	</resultMap>
 	
 	<!-- 트레이너 정보 조회 -->
 		<select id="selectTrainer" resultMap="trainerResultMap">
@@ -49,13 +55,13 @@
 	
 	<!-- 트레이너 정보 수정 -->
 	<update id="updateTrainer">
-		UPDATE TBL_MEMBER A INNER JOIN TBL_TRN_INFO B ON
+		UPDATE TBL_MEMBER A INNER JOIN TBL_TRN_INFO B
 		    ON A.MEMBER_ID = B.TRN_INFO_MEMBER_ID
 		   SET A.MEMBER_NAME = #{ name }
 		     , A.MEMBER_CONTACT = #{ contact }
 		     , A.MEMBER_ADDRESS = #{ address }
 		     , A.MEMBER_BIRTHDAY = #{ birthday }
-		     , B.TRN_CARRER = #{ carrer }
+		     , B.TRN_CARRER = #{ career }
 		 WHERE MEMBER_ID = #{ id }
 		   AND MEMBER_STATUS = 'Y'
 	</update>
