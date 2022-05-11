@@ -60,8 +60,8 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public List<ProductDTO> findAllRocker() {	
-		return productMapper.findAllRocker();
+	public List<ProductDTO> findAllLocker() {	
+		return productMapper.findAllLocker();
 	}
 
 	@Override
