@@ -7,13 +7,13 @@
     <title>수강권 구매</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/member/product/order.css}"/>
     <!-- replace head 부분 -->
-    <div th:replace="/common/centerHeader.html :: center-header"></div>
+    <div th:replace="/common/memberHeader.html :: member-header"></div>
     <!-- 제이쿼리 추가 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body id="body-pd"> <!-- sidebar 적용위해 id 추가 -->
     <!-- 헤더 body 추가 -->
-	<div th:replace="/common/centerHeader.html :: center-body"></div>
+	<div th:replace="/common/memberHeader.html :: member-body"></div>
     <!-- 최대 크기 768 로 맞춰서 / 타이틀 <2> / 기본폰트 15px (표 상단은 bold 처리) / 참고문구는 12px -->
     <div class="height-100 width-768">
         <div class="title-box">

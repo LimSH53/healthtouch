@@ -1,6 +1,7 @@
 package com.jaspa.healthtouch.member.product.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,16 @@ public class MemberProServiceImpl implements MemberProService{
 		return result;
 		
 	}
-	
+
+	@Override
+	public List<PaymentDTO> selectOrderList(String userId) {
+		return memberProMapper.selectOrderList(userId);
+	}
+
+	@Override
+	public List<PaymentDTO> searchOrderList(int searchOption, String userId) {
+		return memberProMapper.searchOrderList(searchOption, userId);
+	}
 	
 
 }

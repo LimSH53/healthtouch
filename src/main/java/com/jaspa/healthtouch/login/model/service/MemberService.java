@@ -1,9 +1,12 @@
 package com.jaspa.healthtouch.login.model.service;
 
+import java.util.List;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.jaspa.healthtouch.login.model.dto.LoginLogDTO;
 import com.jaspa.healthtouch.login.model.dto.MemberDTO;
+import com.jaspa.healthtouch.member.product.model.dto.OrderDTO;
 
 public interface MemberService extends UserDetailsService {
 	
@@ -30,5 +33,9 @@ public interface MemberService extends UserDetailsService {
 	int modifyPwd(MemberDTO requestMember, String pwd);
 
 	void removeMember(String id);
+
+	static List<OrderDTO> selectOrderList(int searchCondition) {
+		return null;
+	}
 
 }

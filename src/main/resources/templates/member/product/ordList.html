@@ -7,30 +7,32 @@
     <title>구매내역 조회</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/member/product/orderList.css}"/>
     <!-- replace head 부분 -->
-    <div th:replace="/common/centerHeader.html :: center-header"></div>
+    <div th:replace="/common/memberHeader.html :: member-header"></div>
     <!-- 제이쿼리 추가 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body id="body-pd"> <!-- sidebar 적용위해 id 추가 -->
     <!-- 헤더 body 추가 -->
-	<div th:replace="/common/centerHeader.html :: center-body"></div>
+	<div th:replace="/common/memberHeader.html :: member-body"></div>
     <!-- 최대 크기 768 로 맞춰서 / 타이틀 <2> / 기본폰트 15px (표 상단은 bold 처리) / 참고문구는 12px -->
     <div class="height-100 width-768">
         <div class="title-box">
             <h2>회원권 구매</h2>
         </div>
         <form>
-            <select class="term-option">
-                <option>기간별 조회</option>
-                <option>1주</option>
-                <option>2주</option>
-                <option>1달</option>
+        	<input type="hidden" name="userId" value="${#authentication.principal.id}">
+            <select class="term-option" id="searchOption">
+                <option value="0">기간별 조회</option>
+                <option value="7">1주</option>
+                <option value="14">2주</option>
+                <option value="30">1달</option>
             </select>
+		</form>
             <table>
                 <tr>
-                    <th>
-                        No
-                    </th>
+                	<th class="hidden">
+                		구매번호
+                	</th>
                     <th>
                         결제일자
                     </th>
@@ -53,33 +55,57 @@
                         
                     </th>
                 </tr>
-                <tr>
-                    <td>
-                        1
-                    </td>
-                    <td>
+                <tr th:each="order : ${ orderList }" >
+                	<th class="hidden" th:text="${order.order.no}">
+                		구매번호
+                	</th>
+                    <td th:text="${#dates.format(order.date, 'yyyy-MM-dd')}">
                         2022-04-17
                     </td>
-                    <td>
+                    <td th:text="${order.order.product.name}">
                         락커 이용권
                     </td>
-                    <td>
+                    <td th:text="|${order.order.product.usePeriod} 개월|">
+                    	<!-- <div></div>
+                    	<div></div> -->
                         12개월
                     </td>
-                    <td>
+                    <td th:text="|${order.order.product.useCount} 회|">
                         0회
                     </td>
                     <td>
+                        <div th:if="${order.order.trnId}==null">
                         -
+                        </div>
+                        <div th:if="${order.order.trnId}!=null" th:text="${order.order.trainer.name}">
+                        </div>
                     </td>
-                    <td>
+                    <td th:text="|${#numbers.formatInteger(order.amount, 0, 'COMMA')}원|">
                         60,000원
                     </td>
-                    <td>
+                    <td th:if="${order.order.trnId}!=null">
                         <button>리뷰등록</button>
                     </td>
                 </tr>
             </table>
-        </div>
+	</div>
+<script type="text/javascript">
+	$("#searchOption").change(function(){
+		let searchOption = $(this).val();
+		console.log(searchOption);
+		$.ajax({
+			url : '/member/product/ordList',
+			type : 'GET',
+			dataType : 'json',
+			data : {
+				searchCondition : searchOption
+			}
+			
+		});
+		
+	})
+	
+</script>	
+	
 </body>
 </html>
