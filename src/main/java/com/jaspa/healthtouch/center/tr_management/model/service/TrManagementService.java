@@ -12,7 +12,7 @@ public interface TrManagementService {
 
 	TrainerInfoDTO trainerDetail(String trId);
 
-	void deleteTrainer(String trId);
+	void deleteTrainer(String id);
 
 	
 

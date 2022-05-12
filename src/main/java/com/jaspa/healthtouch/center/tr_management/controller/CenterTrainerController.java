@@ -4,19 +4,18 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jaspa.healthtouch.center.product.model.dto.ProductDTO;
 import com.jaspa.healthtouch.center.tr_management.model.dto.TrainerInfoDTO;
 import com.jaspa.healthtouch.center.tr_management.model.service.TrManagementService;
-import com.jaspa.healthtouch.login.model.dto.UserImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -58,12 +57,19 @@ public class CenterTrainerController {
 	}
 	
 	
-	@GetMapping("/delete")
-	public String deleteTrainer(@ModelAttribute("params") TrainerInfoDTO params, @RequestParam("trId") String trId) {
-		
-		trManagementService.deleteTrainer(trId);
-		
-		return "redirect:/";
+//	@GetMapping("/delete")
+//	public String deleteTrainer(@AuthenticationPrincipal UserImpl user) {
+//		
+//		trManagementService.deleteTrainer(user.getId());
+//		//System.out.println(trId);
+//		
+//		return "redirect:/";
+//	}
+	
+	@PostMapping("/delete")
+	@ResponseBody
+	public void deleteTrainer(@RequestParam("trId") String id) {
+		trManagementService.deleteTrainer(id);
 	}
 	
 	

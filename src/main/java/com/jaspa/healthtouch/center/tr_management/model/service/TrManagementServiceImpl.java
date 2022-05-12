@@ -35,8 +35,8 @@ public class TrManagementServiceImpl implements TrManagementService{
 
 	@Transactional
 	@Override
-	public void deleteTrainer(String trId) {
-		trainerMapper.deleteTrainer(trId);
+	public void deleteTrainer(String id) {
+		trainerMapper.deleteTrainer(id);
 		
 	}
 

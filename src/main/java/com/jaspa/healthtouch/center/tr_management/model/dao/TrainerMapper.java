@@ -18,7 +18,7 @@ public interface TrainerMapper {
 	TrainerInfoDTO detailTrainerById(String trId);
 
 
-	void deleteTrainer(String trId);
+	void deleteTrainer(String id);
 
 	
 

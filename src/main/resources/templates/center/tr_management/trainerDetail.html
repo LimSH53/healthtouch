@@ -75,16 +75,27 @@
     			denyButtonText: '취소',
     		}).then((result) => {
     			if(result.isConfirmed) {
-    				Swal.fire({
-    					text: '퇴사 처리가 완료되었습니다.',
-    					confirmButtonText: '확인',
-    				}).then((result) => {
-    					location.href = "/center/trainer/delete";
-    				})
+					$.ajax({
+						url: "/center/trainer/delete",
+						type: "post",
+						data: { trId : trId },
+						success: function() {
+							Swal.fire({
+								icon: 'success',
+								text: '퇴사 처리가 완료되었습니다.',
+								confirmButtonText: '확인',
+							}).then((result) => {
+								location.reload();
+							})
+						},
+						error: function(e) {
+							console.log(e);
+						}
+					});
     			}
     		})
     	}
-	
+	</script>
 	
 </body>
 </html>
