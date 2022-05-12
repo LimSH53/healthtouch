@@ -44,7 +44,7 @@ private final NoticeMapper noticeMapper;
 			
 			return noticeList;
 		    }	  
-	
+	 
 	//공지사항 상세조회
 	  @Override
 	  public NoticeDTO selectNoticeDetail(int noticeNo) {

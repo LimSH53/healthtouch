@@ -112,7 +112,7 @@
     AND  A.NOT_DELETE = 'N'
     ORDER BY A.RNUM 
   </select>
-
+  
 	
 	<!-- 총 게시글 갯수 출력 -->
 	<select id="noticeFind" parameterType="com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO" resultType="int">

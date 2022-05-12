@@ -28,6 +28,6 @@ public class NoticeDTO extends CommonDTO {
 
 
 	
-	
+	 
 }
  

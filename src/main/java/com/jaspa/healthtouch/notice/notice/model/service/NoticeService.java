@@ -24,7 +24,7 @@ public interface NoticeService {
 		boolean deleteNotice(int noticeNo);
 
 		
-
+ 
 	
 
 
