@@ -10,11 +10,9 @@
 		<result property="noticeDate" column="NOT_DATE"/>
 		<result property="noticeEditDate" column="NOT_EDIT_DATE"/>
 		<result property="noticeView" column="NOT_VIEW"/>
+		<result property="noticeCategory" column="NOT_CATEGORY"/>
 		
-		<association property="member" resultMap="userResultMap"/>
-		<collection property="commentList" resultMap="commentResultMap"/>
-		<collection property="attachmentList" resultMap="attachmentResultMap"/>
-		
+		<association property="member" resultMap="memberResultMap"/>
 	</resultMap >
 	  
 	<resultMap type="com.jaspa.healthtouch.notice.notice.model.dto.AttachmentDTO" id="attachmentResultMap" >
@@ -59,23 +57,115 @@
 	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberRoleDTO" id="memberRoleResultMap">
 		<id property="memberId" column="REF_MEMBER_ID"/>
 		<result property="authorityCode" column="REF_AUTHORITY_CODE"/>
-		
-		<association property="authority" resultMap="authorityResultMap"/>
-	</resultMap>
 	
-	<resultMap type="com.jaspa.healthtouch.login.model.dto.AuthorityDTO" id="authorityResultMap">
-		<id property="code" column="REF_AUTHORITY_CODE2"/>
-		<result property="name" column="AUTHORITY_NAME"/>
-		<result property="desc" column="AUTHORITY_DESC"/>
 	</resultMap>
 	
 	
+	<!-- 공지사항 조회 -->
+	<select id="noticeList" resultMap="noticeResultMap" parameterType="com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO" >
+  SELECT A.RNUM
+  		,A.NOT_NO
+  	 	,A.NOT_MEMBER_ID
+  	 	,A.NOT_TITLE
+  	 	,A.NOT_CONTENT
+  	 	,A.NOT_DELETE
+  	 	,A.NOT_DATE
+  	 	,A.NOT_EDIT_DATE
+  	 	,A.NOT_VIEW
+  	FROM(SELECT ROWNUM RNUM
+  				,B.NOT_NO
+		  	 	,B.NOT_MEMBER_ID
+		  	 	,B.NOT_TITLE
+		  	 	,B.NOT_CONTENT
+		  	 	,B.NOT_DELETE
+		  	 	,B.NOT_DATE
+		  	 	,B.NOT_EDIT_DATE
+		  	 	,B.NOT_VIEW
+		   	FROM(SELECT  C.NOT_NO
+				  	 	,C.NOT_MEMBER_ID
+				  	 	,C.NOT_TITLE
+				  	 	,C.NOT_CONTENT
+				  	 	,C.NOT_DELETE
+				  	 	,C.NOT_DATE
+				  	 	,C.NOT_EDIT_DATE
+				  	 	,C.NOT_VIEW
+  	 	
+    			FROM  TBL_NOTICE C
+    	<if test="searchKeyword != null and searchKeyword != ''">
+							<where>
+								<if test="searchType == 'title'">
+									C.NOT_TITLE LIKE '%' || #{searchKeyword} || '%'
+								</if>
+								<if test="searchType == 'content'">
+									C.NOT_CONTENT LIKE '%' || #{searchKeyword} || '%'
+								</if>
+							</where>
+						</if>
+					ORDER BY C.NOT_NO DESC
+					)B  
+		  		  <![CDATA[ 
+		  		  WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
+		  		  ]]>
+		  		 )A
+	JOIN TBL_MEMBER D ON (A.NOT_MEMBER_ID = D.MEMBER_ID)
+    WHERE A.RNUM >  #{ paginationInfo.firstRecordIndex }
+    AND  A.NOT_DELETE = 'N'
+    ORDER BY A.RNUM 
+  </select>
+  
+	
+	<!-- 총 게시글 갯수 출력 -->
+	<select id="noticeFind" parameterType="com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO" resultType="int">
+
+		SELECT 
+			COUNT(*) 
+		FROM TBL_NOTICE A 
+		WHERE A.NOT_DELETE = 'N'
+  			<if test="searchKeyword != null and searchKeyword != ''">
+			<choose>
+				<when test="searchType != null and searchType != ''">
+					<choose>
+						<when test="searchType == 'title'">
+							AND A.NOT_TITLE LIKE '%' || #{searchKeyword} || '%'
+						</when>
+						<when test="searchType == 'content'">
+							AND A.NOT_CONTENT LIKE '%' || #{searchKeyword} || '%'
+						</when>
+					</choose>
+				</when>
+			</choose>
+		</if>
+	</select>
+	
+
+	<!-- 공지사항 상세조회 -->
+	<select id="selectNoticeDetail" resultMap="noticeResultMap" >
+	SELECT 
+			*
+	  FROM  TBL_NOTICE 
+	 WHERE  NOT_NO = #{noticeNo}
+	 AND    NOT_DELETE = 'N'
+	</select>
+	
+	
+	<!-- 공지사항 조회수 -->
+		<update id="viewCount" parameterType="int">
+	UPDATE 
+			TBL_NOTICE 
+	SET
+			NOT_VIEW = NOT_VIEW + 1
+	WHERE  
+			NOT_NO = #{noticeNo}
+	</update>
+	
+	
+	<!-- 공지사항 등록 -->
 	<insert id="registNotice" >
         INSERT 
           INTO TBL_NOTICE 
         ( 
           NOT_NO
-        , NOT_MEMBER_ID  
+        , NOT_MEMBER_ID
         , NOT_TITLE
         , NOT_CONTENT
         , NOT_DELETE
@@ -84,12 +174,32 @@
         VALUES
         (
           SEQ_NOT_NO.NEXTVAL
-        , #{ memberId }
-        , #{ noticeTitle }
-        , #{ noticeContent }
+        , 'admin01'
+        , #{noticeTitle}
+        , #{noticeContent}
        	, 'N'
         , SYSDATE
         )
 	</insert>
+	
+	<!-- 공지사항 수정 -->
+	<update id="modifyNotice" >
+	UPDATE TBL_NOTICE
+	   SET 
+	   NOT_EDIT_DATE=SYSDATE
+	 , NOT_TITLE=#{noticeTitle}
+	 , NOT_CONTENT=#{noticeContent}
+	WHERE NOT_NO=#{noticeNo}
+	
+	</update>
+	
+	<!-- 공지사항 삭제 -->
+	<update  id="deleteNotice" parameterType="int">
+	 UPDATE 
+	 	  TBL_NOTICE
+	  SET NOT_DELETE = 'Y'
+	WHERE NOT_NO=#{noticeNo}
+	
+	</update>
 	
 </mapper>
