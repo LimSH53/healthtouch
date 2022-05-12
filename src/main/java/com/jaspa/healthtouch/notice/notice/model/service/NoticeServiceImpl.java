@@ -58,8 +58,8 @@ private final NoticeMapper noticeMapper;
 
 	//공지사항 수정
 	@Override
-	public int modifyNotice(NoticeDTO notice){
-		return noticeMapper.modifyNotice(notice);
+	public void modifyNotice(NoticeDTO notice){
+		 noticeMapper.modifyNotice(notice);
 		
 
 		}

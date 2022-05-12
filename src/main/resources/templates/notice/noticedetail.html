@@ -51,8 +51,8 @@
     <div style="display:-webkit-box ">
       <button th:onclick="'location.href=\''+@{/notice/notice} + '\''"type="button" class="list_btn btn btn-outline-secondary">목록</button>
       <div sec:authorize="hasRole('ROLE_CENTER')" class=" regist-btn" style="margin-left: 565px; ">
-        <a th:href="@{'/notice/modify?no=' + ${ notice.noticeNo }}" type="button" class="btn btn-outline-secondary " value="수정">수정</a>
-        <a  th:href="@{'/notice/delete?no=' + ${ notice.noticeNo }}"type="button" class="btn btn-outline-secondary " value="삭제" id="noticedelete">삭제</a>
+        <a th:href="@{'/notice/noticemodify?noticeNo=' + ${ notice.noticeNo }}" type="button" class="btn btn-outline-secondary " value="수정">수정</a>
+        <a  th:href="@{'/notice/delete?noticeNo=' + ${ notice.noticeNo }}"type="button" class="btn btn-outline-secondary " value="삭제" id="noticedelete">삭제</a>
      	    
 		        <script>
 			                $().ready(function () {

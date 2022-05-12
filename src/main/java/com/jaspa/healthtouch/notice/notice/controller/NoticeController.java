@@ -76,27 +76,24 @@ public class NoticeController {
 	
 
 	//공지사항 수정 페이지 연결
-	@GetMapping("/modify")
-	public String noticeModify(@RequestParam("noticeNo") int noticeNo, Model model)throws Exception  {
-		model.addAttribute("notice", noticeService.selectNoticeDetail(noticeNo));
+	@GetMapping("/noticemodify")
+	public String noticeModify(@RequestParam int noticeNo, Model model)throws Exception  {
+		model.addAttribute("modify", noticeNo);
 		
 		return "/notice/noticemodify";
 	}
 	
 	//공지사항 수정
-	@PostMapping("/modify")
-	public String modifyNotice(NoticeDTO notice) throws Exception {
+	@PostMapping("/noticemodify")
+	public String modifyNotice(@ModelAttribute NoticeDTO notice) throws Exception {
 		noticeService.modifyNotice(notice);
-		NoticeDTO noticedto = new NoticeDTO();
-		noticedto.setNoticeTitle(notice.getNoticeTitle());
-		noticedto.setNoticeContent(notice.getNoticeContent());
 		
-		return "/notice/notice";
+		return "redirect:/notice/notice";
 	}
 
 	//공지사항 삭제
 	@GetMapping("/delete")
-	public String deleteNotice (@RequestParam(value ="noticeNo", required = false) int noticeNo) throws Exception {
+	public String deleteNotice (@RequestParam(value ="noticeNo", required = false) int noticeNo) {
 		  System.out.println("/delete 접근. noticeNo = " + noticeNo);
 		  // 올바르지 않은 접근 시
 		  if (noticeNo == 0) {
@@ -111,13 +108,13 @@ public class NoticeController {
 
 		    // false면 이미 게시글이 삭제된 상태
 		    if (isDeleted == false) {
-		    	// TODO => 게시글 삭제에 실패하였다는 메시지를 전달
+		    	// 게시글 삭제에 실패하였다는 메시지를 전달
 		    }
 		  } catch (DataAccessException e) {
-		  	// TODO => 데이터베이스 처리 과정에 문제가 발생하였다는 메시지를 전달
+		  	// 데이터베이스 처리 과정에 문제가 발생하였다는 메시지를 전달
 
 		  } catch (Exception e) {
-		  	// TODO => 시스템에 문제가 발생하였다는 메시지를 전달
+		  	// 시스템에 문제가 발생하였다는 메시지를 전달
 		  }
 
 		  return "redirect:/notice/notice";
