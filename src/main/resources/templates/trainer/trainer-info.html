@@ -41,20 +41,22 @@
                 <div class="my-info">
         		<form name="modifyForm" id="modifyForm" method="post" th:action="@{/trainer/trainer-info}">
         
+        				
+        				
                         <!--이름-->
                         <label id="la-userName"><b>이름</b></label>
                         <span class="input_area"><input type="text" name="name" id="userName" th:value="${#authentication.principal.name}"></span>
                     
                         <!--연락처-->
                         <label id="phn"><b>연락처</b></label>
-                        <span class="input_area"><input type="text" maxlength="11" name="phone" id="phoneNum" th:value="${#authentication.principal.contact}"></span>
+                        <span class="input_area"><input type="text" maxlength="11" name="contact" id="phoneNum" th:value="${#authentication.principal.contact}"></span>
                 
                         <!--주소-->
                         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         
                         <label id="addr"><b>주소</b></label><br>
                         <!--기본주소-->
-                        <span class="input_area"><input type="text" th:value="${#authentication.principal.address}" id="basicAddr" name="address1" class="postcodify_postcode5" readonly></span>
+                        <span class="input_area"><input type="text" th:value="${#authentication.principal.address}" id="basicAddr" name="address" class="postcodify_postcode5" readonly></span>
                         <button id="postcodify_search_button" type="button" onclick="openZipSearch()" >검색</button>
                     
                         <!--도로명 주소-->
@@ -72,9 +74,8 @@
                         <!--경력-->
                         <h4></h4>
                         <label id="la-career"><b>경력(년)</b></label>
-                        <span class="input_area"><input type="number" name="career" id="memberCareer"  th:value="${#authentication.principal.address}"></span>
-                    				
-                    				
+                        <span class="input_area"><input type="number" name="career" id="memberCareer"  th:value="${trainerInfo.career}"></span>
+                    			
                     																					<!--  <td th:text="|${trainer.career}년|"></td> -->
 
 
@@ -82,7 +83,7 @@
                         <span class="infoModify">
                         
                         	<button type="button" id="info-Modify1" onclick="modifyPwd()" >비밀번호 변경</button>
-                            <button type="button" id="info-Modify" onclick="startModify()">수정</button>
+                            <button type="submit" id="info-Modify">수정</button>
                     
                         </span>
                        
@@ -143,6 +144,8 @@
                 				
                 				var param = { id : id, name : name, contact : contact, address : address, birthday : birthday, career : career };
                 				
+                				console.log(param);
+                				/*
                 				if(isUsable) {
                 					$.ajax({
                 						url: "/trainer/trainer-info",
@@ -173,7 +176,9 @@
                 				$('#modifyContact').hide();
                 				$('#modifyForm input[type=date]').prop('readonly', true);
                 				document.getElementById('modifyBtn').innerHTML = "수정";
+                				*/
                 			}
+                			
                 	
                 		} 
                 		

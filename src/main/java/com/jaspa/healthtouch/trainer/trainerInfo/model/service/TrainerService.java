@@ -9,9 +9,8 @@ public interface TrainerService {
 
 	
 	/* 회원정보 - 조회 */
-	List<TrainerMemberDTO> selectTrainer();
+	TrainerMemberDTO selectTrainer(String id);
 	
 	void updateTrainer(TrainerMemberDTO trainer);
-	
 	
 }

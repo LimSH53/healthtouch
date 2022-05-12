@@ -1,12 +1,12 @@
 package com.jaspa.healthtouch.trainer.trainerInfo.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,19 +31,29 @@ public class TrainerInfoController {
 	}
 	
 	@GetMapping("/trainer-info")
-	public void selectTrainerInfo() {}
+	public void selectTrainerInfo(Model model, @AuthenticationPrincipal UserImpl user) {
+		
+		TrainerMemberDTO trainerInfo = trainerService.selectTrainer(user.getId());
+		model.addAttribute("trainerInfo", trainerInfo);
+		
+		log.info(trainerInfo.toString());
+	}
+	
 	
 	@PostMapping("/trainer-info")
-	public void selectTrainerInfo(TrainerMemberDTO trainer, TrainerServiceImpl info) {
+	public void selectTrainerInfo(TrainerMemberDTO trainer,  @AuthenticationPrincipal UserImpl user, Model model) {
 		
-		List<TrainerMemberDTO> trainerInfo = (List<TrainerMemberDTO>) trainerService.selectTrainer();
+		trainer.setId(user.getId());
+		log.info(trainer.toString());
 		trainerService.updateTrainer(trainer);
 		
-		trainer.setName(trainer.getName());
-		trainer.setContact(trainer.getContact());
-		trainer.setAddress(trainer.getAddress());
-		trainer.setBirthday(trainer.getBirthday());
-		trainer.setCareer(trainer.getCareer());
+		TrainerMemberDTO trainerInfo = trainerService.selectTrainer(user.getId());
+		model.addAttribute("trainerInfo", trainerInfo);
+		
+		user.setName(trainer.getName());
+		user.setContact(trainer.getContact());
+		user.setAddress(trainer.getAddress());
+		user.setBirthday(trainer.getBirthday());
 	}
 	
 	
