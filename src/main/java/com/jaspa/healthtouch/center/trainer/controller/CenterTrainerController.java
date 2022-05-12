@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO;
 import com.jaspa.healthtouch.center.trainer.model.service.TrManagementService;
+import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,6 +45,19 @@ public class CenterTrainerController {
 		mv.setViewName("center/trainer/trainerList");
 		return mv;
 	}
+	
+	/*
+	@GetMapping("/search")
+	public String trainerSearh(Model model, @ModelAttribute("params") TrainerInfoDTO params) {
+		
+		List<TrainerInfoDTO> trSearchList = trManagementService.searchTrainer();
+		
+		model.addAttribute("trSearchList", trSearchList);
+		
+		return "center/member/search";
+	} */
+	
+	
 	
 	
 	@GetMapping("/detail")

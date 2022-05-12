@@ -22,6 +22,8 @@ public interface TrainerMapper {
 
 	void deleteTrainerMStatus(String id);
 
+
+
 	
 
 }

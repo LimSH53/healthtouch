@@ -12,6 +12,8 @@ public interface TrManagementService {
 
 	void deleteTrainer(String id);
 
+	/* List<TrainerInfoDTO> searchTrainer(TrainerInfoDTO params); */
+
 	
 
 	
