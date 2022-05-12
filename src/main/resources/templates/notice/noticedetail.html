@@ -6,7 +6,7 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>공지사항 상세조회</title>
- 	<div sec:authorize="hasRole('ROLE_CENTER')"  th:replace="/common/centerHeader.html :: center-header"></div>
+<div sec:authorize="hasRole('ROLE_CENTER')"  th:replace="/common/centerHeader.html :: center-header"></div>
  	<div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-header"></div>
  	<div sec:authorize="hasRole('ROLE_TRAINER')" th:replace="/common/trnHeader.html :: trn-header"></div>
   	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -15,11 +15,11 @@
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     </head>      
   
-  <body id="body-pd" class='snippet-body ' style='min-height: 130vh;'>
-  
+  <body id="body-pd" class='snippet-body ' style='min-height: 80vh;'>
  <div sec:authorize="hasRole('ROLE_CENTER')" th:replace="/common/centerHeader.html :: center-body"></div>
   <div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-body"></div>
   <div sec:authorize="hasRole('ROLE_TRAINER')"th:replace="/common/trnHeader.html :: trn-body"></div>
+  
   
   <div class="container mt-5">
 <div class="d-flex justify-content-center row">
@@ -31,45 +31,80 @@
  </div>
  <!-- 공지사항 상세조회 -->
 <div class="notice rounded">
-  <div>
+<form th:object="${notice}">
+<div>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3">
-      <span class="bd_title" style="font-size: 15px;">2022년 4월 15일 헬스터치 런칭</span>
+      <span  name="title"  th:text="*{noticeTitle}" class="bd_title" style="font-size: 15px;"></span>
     </div>
     <div class="justify-content-md-center">
-      <span class="mr-1"><i class='bx bx-user'></i>센터</span> 
-      <span class="mr-1"><i class='bx bx-time-five' ></i> 22.04.15</span>
-      <span class="mr-1"><i class='bx bx-show-alt'></i> 15 Views</span>　
+     <i class='bx bx-user' style="font-size: 12px;"><span th:text="*{memberId}" class="mr-1"></span> </i> 
+     <i class='bx bx-time-five'  style="font-size: 12px;"><span th:text="*{#dates.format(noticeDate, 'yyyy-MM-dd')}"class="mr-1"> </span></i> 
+     <i class='bx bx-show-alt' style="font-size: 12px;"> <span th:text="*{noticeView}" class="mr-1"></span> Views　</i> 
     </div>
   </div>
   <hr id="line">
-    <div id="bo_v_con" style="font-size: 12px;">
-      2022년 4월 15일,
-      헬스터치를 회원님들께 선보입니다.
-      
-      가장 중요한 회원 케어 서비스에 힘 쏟을수있게 복잡한 업무를 
-      효율적으로 처리할수있고 누구든지 쉽게 관리가능한 프로그램,  
-      고객의 니즈 반영 및 변화하는 트렌드에 맞춰 구현한 서비스입니다.
-      
-      문의사항은 1:1 문의하기를 이용하시면
-      저희가 성실히! 답해드리겠습니다.
-      
-      아직 부족한 점 많지만 아무쪼록 잘 부탁드립니다. <(_ _)>
+    <div name="content"  th:text="*{noticeContent}" id="bo_v_con" style="font-size: 12px;">
     </div>
-  </section>
-  <hr id="line">
+    <hr id="line">
+       
+	  <!-- 공지사항 목록, 수정,삭제 버튼 -->
+    <div style="display:-webkit-box ">
+      <button th:onclick="'location.href=\''+@{/notice/notice} + '\''"type="button" class="list_btn btn btn-outline-secondary">목록</button>
+      <div sec:authorize="hasRole('ROLE_CENTER')" class=" regist-btn" style="margin-left: 565px; ">
+        <a th:href="@{'/notice/noticemodify?noticeNo=' + ${ notice.noticeNo }}" type="button" class="btn btn-outline-secondary " value="수정">수정</a>
+        <a  th:href="@{'/notice/delete?noticeNo=' + ${ notice.noticeNo }}"type="button" class="btn btn-outline-secondary " value="삭제" id="noticedelete">삭제</a>
+     	    
+		        <script>
+			                $().ready(function () {
+			            $("#noticedelete").click(function () {
+									            Swal.fire({
+						  title: '게시글 삭제',
+						  text: "게시글을 삭제하시겠습니까?",
+						  imageUrl: '/images/checkicon.png',
+						  imageWidth: 100,
+						  imageHeight: 100,
+						  imageAlt: 'Custom image',
+						  showCancelButton: true,
+						  confirmButtonColor: '#1b1b55',
+						  cancelButtonColor: '#e2e2e2',
+						  confirmButtonText: '삭제'
+						  
+						}).then((result) => {
+						  if (result.isConfirmed) {
+						       Swal.fire({
+						     title: '게시글 삭제',
+						 	 text: "게시글이 삭제되었습니다",
+						      imageUrl: '/images/successicon.png',
+							  imageWidth: 100,
+						      imageHeight: 100,
+						      imageAlt: 'Custom image',
+							  confirmButtonColor: '#1b1b55'
+			         })
+                    }
+                })
+            });
+        });
+	            </script>
+      
+      
+      </div>
+    </div>
+</form>
+  
+
   
    <!-- 공지사항 댓글등록 -->
   <section id="comment">
     <form id="comment1">
       <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요." required>
-      <button type="submit" class="btn btn-outline-secondary" id="cmtregist" style="font-size: 15px;">등록</button>
+      <button type="submit" class="btn btn-outline-secondary" id="cmtregist" style="font-size: 10px;">등록</button>
       <script>
 			$().ready(function () {
             $("#cmtregist").click(function () {
                 Swal.fire({
 					  title: '댓글등록',
 					  text: "댓글이 등록되었습다.",
-				      imageUrl: '../images/successicon.png',
+				      imageUrl: '/images/successicon.png',
 					  imageWidth: 100,
 				      imageHeight: 100,
 				      imageAlt: 'Custom image',
@@ -93,7 +128,7 @@
                 잘부탁 드립니다!
               </p>
               <div class="btn-group col">
-                <a class="nav-link cm_btn pull-right " href="modal" data-toggle="modal" >수정</a>
+                <a class="nav-link cm_btn pull-right "  data-toggle="modal" >수정</a>
                 <a  type="button" id="cmtdelete" class="nav-link cm_btn pull-right" >삭제</a>
              
 		        <script>
@@ -131,47 +166,7 @@
           </div>
       </li>
     </ul>
-	  <!-- 공지사항 목록, 수정,삭제 버튼 -->
-    <div style="display:-webkit-box ">
-      <button type="button" class="list_btn btn btn-outline-secondary">목록</button>
-      <div sec:authorize="hasRole('ROLE_CENTER')" class=" regist-btn" style="padding-right: 7px; margin-left: 550px; ">
-        <button type="button" class="btn btn-outline-secondary " value="수정">수정</button>
-        <button type="button" class="btn btn-outline-secondary " value="삭제" id="noticedelete">삭제</button>
-     	    
-		        <script>
-			                $().ready(function () {
-			            $("#noticedelete").click(function () {
-									            Swal.fire({
-						  title: '게시글 삭제',
-						  text: "게시글을 삭제하시겠습니까?",
-						  imageUrl: '../images/checkicon.png',
-						  imageWidth: 100,
-						  imageHeight: 100,
-						  imageAlt: 'Custom image',
-						  showCancelButton: true,
-						  confirmButtonColor: '#1b1b55',
-						  cancelButtonColor: '#e2e2e2',
-						  confirmButtonText: '삭제'
-						}).then((result) => {
-						  if (result.isConfirmed) {
-						       Swal.fire({
-						     title: '게시글 삭제',
-						 	 text: "게시글이 삭제되었습니다",
-						      imageUrl: '../images/successicon.png',
-							  imageWidth: 100,
-						      imageHeight: 100,
-						      imageAlt: 'Custom image',
-							  confirmButtonColor: '#1b1b55'
-			         })
-                    }
-                })
-            });
-        });
-	            </script>
-      
-      
-      </div>
-    </div>
+
   </section>
   
 </div>
