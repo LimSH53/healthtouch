@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
 import com.jaspa.healthtouch.notice.notice.model.service.NoticeService;
@@ -79,15 +78,16 @@ public class NoticeController {
 	@GetMapping("/noticemodify")
 	public String noticeModify(@RequestParam int noticeNo, Model model)throws Exception  {
 		model.addAttribute("modify", noticeNo);
-			
-			return "/notice/noticemodify";
+			 
+			return "/notice/modify";
 		}
 		
 	//공지사항 수정
 	@PostMapping("/noticemodify")
-	@ResponseBody
-	public void modifyNotice(@ModelAttribute NoticeDTO notice) throws Exception {
+	public String modifyNotice(@ModelAttribute NoticeDTO notice) throws Exception {
 		noticeService.modifyNotice(notice);
+		
+		return "redirect:/notice/notice"; 
 		
 		}
 

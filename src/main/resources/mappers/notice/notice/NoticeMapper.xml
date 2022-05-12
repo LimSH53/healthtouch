@@ -186,7 +186,7 @@
 	UPDATE TBL_NOTICE
 	   SET 
 	   NOT_EDIT_DATE=SYSDATE
-	   NOT_TITLE=#{noticeTitle}
+	 , NOT_TITLE=#{noticeTitle}
 	 , NOT_CONTENT=#{noticeContent}
 	WHERE NOT_NO=#{noticeNo}
 	
