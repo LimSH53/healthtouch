@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>healthtouch</title>
+<link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
+<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+<div th:replace="/common/memberHeader.html :: member-header"></div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+	<div th:replace="/common/memberHeader.html :: member-body"></div>
+	<div class="container mt-5">
+		<div class="d-flex justify-content-center row">
+			<div class="col-md-10">
+				<!-- 검색 -->
+				<br>
+				<th:block layout:fragment="search">
+					<div id="adv-search" class="input-group">
+						<form id="searchForm" th:action="@{/member/classInfo/classList}" method="get" class="input-group mb-3" role="form">
+							<input type="hidden" name="currentPageNo" value="1"/>
+							<input type="hidden" name="recordsPerPage" th:value="${params.recordsPerPage}"/>
+							<input type="hidden" name="pageSize" th:value="${params.pageSize}"/>
+							<input type="hidden" value="content" name="searchType">
+							<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-text" th:value="${params.searchKeyword}" placeholder="검색어를 입력해 주세요"/>
+							<div class="search_btn input-group-append">
+								<button type="submit" class="btn btn-primary"><i class="bx bx-search"></i></button>
+							</div>
+						</form>
+					</div>
+				</th:block>
+				<br>
+				<th:block layout:fragment="content">
+					<table class="table align-middle">
+						<thead>
+							<tr class="text-center">
+								<th>No</th>
+								<th>수업 일시</th>
+								<th>담당 트레이너</th>
+								<th>자세히 보기</th>
+							</tr>
+						</thead>
+						<tbody class="table-body">
+							<tr class="cell-1 text-center" th:each="class : ${ classList }">
+								<td th:text="${ classStat.count }"></td>
+								<td th:text="${ #dates.format(class.reservation.datetime, 'yyyy-MM-dd HH:mm') }"></td>
+								<td th:text="${ class.reservation.trainer.name }"></td>
+								<td>
+									<button class="btn btn-sm outline" type="button" id="viewDetailBtn" style="color:#1b1b55 ; border-color: #1b1b55;" th:onclick="|javascript:viewDetail('${class.no}')|">수업 내용 보기</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</th:block>
+				<!-- 페이지네이션 -->
+				<th:block layout:fragment="paging">
+				<br>
+					<nav th:fragment="pagination" th:if="${params != null and params.paginationInfo.totalRecordCount > 0}" th:object="${params.paginationInfo}" th:with="info=${params.paginationInfo}" aria-label="Page navigation" class="text-center">
+						<ul class="pagination flex-wrap d-flex justify-content-center" style="display: flex; border-radius: 0.25rem;">
+							<li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(1)} ]])">
+								<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+							</li>
+							<li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.firstPage - 1)} ]])">
+								<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&lsaquo;</span></a>
+							</li>
+							<li class="page-item" th:each="pageNo : *{#numbers.sequence( firstPage, lastPage )}" th:class="${pageNo == params.currentPageNo} ? 'active'">
+								<a class="page-link" href="javascript:void(0)" th:text="${pageNo}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(pageNo)} ]])"></a>
+							</li>
+							<li class="page-item" th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.lastPage + 1)} ]])">
+								<a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&rsaquo;</span></a>
+							</li>
+							<li class="page-item" th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.totalPageCount)} ]])">
+								<a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+							</li>
+						</ul>
+					</nav>
+				</th:block>
+				<br>
+			</div>
+		</div>
+	</div>
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+			function viewDetail(no) {
+				var classNo = no;
+				
+				$.ajax({
+					url: "/member/classInfo/detail",
+					type: "post",
+					dataType: "json",
+					data: { classNo : classNo },
+					success: function(data) {
+						var date = new Date(data[0].reservation.datetime);
+						var dateText = '';
+						dateText += (date.getYear() + 1900) + "년 ";
+						dateText += (date.getMonth() + 1) + "월 ";
+						dateText += date.getDate() + "일 ";
+						dateText += date.getHours() + "시";
+						
+						Swal.fire({
+							title: dateText,
+							text: data[0].content,
+						})
+					},
+					error: function(e) {
+						console.log(e);
+					}
+				});
+			}
+		</script>
+	</th:block>
+</body>
+</html>

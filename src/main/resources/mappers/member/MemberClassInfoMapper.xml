@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jaspa.healthtouch.member.classInfo.model.dao.MemberClassInfoMapper">
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberDTO" id="memberResultMap">
+		<id property="id" column="REF_MEMBER_ID"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="contact" column="MEMBER_CONTACT"/>
+		<result property="num" column="MEMBER_NUM"/>
+		<result property="birthday" column="MEMBER_BIRTHDAY"/>
+		<result property="age" column="MEMBER_AGE"/>
+		<result property="gender" column="MEMBER_GENDER"/>
+		<result property="address" column="MEMBER_ADDRESS"/>
+		<result property="status" column="MEMBER_STATUS"/>
+		
+		<association property="memberRole" resultMap="memberRoleResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberRoleDTO" id="memberRoleResultMap">
+		<id property="memberId" column="REF_MEMBER_ID"/>
+		<result property="authorityCode" column="REF_AUTHORITY_CODE"/>
+		
+		<association property="authority" resultMap="authorityResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.AuthorityDTO" id="authorityResultMap">
+		<id property="code" column="REF_AUTHORITY_CODE2"/>
+		<result property="name" column="AUTHORITY_NAME"/>
+		<result property="desc" column="AUTHORITY_DESC"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.member.classInfo.model.dto.ClassDTO" id="classResultMap">
+		<id property="no" column="CLS_NO"/>
+		<result property="content" column="CLS_CONTENT"/>
+		<result property="rsvNo" column="CLS_RSV_NO"/>
+		<result property="memberId" column="CLS_MEMBER_ID"/>
+		
+		<association property="reservation" resultMap="reservationResultMap"/>
+		<association property="member" resultMap="memberResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.member.reservation.model.dto.ReservationDTO" id="reservationResultMap">
+		<id property="no" column="RSV_NO"/>
+		<result property="datetime" column="RSV_DATETIME"/>
+		<result property="reqDatetime" column="RSV_REQ_DATETIME"/>
+		<result property="state" column="RSV_STATE"/>
+		<result property="type" column="RSV_TYPE"/>
+		<result property="memberId" column="RSV_MEMBER_ID"/>
+		<result property="trainerId" column="RSV_TRAINER_MEMBER_ID"/>
+		
+		<association property="member">
+			<id property="id" column="RSV_MEMBER_ID"/>
+			<result property="name" column="RSV_MEMBER_NAME"/>	
+		</association>
+		<association property="trainer">
+			<id property="id" column="RSV_TRAINER_MEMBER_ID"/>
+			<result property="name" column="RSV_TRAINER_MEMBER_NAME"/>
+		</association>
+	</resultMap>
+	
+	<select id="findAllClassTotalCount" parameterType="com.jaspa.healthtouch.member.classInfo.model.dto.ClassDTO" resultType="int">
+		SELECT COUNT(*)
+		  FROM TBL_CLASS
+		 WHERE CLS_MEMBER_ID = #{ memberId }
+		<if test="searchKeyword != null and searchKeyword != ''">
+			<choose>
+				<when test="searchType != null and searchType != ''">
+					<choose>
+						<when test="searchType == 'content'">
+							AND CLS_CONTENT LIKE '%' || #{searchKeyword} || '%'
+						</when>
+					</choose>
+				</when>
+			</choose>
+		</if>
+	</select>
+	
+	<select id="findAllClass" parameterType="com.jaspa.healthtouch.member.classInfo.model.dto.ClassDTO" resultMap="classResultMap">
+		SELECT A.RNUM
+			 , A.CLS_NO
+			 , A.CLS_CONTENT
+			 , A.CLS_RSV_NO
+			 , A.CLS_MEMBER_ID
+			 , E.RSV_DATETIME
+			 , E.RSV_TRAINER_MEMBER_ID
+			 , E.RSV_STATE
+			 , F.MEMBER_NAME RSV_TRAINER_MEMBER_NAME
+		  FROM (SELECT ROWNUM RNUM
+		  			 , B.CLS_NO
+		  			 , B.CLS_CONTENT
+		  			 , B.CLS_RSV_NO
+		  			 , B.CLS_MEMBER_ID
+		  		  FROM (SELECT C.CLS_NO
+		  		  			 , C.CLS_CONTENT
+		  		  			 , C.CLS_RSV_NO
+		  		  			 , C.CLS_MEMBER_ID
+		  		  		  FROM TBL_CLASS C
+		  		  		<if test="searchKeyword != null and searchKeyword != ''">
+							<where>
+								<if test="searchType == 'content'">
+									C.CLS_CONTENT LIKE '%' || #{searchKeyword} || '%'
+								</if>
+							</where>
+						</if>) B
+		<![CDATA[
+		WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
+		]]>) A
+		  JOIN TBL_MEMBER D ON (A.CLS_MEMBER_ID = D.MEMBER_ID)
+		  JOIN TBL_RESERVATION E ON (A.CLS_RSV_NO = E.RSV_NO)
+		  JOIN TBL_MEMBER F ON (E.RSV_TRAINER_MEMBER_ID = F.MEMBER_ID)
+		 WHERE A.RNUM > #{ paginationInfo.firstRecordIndex }
+		   AND A.CLS_MEMBER_ID = #{ memberId }
+		   AND E.RSV_STATE = 'Y'
+	</select>
+	
+	<select id="getDetail" resultMap="classResultMap">
+		SELECT A.CLS_NO
+			 , A.CLS_CONTENT
+			 , A.CLS_RSV_NO
+			 , A.CLS_MEMBER_ID
+			 , B.RSV_DATETIME
+		  FROM TBL_CLASS A
+		  JOIN TBL_RESERVATION B ON (A.CLS_RSV_NO = B.RSV_NO)
+		 WHERE A.CLS_NO = #{ no }
+	</select>
+</mapper>
