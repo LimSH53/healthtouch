@@ -1,6 +1,7 @@
 package com.jaspa.healthtouch.member.product.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,5 +20,15 @@ public interface MemberProMapper {
 
 	// 회원 결제 정보
 	int insertPayment(PaymentDTO payment);
+
+	// 회원 구매 목록
+	List<PaymentDTO> selectOrderList(String userId);
+
+	// 회원 구매 날짜별 조회
+	List<PaymentDTO> searchOrderList(int searchOption, String userId);
+
+
+
+
 
 }

@@ -120,8 +120,61 @@
 		 SEQ_ORD_NO.CURRVAL,
 		 #{ amount }
 		)
-		
-	
 	</insert>
+	
+	<!-- 회원 구매 목록 -->
+	<select id="selectOrderList" resultMap="paymentResultMap">
+		SELECT
+		       A.PAY_DATE,
+		       C.PRO_NAME,
+		       C.PRO_USE_PERIOD,
+		       C.PRO_USE_COUNT,
+		       A.PAY_AMOUNT,
+		       B.ORD_MEMBER_ID,
+		       D.MEMBER_NAME
+		  FROM TBL_PAYMENT A
+		  JOIN TBL_ORDER B ON(A.PAY_ORD_NO = B.ORD_NO)
+		  JOIN TBL_PRODUCT C ON (B.ORD_PRO_NO = C.PRO_NO)
+		  LEFT JOIN TBL_MEMBER D ON(B.ORD_TRN_ID = D.MEMBER_ID)
+		 WHERE B.ORD_MEMBER_ID = #{ userId }
+		 ORDER BY A.PAY_NO DESC
+	</select>
+	
+	<!-- 회원 구매 날짜별 조회 -->
+	<select id="searchOrderList" resultMap="paymentResultMap">
+		SELECT
+		       A.PAY_DATE,
+		       C.PRO_NAME,
+		       C.PRO_USE_PERIOD,
+		       C.PRO_USE_COUNT,
+		       A.PAY_AMOUNT,
+		       B.ORD_MEMBER_ID,
+		       D.MEMBER_NAME
+		  FROM TBL_PAYMENT A
+		  JOIN TBL_ORDER B ON(A.PAY_ORD_NO = B.ORD_NO)
+		  JOIN TBL_PRODUCT C ON (B.ORD_PRO_NO = C.PRO_NO)
+		  LEFT JOIN TBL_MEMBER D ON(B.ORD_TRN_ID = D.MEMBER_ID)
+		 <where>
+				<if test="searchOption == 7">
+				A.PAY_DATE <![CDATA[
+							>
+							]]> SYSDATE - 8
+				</if>
+				<if test="searchOption == 14">
+				A.PAY_DATE <![CDATA[
+							>
+							]]> SYSDATE - 14
+				</if>	
+				<if test="searchOption == 30">
+				A.PAY_DATE <![CDATA[
+							>
+							]]> SYSDATE - 30
+				</if>	
+				AND B.ORD_MEMBER_ID = #{ userId }
+		 </where>
+		 ORDER BY A.PAY_NO DESC
+		      
+	
+	</select>
 
 </mapper>
