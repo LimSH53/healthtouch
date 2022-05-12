@@ -79,7 +79,7 @@ public class NoticeController {
 	public String noticeModify(@RequestParam int noticeNo, Model model)throws Exception  {
 		model.addAttribute("modify", noticeNo);
 			 
-			return "/notice/modify";
+			return "/notice/noticemodify";
 		}
 		
 	//공지사항 수정
@@ -87,7 +87,7 @@ public class NoticeController {
 	public String modifyNotice(@ModelAttribute NoticeDTO notice) throws Exception {
 		noticeService.modifyNotice(notice);
 		
-		return "redirect:/notice/notice"; 
+		return "redirect:/notice/noticemodify"; 
 		
 		}
 
@@ -102,10 +102,8 @@ public class NoticeController {
 		  }
 
 		  try {
-		    System.out.println("try 접근. noticeNo = " + noticeNo);
 		    boolean isDeleted = noticeService.deleteNotice(noticeNo);
-		    System.out.println("deleteBoard 실행 후. isDeleted = " + isDeleted);
-
+		    
 		    // false면 이미 게시글이 삭제된 상태
 		    if (isDeleted == false) {
 		    	// 게시글 삭제에 실패하였다는 메시지를 전달
