@@ -58,7 +58,7 @@ private final NoticeMapper noticeMapper;
 
 	//공지사항 수정
 	@Override
-	public void modifyNotice(NoticeDTO notice){
+	public void modifyNotice(NoticeDTO notice)throws Exception{
 		 noticeMapper.modifyNotice(notice);
 		
 

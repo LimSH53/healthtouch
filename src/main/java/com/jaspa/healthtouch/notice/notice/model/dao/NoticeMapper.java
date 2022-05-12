@@ -31,7 +31,7 @@ public interface NoticeMapper {
 	
 	
 	//공지사항 수정  
-	int modifyNotice(NoticeDTO notice);
+	void modifyNotice(NoticeDTO notice)throws Exception;
 	
 	//공지사항 삭제
 	int deleteNotice(int noticeNo);
