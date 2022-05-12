@@ -1,4 +1,4 @@
-package com.jaspa.healthtouch.center.tr_management.controller;
+package com.jaspa.healthtouch.center.trainer.controller;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jaspa.healthtouch.center.tr_management.model.dto.TrainerInfoDTO;
-import com.jaspa.healthtouch.center.tr_management.model.service.TrManagementService;
+import com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO;
+import com.jaspa.healthtouch.center.trainer.model.service.TrManagementService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,7 +41,7 @@ public class CenterTrainerController {
 		log.info("trainerList : {}", trainerList);
 		
 		mv.addObject("trainerList", trainerList);
-		mv.setViewName("center/tr_management/trainerList");
+		mv.setViewName("center/trainer/trainerList");
 		return mv;
 	}
 	
@@ -53,17 +53,8 @@ public class CenterTrainerController {
 		
 		model.addAttribute("trainer",trainer);
 		
-		return "center/tr_management/trainerDetail";
+		return "center/trainer/trainerDetail";
 	}
-	
-	
-//	@GetMapping("/delete")
-//	public String deleteTrainer(@RequestParam("trId") String id) {
-//		
-//		trManagementService.deleteTrainer(id);
-//		
-//		return "redirect:/";
-//	}
 	
 	@PostMapping("/delete")
 	@ResponseBody

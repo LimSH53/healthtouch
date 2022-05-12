@@ -1,4 +1,4 @@
-package com.jaspa.healthtouch.center.tr_management.model.service;
+package com.jaspa.healthtouch.center.trainer.model.service;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jaspa.healthtouch.center.tr_management.model.dao.TrainerMapper;
-import com.jaspa.healthtouch.center.tr_management.model.dto.TrainerInfoDTO;
+import com.jaspa.healthtouch.center.trainer.model.dao.TrainerMapper;
+import com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO;
 
 @Service("trManagementService")
 @Transactional

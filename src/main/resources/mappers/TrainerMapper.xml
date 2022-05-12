@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jaspa.healthtouch.center.tr_management.model.dao.TrainerMapper">
+<mapper namespace="com.jaspa.healthtouch.center.trainer.model.dao.TrainerMapper">
 	 
-	<resultMap type="com.jaspa.healthtouch.center.tr_management.model.dto.TrainerInfoDTO" id="trainerInfoResultMap">
+	<resultMap type="com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO" id="trainerInfoResultMap">
 		<id property="trNum" column="TRN_NUM"/>
 		<result property="career" column="TRN_CAREER"/>
 		<result property="trStatus" column="TRN_HOLD"/>
