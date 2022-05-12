@@ -83,7 +83,7 @@ public class NoticeController {
 			 
 			return "/notice/noticemodify";
 		} 
-		
+		 
 	//공지사항 수정
 	@PostMapping("/noticemodify") 
 	public String modifyNotice(@ModelAttribute NoticeDTO notice) throws Exception {

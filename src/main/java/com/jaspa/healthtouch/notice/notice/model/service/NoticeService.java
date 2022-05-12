@@ -10,7 +10,7 @@ public interface NoticeService {
 		
 		//공지사항 조회
 		List<NoticeDTO> noticeList(NoticeDTO params);
-		
+		 
 		//공지사항 상세 
 		NoticeDTO selectNoticeDetail(int noticeNo);
 		 

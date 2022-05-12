@@ -34,7 +34,7 @@ private final NoticeMapper noticeMapper;
 		  	PaginationInfo paginationInfo = new PaginationInfo(params);
 			paginationInfo.setTotalRecordCount(noticeTotalCount);
 			params.setPaginationInfo(paginationInfo);
-			
+			 
 			log.info("firstRecordIndex : {}", params.getPaginationInfo().getFirstRecordIndex());
 			log.info("recordsPerPage: {}", params.getRecordsPerPage());
 			 
