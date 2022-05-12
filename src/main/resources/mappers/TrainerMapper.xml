@@ -68,11 +68,11 @@
 	</select>
 	 
 	 <!-- 트레이너 퇴사 -->
-	 <update id=" deleteTrainer">
-	 	UPDATE TBL_TRAINER
-	 	   SET TRN_HOLD = 'N'
+	 <update id="deleteTrainer">
+	 	UPDATE TBL_TRN_INFO
+	 	   SET TRN_HOLD = '퇴사'
 	 	 WHERE TRN_INFO_MEMBER_ID = #{ trId }
-	 	   AND TRN_STATUS = 'Y' 
+	 	   AND TRN_HOLD = '재직' 
 	 </update>
 	 
 

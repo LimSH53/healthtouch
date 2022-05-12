@@ -10,58 +10,58 @@
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
    	
-	<style>
-	.trainer-photo {
-		text-align: center;
-	}
-	</style>
+	
 </head>
-<body>
-	<div th:replace="/common/centerHeader.html :: center-body"></div>
+<body style="min-width: 80vh">
+	<div th:replace="/common/centerHeader.html :: center-body"></div> 
 	
-	 <div class="profile">
-		    <div class="customer-photo-zone flex-box">
-		        <div class="trainer-photo flex-box">
-		        <img src="/images/profile.png">
-		        <span class="day-form" style="background: #d8d8d8; margin-left: 0;">트레이너</span>
-		        <span class="day-form" style="background: rgba(212, 232, 226, 1.0)" th:text="${trainer.trStatus}"></span>
-		        </div>
-		    </div>
+		<div class="row g-3" style="margin-left :100px; margin-top :100px">
+		  <div class="col-md-3" style="text-align :center;">
+			    
+			        <div class="trainer-photo flex-box">
+			        <img src="/images/profile.png">
+			        </div>
+			        <div class="trainer-photo-tag">
+			        <span class="day-form" style="background: #d8d8d8; margin-left: 0;">트레이너</span>
+			        <span class="day-form" style="background: rgba(212, 232, 226, 1.0)" th:text="${trainer.trStatus}"></span>
+			       	</div>        
+		  </div>
+		  <div class="col-md-9">
+		  	<div  class="row g-3">
+		  	   <div class="col-md-3">
+			    <label for="inputName" class="form-label">이름</label>
+			    <input type="text" class="form-control" id="inputName"th:value="${trainer.member.name}" required readonly>
+			  </div>
+			  <div class="col-md-3">
+			    <label for="inputId" class="form-label">아이디</label>
+			    <input type="text" class="form-control" id="inputId" th:value="${trainer.member.id}" required readonly>
+			  </div>
+			  <div class="col-md-1">
+			    <label for="inputGender" class="form-label">성별</label>
+			    <input type="text" class="form-control" id="inputGender" th:value="${trainer.member.gender}" required readonly>
+			  </div>
+			  <div class="col-md-2">
+			    <label for="inputAge" class="form-label">나이</label>
+			    <input type="text" class="form-control" id="inputAge" th:value="|${trainer.member.age}세|" required readonly>
+			  </div>
+			  <div class="col-md-9">
+			    <label for="inputAddress" class="form-label">주소</label>
+			    <input type="text" class="form-control" id="inputAddress" th:value="${trainer.member.address}" required readonly>
+			  </div>
+			  <div class="col-md-9">
+			    <label for="inputContact" class="form-label">연락처</label>
+			    <input type="text" class="form-control" id="inputContact" th:value="${trainer.member.contact}" required readonly>
+			  </div>
+			  <th:block th:if="${trainer.getTrStatus().toString().equals('재직')}">
+			  	<div class="col-9">
+				  	<label for="inputContact" class="form-label"></label><br>
+				    <button type="button" class="btn btn-light" onclick="deleteTrainer()">퇴사</button>
+				 </div>
+			  </th:block>	  
+		  	</div>	
+		  </div>		  
+		</div>
 	
-	
-	<form class="row g-3">
-	 
-	  <div class="col-md-3">
-	    <label for="inputName" class="form-label">이름</label>
-	    <input type="text" class="form-control" id="inputName"th:value="${trainer.member.name}" required readonly>
-	  </div>
-	  <div class="col-md-3">
-	    <label for="inputId" class="form-label">아이디</label>
-	    <input type="text" class="form-control" id="inputId" th:value="${trainer.member.id}" required readonly>
-	  </div>
-	  <div class="col-md-2">
-	    <label for="inputGender" class="form-label">성별</label>
-	    <input type="text" class="form-control" id="inputGender" th:value="${trainer.member.gender}" required readonly>
-	  </div>
-	  <div class="col-md-8">
-	    <label for="inputAddress" class="form-label">주소</label>
-	    <input type="text" class="form-control" id="inputAddress" th:value="${trainer.member.address}" required readonly>
-	  </div>
-	  <div class="col-md-6">
-	    <label for="inputContact" class="form-label">연락처</label>
-	    <input type="text" class="form-control" id="inputContact" th:value="${trainer.member.contact}" required readonly>
-	  </div>
-	  <div class="col-md-2">
-	    <label for="inputAge" class="form-label">나이</label>
-	    <input type="text" class="form-control" id="inputAge" th:value="|${trainer.member.age}세|" required readonly>
-	  </div>
-	  
-	  
-	
-	  <div class="col-12">
-	    <button type="submit" class="btn btn-light" onclick="deleteTrainer()">퇴사</button>
-	  </div>
-	</form>
 	
 
 	
@@ -75,17 +75,20 @@
     			denyButtonText: '취소',
     		}).then((result) => {
     			if(result.isConfirmed) {
-					$.ajax({
-						url: "/center/trainer/delete",
+    				
+    				const trId = document.getElementById('inputId').value;
+    				
+					$.ajax({						
+						url: "/center/trainer/delete",	
 						type: "post",
-						data: { trId : trId },
-						success: function() {
+						data: { trId : trId},
+						success: function(trId) {
 							Swal.fire({
 								icon: 'success',
 								text: '퇴사 처리가 완료되었습니다.',
 								confirmButtonText: '확인',
 							}).then((result) => {
-								location.reload();
+								location.href="/center/trainer/list";
 							})
 						},
 						error: function(e) {

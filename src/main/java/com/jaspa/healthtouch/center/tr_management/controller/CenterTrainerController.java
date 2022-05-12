@@ -58,10 +58,9 @@ public class CenterTrainerController {
 	
 	
 //	@GetMapping("/delete")
-//	public String deleteTrainer(@AuthenticationPrincipal UserImpl user) {
+//	public String deleteTrainer(@RequestParam("trId") String id) {
 //		
-//		trManagementService.deleteTrainer(user.getId());
-//		//System.out.println(trId);
+//		trManagementService.deleteTrainer(id);
 //		
 //		return "redirect:/";
 //	}
