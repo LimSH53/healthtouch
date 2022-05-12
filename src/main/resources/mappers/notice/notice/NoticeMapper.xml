@@ -102,7 +102,7 @@
 							</where>
 						</if>
 					ORDER BY C.NOT_NO DESC
-					)B
+					)B 
 		  		  <![CDATA[ 
 		  		  WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
 		  		  ]]>

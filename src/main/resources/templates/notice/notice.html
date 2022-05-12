@@ -61,7 +61,7 @@
  <td class="col-md-auto title" id="title"><a th:href="|@{/notice/noticedetail?noticeNo={no}(no=${ list.noticeNo })}|" th:text="${list.noticeTitle}"></a></td>
   <td th:text="${list.noticeView}"></td>
   <td th:text="${#dates.format(list.noticeDate,'yyyy-MM-dd')}"></td>
-</tr>
+</tr> 
 <tr class="cell-1" th:unless="${not #lists.isEmpty( noticeList )}">
   <td colspan="4"> 조회된 결과가 없습니다. </td>
 </tr> 

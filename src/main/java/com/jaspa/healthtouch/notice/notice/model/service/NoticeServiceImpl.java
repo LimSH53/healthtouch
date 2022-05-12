@@ -37,7 +37,7 @@ private final NoticeMapper noticeMapper;
 			
 			log.info("firstRecordIndex : {}", params.getPaginationInfo().getFirstRecordIndex());
 			log.info("recordsPerPage: {}", params.getRecordsPerPage());
-			
+			 
 			if(noticeTotalCount > 0) {
 				noticeList = noticeMapper.noticeList(params);
 			}

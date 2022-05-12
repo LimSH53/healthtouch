@@ -82,7 +82,7 @@ public class NoticeController {
 		model.addAttribute("notice", notice); //key값 설정
 			 
 			return "/notice/noticemodify";
-		}
+		} 
 		
 	//공지사항 수정
 	@PostMapping("/noticemodify") 

@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 public class NoticeDTO extends CommonDTO {
-
+ 
 	private int noticeNo;
 	private String memberId;
 	private String noticeCategory;
