@@ -77,17 +77,20 @@ public class NoticeController {
 	//공지사항 수정 페이지 연결
 	@GetMapping("/noticemodify")
 	public String noticeModify(@RequestParam int noticeNo, Model model)throws Exception  {
-		model.addAttribute("modify", noticeNo);
+		//상세조회에 담겨있는 값을 꺼냄
+		NoticeDTO notice = noticeService.selectNoticeDetail(noticeNo);
+		model.addAttribute("notice", notice); //key값 설정
 			 
 			return "/notice/noticemodify";
 		}
 		
 	//공지사항 수정
-	@PostMapping("/noticemodify")
+	@PostMapping("/noticemodify") 
 	public String modifyNotice(@ModelAttribute NoticeDTO notice) throws Exception {
 		noticeService.modifyNotice(notice);
 		
-		return "redirect:/notice/noticemodify"; 
+		//주소창에 해당 글의 번호를 파라미터로 보냄
+		return "redirect:/notice/noticedetail?noticeNo=" + notice.getNoticeNo();
 		
 		}
 
@@ -95,9 +98,9 @@ public class NoticeController {
 	@GetMapping("/delete")
 	public String deleteNotice (@RequestParam(value ="noticeNo", required = false) int noticeNo) {
 		  System.out.println("/delete 접근. noticeNo = " + noticeNo);
-		  // 올바르지 않은 접근 시
+		  // 올바르지 않은 접근을 할 경우
 		  if (noticeNo == 0) {
-		  	// TODO => 올바르지 않은 접근이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
+		  	// 올바르지 않은 접근이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트 한다
 		  	return "redirect:/notice/notice";
 		  }
 
@@ -112,7 +115,7 @@ public class NoticeController {
 		  	// 데이터베이스 처리 과정에 문제가 발생하였다는 메시지를 전달
 
 		  } catch (Exception e) {
-		  	// 시스템에 문제가 발생하였다는 메시지를 전달
+		  	// 시스템에 문제가 발생했다는 메시지를 전달
 		  }
 
 		  return "redirect:/notice/notice";

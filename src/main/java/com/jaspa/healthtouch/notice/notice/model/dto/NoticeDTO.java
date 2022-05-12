@@ -25,6 +25,9 @@ public class NoticeDTO extends CommonDTO {
 	
 
 	private MemberDTO member;
+
+
+	
 	
 }
  

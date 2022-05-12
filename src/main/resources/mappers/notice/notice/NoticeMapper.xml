@@ -101,15 +101,16 @@
 								</if>
 							</where>
 						</if>
+					ORDER BY C.NOT_NO DESC
 					)B
-		  		  <![CDATA[
+		  		  <![CDATA[ 
 		  		  WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
 		  		  ]]>
 		  		 )A
 	JOIN TBL_MEMBER D ON (A.NOT_MEMBER_ID = D.MEMBER_ID)
     WHERE A.RNUM >  #{ paginationInfo.firstRecordIndex }
     AND  A.NOT_DELETE = 'N'
-    ORDER BY A.RNUM ASC
+    ORDER BY A.RNUM 
   </select>
 
 	

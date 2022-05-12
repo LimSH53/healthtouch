@@ -2,6 +2,7 @@ package com.jaspa.healthtouch.common.paging;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -53,7 +54,7 @@ public class PaginationInfo {
 		if(lastPage > totalPageCount) {
 			lastPage = totalPageCount;
 		}
-		
+		 
 		// sql 조건절에 사용되는 첫 rnum
 		firstRecordIndex = (criteria.getCurrentPageNo() - 1) * criteria.getRecordsPerPage();
 		

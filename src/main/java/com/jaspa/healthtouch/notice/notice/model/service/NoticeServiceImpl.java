@@ -10,25 +10,33 @@ import com.jaspa.healthtouch.common.paging.PaginationInfo;
 import com.jaspa.healthtouch.notice.notice.model.dao.NoticeMapper;
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
 
+import lombok.extern.slf4j.Slf4j;
 
 
+@Slf4j
 @Service("noticeService")
 public class NoticeServiceImpl implements NoticeService{
 private final NoticeMapper noticeMapper;
 	
+  
 	@Autowired
 	public NoticeServiceImpl(NoticeMapper noticeMapper) {
 		this.noticeMapper = noticeMapper;
 	}
 	//공지사항 조회
+
 	  @Override
 		public List<NoticeDTO> noticeList(NoticeDTO params){
 		  List<NoticeDTO> noticeList = Collections.emptyList();
+		  
 		  
 		  int noticeTotalCount = noticeMapper.noticeFind(params);
 		  	PaginationInfo paginationInfo = new PaginationInfo(params);
 			paginationInfo.setTotalRecordCount(noticeTotalCount);
 			params.setPaginationInfo(paginationInfo);
+			
+			log.info("firstRecordIndex : {}", params.getPaginationInfo().getFirstRecordIndex());
+			log.info("recordsPerPage: {}", params.getRecordsPerPage());
 			
 			if(noticeTotalCount > 0) {
 				noticeList = noticeMapper.noticeList(params);
