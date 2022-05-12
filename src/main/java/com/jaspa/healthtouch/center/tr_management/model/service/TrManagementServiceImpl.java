@@ -37,6 +37,7 @@ public class TrManagementServiceImpl implements TrManagementService{
 	@Override
 	public void deleteTrainer(String id) {
 		trainerMapper.deleteTrainer(id);
+		trainerMapper.deleteTrainerMStatus(id);
 		
 	}
 

@@ -20,6 +20,9 @@ public interface TrainerMapper {
 
 	void deleteTrainer(String id);
 
+
+	void deleteTrainerMStatus(String id);
+
 	
 
 }

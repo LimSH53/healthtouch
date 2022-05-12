@@ -75,6 +75,16 @@
 	 	   AND TRN_HOLD = '재직' 
 	 </update>
 	 
+	 <update id="deleteTrainerMStatus">
+	 	UPDATE TBL_MEMBER
+	 	   SET MEMBER_STATUS = 'N'
+	 	 WHERE MEMBER_ID = #{ trId }
+	 	   AND MEMBER_STATUS = 'Y'
+	 </update>
+	 
+	 
+	 
+	 
 
 </mapper>
 	
