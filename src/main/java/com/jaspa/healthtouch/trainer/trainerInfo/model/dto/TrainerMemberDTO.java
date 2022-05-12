@@ -14,16 +14,16 @@ import lombok.ToString;
 @ToString
 public class TrainerMemberDTO {
 
-
+	private String id;
 	private int trNum; 							// 트레이너 번호
 	private String name;						// 트레이너 이름 (회원이름)
-	private String contact;
+	private String contact;						// 연락처
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date birthday;
-	private String address;
+	private Date birthday;						// 트레이너 생년월일		
+	private String address;						// 주소
 	
 	/* 트레이너 추가기입정보 */
-	private int career;
+	private int career;							// 경력
 	
 	private MemberDTO member;
 	

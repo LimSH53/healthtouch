@@ -39,7 +39,7 @@
 	</resultMap>
 	
 	<!-- 트레이너 정보 조회 -->
-		<select id="selectTrainer" resultMap="trainerResultMap">
+	<select id="selectTrainer" resultMap="trainerResultMap">
 		SELECT 
 			   M.MEMBER_NAME
 			 , M.MEMBER_CONTACT
@@ -48,23 +48,30 @@
 			 , TI.TRN_CAREER
 		  FROM TBL_MEMBER M
 		  JOIN TBL_TRN_INFO TI ON(M.MEMBER_ID = TI.TRN_INFO_MEMBER_ID)
-		 WHERE MR.AUTHORITY_CODE = 2
+		 WHERE M.MEMBER_ID = #{ id }
 		 
 	</select>
 	
 	
 	<!-- 트레이너 정보 수정 -->
 	<update id="updateTrainer">
-		UPDATE TBL_MEMBER A INNER JOIN TBL_TRN_INFO B
-		    ON A.MEMBER_ID = B.TRN_INFO_MEMBER_ID
-		   SET A.MEMBER_NAME = #{ name }
-		     , A.MEMBER_CONTACT = #{ contact }
-		     , A.MEMBER_ADDRESS = #{ address }
-		     , A.MEMBER_BIRTHDAY = #{ birthday }
-		     , B.TRN_CARRER = #{ career }
+		UPDATE TBL_MEMBER
+		   SET MEMBER_NAME = #{ name }
+		     , MEMBER_CONTACT = #{ contact }
+		     , MEMBER_ADDRESS = #{ address }
+		     , MEMBER_BIRTHDAY = #{ birthday }
 		 WHERE MEMBER_ID = #{ id }
 		   AND MEMBER_STATUS = 'Y'
 	</update>
+	
+	
+	<update id="updateTrainerInfo">
+			UPDATE TBL_TRN_INFO
+		       SET TRN_CAREER = #{ career }
+		     WHERE TRN_INFO_MEMBER_ID = #{ id }
+	</update>
+	
+	
 	
 	<!-- ? JOIN 된 업데이트 구문은 resultMap구문이 안필요한지 -->
 	

@@ -16,21 +16,23 @@ public class TrainerServiceImpl implements TrainerService{
 	
 	
 	@Autowired
-	public void TrainerServiceImpl(TrainerInfoMapper trainerInfoMapper) {
+	public TrainerServiceImpl(TrainerInfoMapper trainerInfoMapper) {
 		this.trainerInfoMapper = trainerInfoMapper;
 	}
 
 	@Override
-	public List<TrainerMemberDTO> selectTrainer() {
-		return (List<TrainerMemberDTO>) trainerInfoMapper.selectTrainer();
+	public TrainerMemberDTO selectTrainer(String id) {
+		return trainerInfoMapper.selectTrainer(id);
 	}
 
 	@Transactional
 	@Override
 	public void updateTrainer(TrainerMemberDTO trainer) {
 		trainerInfoMapper.updateTrainer(trainer);
-		
+		trainerInfoMapper.updateTrainerInfo(trainer);
 	}
 
+	
+	
 
 }
