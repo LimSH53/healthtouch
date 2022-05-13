@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jaspa.healthtouch.member.locker.model.dao.LockerMapper">
+
+
+	<!-- 락커 테이블 -->
+	<resultMap type="com.jaspa.healthtouch.member.locker.model.dto.LockerDTO" id="lockerResultMap">
+		<id property="locMngNum" column="LOC_MNG_NUM"/>
+			<result property="locNum" column="LOC_NUM"/>
+			<result property="locStatus" column="LOC_STATUS"/>
+			
+		<association property="member" resultMap="memberResultMap"></association>
+		<association property="order" resultMap="orderResultMap"></association>	
+	</resultMap>
+
+
+
+	<!-- 회원 DTO -->
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberDTO" id="memberResultMap">
+		<id property="id" column="MEMBER_ID"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="contact" column="MEMBER_CONTACT"/>
+		<result property="num" column="MEMBER_NUM"/>
+		<result property="birthday" column="MEMBER_BIRTHDAY"/>
+		<result property="age" column="MEMBER_AGE"/>
+		<result property="gender" column="MEMBER_GENDER"/>
+		<result property="address" column="MEMBER_ADDRESS"/>
+		<result property="status" column="MEMBER_STATUS"/>
+	</resultMap>
+
+
+
+	<!-- 주문 정보 -->
+	<resultMap type="com.jaspa.healthtouch.member.product.model.dto.OrderDTO" id="orderResultMap">
+		<id property="no" column="ORD_NO"></id>
+		<result property="proNo" column="ORD_PRO_NO"/>
+		<result property="memberId" column="ORD_MEMBER_ID"/>
+		<result property="trnId" column="ORD_TRN_ID"/>
+		<result property="startDate" column="ORD_START_DATE"/>
+		<result property="remainCount" column="ORD_REMAIN_COUNT"/>
+		<result property="endDate" column="ORD_END_DATE"/>
+		<result property="modEndDate" column="ORD_MOD_END_DATE"/>
+		<result property="modReason" column="ORD_MOD_REASON"/>
+		
+	</resultMap>
+
+
+	<!-- 전체 락커 상태 조회 : 라커번호 / 라커상태 / 만료일 / 회원명  -->
+	<select id="selectAllLocker" resultMap="lockerResultMap">
+	
+		SELECT 
+			   L.LOC_NUM
+	         , L.LOC_STATUS
+	         , O.ORD_END_DATE
+	         , M.MEMBER_NAME
+		  FROM TBL_LOCKER L
+      	     , TBL_ORDER O
+       	     , TBL_MEMBER M
+       	 WHERE L.LOC_ORD_NO = O.ORD_NO
+      	   AND L.LOC_MEMBER_ID = M.MEMBER_ID
+
+	</select>
+
+
+	<!-- 락커 상태 업데이트 -->
+
+	<update id="updateLocker">
+		UPDATE TBL_LOCKER
+		   SET LOC_STATUS = 'Y'
+		 WHERE LOC_NUM = #{ locNum }
+		   AND LOC_ORD_NO > '0'
+	</update>
+
+
+</mapper>
+
+
+
+
+
