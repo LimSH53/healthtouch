@@ -46,16 +46,16 @@ public class CenterTrainerController {
 		return mv;
 	}
 	
-	/*
-	@GetMapping("/search")
-	public String trainerSearh(Model model, @ModelAttribute("params") TrainerInfoDTO params) {
-		
-		List<TrainerInfoDTO> trSearchList = trManagementService.searchTrainer();
-		
-		model.addAttribute("trSearchList", trSearchList);
-		
-		return "center/member/search";
-	} */
+	
+//	@GetMapping("/search")
+//	public String trainerSearh(Model model, @ModelAttribute("params") TrainerInfoDTO params) {
+//		
+//		List<TrainerInfoDTO> trSearchList = trManagementService.searchTrainer(params);
+//		
+//		model.addAttribute("trSearchList", trSearchList);
+//		
+//		return "center/member/search";
+//	} 
 	
 	
 	

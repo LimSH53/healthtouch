@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO;
+import com.jaspa.healthtouch.common.paging.Criteria;
 
 @Mapper
 public interface TrainerMapper {
@@ -21,6 +22,12 @@ public interface TrainerMapper {
 
 
 	void deleteTrainerMStatus(String id);
+
+
+	int searchTrainerTotalCount(Criteria criteria);
+
+
+	List<TrainerInfoDTO> searchTrainer(Criteria criteria);
 
 
 
