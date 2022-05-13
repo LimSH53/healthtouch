@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jaspa.healthtouch.common.paging.PaginationInfo;
 import com.jaspa.healthtouch.login.model.dao.MemberMapper;
 import com.jaspa.healthtouch.login.model.dto.MemberDTO;
+import com.jaspa.healthtouch.member.product.model.dto.OrderDTO;
 
 @Service("centerMemberService")
 public class CenterMemberServiceImpl implements CenterMemberService {
@@ -47,6 +48,22 @@ public class CenterMemberServiceImpl implements CenterMemberService {
 	@Override
 	public void modifyMemberType(String id) {
 		memberMapper.modifyMemberType(id);
+	}
+
+	@Override
+	public List<OrderDTO> selectOrderListById(String id) {
+		return memberMapper.selectOrderListById(id);
+	}
+
+	@Transactional
+	@Override
+	public int modifyPeriod(String proNo, String modEndDate, String memberId) {
+		return memberMapper.modifyPeriod(proNo, modEndDate, memberId);
+	}
+
+	@Override
+	public String selectProductNo(String categoryNo, String memberId) {
+		return memberMapper.selectProductNo(categoryNo, memberId);
 	}
 
 }

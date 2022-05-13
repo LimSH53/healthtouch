@@ -36,6 +36,57 @@
 		<result property="ip" column="LOGIN_IP"/>
 	</resultMap>
 	
+	<resultMap type="com.jaspa.healthtouch.member.product.model.dto.PaymentDTO" id="paymentResultMap">
+		<id property="no" column="PAY_NO"></id>
+		<result property="ordNo" column="PAY_ORD_NO"/>
+		<result property="date" column="PAY_DATE"/>
+		<result property="status" column="PAY_STATUS"/>
+		<result property="amount" column="PAY_AMOUNT"/>
+		
+		<association property="order" resultMap="orderResultMap"></association>
+	</resultMap>
+		
+	<resultMap type="com.jaspa.healthtouch.member.product.model.dto.OrderDTO" id="orderResultMap">
+		<id property="no" column="ORD_NO"></id>
+		<result property="proNo" column="ORD_PRO_NO"/>
+		<result property="memberId" column="ORD_MEMBER_ID"/>
+		<result property="trnId" column="ORD_TRN_ID"/>
+		<result property="startDate" column="ORD_START_DATE"/>
+		<result property="remainCount" column="ORD_REMAIN_COUNT"/>
+		<result property="endDate" column="ORD_END_DATE"/>
+		<result property="modEndDate" column="ORD_MOD_END_DATE"/>
+		<result property="modReason" column="ORD_MOD_REASON"/>
+		
+		<association property="product" resultMap="productResultMap"></association>
+		<association property="member">
+			<id property="id" column="ORD_MEMBER_ID"/>
+			<result property="name" column="ORD_MEMBER_NAME"/>
+		</association>
+		<association property="trainer">
+			<id property="id" column="ORD_TRN_ID"/>
+			<result property="name" column="ORD_TRN_NAME"/>
+		</association>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.center.product.model.dto.ProductDTO" id="productResultMap">
+		<id property="no" column="PRO_NO"/>
+		<result property="categoryNo" column="PRO_CATE_NO"/>
+		<result property="name" column="PRO_NAME"/>
+		<result property="price" column="PRO_PRICE"/>
+		<result property="contents" column="PRO_CONTENTS"/>
+		<result property="usePeriod" column="PRO_USE_PERIOD"/>
+		<result property="useCount" column="PRO_USE_COUNT"/>
+		<result property="date" column="PRO_DATE"/>
+		<result property="status" column="PRO_STATUS"/>
+		
+		<association property="category" resultMap="categoryResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.center.product.model.dto.ProCategoryDTO" id="categoryResultMap">
+		<id property="categoryNo" column="CATE_NO"/>
+		<result property="categoryName" column="CATE_NAME"/>
+	</resultMap>
+	
 	<select id="findMemberById" resultMap="memberResultMap">
 		SELECT A.MEMBER_ID
 			 , A.MEMBER_PWD
@@ -229,9 +280,6 @@
 								<if test="searchType == 'contact'">
 									C.MEMBER_CONTACT LIKE '%' || #{searchKeyword} || '%'
 								</if>
-								<!-- <when test="'trainer'.equals(searchType)">
-									AND MEMBER_ID LIKE CONCAT('%', #{searchKeyword}, '%')
-								</when> -->
 							</where>
 						</if>
 		  		  ) B
@@ -270,9 +318,6 @@
 						<when test="searchType == 'contact'">
 							AND A.MEMBER_CONTACT LIKE '%' || #{searchKeyword} || '%'
 						</when>
-						<!-- <when test="'trainer'.equals(searchType)">
-							AND MEMBER_ID LIKE CONCAT('%', #{searchKeyword}, '%')
-						</when> -->
 					</choose>
 				</when>
 			</choose>
@@ -283,5 +328,38 @@
 		UPDATE TBL_MEMBER_ROLE
 		   SET AUTHORITY_CODE = 2
 		 WHERE MEMBER_ID = #{ id }
+	</update>
+	
+	<select id="selectOrderListById" resultMap="orderResultMap">
+		SELECT A.ORD_PRO_NO
+			 , A.ORD_MEMBER_ID
+			 , A.ORD_TRN_ID
+			 , A.ORD_START_DATE
+			 , A.ORD_REMAIN_COUNT
+			 , A.ORD_END_DATE
+			 , A.ORD_MOD_END_DATE
+			 , B.MEMBER_NAME ORD_TRN_NAME
+			 , C.PRO_CATE_NO
+			 , C.PRO_NAME
+		  FROM TBL_ORDER A
+		  LEFT JOIN TBL_MEMBER B ON (A.ORD_TRN_ID = B.MEMBER_ID)
+		  JOIN TBL_PRODUCT C ON (A.ORD_PRO_NO = C.PRO_NO)
+		 WHERE A.ORD_MEMBER_ID = #{ id }
+	</select>
+	
+	<select id="selectProductNo" resultType="java.lang.String">
+		SELECT A.ORD_PRO_NO
+		  FROM TBL_ORDER A
+		  JOIN TBL_PRODUCT B ON (A.ORD_PRO_NO = B.PRO_NO)
+		 WHERE A.ORD_MEMBER_ID = #{ memberId }
+		   AND B.PRO_CATE_NO = #{ categoryNo }
+	</select>
+	
+	<update id="modifyPeriod">
+		UPDATE TBL_ORDER
+		   SET ORD_MOD_END_DATE = #{ modEndDate }
+		     , ORD_MOD_REASON = '센터'
+		 WHERE ORD_MEMBER_ID = #{ memberId }
+		   AND ORD_PRO_NO = #{ proNo }
 	</update>
 </mapper>

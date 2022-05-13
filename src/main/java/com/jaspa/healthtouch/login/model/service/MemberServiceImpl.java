@@ -22,6 +22,7 @@ import com.jaspa.healthtouch.login.model.dto.LoginLogDTO;
 import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 import com.jaspa.healthtouch.login.model.dto.MemberRoleDTO;
 import com.jaspa.healthtouch.login.model.dto.UserImpl;
+import com.jaspa.healthtouch.member.product.model.dto.OrderDTO;
 
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
@@ -209,6 +210,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void removeMember(String id) {
 		memberMapper.removeMember(id);
+	}
+
+	@Override
+	public void selectOrderListById(UserImpl user) {
+		List<OrderDTO> orderList = memberMapper.selectOrderListById(user.getId());
+		user.setOrderList(orderList);
 	}
 
 }

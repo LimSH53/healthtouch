@@ -34,6 +34,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		memberService.createLoginLog(loginLog);
 		
 		if(user.getMemberRole().getAuthorityCode() == 1) {	// 회원이면 
+			memberService.selectOrderListById(user);
 			response.sendRedirect("/member/mypage");
 		} else if(user.getMemberRole().getAuthorityCode() == 2) { // 트레이너면 
 			response.sendRedirect("/trainer/trainer-info");

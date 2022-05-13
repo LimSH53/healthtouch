@@ -2,9 +2,12 @@ package com.jaspa.healthtouch.login.model.dto;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+
+import com.jaspa.healthtouch.member.product.model.dto.OrderDTO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +29,7 @@ public class UserImpl extends User {
 	private String status;
 	
 	private MemberRoleDTO memberRole;
+	private List<OrderDTO> orderList;
 	
 	public UserImpl(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, authorities);
@@ -44,4 +48,5 @@ public class UserImpl extends User {
 		this.status = member.getStatus();
 		this.memberRole = member.getMemberRole();
 	}
+	
 }
