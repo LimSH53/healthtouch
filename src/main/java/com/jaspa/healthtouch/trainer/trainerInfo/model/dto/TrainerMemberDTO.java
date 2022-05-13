@@ -4,7 +4,6 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.jaspa.healthtouch.center.tr_management.model.dto.TrainerInfoDTO;
 import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 
 import lombok.Data;
