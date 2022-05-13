@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jaspa.healthtouch.center.product.model.dto.ProductDTO;
+import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 import com.jaspa.healthtouch.member.product.model.dao.MemberProMapper;
 import com.jaspa.healthtouch.member.product.model.dto.OrderDTO;
 import com.jaspa.healthtouch.member.product.model.dto.PaymentDTO;
@@ -54,6 +55,16 @@ public class MemberProServiceImpl implements MemberProService{
 	@Override
 	public List<PaymentDTO> searchOrderList(int searchOption, String userId) {
 		return memberProMapper.searchOrderList(searchOption, userId);
+	}
+
+	@Override
+	public List<MemberDTO> findTrainerList() {
+		return memberProMapper.findTrainerList();
+	}
+
+	@Override
+	public List<ProductDTO> findAllPTList() {
+		return memberProMapper.findAllPTList();
 	}
 	
 

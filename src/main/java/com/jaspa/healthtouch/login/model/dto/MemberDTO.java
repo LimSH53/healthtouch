@@ -6,11 +6,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.jaspa.healthtouch.common.model.dto.CommonDTO;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Data
 public class MemberDTO extends CommonDTO {
 	private String id;
 	private String pwd;

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jaspa.healthtouch.center.product.model.dto.ProductDTO;
+import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 import com.jaspa.healthtouch.login.model.dto.UserImpl;
 import com.jaspa.healthtouch.login.model.service.MemberService;
 import com.jaspa.healthtouch.member.product.model.dto.OrderDTO;
@@ -48,6 +49,7 @@ public class MemberProductController {
 		return mv;
 	}
 
+	// 구매
 	@PostMapping("payment")
 	@ResponseBody
 	public boolean insertPayment(@RequestBody Map<String, Object> paymentInfo, PaymentDTO payment, OrderDTO order) {
@@ -57,8 +59,14 @@ public class MemberProductController {
 		int proNo = Integer.parseInt(String.valueOf(paymentInfo.get("pro_no")));
 		String memberId = String.valueOf(paymentInfo.get("userId"));
 		int period = Integer.parseInt(String.valueOf(paymentInfo.get("period")));
+		int remainCount = Integer.parseInt(String.valueOf(paymentInfo.get("count")));
 		int price = Integer.parseInt(String.valueOf(paymentInfo.get("price")));
-		
+		if(paymentInfo.get("trnId") != null) {
+			String trnId = String.valueOf(paymentInfo.get("trnId"));
+			log.info("trnId : {}", trnId);
+			order.setTrnId(trnId);
+		}
+			
 		log.info("proNo : {}", proNo);
 		log.info("memberId : {}", memberId);
 		log.info("period : {}", period);
@@ -66,6 +74,8 @@ public class MemberProductController {
 		
 		order.setProNo(proNo);
 		order.setMemberId(memberId);
+		
+		order.setRemainCount(remainCount);
 		payment.setAmount(price);
 		
 		log.info("order :{}", order);
@@ -114,6 +124,30 @@ public class MemberProductController {
 
 		return orderList;
 	}	
+	
+	//트레이너 카테고리 조회
+	@GetMapping(value="category", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public List<MemberDTO> findTrainerList(){
+		return memberProService.findTrainerList();
+	}
+	
+	//수강권 조회
+	@GetMapping("PT")
+	public ModelAndView selectPTList(ModelAndView mv) {
+
+		List<ProductDTO> PTList = memberProService.findAllPTList();
+		List<MemberDTO> trainerList = memberProService.findTrainerList();
+
+		log.info("PTList : {}", PTList);
+		log.info("trainerList : {}", trainerList);
+
+		mv.addObject("PTList", PTList);
+		mv.addObject("trainerList", trainerList);
+		mv.setViewName("member/product/ordPT");
+
+		return mv;
+	}
 	
 	
 	

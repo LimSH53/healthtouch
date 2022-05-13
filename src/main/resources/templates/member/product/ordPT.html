@@ -10,6 +10,10 @@
     <div th:replace="/common/memberHeader.html :: member-header"></div>
     <!-- 제이쿼리 추가 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!-- alert cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!-- 아임포트 -->
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
 <body id="body-pd"> <!-- sidebar 적용위해 id 추가 -->
     <!-- 헤더 body 추가 -->
@@ -37,29 +41,142 @@
                         
                     </th>
                 </tr>
-                <tr>
-                    <td>
+                <tr th:each="PT,index : ${ PTList }" th:id="'order_' + ${index.index}" >
+                	<td class="hidden" name="no" th:text="${ PT.no }">
+                        상품번호
+                    </td>
+                    <td name="name" th:text="${ PT.name }">
                         PT 20회
                     </td>
                     <td>
-                        20회
+                    	<div name="count2" th:text="|${ PT.useCount } 회|"></div>
+                    	<div class="hidden" name="count" th:text="${ PT.useCount }"></div>
                     </td>
                     <td>
-                        <select class="trn-option">
-                            <option>김머슬</option>
-                            <option>나튼튼</option>
-                            <option>근력왕</option>
-                        </select>
+                    	<form>
+                    	<select class="trn-option" name="trnCategory" id="trnCategory">
+                    		<option th:each="trainer : ${ trainerList }" th:text="${ trainer.name }" th:value="${ trainer.id }"></option>
+                    	</select>
+                    	</form>
                     </td>
                     <td>
-                        360,000원
+                    	<div name="price2" th:text="|${#numbers.formatInteger(PT.price, 0, 'COMMA')} 원|"></div>
+                    	<div class="hidden" name="price" th:text="${ PT.price }"></div>
                     </td>
                     <td>
-                        <button>결제</button>
+                    	<a>
+                        <button onclick="payApi(this)">결제</button>
+                        </a>
                     </td>
                 </tr>
             </table>
             <div class="ord-guide">※ 트레이너 설정은 희망 트레이너 설정으로 센터 상담 진행시 변동될 수 있습니다.</div>
         </div>
+<!-- 트레이너 카테고리 -->
+<!-- <script type="text/javascript">
+	$(function(){
+		$.ajax({
+			url: "/member/product/category",
+			success: function(data){
+				console.log(data);
+				const $trnCategory = $("#trnCategory");
+				
+				for(let index in data){
+					$trnCategory.append($('<option>').val(data[index].id).text(data[index].name));
+				}
+			}
+		})
+	});
+
+</script> -->        
+<!-- 결제 -->
+<script>
+	function payApi(element){
+		console.log($(element).closest("tr").attr('id')); //order_0
+		
+		var orderId = '#'+$(element).closest("tr").attr('id');
+		
+		console.log("[name=no]", $(orderId + ' ' + '[name=no]').text());	//$(order_0 [name=no]).text())
+		console.log("[name=price]", $(orderId + ' ' + '[name=price]').text());
+		console.log("[name=count]", $(orderId + ' ' + '[name=count]').text());
+		console.log("[name=trnCategory]", $(orderId + ' ' + '[name=trnCategory]').val());
+		
+        var IMP = window.IMP; // 생략가능
+        IMP.init('imp75129533'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+          
+        var msg;
+        
+        //결제장 호출 코드
+        IMP.request_pay({
+            pg : 'html5_inicis',
+            pay_method : 'card',
+            merchant_uid : 'merchant_' + new Date().getTime(),
+            name : $(orderId + ' ' + '[name=name]').text(),
+            amount : 10,
+            buyer_email : '',
+            buyer_name : '[[${#authentication.principal.name}]]',
+            buyer_tel : '[[${#authentication.principal.contact}]]',
+            buyer_addr : '',
+            buyer_postcode : ''
+        }, function(rsp) {
+        	console.log("rsp.success:", rsp.success);
+        	console.log("name=no:", $(orderId + ' ' + '[name=no]').text());	//$(order_0 [name=no]).text())
+    		console.log("name=price:", $(orderId + ' ' + '[name=price]').text());
+    		console.log("name=count:", $(orderId + ' ' + '[name=count]').text());
+    		console.log("[name=trnCategory]", $(orderId + ' ' + '[name=trnCategory]').val());
+            if ( rsp.success ) {
+                //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+                jQuery.ajax({
+                    url: "/member/product/payment", //cross-domain error가 발생하지 않도록 주의해주세요
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        imp_uid : rsp.imp_uid,
+                        userId : '[[${#authentication.principal.id}]]', //유저 id
+                        pro_no : $(orderId + ' ' + '[name=no]').text(),//상품번호
+                        price : $(orderId + ' ' + '[name=price]').text(),//총 결제 금액
+                        count : $(orderId + ' ' + '[name=count]').text(),//이용횟수
+                        trnId : $(orderId + ' ' + '[name=trnCategory]').val(),//트레이너 id
+                        period : 0
+                    })
+                }).done(function(data) {
+                	console.log(data);
+                    //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+                    if (data) {
+                        
+                        Swal.fire({
+                            icon: 'success',
+                              text: '결제가 완료되었습니다.',
+                              confirmButtonText: '확인',
+                         }).then((result) => {
+                            location.href = "/member/product/ordList";
+                         })
+
+                    } else {
+                        //[3] 아직 제대로 결제가 되지 않았습니다.
+                        alert("결제 실패")
+                        //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+                    }
+                });
+                //성공시 이동할 페이지
+                /* location.href='/member/product/membership'; */
+            } else {
+                msg = '결제에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+                //실패시 이동할 페이지
+                /* location.href='/member/product/membership'; */
+                Swal.fire({
+                    icon: 'error',
+                      text: '결제에 실패하였습니다. 다시 결제를 진행해 주세요.',
+                      confirmButtonText: '확인',
+                 }).then((result) => {
+                    location.href = "/member/product/PT";
+                 })
+
+            }
+        });
+        
+    };
+</script>
 </body>
 </html>
