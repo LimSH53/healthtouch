@@ -59,7 +59,7 @@ public class CenterTrainerController {
 	
 	
 	
-	
+	//트레이너 상세조회
 	@GetMapping("/detail")
 	public String trainerDetail(@ModelAttribute("params") TrainerInfoDTO params, @RequestParam("id") String id, Model model) {
 		
@@ -70,12 +70,14 @@ public class CenterTrainerController {
 		return "center/trainer/trainerDetail";
 	}
 	
+	//트레이너 퇴사
 	@PostMapping("/delete")
 	@ResponseBody
 	public void deleteTrainer(@RequestParam("trId") String id) {
 		trManagementService.deleteTrainer(id);
 	}
 	
+	//트레이너 급여조회
 	
 	
 }
