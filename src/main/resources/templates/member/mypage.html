@@ -110,48 +110,92 @@
 				<h4>잔여 기간 및 횟수</h4>
 				<br>
 				<!-- 가데이터 생기면 수정 -->
-				<form>
-					<div class="form-group row">
-						<!-- 아이콘 삽입하기 -->
-		                <label class="col-sm-2 col-form-label">회원권</label>
-		                <div class="col-sm-4">
-		                	<input type="text" class="form-control" name="something" id="something" value="헬스12개월" required readonly>
-		                </div>
-		                <div class="col-sm-6">
-		                	<input type="text" class="form-control" name="something" id="something" value="2022-04-15 ~ 2023-04-14" required readonly>
-		                </div>
-		            </div>
-		            <br>
-		            <div class="form-group row">
-		                <label class="col-sm-2 col-form-label">수강권</label>
-		                <div class="col-sm-4">
-		                	<input type="text" class="form-control" name="something" id="something" value="PT 20회" required readonly>
-		                </div>
-		                <div class="col-sm-6">
-		                	<input type="text" class="form-control" name="something" id="something" value="잔여 횟수 3회" required readonly>
-		                </div>
-		            </div>
-		            <br>
-		            <div class="form-group row">
-		                <label class="col-sm-2 col-form-label">락커</label>
-		                <div class="col-sm-4">
-		                	<input type="text" class="form-control" name="something" id="something" value="락커" required readonly>
-		                </div>
-		                <div class="col-sm-6">
-		                	<input type="text" class="form-control" name="something" id="something" value="2022-04-15 ~ 2023-04-14" required readonly>
-		                </div>
-		            </div>
-		            <br>
-		            <div class="form-group row">
-		                <label class="col-sm-2 col-form-label">운동복</label>
-		                <div class="col-sm-4">
-		                	<input type="text" class="form-control" name="something" id="something" value="운동복 12개월" required readonly>
-		                </div>
-		                <div class="col-sm-6">
-		                	<input type="text" class="form-control" name="something" id="something" value="2022-04-15 ~ 2023-04-14" required readonly>
-		                </div>
-		            </div>
-				</form>
+				<div th:each="order : ${#authentication.principal.orderList}">
+					<form>
+						<th:block th:if="${ order.product.categoryNo == 10 }">
+							<div class="form-group row">
+								<!-- 아이콘 삽입하기 -->
+				                <label class="col-sm-2 col-form-label">회원권</label>
+				                <div class="col-sm-3">
+				                	<input type="text" class="form-control" name="membershipName" id="membershipName" th:value="${ order.product.name }" required readonly>
+				                </div>
+				                <div class="col-sm-3">
+				                	<input type="date" class="form-control" name="membershipPeriod" id="membershipPeriod" th:value="${#dates.format(order.startDate, 'yyyy-MM-dd')}" required readonly>
+				                </div>
+				                ~
+				                <th:block th:if="${ order.modEndDate } != null">
+				                <div class="col-sm-3">
+				                	<input type="date" class="form-control" name="membershipPeriod" id="membershipPeriod" th:value="${#dates.format(order.modEndDate, 'yyyy-MM-dd')}" required readonly>
+				                </div>
+				                </th:block>
+				                <th:block th:if="${ order.modEndDate } == null">
+				                <div class="col-sm-3">
+				                	<input type="date" class="form-control" name="membershipPeriod" id="membershipPeriod" th:value="${#dates.format(order.endDate, 'yyyy-MM-dd')}" required readonly>
+				                </div>
+				                </th:block>
+				            </div>
+				            <br>
+			            </th:block>
+			            <th:block th:if="${ order.product.categoryNo == 20 }">
+				            <div class="form-group row">
+				                <label class="col-sm-2 col-form-label">수강권</label>
+				                <div class="col-sm-3">
+				                	<input type="text" class="form-control" name="ptName" id="ptName" th:value="${ order.product.name }" required readonly>
+				                </div>
+				                <div class="col-sm-6">
+				                	<input type="text" class="form-control" name="ptPeriod" id="ptPeriod" th:value="${ order.remainCount }" required readonly>
+				                </div>
+				            </div>
+				            <br>
+			            </th:block>
+			            <th:block th:if="${ order.product.categoryNo == 30 }">
+				            <div class="form-group row">
+				                <label class="col-sm-2 col-form-label">락커</label>
+				                <div class="col-sm-3">
+				                	<input type="text" class="form-control" name="lockerName" id="lockerName" th:value="${ order.product.name }" required readonly>
+				                </div>
+				                <div class="col-sm-3">
+				                	<input type="date" class="form-control" name="lockerPeriod" id="lockerPeriod" th:value="${#dates.format(order.startDate, 'yyyy-MM-dd')}" required readonly>
+				                </div>
+				                ~
+				                <th:block th:if="${ order.modEndDate } != null">
+				                <div class="col-sm-3">
+				                	<input type="date" class="form-control" name="lockerPeriod" id="lockerPeriod" th:value="${#dates.format(order.modEndDate, 'yyyy-MM-dd')}" required readonly>
+				                </div>
+				                </th:block>
+				                <th:block th:if="${ order.modEndDate } == null">
+				                <div class="col-sm-3">
+				                	<input type="date" class="form-control" name="lockerPeriod" id="lockerPeriod" th:value="${#dates.format(order.endDate, 'yyyy-MM-dd')}" required readonly>
+				                </div>
+				                </th:block>
+				            </div>
+				            <br>
+			            </th:block>
+			            <th:block th:if="${ order.product.categoryNo == 40 }">
+				            <div class="form-group row">
+				                <label class="col-sm-2 col-form-label">운동복</label>
+				                <div class="col-sm-3">
+				                	<input type="text" class="form-control" name="sportswearName" id="sportswearName" th:value="${ order.product.name }" required readonly>
+				                </div>
+				                <div class="col-sm-3">
+				                	<input type="date" class="form-control" name="sportswearPeriod" id="sportswearPeriod" th:value="${#dates.format(order.startDate, 'yyyy-MM-dd')}" required readonly>
+				                </div>
+				                ~
+				                <th:block th:if="${ order.modEndDate } != null">
+				                <div class="col-sm-3">
+				                	<input type="date" class="form-control" name="sportswearPeriod" id="sportswearPeriod" th:value="${#dates.format(order.modEndDate, 'yyyy-MM-dd')}" required readonly>
+				                </div>
+				                </th:block>
+				                <th:block th:if="${ order.modEndDate } == null">
+				                <div class="col-sm-3">
+				                	<input type="date" class="form-control" name="sportswearPeriod" id="sportswearPeriod" th:value="${#dates.format(order.endDate, 'yyyy-MM-dd')}" required readonly>
+				                </div>
+				                </th:block>
+				            </div>
+				            <br>
+			            </th:block>
+					</form>
+				</div>
 	            <br>
 	            <hr>
 				<br>

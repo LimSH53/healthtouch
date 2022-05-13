@@ -1,5 +1,7 @@
 package com.jaspa.healthtouch.member.product.model.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.jaspa.healthtouch.center.product.model.dto.ProductDTO;
 import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 
@@ -12,9 +14,12 @@ public class OrderDTO {
 	private int proNo;
 	private String memberId;
 	private String  trnId;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private java.util.Date startDate;
 	private int remainCount;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private java.util.Date endDate;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private java.util.Date modEndDate;
 	private String modReason;
 	

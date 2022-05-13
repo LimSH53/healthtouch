@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.jaspa.healthtouch.login.model.dto.LoginLogDTO;
 import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 import com.jaspa.healthtouch.login.model.dto.MemberRoleDTO;
+import com.jaspa.healthtouch.member.product.model.dto.OrderDTO;
 
 @Mapper
 public interface MemberMapper {
@@ -40,5 +41,11 @@ public interface MemberMapper {
 	int findAllMemberTotalCount(MemberDTO params);
 
 	void modifyMemberType(String id);
+
+	List<OrderDTO> selectOrderListById(String id);
+
+	int modifyPeriod(String proNo, String modEndDate, String memberId);
+
+	String selectProductNo(String categoryNo, String memberId);
 
 }

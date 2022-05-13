@@ -28,7 +28,6 @@
 								<option value="id" th:selected="${#strings.equals(params.searchType, 'id')}">아이디</option>
 								<option value="num" th:selected="${#strings.equals(params.searchType, 'num')}">출석번호</option>
 								<option value="contact" th:selected="${#strings.equals(params.searchType, 'contact')}">연락처</option>
-								<!-- <option value="trainer" th:selected="${#strings.equals(params.searchType, 'trainer')}">담당 트레이너</option> -->
 							</select>
 							<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-text" th:value="${params.searchKeyword}" placeholder="검색어를 입력해 주세요"/>
 							<div class="search_btn input-group-append">
