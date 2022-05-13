@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jaspa.healthtouch.center.product.model.dto.ProductDTO;
 import com.jaspa.healthtouch.login.model.dto.UserImpl;
+import com.jaspa.healthtouch.login.model.service.MemberService;
 import com.jaspa.healthtouch.member.product.model.dto.OrderDTO;
 import com.jaspa.healthtouch.member.product.model.dto.PaymentDTO;
 import com.jaspa.healthtouch.member.product.model.service.MemberProService;
@@ -74,6 +76,53 @@ public class MemberProductController {
 		return result > 0 ? (result2 > 0 ? true : false) : false;
 
 	}
+	
+	// 구매 내역 조회
+	/*
+	 * @GetMapping("ordList") public ModelAndView
+	 * selectOrderList(@AuthenticationPrincipal UserImpl user, ModelAndView mv) {
+	 * 
+	 * log.info("user : {}", user);
+	 * 
+	 * String userId = user.getId();
+	 * 
+	 * List<PaymentDTO> orderList = memberProService.selectOrderList(userId);
+	 * 
+	 * log.info("orderList : {}", orderList);
+	 * 
+	 * mv.addObject("orderList", orderList);
+	 * mv.setViewName("member/product/ordList");
+	 * 
+	 * 
+	 * return mv; }
+	 */
+	
+	// 구매 내역 조회
+	@GetMapping("ordList")
+	@ResponseBody
+	public ModelAndView searchOrderList(@RequestParam(value="searchCondition", required =false, defaultValue="0") int searchCondition, @AuthenticationPrincipal UserImpl user, ModelAndView mv) {
+		
+		log.info("user : {}", user);
+		log.info("searchCondition: {}", searchCondition);
+		
+		String userId = user.getId();
+		
+		int searchOption = searchCondition;
+		
+		List<PaymentDTO> orderList = memberProService.searchOrderList(searchOption, userId);
+		
+		log.info("orderList : {}", orderList);
+		
+		mv.addObject("orderList", orderList);
+		mv.setViewName("member/product/ordList");
+		
+		
+		return mv;
+	}
+	
+	
+	
+	
 
 
 }

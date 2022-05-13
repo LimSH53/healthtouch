@@ -1,6 +1,7 @@
 package com.jaspa.healthtouch.member.product.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.jaspa.healthtouch.center.product.model.dto.ProductDTO;
 import com.jaspa.healthtouch.member.product.model.dto.OrderDTO;
@@ -16,6 +17,16 @@ public interface MemberProService {
 	
 	// 회원 결제 정보
 	int insertPayment(PaymentDTO payment);
+	
+	// 회원 구매 목록
+	List<PaymentDTO> selectOrderList(String userId);
+
+	// 회원 구매 날짜별 조회
+	List<PaymentDTO> searchOrderList(int searchOption, String userId);
+
+
+
+
 	
 
 }

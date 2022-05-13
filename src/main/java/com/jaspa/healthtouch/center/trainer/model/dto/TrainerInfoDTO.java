@@ -1,4 +1,4 @@
-package com.jaspa.healthtouch.center.tr_management.model.dto;
+package com.jaspa.healthtouch.center.trainer.model.dto;
 
 import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 

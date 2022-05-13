@@ -25,7 +25,7 @@
         </div>
             <table>
                 <tr>
-                	<td>
+                	<td class="hidden">
                         상품번호
                     </td>                
                     <th class="width-40">
@@ -42,7 +42,7 @@
                     </th>
                 </tr>
                 <tr th:each="membership,index : ${ membershipList }" th:id="'order_' + ${index.index}" >
-                	<td name="no" th:text="${ membership.no }">
+                	<td class="hidden" name="no" th:text="${ membership.no }">
                         상품번호
                     </td>
                     <td name="name" th:text="${ membership.name }">
@@ -116,18 +116,13 @@
                 	console.log(data);
                     //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
                     if (data) {
-                        msg = '결제가 완료되었습니다.';
-                        msg += '\n고유ID : ' + rsp.imp_uid;
-                        msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-                        msg += '\결제 금액 : ' + rsp.paid_amount;
-                        msg += '카드 승인번호 : ' + rsp.apply_num;
                         
                         Swal.fire({
                             icon: 'success',
                               text: '결제가 완료되었습니다.',
                               confirmButtonText: '확인',
                          }).then((result) => {
-                            location.href = "/member/product/membership";
+                            location.href = "/member/product/ordList";
                          })
 
                     } else {
@@ -145,7 +140,7 @@
                 /* location.href='/member/product/membership'; */
                 Swal.fire({
                     icon: 'error',
-                      text: '엥 결제에 실패하였습니다.',
+                      text: '결제에 실패하였습니다. 다시 결제를 진행해 주세요.',
                       confirmButtonText: '확인',
                  }).then((result) => {
                     location.href = "/member/product/membership";

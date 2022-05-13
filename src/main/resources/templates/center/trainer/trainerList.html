@@ -26,7 +26,7 @@
         <div class="content">
             <div class="container">
             <h2 class="mb-5">트레이너 조회</h2>
-
+			</div>
             <div>
                 <!-- selectbox - 전체, 재직, 퇴사 -->
                 <select class="form-select" aria-label="Default select example" style="width: 10%;">
@@ -34,7 +34,9 @@
                     <option value="1">재직</option>
                     <option value="2">퇴사</option>
                 </select>
-
+			</div>
+			
+			
 			<!-- 트레이너 목록 테이블 -->
             <div class="table-responsive custom-table-responsive">
             <table class="table custom-table">
@@ -68,7 +70,7 @@
                 </td>
                 <td th:text="${trainer.trNum}"> </td>
           		<td>
-                	<a th:href="|@{/center/trainer/trainerDetail?id={id}(id=${ trainer.member.id })}|" th:text="${ trainer.member.id }" ></a>
+                	<a th:href="|@{/center/trainer/detail?id={id}(id=${ trainer.member.id })}|" th:text="${ trainer.member.id }" ></a>
                 </td>   
                 <td th:text="${trainer.member.name}"></td>           
                 <td th:text="${trainer.member.gender}"></td>
@@ -103,8 +105,8 @@
 						</ul>
 					</nav>
            
-            </div>
-            </div>
+            
+            
             </div>
     </div>
     <script th:inline="javascript">

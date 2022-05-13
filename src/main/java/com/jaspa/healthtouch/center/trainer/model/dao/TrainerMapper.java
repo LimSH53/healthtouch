@@ -1,11 +1,10 @@
-package com.jaspa.healthtouch.center.tr_management.model.dao;
+package com.jaspa.healthtouch.center.trainer.model.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.jaspa.healthtouch.center.tr_management.model.dto.TrainerInfoDTO;
+import com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO;
 
 @Mapper
 public interface TrainerMapper {
@@ -16,6 +15,12 @@ public interface TrainerMapper {
 
 
 	TrainerInfoDTO detailTrainerById(String trId);
+
+
+	void deleteTrainer(String id);
+
+
+	void deleteTrainerMStatus(String id);
 
 	
 
