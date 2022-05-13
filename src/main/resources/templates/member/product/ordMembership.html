@@ -110,7 +110,9 @@
                         userId : '[[${#authentication.principal.id}]]', //유저 id
                         pro_no : $(orderId + ' ' + '[name=no]').text(),//상품번호
                         price : $(orderId + ' ' + '[name=price]').text(),//총 결제 금액
-                        period : $(orderId + ' ' + '[name=period]').text()//이용기간
+                        period : $(orderId + ' ' + '[name=period]').text(),//이용기간
+                        count : 0//이용횟수
+
                     })
                 }).done(function(data) {
                 	console.log(data);

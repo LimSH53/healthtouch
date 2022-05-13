@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.jaspa.healthtouch.center.product.model.dto.ProductDTO;
+import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 import com.jaspa.healthtouch.member.product.model.dto.OrderDTO;
 import com.jaspa.healthtouch.member.product.model.dto.PaymentDTO;
 
@@ -26,6 +27,12 @@ public interface MemberProMapper {
 
 	// 회원 구매 날짜별 조회
 	List<PaymentDTO> searchOrderList(int searchOption, String userId);
+
+	// 트레이너 리스트
+	List<MemberDTO> findTrainerList();
+
+	// 수강권 상품 조회
+	List<ProductDTO> findAllPTList();
 
 
 
