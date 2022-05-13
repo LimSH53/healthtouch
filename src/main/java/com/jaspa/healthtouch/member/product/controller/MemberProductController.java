@@ -78,29 +78,28 @@ public class MemberProductController {
 	}
 	
 	// 구매 내역 조회
-	/*
-	 * @GetMapping("ordList") public ModelAndView
-	 * selectOrderList(@AuthenticationPrincipal UserImpl user, ModelAndView mv) {
-	 * 
-	 * log.info("user : {}", user);
-	 * 
-	 * String userId = user.getId();
-	 * 
-	 * List<PaymentDTO> orderList = memberProService.selectOrderList(userId);
-	 * 
-	 * log.info("orderList : {}", orderList);
-	 * 
-	 * mv.addObject("orderList", orderList);
-	 * mv.setViewName("member/product/ordList");
-	 * 
-	 * 
-	 * return mv; }
-	 */
+	 @GetMapping("ordList")
+	 public ModelAndView selectOrderList(@AuthenticationPrincipal UserImpl user, ModelAndView mv) {
+	 
+	 log.info("user : {}", user);
+	  
+	 String userId = user.getId();
+	  
+	 List<PaymentDTO> orderList = memberProService.selectOrderList(userId);
+	  
+	 log.info("orderList : {}", orderList);
+	  
+	 mv.addObject("orderList", orderList);
+	 mv.setViewName("member/product/ordList");
+	 
+	  
+	  return mv; 
+	  }
 	
 	// 구매 내역 조회
-	@GetMapping("ordList")
+	@PostMapping("ordList")
 	@ResponseBody
-	public ModelAndView searchOrderList(@RequestParam(value="searchCondition", required =false, defaultValue="0") int searchCondition, @AuthenticationPrincipal UserImpl user, ModelAndView mv) {
+	public List<PaymentDTO> searchOrderList(@RequestParam(value="searchCondition", required =false, defaultValue="0") int searchCondition, @AuthenticationPrincipal UserImpl user) {
 		
 		log.info("user : {}", user);
 		log.info("searchCondition: {}", searchCondition);
@@ -112,13 +111,11 @@ public class MemberProductController {
 		List<PaymentDTO> orderList = memberProService.searchOrderList(searchOption, userId);
 		
 		log.info("orderList : {}", orderList);
-		
-		mv.addObject("orderList", orderList);
-		mv.setViewName("member/product/ordList");
-		
-		
-		return mv;
-	}
+
+		return orderList;
+	}	
+	
+	
 	
 	
 	

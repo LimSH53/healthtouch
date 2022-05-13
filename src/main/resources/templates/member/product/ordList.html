@@ -55,7 +55,7 @@
                         
                     </th>
                 </tr>
-                <tr th:each="order : ${ orderList }" >
+                <tr id="orderListTable" th:each="order : ${ orderList }" >
                 	<th class="hidden" th:text="${order.order.no}">
                 		구매번호
                 	</th>
@@ -95,11 +95,15 @@
 		console.log(searchOption);
 		$.ajax({
 			url : '/member/product/ordList',
-			type : 'GET',
+			type : 'POST',
 			dataType : 'json',
 			data : {
 				searchCondition : searchOption
 			}
+			
+		}).done(function(data){
+			console.log("data :", data);
+			$('#orderListTable').replaceWith(data);
 			
 		});
 		
