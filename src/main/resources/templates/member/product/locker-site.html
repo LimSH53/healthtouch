@@ -35,19 +35,283 @@
                 </h2>
                 
                 
-                <div class="row" th:each="locker : ${ lockerList }" >
+
+                <div class="row">
                 
                 
+                
+                <!-- 1번락커가 데이터가 있을때 -->
                   <div class="col-2 ex p-3 m-4" >
-                    <div class="p-1 text-end"  >   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ locker.locNum }" ></div>
-                        <div id="status_off" style="float: left; width:50%;" th:text="${ locker.locStatus }" ></div>
-                        <div th:text="${ locker.member.name }"></div>
-                        <div th:text="|~${#dates.format(locker.order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
+                    <div class="p-1 text-end">   
+                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[0].locNum }"></div>
+                        <div id="status_on" style="float: left; width:50%;" 
+	                        th:style="${lockerList[0].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}" 
+	                        >사용중</div>
+                        <div th:text="${ lockerList[0].member.name }"></div>
+                        <div th:text="|~${#dates.format(lockerList[0].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
+                    
                     </div>    
                   </div>
-           
                   
+
+                  
+                  
+                  
+                  <!-- 2번락커가 데이터가 있을때 -->
+                  
+                  <div class="col-2 ex p-3 m-4" >
+                    <div class="p-1 text-end">   
+                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[1].locNum }"></div>
+                        <div id="status_on" style="float: left; width:50%;" 
+                        	th:style="${lockerList[1].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}" 
+	                        >사용중</div>
+                        <div th:text="${ lockerList[1].member.name }"></div>
+                        <div th:text="|~${#dates.format(lockerList[1].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
+                    
+                    </div>    
+                  </div>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <!-- 3번락커가 데이터가 있을때 -->
+                  
+                  <div class="col-2 ex p-3 m-4" >
+                    <div class="p-1 text-end">   
+                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[2].locNum }"></div>
+                       <div id="status_on" style="float: left; width:50%;" 
+                        	th:style="${lockerList[2].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}" 
+	                        >사용중</div>
+                        <div th:text="${ lockerList[2].member.name }"></div>
+                        <div th:text="|~${#dates.format(lockerList[2].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
+                    
+                    </div>    
+                  </div>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <!-- 4번락커가 데이터가 있을때 -->
+                  
+                  <div class="col-2 ex p-3 m-4" >
+                    <div class="p-1 text-end">   
+                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[3].locNum }"></div>
+                        <div id="status_on" style="float: left; width:50%;" 
+                        	th:style="${lockerList[3].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}">
+	                        사용중</div>
+                        <div th:text="${ lockerList[3].member.name }"></div>
+                        <div th:text="|~${#dates.format(lockerList[3].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
+                    
+                    </div>    
+                  </div>
+                  
+                  
+                  <!-- 5번락커 데이터가 있을때 -->
+                  
+                  <div class="col-2 ex p-3 m-4" th:if="${ lockerList[4].locStatus == 'Y' }">
+                    <div class="p-1 text-end">   
+                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[4].locNum }"></div>
+                        <div id="status_on" style="float: left; width:50%;" 
+                        	th:style="${lockerList[4].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}">
+	                        사용중</div>
+                        <div th:text="${ lockerList[4].member.name }"></div>
+                        <div th:text="|~${#dates.format(lockerList[4].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
+                    
+                    </div>    
+                  </div>
+                  
+                  
+                  <!-- 5번데이터가 없을때 -->
+                  <div class="col-2 ex p-3 m-4" th:unless="${ lockerList[4].locStatus == 'Y' }">
+                    <div class="p-1 text-end">   
+                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">5</div>
+                        <div id="status_on" style="float: left; width:50%; background:gray; color: white; text-align: center;">사용가능</div>
+                    </div>    
+                  </div>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <!-- ----------------------------------------관리 X--------------------------------------------------- -->
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <!-- 6번데이터가 있을때 -->
+                  <div class="col-2 ex p-3 m-4" th:if="${ locMngNum == 5 }">
+                    <div class="p-1 text-end">   
+                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[4].locNum }"></div>
+                        <div id="status_on" style="float: left; width:50%;" 
+                        	th:style="${lockerList[5].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}" 
+	                        th:text="${ lockerList[5].locStatus }"></div>
+                        <div th:text="${ lockerList[5].member.name }"></div>
+                        <div th:text="|~${#dates.format(lockerList[5].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
+                    
+                    </div>    
+                  </div>
+
+                   <!-- 6번데이터가 없을때 -->
+                  <div class="col-2 ex p-3 m-4" th:unless="${ locMngNum == 5 }">
+                    <div class="p-1 text-end">   
+                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">6</div>
+                        <div id="status_on" style="float: left; width:50%; background:gray; color: white; text-align: center;">사용가능</div>
+                    </div>    
+                  </div>
+
+
+
+
+
+
+
+
+
+
+                  
+                  <!-- 7번데이터가 있을때 -->
+                  <div class="col-2 ex p-3 m-4" th:if="${ locMngNum == 5 }">
+                    <div class="p-1 text-end">   
+                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[4].locNum }"></div>
+                        <div id="status_on" style="float: left; width:50%;" 
+                        	th:style="${lockerList[5].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}" 
+	                        th:text="${ lockerList[5].locStatus }"></div>
+                        <div th:text="${ lockerList[5].member.name }"></div>
+                        <div th:text="|~${#dates.format(lockerList[5].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
+                    
+                    </div>    
+                  </div>
+
+                   <!-- 7번데이터가 없을때 -->
+                  <div class="col-2 ex p-3 m-4" th:unless="${ locMngNum == 5 }">
+                    <div class="p-1 text-end">   
+                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">7</div>
+                        <div id="status_on" style="float: left; width:50%; background:gray; color: white; text-align: center;">사용가능</div>
+                    </div>    
+                  </div>
+                  
+
+                
+                
+                
+                <!-- 8번데이터가 있을때 -->
+                  <div class="col-2 ex p-3 m-4" th:if="${ locMngNum == 5 }">
+                    <div class="p-1 text-end">   
+                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[4].locNum }"></div>
+                        <div id="status_on" style="float: left; width:50%;" 
+                        	th:style="${lockerList[5].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}" 
+	                        th:text="${ lockerList[5].locStatus }"></div>
+                        <div th:text="${ lockerList[5].member.name }"></div>
+                        <div th:text="|~${#dates.format(lockerList[5].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
+                    
+                    </div>    
+                  </div>
+
+                   <!-- 8번데이터가 없을때 -->
+                  <div class="col-2 ex p-3 m-4" th:unless="${ locMngNum == 5 }">
+                    <div class="p-1 text-end">   
+                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">8</div>
+                        <div id="status_on" style="float: left; width:50%; background:gray; color: white; text-align: center;">사용가능</div>
+                    </div>    
+                  </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                <!-- 9번데이터가 있을때 -->
+                  <div class="col-2 ex p-3 m-4" th:if="${ locMngNum == 5 }">
+                    <div class="p-1 text-end">   
+                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[4].locNum }"></div>
+                        <div id="status_on" style="float: left; width:50%;" 
+                        	th:style="${lockerList[5].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}" 
+	                        th:text="${ lockerList[5].locStatus }"></div>
+                        <div th:text="${ lockerList[5].member.name }"></div>
+                        <div th:text="|~${#dates.format(lockerList[5].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
+                    
+                    </div>    
+                  </div>
+
+                   <!-- 9번데이터가 없을때 -->
+                  <div class="col-2 ex p-3 m-4" th:unless="${ locMngNum == 5 }">
+                    <div class="p-1 text-end">   
+                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">9</div>
+                        <div id="status_on" style="float: left; width:50%; background:gray; color: white; text-align: center;">사용가능</div>
+                    </div>    
+                  </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                <!-- 10번데이터가 있을때 -->
+                  <div class="col-2 ex p-3 m-4" th:if="${ locMngNum == 5 }">
+                    <div class="p-1 text-end">   
+                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[4].locNum }"></div>
+                        <div id="status_on" style="float: left; width:50%;" 
+                        	th:style="${lockerList[5].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}" 
+	                        th:text="${ lockerList[5].locStatus }"></div>
+                        <div th:text="${ lockerList[5].member.name }"></div>
+                        <div th:text="|~${#dates.format(lockerList[5].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
+                    
+                    </div>    
+                  </div>
+
+                   <!-- 10번데이터가 없을때 -->
+                  <div class="col-2 ex p-3 m-4" th:unless="${ locMngNum == 5 }">
+                    <div class="p-1 text-end">   
+                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">10</div>
+                        <div id="status_on" style="float: left; width:50%; background:gray; color: white; text-align: center;">사용가능</div>
+                    </div>    
+                  </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
             </div>
                       
     </div>
