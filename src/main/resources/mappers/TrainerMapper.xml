@@ -23,6 +23,16 @@
 		<association property="trainer" resultMap="trainerInfoResultMap"/>
 	</resultMap>
 	 
+	<resultMap type="com.jaspa.healthtouch.center.trainer.model.dto.HolidayDTO" id="holidayResultMap">
+		<id property="hReqNo" column="H_REQ_NO"/>
+		<result property="reqHday" column="HDATE_REQ"/>
+		<result property="hReason" column="H_REASON"/>
+		<result property="hStatus" column="H_STATUS"/>
+		<result property="rejReason" column="H_REJ_REASON"/>
+		<result property="hDay" column="HDATE"/>
+		
+		<association property="trainer" resultMap="trainerInfoResultMap"/>
+	</resultMap> 
 	 
 	<resultMap type="com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO" id="trainerInfoResultMap">
 		<id property="trNum" column="TRN_NUM"/>
@@ -123,7 +133,20 @@
 	      	       
 	 </select>
 	 
-	 
+	 <!-- 휴가 요청 조회 -->
+	 <select id="selectAllHdayRequest" resultMap="holidayResultMap">
+	 	SELECT
+	 		   HR.H_REQ_NO
+	 		 , HR.HDATE_REQ
+	 		 , M.MEMBER_NAME
+	 		 , M.MEMBER_ID
+	 		 , HR.H_REASON
+	 		 , HR.HDATE
+	 		 , HR.H_STATUS
+	     FROM TBL_HDAY_REQ HR
+	     JOIN TBL_TRN_INFO TI ON(HR.H_TRN_NUM = TI.TRN_NUM)
+	     JOIN TBL_MEMBER M ON(TI.TRN_INFO_MEMBER_ID = M.MEMBER_ID)
+	 </select>
 	 
 
 </mapper>

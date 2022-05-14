@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jaspa.healthtouch.center.trainer.model.dto.HolidayDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerSalaryDTO;
 import com.jaspa.healthtouch.center.trainer.model.service.TrManagementService;
@@ -75,8 +76,8 @@ public class CenterTrainerController {
 		trManagementService.deleteTrainer(id);
 	}
 	
-	//트레이너 급여조회
-	@GetMapping("salary")
+	//급여 리스트 조회
+	@GetMapping("/salary")
 	public ModelAndView selectAllSalary(ModelAndView mv) {
 		
 		List<TrainerSalaryDTO> salaryList = trManagementService.selectAllSalary();
@@ -85,6 +86,17 @@ public class CenterTrainerController {
 		mv.setViewName("center/trainer/salaryList");
 		return mv;
 	}
+	
+	//휴가요청 조회
+		@GetMapping("/hday")
+		public ModelAndView selectAllHdayRequest(ModelAndView mv) {
+			
+			List<HolidayDTO> hdayRequestList = trManagementService.selectAllHdayRequest();
+			
+			mv.addObject("hdayRequestList", hdayRequestList);
+			mv.setViewName("center/trainer/hdayRequestList");
+			return mv;
+		}
 	
 	
 }
