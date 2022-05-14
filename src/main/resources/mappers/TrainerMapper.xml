@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jaspa.healthtouch.center.trainer.model.dao.TrainerMapper">
+	
+	<resultMap type="com.jaspa.healthtouch.center.trainer.model.dto.TrainerSalaryDTO" id="trainerSalResultMap">
+		<id property="salNo" column="SAL_NO"/>
+		<result property="salDate" column="SAL_DATE"/>
+		<result property="ptCount" column="PT_COUNT"/>
+		<result property="totalSalary" column="SAL_TOTAL"/>
+		
+		<association property="trainer" resultMap="trainerInfoResultMap"/>
+		<association property="salCondition" resultMap="salConditionResultMap"/>
+	</resultMap>
+	
+
+	<resultMap type="com.jaspa.healthtouch.center.trainer.model.dto.SalaryConditionDTO" id="salConditionResultMap">
+		<id property="conditionNO" column="SAL_CON_NO"/>
+		<result property="basicSalary" column="SAL_BASIC"/>
+		<result property="ptPrice" column="PT_PRICE"/>
+		<result property="commission" column="COMMISION"/>
+		<result property="conStatus" column="SAL_CON_STATUS"/>
+		
+		<association property="trainer" resultMap="trainerInfoResultMap"/>
+	</resultMap>
+	 
 	 
 	<resultMap type="com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO" id="trainerInfoResultMap">
 		<id property="trNum" column="TRN_NUM"/>
@@ -82,6 +104,24 @@
 	 	   AND MEMBER_STATUS = 'Y'
 	 </update>
 	 
+	 <!-- 급여 리스트 조회 -->
+	 <select id="selectAllSalary" resultMap="trainerSalResultMap">
+	 	SELECT 
+	 			S.SAL_NO
+	 		  , M.MEMBER_NAME
+	 		  , M.MEMBER_ID
+	 		  , SC.SAL_BASIC
+	 		  , SC.PT_PRICE
+	 		  , S.PT_COUNT
+	 		  , SC.COMMISSION
+	 		  , S.SAL_TOTAL
+	      FROM TBL_SAL_CON SC
+	      JOIN TBL_SALARY S ON(SC.SAL_CON_NO = S.SAL_CON_NO)
+	      JOIN TBL_TRN_INFO TI ON(SC.SAL_TRN_NUM = TI.TRN_NUM)
+	      JOIN TBL_MEMBER M ON(TI.TRN_INFO_MEMBER_ID = M.MEMBER_ID)
+	     WHERE SC.SAL_CON_STATUS = 'Y'
+	      	       
+	 </select>
 	 
 	 
 	 

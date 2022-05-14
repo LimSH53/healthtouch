@@ -1,0 +1,98 @@
+<!doctype html>
+                       
+<html xmlns:th="http://www.thymeleaf.org">
+                           
+<head>     
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>트레이너-급여</title>
+        
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>  
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+	<div th:replace="/common/centerHeader.html :: center-header"></div>
+   
+</head>
+                                
+<body id="body-pd">
+
+	<!-- 헤더 body 추가 -->
+	<div th:replace="/common/centerHeader.html :: center-body"></div>
+	
+	<!--Container Main start-->
+    <div class="height-100 bg-light">
+        <div class="content">
+            <div class="container">
+            <h2 class="mb-5">급여 조회</h2>
+
+            <div>
+                <!-- selectbox  -->
+                <select class="form-select" aria-label="Default select example" style="width: 10%;">
+                    <option selected>4월</option>
+                    <option value="1">5월</option>
+                    <option value="2">6월</option>
+                </select>
+<!--                 
+                <form class="example" action="action_page.php">
+                    <input type="text" placeholder="검색어를 입력하세요" name="search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form> -->
+            </div>
+
+
+            <div class="table-responsive custom-table-responsive">
+            <table class="table custom-table" style="width: 80%; margin:auto">
+            <thead>
+            <tr>
+            <th scope="col">No</th>
+            <th scope="col">이름</th>
+            <th scope="col">ID</th>
+            <th scope="col">기본급</th>
+            <th scope="col">수업단가</th>
+            <th scope="col">수업횟수</th>
+            <th scope="col">수수료</th>
+            <th scope="col">총급여</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="table_sal" th:each="salary : ${ salaryList}" >
+                <td th:text="${salary.salNo}"></td>
+                <td th:text="${salary.trainer.member.name}"></td>
+                <td th:text="${salary.trainer.member.id}"></td>
+                <td th:text="${salary.salCondition.basicSalary}"></td>
+                <td>50,000원</td>
+                <td th:text="${salary.ptCount}"></td>
+                <td th:text="${salary.salCondition.commission}"></td>
+                <td th:text="${salary.totalSalary}"></td>
+            </tr>
+            
+            </tbody>
+            </table><br>
+
+            
+            <!-- 페이징-->
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            </div>
+            </div>
+    </div>
+    
+    
+</body>
+</html> 

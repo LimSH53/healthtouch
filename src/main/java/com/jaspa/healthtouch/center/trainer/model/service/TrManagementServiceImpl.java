@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jaspa.healthtouch.center.trainer.model.dao.TrainerMapper;
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO;
+import com.jaspa.healthtouch.center.trainer.model.dto.TrainerSalaryDTO;
 import com.jaspa.healthtouch.common.paging.Criteria;
 import com.jaspa.healthtouch.common.paging.PaginationInfo;
 
@@ -39,6 +40,12 @@ public class TrManagementServiceImpl implements TrManagementService {
 		trainerMapper.deleteTrainer(id);
 		trainerMapper.deleteTrainerMStatus(id);
 
+	}
+
+	@Override
+	public List<TrainerSalaryDTO> selectAllSalary() {
+	
+		return trainerMapper.selectAllSalary();
 	}
 
 	
