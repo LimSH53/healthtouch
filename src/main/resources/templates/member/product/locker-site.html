@@ -6,7 +6,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>락커 등록</title>
+    <title>락커이용현황</title>
     <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
 	<div th:replace="/common/memberHeader.html :: member-header"></div>
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -33,206 +33,24 @@
                         <button type="button" class="btn btn-primary">등록</button>
                     </div>
                 </h2>
-                <div class="row">
+                
+                
+                <div class="row" th:each="locker : ${ lockerList }" >
+                
+                
                   <div class="col-2 ex p-3 m-4" >
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">1</div>
-                        <div id="status_on" style="float: left; width:50%;">이용가능</div>
-                    
+                    <div class="p-1 text-end"  >   
+                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ locker.locNum }" ></div>
+                        <div id="status_off" style="float: left; width:50%;" th:text="${ locker.locStatus }" ></div>
+                        <div th:text="${ locker.member.name }"></div>
+                        <div th:text="|~${#dates.format(locker.order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
                     </div>    
                   </div>
-                  <div class="col-2 ex p-3 m-4" >
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">2</div>
-                        <div id="status_off" style="float: left; width:50%;">사용중</div>
-                        <div>홍길동</div>
-                        <div>~ 2022. 5. 31</div> 
-                    </div>    
-                  </div>
-                  <div class="col-2 ex p-3 m-4" >
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">3</div>
-                        <div id="status_off" style="float: left; width:50%;">사용중</div>
-                        <div>홍길동</div>
-                        <div>~ 2022. 5. 31</div> 
-                    </div>    
-                  </div>
-                  <div class="col-2 ex p-3 m-4" >
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">4</div>
-                        <div id="status_off" style="float: left; width:50%;">사용중</div>
-                        <div>홍길동</div>
-                        <div>~ 2022. 5. 31</div> 
-                    </div>    
-                  </div>
-                  <div class="col-2 ex p-3 m-4" >
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">5</div>
-                        <div id="status_off" style="float: left; width:50%;">사용중</div>
-                        <div>홍길동</div>
-                        <div>~ 2022. 5. 31</div> 
-                    </div>    
-                  </div>
-                  <div class="col-2 ex p-3 m-4" >
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">6</div>
-                        <div id="status_off" style="float: left; width:50%;">사용중</div>
-                        <div>홍길동</div>
-                        <div>~ 2022. 5. 31</div> 
-                    </div>    
-                  </div>
-                </div>
-                <div class="row">
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">7</div>
-                          <div id="status_on" style="float: left; width:50%;">이용가능</div>
-                          
-                      </div>    
-                    </div>
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">8</div>
-                          <div id="status_off" style="float: left; width:50%;">사용중</div>
-                          <div>홍길동</div>
-                          <div>~ 2022. 5. 31</div> 
-                      </div>    
-                    </div>
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">9</div>
-                          <div id="status_off" style="float: left; width:50%;">사용중</div>
-                          <div>홍길동</div>
-                          <div>~ 2022. 5. 31</div> 
-                      </div>    
-                    </div>
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">10</div>
-                          <div id="status_off" style="float: left; width:50%;">사용중</div>
-                          <div>홍길동</div>
-                          <div>~ 2022. 5. 31</div> 
-                      </div>    
-                    </div>
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">11</div>
-                          <div id="status_off" style="float: left; width:50%;">사용중</div>
-                          <div>홍길동</div>
-                          <div>~ 2022. 5. 31</div> 
-                      </div>    
-                    </div>
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">12</div>
-                          <div id="status_off" style="float: left; width:50%;">사용중</div>
-                          <div>홍길동</div>
-                          <div>~ 2022. 5. 31</div> 
-                      </div>    
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">13</div>
-                          <div id="status_on" style="float: left; width:50%;">이용가능</div>
-                          
-                      </div>    
-                    </div>
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">14</div>
-                          <div id="status_off" style="float: left; width:50%;">사용중</div>
-                          <div>홍길동</div>
-                          <div>~ 2022. 5. 31</div> 
-                      </div>    
-                    </div>
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">15</div>
-                          <div id="status_off" style="float: left; width:50%;">사용중</div>
-                          <div>홍길동</div>
-                          <div>~ 2022. 5. 31</div> 
-                      </div>    
-                    </div>
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">16</div>
-                          <div id="status_off" style="float: left; width:50%;">사용중</div>
-                          <div>홍길동</div>
-                          <div>~ 2022. 5. 31</div> 
-                      </div>    
-                    </div>
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">17</div>
-                          <div id="status_off" style="float: left; width:50%;">사용중</div>
-                          <div>홍길동</div>
-                          <div>~ 2022. 5. 31</div> 
-                      </div>    
-                    </div>
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">18</div>
-                          <div id="status_off" style="float: left; width:50%;">사용중</div>
-                          <div>홍길동</div>
-                          <div>~ 2022. 5. 31</div> 
-                      </div>    
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">19</div>
-                          <div id="status_on" style="float: left; width:50%;">이용가능</div>
-                     
-                      </div>    
-                    </div>
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">20</div>
-                          <div id="status_off" style="float: left; width:50%;">사용중</div>
-                          <div>홍길동</div>
-                          <div>~ 2022. 5. 31</div> 
-                      </div>    
-                    </div>
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">21</div>
-                          <div id="status_off" style="float: left; width:50%;">사용중</div>
-                          <div>홍길동</div>
-                          <div>~ 2022. 5. 31</div> 
-                      </div>    
-                    </div>
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">22</div>
-                          <div id="status_off" style="float: left; width:50%;">사용중</div>
-                          <div>홍길동</div>
-                          <div>~ 2022. 5. 31</div> 
-                      </div>    
-                    </div>
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">23</div>
-                          <div id="status_off" style="float: left; width:50%;">사용중</div>
-                          <div>홍길동</div>
-                          <div>~ 2022. 5. 31</div> 
-                      </div>    
-                    </div>
-                    <div class="col-2 ex p-3 m-4" >
-                      <div class="p-1 text-end">   
-                          <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">24</div>
-                          <div id="status_off" style="float: left; width:50%;">사용중</div>
-                          <div>홍길동</div>
-                          <div>~ 2022. 5. 31</div> 
-                      </div>    
-                    </div>
-                  </div>  
+           
+                  
             </div>
                       
     </div>
-
 
 
 
