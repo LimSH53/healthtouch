@@ -1,5 +1,6 @@
 package com.jaspa.healthtouch.center.trainer.model.dto;
 
+import com.jaspa.healthtouch.common.paging.PaginationInfo;
 import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 
 import lombok.Data;
@@ -15,5 +16,6 @@ public class TrainerInfoDTO {
 	private String trId;
 	
 	private MemberDTO member;
+
 	
 }
