@@ -39,8 +39,6 @@ public class CenterTrainerController {
 		
 		List<TrainerInfoDTO> trainerList = trManagementService.selectAllTrainer();
 		
-		log.info("trainerList : {}", trainerList);
-		
 		mv.addObject("trainerList", trainerList);
 		mv.setViewName("center/trainer/trainerList");
 		return mv;
