@@ -19,6 +19,6 @@ public class TrainerSalaryDTO {
 	private int totalSalary;
 	
 	private SalaryConditionDTO salCondition;
-	
+	private TrainerInfoDTO trainer;
 	
 }

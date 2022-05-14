@@ -55,16 +55,9 @@
 			
 			<!-- 트레이너 목록 테이블 -->
             <div class="table-responsive custom-table-responsive">
-            <table class="table custom-table">
+            <table class="table custom-table" style="width: 90%; margin:auto">
             <thead>
             <tr>
-            <th scope="col">
-            <label class="control control--checkbox">
-            <input type="checkbox" class="js-check-all" name="checkAll" value="selectAll"
-             onclick="selectAll(this)">
-            <div class="control__indicator"></div>
-            </label>
-            </th>
             <th>No</th>
             <th>ID</th>
             <th>이름</th>            
@@ -73,17 +66,11 @@
             <th>경력</th>
             <th>재직여부</th>
             
-          
+           
             </tr>
             </thead>
             <tbody>
             <tr class="table_tr" th:each="trainer : ${ trainerList}">
-                <td scope="row">
-                    <label class="control control--checkbox">
-                        <input type="checkbox" name="check">
-                        <div class="control__indicator"></div>
-                    </label>
-                </td>
                 <td th:text="${trainer.trNum}"> </td>
           		<td>
                 	<a th:href="|@{/center/trainer/detail?id={id}(id=${ trainer.member.id })}|" th:text="${ trainer.member.id }" ></a>

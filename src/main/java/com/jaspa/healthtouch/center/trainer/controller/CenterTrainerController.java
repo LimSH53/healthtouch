@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO;
+import com.jaspa.healthtouch.center.trainer.model.dto.TrainerSalaryDTO;
 import com.jaspa.healthtouch.center.trainer.model.service.TrManagementService;
-import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -76,6 +76,15 @@ public class CenterTrainerController {
 	}
 	
 	//트레이너 급여조회
+	@GetMapping("salary")
+	public ModelAndView selectAllSalary(ModelAndView mv) {
+		
+		List<TrainerSalaryDTO> salaryList = trManagementService.selectAllSalary();
+		
+		mv.addObject("salaryList", salaryList);
+		mv.setViewName("center/trainer/salaryList");
+		return mv;
+	}
 	
 	
 }
