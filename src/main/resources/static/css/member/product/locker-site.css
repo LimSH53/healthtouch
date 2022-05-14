@@ -38,7 +38,7 @@ font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, '
 .row {
     --bs-gutter-x: 1.5rem;
     --bs-gutter-y: 0;
-    display: inline-block;
+/*     display: inline-block; */
     flex-wrap: wrap;
     margin-top: calc(var(--bs-gutter-y) * -1);
     margin-right: calc(var(--bs-gutter-x)/ -2);
