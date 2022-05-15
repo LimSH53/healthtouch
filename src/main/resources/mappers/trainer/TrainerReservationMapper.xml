@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jaspa.healthtouch.trainer.reservation.model.dao.TrainerReservationMapper">
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberDTO" id="memberResultMap">
+		<id property="id" column="REF_MEMBER_ID"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="contact" column="MEMBER_CONTACT"/>
+		<result property="num" column="MEMBER_NUM"/>
+		<result property="birthday" column="MEMBER_BIRTHDAY"/>
+		<result property="age" column="MEMBER_AGE"/>
+		<result property="gender" column="MEMBER_GENDER"/>
+		<result property="address" column="MEMBER_ADDRESS"/>
+		<result property="status" column="MEMBER_STATUS"/>
+		
+		<association property="memberRole" resultMap="memberRoleResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberRoleDTO" id="memberRoleResultMap">
+		<id property="memberId" column="REF_MEMBER_ID"/>
+		<result property="authorityCode" column="REF_AUTHORITY_CODE"/>
+		
+		<association property="authority" resultMap="authorityResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.AuthorityDTO" id="authorityResultMap">
+		<id property="code" column="REF_AUTHORITY_CODE2"/>
+		<result property="name" column="AUTHORITY_NAME"/>
+		<result property="desc" column="AUTHORITY_DESC"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.member.classInfo.model.dto.ClassDTO" id="classResultMap">
+		<id property="no" column="CLS_NO"/>
+		<result property="content" column="CLS_CONTENT"/>
+		<result property="rsvNo" column="CLS_RSV_NO"/>
+		<result property="memberId" column="CLS_MEMBER_ID"/>
+		
+		<association property="reservation" resultMap="reservationResultMap"/>
+		<association property="member" resultMap="memberResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.member.reservation.model.dto.ReservationDTO" id="reservationResultMap">
+		<id property="no" column="RSV_NO"/>
+		<result property="datetime" column="RSV_DATETIME"/>
+		<result property="reqDatetime" column="RSV_REQ_DATETIME"/>
+		<result property="state" column="RSV_STATE"/>
+		<result property="type" column="RSV_TYPE"/>
+		<result property="memberId" column="RSV_MEMBER_ID"/>
+		<result property="trainerId" column="RSV_TRAINER_MEMBER_ID"/>
+		
+		<association property="member">
+			<id property="id" column="RSV_MEMBER_ID"/>
+			<result property="name" column="RSV_MEMBER_NAME"/>	
+		</association>
+		<association property="trainer">
+			<id property="id" column="RSV_TRAINER_MEMBER_ID"/>
+			<result property="name" column="RSV_TRAINER_MEMBER_NAME"/>
+		</association>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.member.reservation.model.dto.ReservationChangeDTO" id="reservationChangeResultMap">
+		<id property="no" column="RCH_NO"/>
+		<result property="rsvNo" column="RCH_RSV_NO"/>
+		<result property="reqDatetime" column="RCH_REQ_DATETIME"/>
+		<result property="datetime" column="RCH_DATETIME"/>
+		<result property="state" column="RCH_STATE"/>
+		
+		<association property="reservation" resultMap="reservationResultMap"/>
+	</resultMap>
+	
+	<select id="findAllReservationTotalCount" parameterType="com.jaspa.healthtouch.member.reservation.model.dto.ReservationDTO" resultType="int">
+		SELECT COUNT(*)
+		  FROM TBL_RESERVATION A
+		  JOIN TBL_MEMBER B ON (A.RSV_MEMBER_ID = B.MEMBER_ID)
+		 WHERE A.RSV_TRAINER_MEMBER_ID = #{ memberId }
+		<if test="searchKeyword != null and searchKeyword != ''">
+			<choose>
+				<when test="searchType != null and searchType != ''">
+					<choose>
+						<when test="searchType == 'datetime'">
+							AND A.RSV_DATETIME BETWEEN TO_DATE(#{searchKeyword}, 'YYYY-MM-DD') AND TO_DATE(#{searchKeyword}, 'YYYY-MM-DD') + 1
+						</when>
+						<when test="searchType == 'memberName'">
+							AND B.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+						</when>
+					</choose>
+				</when>
+			</choose>
+		</if>
+	</select>
+	
+	<select id="findAllReservation" parameterType="com.jaspa.healthtouch.member.reservation.model.dto.ReservationDTO" resultMap="reservationResultMap">
+		SELECT A.RNUM
+			 , A.RSV_NO
+			 , A.RSV_DATETIME
+			 , A.RSV_REQ_DATETIME
+			 , A.RSV_STATE
+			 , A.RSV_TYPE
+			 , A.RSV_MEMBER_ID
+			 , A.RSV_TRAINER_MEMBER_ID
+			 , D.MEMBER_NAME RSV_MEMBER_NAME
+		  FROM (SELECT ROWNUM RNUM
+		  			 , B.RSV_NO
+		  			 , B.RSV_DATETIME
+		  			 , B.RSV_REQ_DATETIME
+		  			 , B.RSV_STATE
+		  			 , B.RSV_TYPE
+		  			 , B.RSV_MEMBER_ID
+		  			 , B.RSV_TRAINER_MEMBER_ID
+		  		  FROM (SELECT C.RSV_NO
+		  		  			 , C.RSV_DATETIME
+		  		  			 , C.RSV_REQ_DATETIME
+		  		  			 , C.RSV_STATE
+		  		  			 , C.RSV_TYPE
+		  		  			 , C.RSV_MEMBER_ID
+		  		  			 , C.RSV_TRAINER_MEMBER_ID
+		  		  		  FROM TBL_RESERVATION C
+		  		  ) B
+		  <![CDATA[
+		  WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
+		  ]]>) A
+		     JOIN TBL_MEMBER D ON (A.RSV_MEMBER_ID = D.MEMBER_ID)
+		    WHERE A.RNUM > #{ paginationInfo.firstRecordIndex }
+		   <if test="searchKeyword != null and searchKeyword != ''">
+				<choose>
+					<when test="searchType != null and searchType != ''">
+						<choose>
+							<when test="searchType == 'datetime'">
+								AND A.RSV_DATETIME BETWEEN TO_DATE(#{searchKeyword}, 'YYYY-MM-DD') AND TO_DATE(#{searchKeyword}, 'YYYY-MM-DD') + 1
+							</when>
+							<when test="searchType == 'memberName'">
+								AND D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							</when>
+						</choose>
+					</when>
+				</choose>
+			</if>
+		      AND A.RSV_TRAINER_MEMBER_ID = #{ memberId }
+		    ORDER BY A.RSV_NO ASC
+	</select>
+	
+	<select id="findReservationById" resultMap="reservationResultMap">
+		SELECT A.RSV_NO
+			 , A.RSV_DATETIME
+			 , A.RSV_REQ_DATETIME
+			 , A.RSV_STATE
+			 , A.RSV_TYPE
+			 , A.RSV_MEMBER_ID
+			 , A.RSV_TRAINER_MEMBER_ID
+			 , B.MEMBER_NAME RSV_MEMBER_NAME
+		  FROM TBL_RESERVATION A
+		  JOIN TBL_MEMBER B ON (A.RSV_MEMBER_ID = B.MEMBER_ID)
+		 WHERE A.RSV_TRAINER_MEMBER_ID = #{ id }
+		   AND A.RSV_STATE = 'Y'
+	</select>
+	
+	<select id="getDetail" resultMap="reservationResultMap">
+		SELECT A.RSV_NO
+			 , A.RSV_DATETIME
+			 , A.RSV_REQ_DATETIME
+			 , A.RSV_STATE
+			 , A.RSV_TYPE
+			 , A.RSV_MEMBER_ID
+			 , A.RSV_TRAINER_MEMBER_ID
+			 , B.MEMBER_NAME RSV_MEMBER_NAME
+		  FROM TBL_RESERVATION A
+		  JOIN TBL_MEMBER B ON (A.RSV_MEMBER_ID = B.MEMBER_ID)
+		 WHERE A.RSV_NO = #{ no }
+	</select>
+	
+	<select id="getChangeDetail" resultMap="reservationChangeResultMap">
+		SELECT A.RCH_NO
+			 , A.RCH_RSV_NO
+			 , A.RCH_REQ_DATETIME
+			 , A.RCH_DATETIME
+			 , A.RCH_STATE
+			 , B.RSV_NO
+			 , B.RSV_DATETIME
+			 , B.RSV_REQ_DATETIME
+			 , B.RSV_STATE
+			 , B.RSV_TYPE
+			 , B.RSV_MEMBER_ID
+			 , B.RSV_TRAINER_MEMBER_ID
+			 , C.MEMBER_NAME RSV_MEMBER_NAME
+		  FROM TBL_RESERVATION_CHANGE A
+		  JOIN TBL_RESERVATION B ON (A.RCH_RSV_NO = B.RSV_NO)
+		  JOIN TBL_MEMBER C ON (B.RSV_MEMBER_ID = C.MEMBER_ID)
+		 WHERE A.RCH_RSV_NO = #{ no }
+	</select>
+	
+	<delete id="cancelReservation">
+		DELETE FROM TBL_RESERVATION
+		 WHERE RSV_NO = #{ reservationNo }
+	</delete>
+</mapper>

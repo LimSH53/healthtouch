@@ -16,6 +16,26 @@
 			locale: 'ko',
 			themeSystem: 'bootstrap5'
         });
+		
+		var arr = '';
+		
+		$.ajax({
+			dataType: 'json',
+			url: '/trainer/reservation/calendar',
+			type: 'post',
+			async: false,
+			success: function(rsvMap) {
+				arr = rsvMap;
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		})
+		
+		$.each(arr, function(index, item) {
+			calendar.addEvent(item);
+		});
+		
 		calendar.render();
 	});
 </script>
