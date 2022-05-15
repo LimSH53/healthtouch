@@ -43,6 +43,15 @@
 		<association property="member" resultMap="memberResultMap"/>
 	</resultMap>
 	
+	<resultMap type="com.jaspa.healthtouch.center.trainer.model.dto.AttendanceDTO" id="attendanceResultMap">
+		<id property="attNo" column="TRN_RECORD_NO"/>
+		<result property="attendTime" column="TRN_ATTEND_TIME"/>
+		<result property="leaveTime" column="TRN_LEAVE_TIME"/>
+		<result property="attKind" column="TRN_REC_KIND"/>
+		
+		<association property="member" resultMap="memberResultMap"/>
+	</resultMap>
+	
 	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberDTO" id="memberResultMap">
 		<id property="id" column="MEMBER_ID"/>
 		<result property="pwd" column="MEMBER_PWD"/>
@@ -148,6 +157,19 @@
 	     JOIN TBL_MEMBER M ON(TI.TRN_INFO_MEMBER_ID = M.MEMBER_ID)
 	 </select>
 	 
+	 <!-- 근태 조회 -->
+	 <select id="selectAllAttendance" resultMap="attendanceResultMap">
+	 
+	 	SELECT
+	 			TR.TRN_RECORD_NO
+	 		  , M.MEMBER_NAME
+	 		  , M.MEMBER_ID
+	 		  , TR.TRN_ATTEND_TIME
+	 		  , TR.TRN_LEAVE_TIME
+	 	  FROM TBL_TRN_RECORD TR	
+	 	  JOIN TBL_MEMBER M ON(TR.TRN_REC_MEMBER_ID = M.MEMBER_ID)
+	 
+	 </select>
 
 </mapper>
 	

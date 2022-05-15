@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.jaspa.healthtouch.center.trainer.model.dto.AttendanceDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.HolidayDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerSalaryDTO;
@@ -36,6 +37,9 @@ public interface TrainerMapper {
 
 
 	List<HolidayDTO> selectAllHdayRequest();
+
+
+	List<AttendanceDTO> selectAllAttendance();
 
 
 

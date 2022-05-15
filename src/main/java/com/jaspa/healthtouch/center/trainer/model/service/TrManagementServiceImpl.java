@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jaspa.healthtouch.center.trainer.model.dao.TrainerMapper;
+import com.jaspa.healthtouch.center.trainer.model.dto.AttendanceDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.HolidayDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerSalaryDTO;
@@ -53,6 +54,12 @@ public class TrManagementServiceImpl implements TrManagementService {
 	public List<HolidayDTO> selectAllHdayRequest() {
 		
 		return  trainerMapper.selectAllHdayRequest();
+	}
+
+	@Override
+	public List<AttendanceDTO> selectAllAttendanceList() {
+		
+		return trainerMapper.selectAllAttendance();
 	}
 
 	
