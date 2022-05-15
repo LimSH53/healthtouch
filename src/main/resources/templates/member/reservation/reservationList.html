@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>healthtouch</title>
+<link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
+<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+<div th:replace="/common/memberHeader.html :: member-header"></div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body id="body-pd" class="snippet-body" style="min-height: 80vh">
+	<div th:replace="/common/memberHeader.html :: member-body"></div>
+	<div class="container mt-5">
+		<div class="d-flex justify-content-center row">
+			<div class="col-md-10">
+				<!-- 검색 -->
+				<br>
+				<th:block layout:fragment="search">
+					<div id="adv-search" class="input-group">
+						<form id="searchForm" th:action="@{/member/reservation/reservationList}" method="get" class="input-group mb-3" role="form">
+							<input type="hidden" name="currentPageNo" value="1"/>
+							<input type="hidden" name="recordsPerPage" th:value="${params.recordsPerPage}"/>
+							<input type="hidden" name="pageSize" th:value="${params.pageSize}"/>
+							<input type="hidden" value="datetime" name="searchType">
+							<input type="date" name="searchKeyword" id="searchKeyword" class="form-control input-text" th:value="${params.searchKeyword}"/>
+							<div class="search_btn input-group-append">
+								<button type="submit" class="btn btn-primary"><i class="bx bx-search"></i></button>
+							</div>
+						</form>
+					</div>
+				</th:block>
+				<br>
+				<th:block layout:fragment="content">
+					<table class="table align-middle">
+						<thead>
+							<tr class="text-center">
+								<th>No</th>
+								<th>수업 일시</th>
+								<th>담당 트레이너</th>
+								<th>승인 여부</th>
+								<th>자세히 보기</th>
+							</tr>
+						</thead>
+						<tbody class="table-body">
+							<tr class="cell-1 text-center" th:each="reservation : ${ reservationList }">
+								<td th:text="${ reservationStat.count }"></td>
+								<td th:text="${ #dates.format(reservation.datetime, 'yyyy-MM-dd HH:mm') }"></td>
+								<td th:text="${ reservation.trainer.name }"></td>
+								<td>
+									<th:block th:if="${ reservation.state == 'Y' }">
+									승인
+									</th:block>
+									<th:block th:if="${ reservation.state == 'N' }">
+									미승인
+									</th:block>
+								</td>
+								<td>
+									<button class="btn btn-sm outline" type="button" id="viewDetailBtn" style="color:#1b1b55 ; border-color: #1b1b55;" th:onclick="|javascript:viewDetail('${reservation.no}')|">예약 내용 확인</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</th:block>
+				<!-- 페이지네이션 -->
+				<th:block layout:fragment="paging">
+				<br>
+					<nav th:fragment="pagination" th:if="${params != null and params.paginationInfo.totalRecordCount > 0}" th:object="${params.paginationInfo}" th:with="info=${params.paginationInfo}" aria-label="Page navigation" class="text-center">
+						<ul class="pagination flex-wrap d-flex justify-content-center" style="display: flex; border-radius: 0.25rem;">
+							<li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(1)} ]])">
+								<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+							</li>
+							<li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.firstPage - 1)} ]])">
+								<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&lsaquo;</span></a>
+							</li>
+							<li class="page-item" th:each="pageNo : *{#numbers.sequence( firstPage, lastPage )}" th:class="${pageNo == params.currentPageNo} ? 'active'">
+								<a class="page-link" href="javascript:void(0)" th:text="${pageNo}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(pageNo)} ]])"></a>
+							</li>
+							<li class="page-item" th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.lastPage + 1)} ]])">
+								<a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&rsaquo;</span></a>
+							</li>
+							<li class="page-item" th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.totalPageCount)} ]])">
+								<a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+							</li>
+						</ul>
+					</nav>
+				</th:block>
+				<br>
+			</div>
+		</div>
+	</div>
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+		/*<![CDATA[*/
+			function viewDetail(no) {
+				var reservationNo = no;
+				var reservationChangeNo = '';
+				
+				$.ajax({
+					url: "/member/reservation/detail",
+					type: "post",
+					dataType: "json",
+					data: { reservationNo: reservationNo },
+					success: function(data) {
+						var html = '';
+						var buttonText = '';
+						
+						if(data.rsvNo != null) {
+							reservationChangeNo = data.rsvNo;
+							
+							var datetime = new Date(data.reservation.datetime);
+							var datetimeText = '';
+							datetimeText += (datetime.getYear() + 1900) + "년 ";
+							datetimeText += (datetime.getMonth() + 1) + "월 ";
+							datetimeText += datetime.getDate() + "일 ";
+							datetimeText += datetime.getHours() + "시";
+							
+							var reqDatetime = new Date(data.reservation.reqDatetime);
+							var reqDatetimeText = '';
+							reqDatetimeText += (reqDatetime.getYear() + 1900) + "년 ";
+							reqDatetimeText += (reqDatetime.getMonth() + 1) + "월 ";
+							reqDatetimeText += reqDatetime.getDate() + "일 ";
+							reqDatetimeText += reqDatetime.getHours() + "시";
+							
+							var state = data.reservation.state;
+							if(state == 'Y') {
+								state = '승인';
+							} else if(state == 'N') {
+								state = '미승인';
+							}
+							var type = data.reservation.type;
+							var trainerName = data.reservation.trainer.name;
+							
+							var rchReqDatetime = new Date(data.reqDatetime);
+							var rchReqDatetimeText = '';
+							rchReqDatetimeText += (rchReqDatetime.getYear() + 1900) + "년 ";
+							rchReqDatetimeText += (rchReqDatetime.getMonth() + 1) + "월 ";
+							rchReqDatetimeText += rchReqDatetime.getDate() + "일 ";
+							rchReqDatetimeText += rchReqDatetime.getHours() + "시 ";
+							rchReqDatetimeText += rchReqDatetime.getMinutes() + "분";
+							
+							var rchDatetime = new Date(data.datetime);
+							var rchDatetimeText = '';
+							rchDatetimeText += (rchDatetime.getYear() + 1900) + "년 ";
+							rchDatetimeText += (rchDatetime.getMonth() + 1) + "월 ";
+							rchDatetimeText += rchDatetime.getDate() + "일 ";
+							rchDatetimeText += rchDatetime.getHours() + "시";
+							
+							var rchState = data.state;
+							if(rchState == 'Y') {
+								// 변경 요청 승인 된 후 
+								rchState = '승인';
+								html += '<input type="hidden" id="check" value="B">';
+								buttonText = '예약 변경 재요청';
+							} else if(rchState == 'N') {
+								// 변경 요청 승인 되기 전 
+								rchState = '미승인';
+								html += '<input type="hidden" id="check" value="C">';
+								buttonText = '예약 변경 취소';
+							}
+							
+							html += 
+								`<br>
+								<hr>
+								<br>
+								<div class="form-group row">
+								    <label class="col-sm-4 col-form-label">수업 일시</label>
+								    <div class="col-sm-8">
+								        <input type="text" class="form-control" value="${datetimeText}" readonly>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-sm-4 col-form-label">예약 일시</label>
+								    <div class="col-sm-8">
+								        <input type="text" class="form-control" value="${reqDatetimeText}" readonly>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-sm-4 col-form-label">담당 트레이너</label>
+								    <div class="col-sm-8">
+								        <input type="text" class="form-control" value="${trainerName}" readonly>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-sm-4 col-form-label">예약 상태</label>
+								    <div class="col-sm-8">
+								        <input type="text" class="form-control" value="${state}" readonly>
+								    </div>
+								</div>
+								<br>
+								<hr>
+								<br>
+								<div class="form-group row">
+								    <label class="col-sm-4 col-form-label">변경된 수업 일시</label>
+								    <div class="col-sm-8">
+								        <input type="text" class="form-control" value="${rchDatetimeText}" readonly>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-sm-4 col-form-label">변경 요청 일시</label>
+								    <div class="col-sm-8">
+								        <input type="text" class="form-control" value="${rchReqDatetimeText}" readonly>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-sm-4 col-form-label">변경 처리 상태</label>
+								    <div class="col-sm-8">
+								        <input type="text" class="form-control" value="${rchState}" readonly>
+								    </div>
+								</div>
+								<br>
+								<hr>
+								<br>`;
+						} else {
+							var datetime = new Date(data.datetime);
+							var datetimeText = '';
+							datetimeText += (datetime.getYear() + 1900) + "년 ";
+							datetimeText += (datetime.getMonth() + 1) + "월 ";
+							datetimeText += datetime.getDate() + "일 ";
+							datetimeText += datetime.getHours() + "시";
+							
+							var reqDatetime = new Date(data.reqDatetime);
+							var reqDatetimeText = '';
+							reqDatetimeText += (reqDatetime.getYear() + 1900) + "년 ";
+							reqDatetimeText += (reqDatetime.getMonth() + 1) + "월 ";
+							reqDatetimeText += reqDatetime.getDate() + "일 ";
+							reqDatetimeText += reqDatetime.getHours() + "시 ";
+							reqDatetimeText += reqDatetime.getMinutes() + "분";
+							
+							var state = data.state;
+							if(state == 'Y') {
+								// 승인 된 후 
+								state = '승인';
+								html += '<input type="hidden" id="check" value="B">';
+								buttonText = '예약 변경 요청';
+							} else if(state == 'N') {
+								// 승인 되기 전 
+								state = '미승인';
+								html += '<input type="hidden" id="check" value="A">';
+								buttonText = '예약 취소';
+							}
+							var type = data.type;
+							var trainerName = data.trainer.name;
+							
+							html += 
+								`<br>
+								<hr>
+								<br>
+								<div class="form-group row">
+								    <label class="col-sm-4 col-form-label">수업 일시</label>
+								    <div class="col-sm-8">
+								        <input type="text" class="form-control" value="${datetimeText}" readonly>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-sm-4 col-form-label">예약 일시</label>
+								    <div class="col-sm-8">
+								        <input type="text" class="form-control" value="${reqDatetimeText}" readonly>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-sm-4 col-form-label">담당 트레이너</label>
+								    <div class="col-sm-8">
+								        <input type="text" class="form-control" value="${trainerName}" readonly>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-sm-4 col-form-label">예약 상태</label>
+								    <div class="col-sm-8">
+								        <input type="text" class="form-control" value="${state}" readonly>
+								    </div>
+								</div>
+								<br>
+								<hr>
+								<br>`;
+						}
+						
+						Swal.fire({
+							title: '예약 상세 조회',
+							html: html,
+							confirmButtonText: buttonText,
+							focusConfirm: false,
+							showDenyButton: true,
+							denyButtonText: '닫기',
+							preConfirm: () => {
+								const check = Swal.getPopup().querySelector('#check').value
+								
+								return { check: check }
+							}
+						}).then((result) => {
+							if(result.isConfirmed) {
+								var check = result.value.check;
+								
+								if(check == 'A') { // 예약 취소 
+									Swal.fire({
+										icon: 'question',
+										text: '예약을 취소하시겠습니까?',
+										confirmButtonText: '예약 취소',
+										showDenyButton: true,
+										denyButtonText: '닫기',
+									}).then((result) => {
+										if(result.isConfirmed) {
+											$.ajax({
+												url: "/member/reservation/cancel",
+												type: "post",
+												data: { reservationNo: reservationNo },
+												success: function() {
+													Swal.fire({
+														icon: 'success',
+														text: '예약 취소가 완료되었습니다.',
+													})
+												},
+												error: function(e) {
+													console.log(e);
+												}
+											});
+										}
+									})
+								} else if(check == 'B') { // 예약 변경 요청 
+									// 시간표 가져와야 함 
+								} else if(check == 'C') { // 예약 변경 취소 
+									Swal.fire({
+										icon: 'question',
+										text: '예약 변경을 취소하시겠습니까?',
+										confirmButtonText: '변경 취소',
+										showDenyButton: true,
+										denyButtonText: '닫기',
+									}).then((result) => {
+										if(result.isConfirmed) {
+											$.ajax({
+												url: "/member/reservation/cancelChange",
+												type: "post",
+												data: { reservationChangeNo: reservationChangeNo },
+												success: function() {
+													Swal.fire({
+														icon: 'success',
+														text: '예약 변경 취소가 완료되었습니다.',
+													})
+												},
+												error: function(e) {
+													console.log(e);
+												}
+											});
+										}
+									})
+								}
+							}
+						})
+					},
+					error: function(e) {
+						console.log(e);
+					}
+				});
+			}
+		/*]]>*/
+		</script>
+	</th:block>
+</body>
+</html>
