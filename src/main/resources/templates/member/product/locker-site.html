@@ -30,9 +30,9 @@
             <div class="container" >
                 <h2 class="mb-3">락커 등록
                     <div style="float: right;">
-                        <button type="button" class="btn btn-primary">등록</button>
+                        <button type="button" class="btn btn-primary" onclick="openPopup('@{/member/product/updateLocker}', 'modifyPassword', 500, 500);" style=" color: #ffffff;">등록</button>
                     </div>
-                </h2>
+                </h2> 
                 
                 
 
@@ -315,6 +315,42 @@
             </div>
                       
     </div>
+
+
+
+
+
+
+
+
+			
+			<script>
+				// 사용자 입력 값 유효성 검사
+				function validate(){
+					return true;
+				}
+				
+				// 팝업창 호출
+				function openPopup(url, title, width, height){
+					let left = (document.body.clientWidth/2)-(width/2); 
+					left += window.screenLeft;	 // 듀얼 모니터
+					let top = (screen.availHeight/2)-(height/2);
+			
+					let options = "width="+width+",height="+height+",left="+left+",top="+top;
+					
+					window.open(url, title, options);
+				}
+				
+	
+			</script>
+		
+
+
+
+
+
+
+
 
 
 
