@@ -66,6 +66,16 @@ public class MemberProServiceImpl implements MemberProService{
 	public List<ProductDTO> findAllPTList() {
 		return memberProMapper.findAllPTList();
 	}
+
+	@Override
+	public List<ProductDTO> findAllLocker() {
+		return memberProMapper.findAllLocker();
+	}
+
+	@Override
+	public List<ProductDTO> findAllSportswear() {
+		return memberProMapper.findAllSportswear();
+	}
 	
 
 }

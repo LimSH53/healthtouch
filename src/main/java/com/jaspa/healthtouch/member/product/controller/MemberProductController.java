@@ -61,8 +61,8 @@ public class MemberProductController {
 		int period = Integer.parseInt(String.valueOf(paymentInfo.get("period")));
 		int remainCount = Integer.parseInt(String.valueOf(paymentInfo.get("count")));
 		int price = Integer.parseInt(String.valueOf(paymentInfo.get("price")));
-		if(paymentInfo.get("trnId") != null) {
-			String trnId = String.valueOf(paymentInfo.get("trnId"));
+		String trnId = String.valueOf(paymentInfo.get("trnId"));
+		if(trnId != null) {
 			log.info("trnId : {}", trnId);
 			order.setTrnId(trnId);
 		}
@@ -148,6 +148,34 @@ public class MemberProductController {
 
 		return mv;
 	}
+	
+	//락커 이용권
+	@GetMapping("locker")
+	public ModelAndView selectLockerList(ModelAndView mv) {
+
+		List<ProductDTO> lockerList = memberProService.findAllLocker();
+
+		log.info("membershipList : {}", lockerList);
+
+		mv.addObject("lockerList", lockerList);
+		mv.setViewName("member/product/ordLocker");
+
+		return mv;
+	}
+	
+	//운동복 이용권
+	@GetMapping("sportswear")
+	public ModelAndView selectSportswearList(ModelAndView mv) {
+
+		List<ProductDTO> sportswearList = memberProService.findAllSportswear();
+
+		log.info("sportswearList : {}", sportswearList);
+
+		mv.addObject("sportswearList", sportswearList);
+		mv.setViewName("member/product/ordsportswear");
+
+		return mv;
+	}	
 	
 	
 	

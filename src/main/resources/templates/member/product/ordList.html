@@ -74,16 +74,16 @@
                         0회
                     </td>
                     <td>
-                        <div th:if="${order.order.trnId}==null">
+                        <div th:if="${order.order.trnId}==null or ${order.order.trnId}=='null'">
                         -
                         </div>
-                        <div th:if="${order.order.trnId}!=null" th:text="${order.order.trainer.name}">
+                        <div th:if="${order.order.trnId}!=null and ${order.order.trnId}!='null'" th:text="${order.order.trainer.name}">
                         </div>
                     </td>
                     <td th:text="|${#numbers.formatInteger(order.amount, 0, 'COMMA')}원|">
                         60,000원
                     </td>
-                    <td th:if="${order.order.trnId}!=null">
+                    <td th:if="${order.order.trnId}!=null and ${order.order.trnId}!='null'">
                         <button>리뷰등록</button>
                     </td>
                 </tr>

@@ -24,8 +24,15 @@
 		<result property="modReason" column="ORD_MOD_REASON"/>
 		
 		<association property="product" resultMap="productResultMap"></association>
-		<association property="member" resultMap="memberResultMap"></association>
-		<association property="trainer" resultMap="memberResultMap"></association>
+		<association property="member">
+			<id property="id" column="ORD_MEMBER_ID"/>
+			<result property="name" column="ORD_MEMBER_NAME"/>
+		</association>
+		<association property="trainer">
+			<id property="id" column="ORD_TRN_ID"/>
+			<result property="name" column="ORD_TRN_NAME"/>
+		</association>
+		
 	</resultMap>
 	
 	<resultMap type="com.jaspa.healthtouch.center.product.model.dto.ProductDTO" id="productResultMap">
@@ -151,8 +158,8 @@
 		       A.PAY_AMOUNT,
 		       B.ORD_MEMBER_ID,
 		       B.ORD_TRN_ID,
-		       D.MEMBER_NAME,
-		       E.MEMBER_NAME
+		       D.MEMBER_NAME ORD_MEMBER_NAME,
+		       E.MEMBER_NAME ORD_TRN_NAME
 		  FROM TBL_PAYMENT A
 		  JOIN TBL_ORDER B ON(A.PAY_ORD_NO = B.ORD_NO)
 		  JOIN TBL_PRODUCT C ON (B.ORD_PRO_NO = C.PRO_NO)
@@ -172,11 +179,13 @@
 		       A.PAY_AMOUNT,
 		       B.ORD_MEMBER_ID,
 		       B.ORD_TRN_ID,
-		       D.MEMBER_NAME
+		       D.MEMBER_NAME ORD_MEMBER_NAME,
+		       E.MEMBER_NAME ORD_TRN_NAME
 		  FROM TBL_PAYMENT A
 		  JOIN TBL_ORDER B ON(A.PAY_ORD_NO = B.ORD_NO)
 		  JOIN TBL_PRODUCT C ON (B.ORD_PRO_NO = C.PRO_NO)
-		  LEFT JOIN TBL_MEMBER D ON(B.ORD_TRN_ID = D.MEMBER_ID)
+		  LEFT JOIN TBL_MEMBER D ON(B.ORD_MEMBER_ID = D.MEMBER_ID)
+		  LEFT JOIN TBL_MEMBER E ON(B.ORD_TRN_ID = E.MEMBER_ID)
 		 <where>
 				<if test="searchOption == 7">
 				A.PAY_DATE <![CDATA[
@@ -227,6 +236,46 @@
 		  FROM TBL_PRODUCT A
 		  JOIN TBL_PRO_CATEGORY B ON(A.PRO_CATE_NO = B.CATE_NO)
 		 WHERE A.PRO_CATE_NO = 20
+		   AND A.PRO_STATUS = 'Y'
+		 ORDER BY A.PRO_NO DESC
+	</select>
+	
+	<!-- 락커 이용권(30) 상품 조회 -->
+	<select id="findAllLocker" resultMap="productResultMap">
+		SELECT
+				A.PRO_NO
+			  , A.PRO_CATE_NO
+			  , A.PRO_NAME
+			  , A.PRO_PRICE
+			  , A.PRO_CONTENTS
+			  , A.PRO_USE_PERIOD
+			  , A.PRO_USE_COUNT
+			  , A.PRO_DATE
+			  , A.PRO_STATUS
+			  , B.CATE_NAME
+		  FROM TBL_PRODUCT A
+		  JOIN TBL_PRO_CATEGORY B ON(A.PRO_CATE_NO = B.CATE_NO)
+		 WHERE A.PRO_CATE_NO = 30
+		   AND A.PRO_STATUS = 'Y'
+		 ORDER BY A.PRO_NO DESC
+	</select>
+	
+	<!-- 락커 이용권(40) 상품 조회 -->
+	<select id="findAllSportswear" resultMap="productResultMap">
+		SELECT
+				A.PRO_NO
+			  , A.PRO_CATE_NO
+			  , A.PRO_NAME
+			  , A.PRO_PRICE
+			  , A.PRO_CONTENTS
+			  , A.PRO_USE_PERIOD
+			  , A.PRO_USE_COUNT
+			  , A.PRO_DATE
+			  , A.PRO_STATUS
+			  , B.CATE_NAME
+		  FROM TBL_PRODUCT A
+		  JOIN TBL_PRO_CATEGORY B ON(A.PRO_CATE_NO = B.CATE_NO)
+		 WHERE A.PRO_CATE_NO = 40
 		   AND A.PRO_STATUS = 'Y'
 		 ORDER BY A.PRO_NO DESC
 	</select>

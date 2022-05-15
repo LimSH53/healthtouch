@@ -34,6 +34,12 @@ public interface MemberProMapper {
 	// 수강권 상품 조회
 	List<ProductDTO> findAllPTList();
 
+	// 락커 이용권 조회
+	List<ProductDTO> findAllLocker();
+
+	// 운동복 이용권 조회
+	List<ProductDTO> findAllSportswear();
+
 
 
 
