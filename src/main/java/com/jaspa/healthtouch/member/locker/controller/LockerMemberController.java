@@ -50,35 +50,7 @@ public class LockerMemberController {
 	
 	
 	
-	
-	
-	
-	@GetMapping("/updateLocker")
-	public void updateLocker(Model model, @AuthenticationPrincipal UserImpl user) {
-		
-		LockerDTO lockerInfo = lockerMemberService.updateLocker(user.getId());
-		model.addAttribute("lockerInfo", lockerInfo);
-		
-		log.info(lockerInfo.toString());
-	}
-	
-	
-	@PostMapping("/updateLocker")
-	public void updateLocker(TrainerMemberDTO trainer,  @AuthenticationPrincipal UserImpl user, Model model) {
-		
-		trainer.setId(user.getId());
-		log.info(trainer.toString());
-		trainerService.updateTrainer(trainer);
-		
-		TrainerMemberDTO trainerInfo = trainerService.selectTrainer(user.getId());
-		model.addAttribute("trainerInfo", trainerInfo);
-		
-		user.setName(trainer.getName());
-		user.setContact(trainer.getContact());
-		user.setAddress(trainer.getAddress());
-		user.setBirthday(trainer.getBirthday());
-	}
-	
+
 	
 	
 	
