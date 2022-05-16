@@ -12,6 +12,7 @@ import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 import com.jaspa.healthtouch.member.product.model.dao.MemberProMapper;
 import com.jaspa.healthtouch.member.product.model.dto.OrderDTO;
 import com.jaspa.healthtouch.member.product.model.dto.PaymentDTO;
+import com.jaspa.healthtouch.member.product.model.dto.ReviewDTO;
 
 @Service("MemberProService")
 @Transactional
@@ -75,6 +76,26 @@ public class MemberProServiceImpl implements MemberProService{
 	@Override
 	public List<ProductDTO> findAllSportswear() {
 		return memberProMapper.findAllSportswear();
+	}
+
+	@Override
+	public OrderDTO selectReviewInfo(int ordNo, String userId) {
+		return memberProMapper.selectReviewInfo(ordNo, userId);
+	}
+
+	@Override
+	public int registReview(ReviewDTO review) {
+		return memberProMapper.registReview(review);
+	}
+
+	@Override
+	public int updateOrdStatus(int orderNo) {
+		return memberProMapper.updateOrdStatus(orderNo);
+	}
+
+	@Override
+	public ReviewDTO selectMyreview(int no, String userId) {
+		return memberProMapper.selectMyreview(no, userId);
 	}
 	
 

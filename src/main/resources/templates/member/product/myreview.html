@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,7 +21,7 @@
         </div>
             <div class="trn-info-1">
                 담당 트레이너
-                <input class="trn-info" type="text" readonly value="김머슬">
+                <input class="trn-info" type="text" readonly th:value="${myreview.order.trainer.name}">
             </div>
             <table>
                 <tr>
@@ -32,23 +32,24 @@
                 <tr>
                     <td>
                         <label>평점</label>
-                        <input type="text" readonly value="★★★★★">
+                        <input type="text" th:if="${myreview.grade}==5" readonly value="★★★★★">
+                        <input type="text" th:if="${myreview.grade}==4" readonly value="★★★★">
+                        <input type="text" th:if="${myreview.grade}==3" readonly value="★★★">
+                        <input type="text" th:if="${myreview.grade}==2" readonly value="★★">
+                        <input type="text" th:if="${myreview.grade}==1" readonly value="★">
                     </td>
                 </tr>
                 <tr>
                     <td class="review-contents">
-                        <pre>
-                            dkdkdkdkdk
-                            dkdkdkdkdkd
-                            dkdkdkkdkdkd
-                            dkdkdkdkdkdkdkdkk
-                            dkdkdkdkdk
-                        </pre>
+                        <div th:text="${myreview.contents}">
+                        </div>
                     </td>
                 </tr>
             </table>
             <div class="list-back">
-                <button>돌아가기</button>
+                	<button onclick="location.href='/member/product/ordList'">
+                	돌아가기
+                	</button>
             </div>
         </div>
 </body>

@@ -1,18 +1,22 @@
 package com.jaspa.healthtouch.member.product.controller;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jaspa.healthtouch.center.product.model.dto.ProductDTO;
 import com.jaspa.healthtouch.login.model.dto.MemberDTO;
@@ -20,6 +24,7 @@ import com.jaspa.healthtouch.login.model.dto.UserImpl;
 import com.jaspa.healthtouch.login.model.service.MemberService;
 import com.jaspa.healthtouch.member.product.model.dto.OrderDTO;
 import com.jaspa.healthtouch.member.product.model.dto.PaymentDTO;
+import com.jaspa.healthtouch.member.product.model.dto.ReviewDTO;
 import com.jaspa.healthtouch.member.product.model.service.MemberProService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,10 +35,12 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberProductController {
 
 	private MemberProService memberProService;
+	private MessageSource messageSource;
 
 	@Autowired
-	public MemberProductController(MemberProService memberProService) {
+	public MemberProductController(MemberProService memberProService, MessageSource messageSource) {
 		this.memberProService = memberProService;
+		this.messageSource = messageSource;
 	}
 
 	@GetMapping("membership")
@@ -177,8 +184,60 @@ public class MemberProductController {
 		return mv;
 	}	
 	
+	//리뷰등록을 위한 조회
+	@GetMapping("review")
+	public ModelAndView selectReviewInfo(ModelAndView mv, @RequestParam("ordNo") int no, @AuthenticationPrincipal UserImpl user) {
+		
+		String userId = user.getId();
+		
+		log.info("no: {}", no);
+		log.info("userId: {}", userId);
+		
+		OrderDTO reviewInfo = memberProService.selectReviewInfo(no, userId);
+		
+		log.info("reviewInfo :{}", reviewInfo);
+		
+		mv.addObject("reviewInfo", reviewInfo);
+		mv.setViewName("member/product/reviewRegist");
+		
+		return mv;
+	}
 	
+	//리뷰 등록
+	@PostMapping("review")
+	public String registReview(@ModelAttribute ReviewDTO review, RedirectAttributes rttr, Locale locale) {
+		
+		memberProService.registReview(review);
+		// order 테이블 리뷰 등록여부 값 변경
+		
+		int orderNo = review.getOrdNo();
+		memberProService.updateOrdStatus(orderNo);
+		
+		log.info("review:{}", review);
+		
+		rttr.addFlashAttribute("successMessage", messageSource.getMessage("registReview", null, locale));
+		
+		return "redirect:/member/product/ordList";
+	}
 	
+	//리뷰 조회
+	@GetMapping("myreview")
+	public ModelAndView selectMyreview(ModelAndView mv, @RequestParam("ordNo") int no, @AuthenticationPrincipal UserImpl user) {
+		
+		String userId = user.getId();
+
+		log.info("no: {}", no);
+		log.info("userId: {}", userId);
+		
+		ReviewDTO myreview = memberProService.selectMyreview(no, userId);
+		
+		log.info("myreview :{}", myreview);
+		
+		mv.addObject("myreview", myreview);
+		mv.setViewName("member/product/myreview");
+		
+		return mv;
+	}
 	
 	
 	

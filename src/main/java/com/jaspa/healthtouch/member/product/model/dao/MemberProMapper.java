@@ -9,6 +9,7 @@ import com.jaspa.healthtouch.center.product.model.dto.ProductDTO;
 import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 import com.jaspa.healthtouch.member.product.model.dto.OrderDTO;
 import com.jaspa.healthtouch.member.product.model.dto.PaymentDTO;
+import com.jaspa.healthtouch.member.product.model.dto.ReviewDTO;
 
 @Mapper
 public interface MemberProMapper {
@@ -39,6 +40,18 @@ public interface MemberProMapper {
 
 	// 운동복 이용권 조회
 	List<ProductDTO> findAllSportswear();
+
+	// 리뷰 등록 관련 정보 조회
+	OrderDTO selectReviewInfo(int ordNo, String userId);
+
+	// 리뷰 등록
+	int registReview(ReviewDTO review);
+
+	// order 테이블 리뷰등록 여부 Y 변경
+	int updateOrdStatus(int orderNo);
+
+	// 마이리뷰 조회
+	ReviewDTO selectMyreview(int no, String userId);
 
 
 
