@@ -22,6 +22,7 @@ public class OrderDTO {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private java.util.Date modEndDate;
 	private String modReason;
+	private String revStatus;
 	
 	// 회원정보
 	private MemberDTO member;

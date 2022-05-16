@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,6 +10,8 @@
     <div th:replace="/common/memberHeader.html :: member-header"></div>
     <!-- 제이쿼리 추가 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- alert cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body id="body-pd"> <!-- sidebar 적용위해 id 추가 -->
     <!-- 헤더 body 추가 -->
@@ -19,9 +21,12 @@
         <div class="title-box">
             <h2>내가 등록한 리뷰</h2>
         </div>
+        <form action="/member/product/review" method="POST">
+        	<input name="ordNo" type="hidden" th:value="${ reviewInfo.no }">
             <div class="trn-info-1">
                 담당 트레이너
-                <input class="trn-info" type="text" readonly value="김머슬">
+                <input name="trnId" type="hidden" th:value="${ reviewInfo.trnId }">
+                <input name="trnName" class="trn-info" type="text" readonly th:value="${ reviewInfo.trainer.name }">
             </div>
             <table>
                 <tr>
@@ -32,25 +37,25 @@
                 <tr>
                     <td>
                         <label>평점</label>
-                        <select class="rev-grade">
-                            <option>★★★★★</option>
-                            <option>★★★★</option>
-                            <option>★★★</option>
-                            <option>★★</option>
-                            <option>★</option>
+                        <select class="rev-grade" name="grade">
+                            <option value="5">★★★★★</option>
+                            <option value="4">★★★★</option>
+                            <option value="3">★★★</option>
+                            <option value="2">★★</option>
+                            <option value="1">★</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <textarea class="review-contents" placeholder=" 담당 트레이너에 대해 후기를 써주세요 :) "></textarea>
+                        <textarea class="review-contents" name="contents" placeholder=" 담당 트레이너에 대해 후기를 써주세요 :) "></textarea>
                     </td>
                 </tr>
             </table>
             <div class="list-back">
-                <button>등록</button>
+                <button type="submit">등록</button>
             </div>
-        </div>
-
+		</form>
+	</div>
 </body>
 </html>

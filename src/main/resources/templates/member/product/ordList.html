@@ -10,8 +10,20 @@
     <div th:replace="/common/memberHeader.html :: member-header"></div>
     <!-- 제이쿼리 추가 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- alert cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>    
 </head>
 <body id="body-pd"> <!-- sidebar 적용위해 id 추가 -->
+<script type="text/javascript">
+	const successMessage = '[[${successMessage}]]';
+	
+	if(successMessage){
+		Swal.fire({
+            icon: 'success',
+            title: successMessage
+        });
+	}
+</script>
     <!-- 헤더 body 추가 -->
 	<div th:replace="/common/memberHeader.html :: member-body"></div>
     <!-- 최대 크기 768 로 맞춰서 / 타이틀 <2> / 기본폰트 15px (표 상단은 bold 처리) / 참고문구는 12px -->
@@ -19,15 +31,13 @@
         <div class="title-box">
             <h2>구매내역 조회</h2>
         </div>
-        <form>
-        	<input type="hidden" name="userId" value="${#authentication.principal.id}">
+     
             <select class="term-option" id="searchOption">
                 <option value="0">기간별 조회</option>
                 <option value="7">1주</option>
                 <option value="14">2주</option>
                 <option value="30">1달</option>
             </select>
-		</form>
             <table>
                 <tr>
                 	<th class="hidden">
@@ -56,7 +66,7 @@
                     </th>
                 </tr>
                 <tr id="orderListTable" th:each="order : ${ orderList }" >
-                	<th class="hidden" th:text="${order.order.no}">
+                	<th th:text="${order.order.no}" class="hidden">
                 		구매번호
                 	</th>
                     <td th:text="${#dates.format(order.date, 'yyyy-MM-dd')}">
@@ -84,7 +94,8 @@
                         60,000원
                     </td>
                     <td th:if="${order.order.trnId}!=null and ${order.order.trnId}!='null'">
-                        <button>리뷰등록</button>
+                        <button th:if="${order.order.revStatus}=='N'" th:onclick="|javascript:regist('${order.order.no}')|">리뷰등록</button>
+                        <button th:if="${order.order.revStatus}=='Y'" th:onclick="|javascript:myreview('${order.order.no}')|">리뷰확인</button>
                     </td>
                 </tr>
             </table>
@@ -107,9 +118,21 @@
 			
 		});
 		
-	})
+	});
+</script>
+
+<script type="text/javascript">
+	function regist(no) {
+		let ordNo = no;
+		console.log("ordNo: ", ordNo);
+		location.href="/member/product/review?ordNo="+ordNo;
+	}
 	
-</script>	
-	
+	function myreview(no) {
+		let ordNo = no;
+		console.log("ordNo: ", ordNo);
+		location.href="/member/product/myreview?ordNo="+ordNo;
+	}
+</script>
 </body>
 </html>

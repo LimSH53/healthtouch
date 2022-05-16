@@ -7,6 +7,7 @@ import com.jaspa.healthtouch.center.product.model.dto.ProductDTO;
 import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 import com.jaspa.healthtouch.member.product.model.dto.OrderDTO;
 import com.jaspa.healthtouch.member.product.model.dto.PaymentDTO;
+import com.jaspa.healthtouch.member.product.model.dto.ReviewDTO;
 
 public interface MemberProService {
 
@@ -36,6 +37,18 @@ public interface MemberProService {
 
 	// 운동복 이용권 조회
 	List<ProductDTO> findAllSportswear();
+
+	// 리뷰 정보 조회
+	OrderDTO selectReviewInfo(int ordNo, String userId);
+
+	// 리뷰 등록
+	int registReview(ReviewDTO review);
+	
+	// order 테이블 리뷰상태 변경
+	int updateOrdStatus(int orderNo);
+
+	// myreview 조회
+	ReviewDTO selectMyreview(int no, String userId);
 
 
 

@@ -22,6 +22,7 @@
 		<result property="endDate" column="ORD_END_DATE"/>
 		<result property="modEndDate" column="ORD_MOD_END_DATE"/>
 		<result property="modReason" column="ORD_MOD_REASON"/>
+		<result property="revStatus" column="ORD_REV_STATUS"/>
 		
 		<association property="product" resultMap="productResultMap"></association>
 		<association property="member">
@@ -80,6 +81,17 @@
 		<id property="code" column="REF_AUTHORITY_CODE2"/>
 		<result property="name" column="AUTHORITY_NAME"/>
 		<result property="desc" column="AUTHORITY_DESC"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.member.product.model.dto.ReviewDTO" id="reviewResultMap">
+		<id property="revNo" column="REV_NO"></id>
+		<result property="ordNo" column="ORD_NO"/>
+		<result property="contents" column="REV_CONTENTS"/>
+		<result property="status" column="REV_STATUS"/>
+		<result property="grade" column="REV_GRADE"/>
+		
+		<association property="order" resultMap="orderResultMap"></association>
+	
 	</resultMap>
 	
 	<!-- 회원권(10) 상품 조회 -->
@@ -152,6 +164,8 @@
 	<select id="selectOrderList" resultMap="paymentResultMap">
 		SELECT
 		       A.PAY_DATE,
+		       B.ORD_NO,
+		       B.ORD_REV_STATUS,
 		       C.PRO_NAME,
 		       C.PRO_USE_PERIOD,
 		       C.PRO_USE_COUNT,
@@ -173,6 +187,8 @@
 	<select id="searchOrderList" resultMap="paymentResultMap">
 		SELECT
 		       A.PAY_DATE,
+		       B.ORD_NO,
+		       B.ORD_REV_STATUS,
 		       C.PRO_NAME,
 		       C.PRO_USE_PERIOD,
 		       C.PRO_USE_COUNT,
@@ -208,6 +224,7 @@
 		      
 	</select>
 	
+	<!-- 트레이너 리스트 -->
 	<select id="findTrainerList" resultMap="memberResultMap">
 		SELECT
 			   A.MEMBER_ID,
@@ -278,6 +295,63 @@
 		 WHERE A.PRO_CATE_NO = 40
 		   AND A.PRO_STATUS = 'Y'
 		 ORDER BY A.PRO_NO DESC
+	</select>
+	
+	<!-- 리뷰 등록용 조회 -->
+	<select id="selectReviewInfo" resultMap="orderResultMap">
+		SELECT
+		       A.ORD_NO,
+		       A.ORD_MEMBER_ID,
+		       A.ORD_TRN_ID,
+		       B.MEMBER_NAME ORD_TRN_NAME
+		  FROM TBL_ORDER A
+		  JOIN TBL_MEMBER B ON (A.ORD_TRN_ID = B.MEMBER_ID)
+		 WHERE A.ORD_NO = #{ ordNo }
+		   AND A.ORD_MEMBER_ID = #{ userId }
+	</select>
+	
+	<!-- 리뷰 등록 -->
+	<insert id="registReview">
+		INSERT
+		  INTO TBL_REVIEW
+		(
+		  REV_NO,
+		  ORD_NO,
+		  REV_CONTENTS,
+		  REV_STATUS,
+		  REV_GRADE
+		)
+		VALUES
+		(
+		  SEQ_REV_NO.NEXTVAL,
+		  #{ ordNo },
+		  #{ contents },
+		  'Y',
+		  #{ grade }
+		)
+		
+	</insert>
+	
+	<!-- 주문테이블 리뷰정보 업데이트 -->
+	<update id="updateOrdStatus">
+		UPDATE TBL_ORDER
+		   SET ORD_REV_STATUS = 'Y'
+		 WHERE ORD_NO = #{orderNo}
+	</update>
+	
+	<!-- 마이리뷰 조회 -->
+	<select id="selectMyreview" resultMap="reviewResultMap">
+		SELECT
+		       A.REV_NO,
+		       A.ORD_NO,
+		       A.REV_CONTENTS,
+		       A.REV_STATUS,
+		       A.REV_GRADE,
+		       C.MEMBER_NAME ORD_TRN_NAME
+		  FROM TBL_REVIEW A
+		  JOIN TBL_ORDER B ON(A.ORD_NO = B.ORD_NO)
+		  JOIN TBL_MEMBER C ON(B.ORD_TRN_ID = C.MEMBER_ID)
+		 WHERE A.ORD_NO = #{no}
 	</select>
 
 </mapper>

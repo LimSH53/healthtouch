@@ -101,7 +101,7 @@ td input {
 
 .review-contents {
     width: 700px;
-    height: 200px;
+    height: 100px;
     resize: none;
     margin-bottom: 20px;
 }
@@ -111,6 +111,7 @@ td input {
     width: 150px;
     height: 30px;
 }
+
 
 
 
