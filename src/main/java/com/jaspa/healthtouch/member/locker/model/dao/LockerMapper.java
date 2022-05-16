@@ -16,4 +16,7 @@ public interface LockerMapper {
 	/* 라커 등록 */
 	int updateLocker(LockerDTO locker);
 	
+	/* 구매내역 조회 */
+	int selectOrdNum(int no);
+
 }

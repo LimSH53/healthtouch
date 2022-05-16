@@ -12,4 +12,7 @@ public interface LockerMemberService {
 	
 	/* 라커 등록 */
 	void updateLocker(LockerDTO locker);
+	
+	/* 이용권 조회 */
+	int selectOrdNum(int no);
 }

@@ -21,6 +21,19 @@ font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, '
     text-align: center;
 }
 
+
+.locNum {
+	border-radius: 20px;
+    margin: 5px 5px;
+	background: white;
+	width:300px;
+	font-size : 18px;
+	padding: 5px 10px;
+}
+
+
+
+
 .main_size {
     margin-top: 100px;margin-bottom: 100px;margin-left: 100px;margin-right: 100px;
 
@@ -44,3 +57,7 @@ font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, '
     margin-right: calc(var(--bs-gutter-x)/ -2);
     margin-left: calc(var(--bs-gutter-x)/ -2);
 }
+
+
+
+
