@@ -1,6 +1,7 @@
 package com.jaspa.healthtouch.trainer.reservation.model.service;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,27 @@ public class TrainerReservationServiceImpl implements TrainerReservationService 
 	@Override
 	public void cancelReservation(String reservationNo) {
 		trainerReservationMapper.cancelReservation(reservationNo);
+	}
+
+	@Override
+	public void cancelAllReservation(String reservationNo) {
+		trainerReservationMapper.cancelAllReservation(reservationNo);
+	}
+
+	@Override
+	public void acceptReservation(String reservationNo) {
+		trainerReservationMapper.acceptReservation(reservationNo);
+	}
+
+	@Override
+	public void acceptReservationChange(String reservationNo, String reservationChangeNo, Date datetime) {
+		trainerReservationMapper.reservationChange(reservationNo, datetime);
+		trainerReservationMapper.acceptReservationChange(reservationChangeNo);
+	}
+
+	@Override
+	public Date findReservationChangeDatetime(String reservationChangeNo) {
+		return trainerReservationMapper.findReservationChangeDatetime(reservationChangeNo);
 	}
 
 }
