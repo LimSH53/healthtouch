@@ -319,7 +319,49 @@
 								console.log(check);
 								
 								if(check == 'A') { // 예약 요청 응답 
-									console.log(check);
+									Swal.fire({
+										icon: 'question',
+										text: '예약 요청을 수락하시겠습니까?',
+										showDenyButton: true,
+										showCancelButton: true,
+										confirmButtonText: '수락',
+										denyButtonText: '거절',
+										cancelButtonText: '닫기',
+									}).then((result) => {
+										if(result.isConfirmed) {
+											// 수락 
+											$.ajax({
+												url: "/trainer/reservation/acceptReservation",
+												type: "post",
+												data: { reservationNo: reservationNo },
+												success: function() {
+													Swal.fire({
+														icon: 'success',
+														text: '예약 수락이 완료되었습니다.',
+													})
+												},
+												error: function(e) {
+													console.log(e);
+												}
+											})
+										} else if(result.isDenied) {
+											// 거절 
+											$.ajax({
+												url: "/trainer/reservation/cancel",
+												type: "post",
+												data: { reservationNo: reservationNo },
+												success: function() {
+													Swal.fire({
+														icon: 'success',
+														text: '예약 거절이 완료되었습니다.',
+													})
+												},
+												error: function(e) {
+													console.log(e);
+												}
+											});
+										}
+									})
 								} else if(check == 'B') { // 수업 취소 
 									Swal.fire({
 										icon: 'question',
@@ -346,9 +388,97 @@
 										}
 									})
 								} else if(check == 'C') { // 변경 요청 응답 
-									console.log(check);
+									Swal.fire({
+										icon: 'question',
+										text: '변경 요청을 수락하시겠습니까?',
+										showDenyButton: true,
+										showCancelButton: true,
+										confirmButtonText: '수락',
+										denyButtonText: '거절',
+										cancelButtonText: '닫기',
+									}).then((result) => {
+										if(result.isConfirmed) {
+											// 수락 
+											$.ajax({
+												url: "/trainer/reservation/acceptReservationChange",
+												type: "post",
+												data: { reservationChangeNo: reservationChangeNo, reservationNo: reservationNo },
+												success: function() {
+													Swal.fire({
+														icon: 'success',
+														text: '변경 요청을 수락했습니다.',
+													})
+												},
+												error: function(e) {
+													console.log(e);
+												}
+											})
+										} else if(result.isDenied) {
+											// 거절 
+											$.ajax({
+												url: "/trainer/reservation/cancelAll",
+												type: "post",
+												data: { reservationNo: reservationNo },
+												success: function() {
+													// 해당 수업 삭제 
+													$.ajax({
+														url: "/trainer/reservation/cancel",
+														type: "post",
+														data: { reservationNo: reservationNo },
+														success: function() {
+															Swal.fire({
+																icon: 'success',
+																text: '수업 취소가 완료되었습니다.',
+															})
+														},
+														error: function(e) {
+															console.log(e);
+														}
+													})
+												},
+												error: function(e) {
+													console.log(e);
+												}
+											});
+										}
+									})
 								} else if(check == 'D') { // 수업 취소, 변경 요청까지 취소 
-									console.log(check);
+									Swal.fire({
+										icon: 'question',
+										text: '수업을 취소하시겠습니까?',
+										confirmButtonText: '수업 취소',
+										showDenyButton: true,
+										denyButtonText: '닫기',
+									}).then((result) => {
+										if(result.isConfirmed) {
+											// 변경 요청부터 삭제 후 
+											$.ajax({
+												url: "/trainer/reservation/cancelAll",
+												type: "post",
+												data: { reservationNo: reservationNo },
+												success: function() {
+													// 해당 수업 삭제 
+													$.ajax({
+														url: "/trainer/reservation/cancel",
+														type: "post",
+														data: { reservationNo: reservationNo },
+														success: function() {
+															Swal.fire({
+																icon: 'success',
+																text: '수업 취소가 완료되었습니다.',
+															})
+														},
+														error: function(e) {
+															console.log(e);
+														}
+													})
+												},
+												error: function(e) {
+													console.log(e);
+												}
+											});
+										}
+									})
 								}
 							}
 						})

@@ -192,4 +192,34 @@
 		DELETE FROM TBL_RESERVATION
 		 WHERE RSV_NO = #{ reservationNo }
 	</delete>
+	
+	<delete id="cancelAllReservation">
+		DELETE FROM TBL_RESERVATION_CHANGE
+		 WHERE RCH_RSV_NO = #{ reservationNo }
+	</delete>
+	
+	<update id="acceptReservation">
+		UPDATE TBL_RESERVATION
+		   SET RSV_STATE = 'Y'
+		 WHERE RSV_NO = #{ reservationNo }
+	</update>
+	
+	<select id="findReservationChangeDatetime" resultType="java.util.Date">
+		SELECT RCH_DATETIME
+		  FROM TBL_RESERVATION_CHANGE
+		 WHERE RCH_NO = #{ reservationChangeNo }
+	</select>
+	
+	<update id="reservationChange">
+		UPDATE TBL_RESERVATION
+		   SET RSV_STATE = 'Y'
+		     , RSV_DATETIME = #{ datetime }
+		 WHERE RSV_NO = #{ reservationNo }
+	</update>
+	
+	<update id="acceptReservationChange">
+		UPDATE TBL_RESERVATION_CHANGE
+		   SET RCH_STATE = 'Y'
+		 WHERE RCH_NO = #{ reservationChangeNo }
+	</update>
 </mapper>

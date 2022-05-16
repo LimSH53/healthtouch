@@ -1,5 +1,6 @@
 package com.jaspa.healthtouch.trainer.reservation.model.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.jaspa.healthtouch.member.reservation.model.dto.ReservationChangeDTO;
@@ -16,5 +17,13 @@ public interface TrainerReservationService {
 	ReservationDTO getDetail(int no);
 
 	void cancelReservation(String reservationNo);
+
+	void cancelAllReservation(String reservationNo);
+
+	void acceptReservation(String reservationNo);
+
+	void acceptReservationChange(String reservationNo, String reservationChangeNo, Date datetime);
+
+	Date findReservationChangeDatetime(String reservationChangeNo);
 
 }

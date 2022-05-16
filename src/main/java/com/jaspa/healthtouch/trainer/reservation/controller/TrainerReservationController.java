@@ -83,4 +83,24 @@ public class TrainerReservationController {
 	public void cancelReservation(@RequestParam("reservationNo") String reservationNo) {
 		trainerReservationService.cancelReservation(reservationNo);
 	}
+	
+	@PostMapping("/cancelAll")
+	@ResponseBody
+	public void cancelAllReservation(@RequestParam("reservationNo") String reservationNo) {
+		trainerReservationService.cancelAllReservation(reservationNo);
+	}
+	
+	@PostMapping("acceptReservation")
+	@ResponseBody
+	public void acceptReservation(@RequestParam("reservationNo") String reservationNo) {
+		trainerReservationService.acceptReservation(reservationNo);
+	}
+	
+	@PostMapping("/acceptReservationChange")
+	@ResponseBody
+	public void acceptReservationChange(@RequestParam("reservationNo") String reservationNo, @RequestParam("reservationChangeNo") String reservationChangeNo) {
+		// 요청한 예약 변경일 
+		Date datetime = trainerReservationService.findReservationChangeDatetime(reservationChangeNo);
+		trainerReservationService.acceptReservationChange(reservationNo, reservationChangeNo, datetime);
+	}
 }

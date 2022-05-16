@@ -151,7 +151,7 @@
 							if(rchState == 'Y') {
 								// 변경 요청 승인 된 후 
 								rchState = '승인';
-								html += '<input type="hidden" id="check" value="B">';
+								html += '<input type="hidden" id="check" value="D">';
 								buttonText = '예약 변경 재요청';
 							} else if(rchState == 'N') {
 								// 변경 요청 승인 되기 전 
@@ -344,6 +344,8 @@
 											});
 										}
 									})
+								} else if(check == 'D') {
+									// 예약 변경 요청 이미 있는 걸 바꿔야 함 
 								}
 							}
 						})

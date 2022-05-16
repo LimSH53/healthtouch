@@ -1,5 +1,6 @@
 package com.jaspa.healthtouch.trainer.reservation.model.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -21,5 +22,15 @@ public interface TrainerReservationMapper {
 	ReservationDTO getDetail(int no);
 
 	void cancelReservation(String reservationNo);
+
+	void cancelAllReservation(String reservationNo);
+
+	void acceptReservation(String reservationNo);
+
+	void reservationChange(String reservationNo, Date datetime);
+
+	void acceptReservationChange(String reservationChangeNo);
+
+	Date findReservationChangeDatetime(String reservationChangeNo);
 
 }
