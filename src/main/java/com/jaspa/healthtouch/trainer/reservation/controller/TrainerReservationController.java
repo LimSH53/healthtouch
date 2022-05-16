@@ -82,6 +82,9 @@ public class TrainerReservationController {
 	@ResponseBody
 	public void cancelReservation(@RequestParam("reservationNo") String reservationNo) {
 		trainerReservationService.cancelReservation(reservationNo);
+		String memberId = trainerReservationService.findIdByReservationNo(reservationNo);
+		int ordNo = trainerReservationService.findOrdNoById(memberId);
+		trainerReservationService.plusRemainCount(memberId, ordNo);
 	}
 	
 	@PostMapping("/cancelAll")
@@ -93,7 +96,14 @@ public class TrainerReservationController {
 	@PostMapping("acceptReservation")
 	@ResponseBody
 	public void acceptReservation(@RequestParam("reservationNo") String reservationNo) {
+		// 예약 요청 상태 Y로 
 		trainerReservationService.acceptReservation(reservationNo);
+		// 해당 회원 구해오기 
+		String memberId = trainerReservationService.findIdByReservationNo(reservationNo);
+		// 해당 회원의 상품 정보 불러오기 
+		int ordNo = trainerReservationService.findOrdNoById(memberId);
+		// 피티 잔여 횟수 1 차감 
+		trainerReservationService.minusRemainCount(memberId, ordNo);
 	}
 	
 	@PostMapping("/acceptReservationChange")

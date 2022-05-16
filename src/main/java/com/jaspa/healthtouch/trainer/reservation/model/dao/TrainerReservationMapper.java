@@ -33,4 +33,12 @@ public interface TrainerReservationMapper {
 
 	Date findReservationChangeDatetime(String reservationChangeNo);
 
+	String findIdByReservationNo(String reservationNo);
+
+	void minusRemainCount(String memberId, int ordNo);
+
+	int findOrdNoById(String memberId);
+
+	void plusRemainCount(String memberId, int ordNo);
+
 }

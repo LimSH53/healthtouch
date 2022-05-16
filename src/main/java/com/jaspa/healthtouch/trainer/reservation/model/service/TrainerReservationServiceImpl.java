@@ -80,4 +80,24 @@ public class TrainerReservationServiceImpl implements TrainerReservationService 
 		return trainerReservationMapper.findReservationChangeDatetime(reservationChangeNo);
 	}
 
+	@Override
+	public String findIdByReservationNo(String reservationNo) {
+		return trainerReservationMapper.findIdByReservationNo(reservationNo);
+	}
+
+	@Override
+	public void minusRemainCount(String memberId, int ordNo) {
+		trainerReservationMapper.minusRemainCount(memberId, ordNo);
+	}
+
+	@Override
+	public int findOrdNoById(String memberId) {
+		return trainerReservationMapper.findOrdNoById(memberId);
+	}
+
+	@Override
+	public void plusRemainCount(String memberId, int ordNo) {
+		trainerReservationMapper.plusRemainCount(memberId, ordNo);
+	}
+
 }

@@ -68,6 +68,47 @@
 		<association property="reservation" resultMap="reservationResultMap"/>
 	</resultMap>
 	
+	<resultMap type="com.jaspa.healthtouch.member.product.model.dto.OrderDTO" id="orderResultMap">
+		<id property="no" column="ORD_NO"></id>
+		<result property="proNo" column="ORD_PRO_NO"/>
+		<result property="memberId" column="ORD_MEMBER_ID"/>
+		<result property="trnId" column="ORD_TRN_ID"/>
+		<result property="startDate" column="ORD_START_DATE"/>
+		<result property="remainCount" column="ORD_REMAIN_COUNT"/>
+		<result property="endDate" column="ORD_END_DATE"/>
+		<result property="modEndDate" column="ORD_MOD_END_DATE"/>
+		<result property="modReason" column="ORD_MOD_REASON"/>
+		
+		<association property="product" resultMap="productResultMap"></association>
+		<association property="member">
+			<id property="id" column="ORD_MEMBER_ID"/>
+			<result property="name" column="ORD_MEMBER_NAME"/>
+		</association>
+		<association property="trainer">
+			<id property="id" column="ORD_TRN_ID"/>
+			<result property="name" column="ORD_TRN_NAME"/>
+		</association>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.center.product.model.dto.ProductDTO" id="productResultMap">
+		<id property="no" column="PRO_NO"/>
+		<result property="categoryNo" column="PRO_CATE_NO"/>
+		<result property="name" column="PRO_NAME"/>
+		<result property="price" column="PRO_PRICE"/>
+		<result property="contents" column="PRO_CONTENTS"/>
+		<result property="usePeriod" column="PRO_USE_PERIOD"/>
+		<result property="useCount" column="PRO_USE_COUNT"/>
+		<result property="date" column="PRO_DATE"/>
+		<result property="status" column="PRO_STATUS"/>
+		
+		<association property="category" resultMap="categoryResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.center.product.model.dto.ProCategoryDTO" id="categoryResultMap">
+		<id property="categoryNo" column="CATE_NO"/>
+		<result property="categoryName" column="CATE_NAME"/>
+	</resultMap>
+	
 	<select id="findAllReservationTotalCount" parameterType="com.jaspa.healthtouch.member.reservation.model.dto.ReservationDTO" resultType="int">
 		SELECT COUNT(*)
 		  FROM TBL_RESERVATION A
@@ -221,5 +262,34 @@
 		UPDATE TBL_RESERVATION_CHANGE
 		   SET RCH_STATE = 'Y'
 		 WHERE RCH_NO = #{ reservationChangeNo }
+	</update>
+	
+	<select id="findIdByReservationNo" resultType="java.lang.String">
+		SELECT RSV_MEMBER_ID
+		  FROM TBL_RESERVATION
+		 WHERE RSV_NO = #{ reservationNo }
+	</select>
+	
+	<select id="findOrdNoById" resultType="int">
+		SELECT ORD_NO
+		  FROM TBL_ORDER
+		 WHERE ORD_MEMBER_ID = #{ memberId }
+		   AND ORD_PRO_NO IN (SELECT PRO_NO
+		   						FROM TBL_PRODUCT
+		   					   WHERE PRO_CATE_NO = 20)
+	</select>
+	
+	<update id="minusRemainCount">
+		UPDATE TBL_ORDER
+		   SET ORD_REMAIN_COUNT = ORD_REMAIN_COUNT - 1
+		 WHERE ORD_NO = #{ ordNo }
+		   AND ORD_MEMBER_ID = #{ memberId }
+	</update>
+	
+	<update id="plusRemainCount">
+		UPDATE TBL_ORDER
+		   SET ORD_REMAIN_COUNT = ORD_REMAIN_COUNT + 1
+		 WHERE ORD_NO = #{ ordNo }
+		   AND ORD_MEMBER_ID = #{ memberId }
 	</update>
 </mapper>
