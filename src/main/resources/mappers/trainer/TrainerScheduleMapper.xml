@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jaspa.healthtouch.trainer.schedule.model.dao.TrainerScheduleMapper">
+
+
+	<resultMap type="com.jaspa.healthtouch.trainer.schedule.model.dto.TrainerScheduleDTO" id="trainerScheduleResultMap">
+		<id property="schNum" column="TRN_SCH"/>
+		<result property="id" column="TRN_SCH_MEMBER_ID"/>		
+		<result property="schName" column="TRN_SCH_NAME"/>		
+		<result property="schWeek" column="TRN_SCH_WEEK"/>		
+		<result property="schStart" column="TRN_SCH_START"/>		
+		<result property="schEnd" column="TRN_SCH_END"/>
+		<result property="schColor" column="TRN_SCH_COLOR"/>			
+								
+		<association property="member" resultMap="memberResultMap"/>
+	</resultMap>
+
+
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberDTO" id="memberResultMap">
+		<id property="id" column="MEMBER_ID"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="contact" column="MEMBER_CONTACT"/>
+		<result property="num" column="MEMBER_NUM"/>
+		<result property="birthday" column="MEMBER_BIRTHDAY"/>
+		<result property="age" column="MEMBER_AGE"/>
+		<result property="gender" column="MEMBER_GENDER"/>
+		<result property="address" column="MEMBER_ADDRESS"/>
+		<result property="type" column="MEMBER_TYPE"/>
+		<result property="status" column="MEMBER_STATUS"/>
+
+	</resultMap>
+
+
+
+
+
+	<!-- 트레이너 정보 조회 -->
+	<select id="selectTrainerSchedule" resultMap="trainerScheduleResultMap">
+	
+		 SELECT 
+			   S.TRN_SCH
+			 , M.MEMBER_ID
+			 , S.TRN_SCH_NAME
+			 , S.TRN_SCH_WEEK
+			 , S.TRN_SCH_START
+			 , S.TRN_SCH_END
+			 , S.TRN_SCH_COLOR
+		  FROM TRN_SCHEDULE S
+		  JOIN TBL_MEMBER M ON(M.MEMBER_ID = S.TRN_SCH_MEMBER_ID)
+		 WHERE M.MEMBER_ID = #{ schId }
+		 
+	</select>
+
+
+
+</mapper>

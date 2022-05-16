@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jaspa.healthtouch.login.model.dto.UserImpl;
@@ -48,38 +49,26 @@ public class LockerMemberController {
 	}
 	
 	
-/*
+
 	@PostMapping("/updateLocker")
 	public ModelAndView updateLocker(LockerDTO locker, ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
 		
 		log.info("updateLocker 라커 정보 : {}", locker);
 		
-		locker.setId(user.getId());
 		
 		lockerMemberService.updateLocker(locker);
 		
-		mv.setViewName("member/product/locker-site");
-		
-		return mv;
-	}
-
-*/	  
-		 
-	
-	@PostMapping("/updateLocker")
-	public ModelAndView selectOrdNum(LockerDTO locker, ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
+		/*
+		 * locker.setLocMngNum(locker.getLocMngNum()); locker.setId(user.getId());
+		 * locker.setLocNum(locker.getLocMngNum());
+		 */
 		
 		log.info("updateLocker 라커 정보 : {}", locker);
 		
-		locker.setId(user.getId());
-		
-		lockerMemberService.updateLocker(locker);
-		
 		mv.setViewName("member/product/locker-site");
 		
 		return mv;
 	}
-		
 
 	
 }

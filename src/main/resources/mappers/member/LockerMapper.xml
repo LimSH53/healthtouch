@@ -32,7 +32,7 @@
 
 
 	<!-- 주문 정보 -->
-	<resultMap type="com.jaspa.healthtouch.member.product.model.dto.OrderDTO" id="locOrdResultMap">
+	<resultMap type="com.jaspa.healthtouch.member.product.model.dto.OrderDTO" id="orderResultMap">
 		<id property="no" column="ORD_NO"></id>
 		<result property="proNo" column="ORD_PRO_NO"/>
 		<result property="id" column="ORD_MEMBER_ID"/>
@@ -66,7 +66,7 @@
 	<!-- 락커 상태 업데이트 -->
 	<!-- 조건 : 현재 락커 이용상태가 n이며 락커 관리번호가 longMngNum 인곳에 
 		 수정 : 주문번호, 아이디를 로그인한 아이디로 수정하고 락커 상태를 y로 수정하기 -->
-<!-- 	<update id="updateLocker">
+ 	<update id="updateLocker">
 
 		UPDATE TBL_LOCKER
 		   SET LOC_ORD_NO = #{ no }
@@ -76,27 +76,6 @@
 		   AND LOC_STATUS = 'N'
 		   
 	</update>
-
- -->
-
-
-		<select id="selectOrdNum" resultMap="locOrdResultMap">
-		
-			SELECT ORD_NO
-	          FROM TBL_ORDER
-	         WHERE ORD_MEMBER_ID = #{ id }
-		
-		</select>
-
-
-		<insert id="insertLocker">
-		
-		
-		
-		</insert>
-
-
-
 
 
 

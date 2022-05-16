@@ -12,11 +12,13 @@ public interface LockerMapper {
 	
 	/* 라커 전체조회 */
 	List<LockerDTO> selectAllLocker();
+
+	void updateLocker(LockerDTO locker);
 	
 	/* 라커 등록 */
-	int updateLocker(LockerDTO locker);
-	
+	/* int updateLocker(LockerDTO locker); */
+
 	/* 구매내역 조회 */
-	int selectOrdNum(int no);
+	/* int selectOrdNum(int no); */
 
 }
