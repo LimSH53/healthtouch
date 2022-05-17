@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jaspa.healthtouch.center.trainer.model.dto.AttendanceDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.HolidayDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerSalaryDTO;
@@ -88,15 +89,25 @@ public class CenterTrainerController {
 	}
 	
 	//휴가요청 조회
-		@GetMapping("/hday")
-		public ModelAndView selectAllHdayRequest(ModelAndView mv) {
-			
-			List<HolidayDTO> hdayRequestList = trManagementService.selectAllHdayRequest();
-			
-			mv.addObject("hdayRequestList", hdayRequestList);
-			mv.setViewName("center/trainer/hdayRequestList");
-			return mv;
-		}
+	@GetMapping("/hday")
+	public ModelAndView selectAllHdayRequest(ModelAndView mv) {
+		
+		List<HolidayDTO> hdayRequestList = trManagementService.selectAllHdayRequest();
+		
+		mv.addObject("hdayRequestList", hdayRequestList);
+		mv.setViewName("center/trainer/hdayRequestList");
+		return mv;
+	}
 	
+	// 근태 조회
+	@GetMapping("/attendance")
+	public ModelAndView selectAllAttendanceList(ModelAndView mv) {
+		
+		List<AttendanceDTO> attendanceList = trManagementService.selectAllAttendanceList();
+		
+		mv.addObject("attendanceList", attendanceList);
+		mv.setViewName("center/trainer/attendanceList");
+		return mv;
+	}
 	
 }
