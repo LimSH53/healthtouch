@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>healthtouch</title>
+<link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
+<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+<div th:replace="/common/centerHeader.html :: center-header"></div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body id="body-pd" class="snippet-body" style="min-height: 80vh">
+	<div th:replace="/common/centerHeader.html :: center-body"></div>
+	<div class="container mt-5">
+		<div class="d-flex justify-content-center row">
+			<div class="col-md-10">
+				<!-- 목록 -->
+				<br>
+				<th:block layout:fragment="content">
+					<table class="table">
+						<thead>
+							<tr class="text-center">
+								<th>No</th>
+								<th>회원명</th>
+								<th>연락처</th>
+								<th>상품명</th>
+								<th>가격</th>
+								<th>결제일</th>
+								<th>결제금액</th>
+							</tr>
+						</thead>
+						<tbody class="table-body">
+							<tr class="cell-1 text-center" th:each="revenue : ${ revenueList }">
+								<td th:text="${ revenue.no }"></td>
+								<td th:text="${ revenue.order.member.name }"></td>
+								<td th:text="${ revenue.order.member.contact }"></td>
+								<td th:text="${ revenue.order.product.name }"></td>
+								<td th:text="|${#numbers.formatInteger(revenue.order.product.price, 0, 'COMMA')} 원|"></td>
+								<td th:text="${#dates.format(revenue.date, 'yyy-MM-dd')}"></td>
+								<td th:text="|${#numbers.formatInteger(revenue.amount, 0, 'COMMA')} 원|"></td>
+							</tr>
+						</tbody>
+					</table>
+				</th:block>
+				<br>
+			</div>
+		</div>
+	</div>
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			function movePage(uri, queryString) {
+				location.href = uri + queryString;
+			}
+			/*[- end of function -]*/
+			
+			/*]]>*/
+		</script>
+	</th:block>
+</body>
+</html>

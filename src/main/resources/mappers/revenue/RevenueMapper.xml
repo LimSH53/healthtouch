@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jaspa.healthtouch.center.revenue.model.dao.RevenueMapper">
+	
+	<resultMap type="com.jaspa.healthtouch.member.product.model.dto.PaymentDTO" id="paymentResultMap">
+		<id property="no" column="PAY_NO"></id>
+		<result property="ordNo" column="PAY_ORD_NO"/>
+		<result property="date" column="PAY_DATE"/>
+		<result property="status" column="PAY_STATUS"/>
+		<result property="amount" column="PAY_AMOUNT"/>
+		
+		<association property="order" resultMap="orderResultMap"></association>
+	</resultMap>
+		
+	<resultMap type="com.jaspa.healthtouch.member.product.model.dto.OrderDTO" id="orderResultMap">
+		<id property="no" column="ORD_NO"></id>
+		<result property="proNo" column="ORD_PRO_NO"/>
+		<result property="memberId" column="ORD_MEMBER_ID"/>
+		<result property="trnId" column="ORD_TRN_ID"/>
+		<result property="startDate" column="ORD_START_DATE"/>
+		<result property="remainCount" column="ORD_REMAIN_COUNT"/>
+		<result property="endDate" column="ORD_END_DATE"/>
+		<result property="modEndDate" column="ORD_MOD_END_DATE"/>
+		<result property="modReason" column="ORD_MOD_REASON"/>
+		<result property="revStatus" column="ORD_REV_STATUS"/>
+		
+		<association property="product">
+			<id property="no" column="MEMBER_PRO_NO"/>
+			<result property="name" column="MEMBER_PRO_NAME"/>
+			<result property="price" column="MEMBER_PRO_PRICE"/>
+		</association>
+		<association property="member">
+			<id property="id" column="ORD_MEMBER_ID"/>
+			<result property="name" column="ORD_MEMBER_NAME"/>
+			<result property="contact" column="MEMBER_CONTACT"/>
+		</association>
+		
+	</resultMap>
+	
+	<select id="selectAllrevenue" resultMap="paymentResultMap">
+		SELECT
+			   A.PAY_NO,
+		       A.PAY_DATE,
+		       A.PAY_AMOUNT,
+		       C.PRO_NAME MEMBER_PRO_NAME,
+		       C.PRO_PRICE MEMBER_PRO_PRICE,
+		       D.MEMBER_NAME ORD_MEMBER_NAME,
+		       D.MEMBER_CONTACT MEMBER_CONTACT
+		  FROM TBL_PAYMENT A
+		  JOIN TBL_ORDER B ON (A.PAY_ORD_NO = B.ORD_NO)
+		  JOIN TBL_PRODUCT C ON (B.ORD_PRO_NO = C.PRO_NO)
+		  JOIN TBL_MEMBER D ON (B.ORD_MEMBER_ID = D.MEMBER_ID)
+		 ORDER BY A.PAY_NO DESC
+	</select>
+
+
+</mapper>
