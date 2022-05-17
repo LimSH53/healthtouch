@@ -16,11 +16,6 @@ font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, '
     text-align: center;
 }
 
-.main_size {
-    margin-top: 100px;margin-bottom: 100px;margin-left: 100px;margin-right: 100px;
-
-}
-
 .col-2{
     flex:auto;
     background-color : lightgray;
