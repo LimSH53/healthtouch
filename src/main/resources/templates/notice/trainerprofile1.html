@@ -25,16 +25,16 @@
      <!-- 트레이너 선택 -->
  <ul class="nav1 nav-tabs">
     <li class="nav-item">
-        <a class="nav-link " style=" color: #1b1b55; background-color: #F7F6FB;" aria-current="page" href="/notice/trainerprofile">사공유연</a>
+        <a class="nav-link " style=" color: #1b1b55; background-color: #F7F6FB;" aria-current="page" href="/notice/trainerprofile">서현승</a>
     </li>
     <li class="nav-item">
-       <a class="nav-link active " style=" background-color: #1b1b55; color: #F7F6FB;" aria-current="page" href="/notice/trainerprofile1">곽머슬</a>
+       <a class="nav-link active " style=" background-color: #1b1b55; color: #F7F6FB;" aria-current="page" href="/notice/trainerprofile1">남지현</a>
       </li>
       <li class="nav-item">
-         <a class="nav-link " style=" color: #1b1b55; background-color: #F7F6FB;" aria-current="page" href="/notice/trainerprofile2">표로틴</a>
+         <a class="nav-link " style=" color: #1b1b55; background-color: #F7F6FB;" aria-current="page" href="/notice/trainerprofile2">허승준</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " style=" color: #1b1b55; background-color: #F7F6FB;" aria-current="page" href="/notice/trainerprofile3">박단단</a>
+        <a class="nav-link " style=" color: #1b1b55; background-color: #F7F6FB;" aria-current="page" href="/notice/trainerprofile3">한주은</a>
       </li>
   </ul>
    <!-- 트레이너 정보조회 -->
@@ -46,7 +46,7 @@
                 <div class="col-lg-7">
                     <div class="about-text go-to">
                         <div style="display: grid;">
-                            <span class="dark-color" style="font-size: 20px; font-weight: bolder;">곽머슬</span>
+                            <span class="dark-color" style="font-size: 20px; font-weight: bolder;">남지현</span>
                             <pan class="theme-color lead" style="font-size: 15px; font-weight:bold;">난 슬플때, 3대100000000을 쳐</pan>
                         </div>
                         <div class="row about-list">
@@ -90,25 +90,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row" class="col-6">후기후기</th>
-                                        <td class="col-6"> ★★★★★ </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" class="col-6">후기후기</th>
-                                        <td class="col-6"> ★★★★★ </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" class="col-6">후기후기</th>
-                                        <td class="col-6"> ★★★★★ </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" class="col-6">후기후기</th>
-                                        <td class="col-6"> ★★★★★ </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" class="col-6">후기후기</th>
-                                        <td class="col-6"> ★★★★★ </td>
+                                     <tr>
+                                        <td scope="row" class="col-6" th:text="${trainerProfile1.contents}">후기후기</td>
+                                        <td class="col-6" th:if="${trainerProfile1.grade}==1"> ★ </td>
+                                        <td class="col-6" th:if="${trainerProfile1.grade}==2"> ★★ </td>
+                                        <td class="col-6" th:if="${trainerProfile1.grade}==3"> ★★★ </td>
+                                        <td class="col-6" th:if="${trainerProfile1.grade}==4"> ★★★★ </td>
+                                        <td class="col-6" th:if="${trainerProfile1.grade}==5"> ★★★★★ </td>
                                     </tr>
                                 </tbody>
                             </table>
