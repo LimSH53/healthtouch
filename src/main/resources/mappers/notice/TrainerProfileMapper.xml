@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jaspa.healthtouch.notice.trainer.model.dao.TrainerProfileMapper">
+	
+	<resultMap type="com.jaspa.healthtouch.member.product.model.dto.ReviewDTO" id="reviewResultMap">
+		<id property="revNo" column="REV_NO"></id>
+		<result property="ordNo" column="ORD_NO"/>
+		<result property="contents" column="REV_CONTENTS"/>
+		<result property="status" column="REV_STATUS"/>
+		<result property="grade" column="REV_GRADE"/>
+		
+		<association property="order" resultMap="orderResultMap"></association>
+	
+	</resultMap>	
+	
+	<resultMap type="com.jaspa.healthtouch.member.product.model.dto.OrderDTO" id="orderResultMap">
+		<id property="no" column="ORD_NO"></id>
+		<result property="proNo" column="ORD_PRO_NO"/>
+		<result property="memberId" column="ORD_MEMBER_ID"/>
+		<result property="trnId" column="ORD_TRN_ID"/>
+		<result property="startDate" column="ORD_START_DATE"/>
+		<result property="remainCount" column="ORD_REMAIN_COUNT"/>
+		<result property="endDate" column="ORD_END_DATE"/>
+		<result property="modEndDate" column="ORD_MOD_END_DATE"/>
+		<result property="modReason" column="ORD_MOD_REASON"/>
+		<result property="revStatus" column="ORD_REV_STATUS"/>
+		
+		<association property="product" resultMap="productResultMap"></association>
+		<association property="member">
+			<id property="id" column="ORD_MEMBER_ID"/>
+			<result property="name" column="ORD_MEMBER_NAME"/>
+		</association>
+		<association property="trainer">
+			<id property="id" column="ORD_TRN_ID"/>
+			<result property="name" column="ORD_TRN_NAME"/>
+		</association>
+		
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.center.product.model.dto.ProductDTO" id="productResultMap">
+		<id property="no" column="PRO_NO"/>
+		<result property="categoryNo" column="PRO_CATE_NO"/>
+		<result property="name" column="PRO_NAME"/>
+		<result property="price" column="PRO_PRICE"/>
+		<result property="contents" column="PRO_CONTENTS"/>
+		<result property="usePeriod" column="PRO_USE_PERIOD"/>
+		<result property="useCount" column="PRO_USE_COUNT"/>
+		<result property="date" column="PRO_DATE"/>
+		<result property="status" column="PRO_STATUS"/>
+		
+		<association property="category" resultMap="categoryResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.center.product.model.dto.ProCategoryDTO" id="categoryResultMap">
+		<id property="categoryNo" column="CATE_NO"/>
+		<result property="categoryName" column="CATE_NAME"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberDTO" id="memberResultMap">
+		<id property="id" column="MEMBER_ID"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="contact" column="MEMBER_CONTACT"/>
+		<result property="num" column="MEMBER_NUM"/>
+		<result property="birthday" column="MEMBER_BIRTHDAY"/>
+		<result property="age" column="MEMBER_AGE"/>
+		<result property="gender" column="MEMBER_GENDER"/>
+		<result property="address" column="MEMBER_ADDRESS"/>
+		<result property="status" column="MEMBER_STATUS"/>
+		
+		<association property="memberRole" resultMap="memberRoleResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberRoleDTO" id="memberRoleResultMap">
+		<id property="memberId" column="REF_MEMBER_ID"/>
+		<result property="authorityCode" column="REF_AUTHORITY_CODE"/>
+		
+		<association property="authority" resultMap="authorityResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.AuthorityDTO" id="authorityResultMap">
+		<id property="code" column="REF_AUTHORITY_CODE2"/>
+		<result property="name" column="AUTHORITY_NAME"/>
+		<result property="desc" column="AUTHORITY_DESC"/>
+	</resultMap>
+
+
+	<!-- 트레이너 후기 조회(서현승) -->
+	<select id="trainerProfile" resultMap="reviewResultMap">
+		SELECT 
+			   A.REV_NO
+			 , A.ORD_NO
+			 , A.REV_CONTENTS
+			 , A.REV_STATUS
+			 , A.REV_GRADE
+			 , C.MEMBER_NAME ORD_TRN_NAME
+		  FROM TBL_REVIEW A
+		  JOIN TBL_ORDER B ON(A.ORD_NO= B.ORD_NO)
+		  JOIN TBL_MEMBER C ON(B.ORD_TRN_ID = C.MEMBER_ID)
+		 WHERE C.MEMBER_NAME LIKE '서현승'
+		 
+	</select>
+	
+	<!-- 트레이너 후기 조회(남지현) -->
+	<select id="trainerProfile1" resultMap="reviewResultMap">
+		SELECT 
+			   A.REV_NO
+			 , A.ORD_NO
+			 , A.REV_CONTENTS
+			 , A.REV_STATUS
+			 , A.REV_GRADE
+			 , C.MEMBER_NAME ORD_TRN_NAME
+		  FROM TBL_REVIEW A
+		  JOIN TBL_ORDER B ON(A.ORD_NO = B.ORD_NO)
+		  JOIN TBL_MEMBER C ON(B.ORD_TRN_ID = C.MEMBER_ID)
+		 WHERE  A.ORD_NO = #{no}
+		 AND  C.MEMBER_NAME LIKE '남지현'
+	</select>
+	
+		<!-- 트레이너 후기 조회(허승준) -->
+	<select id="trainerProfile2" resultMap="reviewResultMap">
+		SELECT 
+			   A.REV_NO
+			 , A.ORD_NO
+			 , A.REV_CONTENTS
+			 , A.REV_STATUS
+			 , A.REV_GRADE
+			 , C.MEMBER_NAME ORD_TRN_NAME
+		  FROM TBL_REVIEW A
+		  JOIN TBL_ORDER B ON(A.ORD_NO= B.ORD_NO)
+		  JOIN TBL_MEMBER C ON(B.ORD_TRN_ID = C.MEMBER_ID)
+		 WHERE  A.ORD_NO = #{no}
+		 AND C.MEMBER_NAME LIKE '허승준'
+	</select>
+	
+		<!-- 트레이너 후기 조회(한주은) -->
+	<select id="trainerProfile3" resultMap="reviewResultMap">
+		SELECT 
+			   A.REV_NO
+			 , A.ORD_NO
+			 , A.REV_CONTENTS
+			 , A.REV_STATUS
+			 , A.REV_GRADE
+			 , C.MEMBER_NAME ORD_TRN_NAME
+		  FROM TBL_REVIEW A
+		  JOIN TBL_ORDER B ON(A.ORD_NO = B.ORD_NO)
+		  JOIN TBL_MEMBER C ON(B.ORD_TRN_ID = C.MEMBER_ID)
+		  WHERE A.ORD_NO = #{no}
+		 AND C.MEMBER_NAME LIKE '한주은'
+	</select>
+
+</mapper>
+	
