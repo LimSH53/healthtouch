@@ -86,7 +86,7 @@
 
 
 	<!-- 트레이너 후기 조회(서현승) -->
-	<select id="trainerProfile" resultMap="reviewResultMap">
+	<select id="trainerprofile" resultMap="reviewResultMap">
 		SELECT 
 			   A.REV_NO
 			 , A.ORD_NO
@@ -97,57 +97,10 @@
 		  FROM TBL_REVIEW A
 		  JOIN TBL_ORDER B ON(A.ORD_NO= B.ORD_NO)
 		  JOIN TBL_MEMBER C ON(B.ORD_TRN_ID = C.MEMBER_ID)
-		 WHERE C.MEMBER_NAME LIKE '서현승'
+		  WHERE C.MEMBER_NAME LIKE '서현승'
 		 
 	</select>
-	
-	<!-- 트레이너 후기 조회(남지현) -->
-	<select id="trainerProfile1" resultMap="reviewResultMap">
-		SELECT 
-			   A.REV_NO
-			 , A.ORD_NO
-			 , A.REV_CONTENTS
-			 , A.REV_STATUS
-			 , A.REV_GRADE
-			 , C.MEMBER_NAME ORD_TRN_NAME
-		  FROM TBL_REVIEW A
-		  JOIN TBL_ORDER B ON(A.ORD_NO = B.ORD_NO)
-		  JOIN TBL_MEMBER C ON(B.ORD_TRN_ID = C.MEMBER_ID)
-		 WHERE  A.ORD_NO = #{no}
-		 AND  C.MEMBER_NAME LIKE '남지현'
-	</select>
-	
-		<!-- 트레이너 후기 조회(허승준) -->
-	<select id="trainerProfile2" resultMap="reviewResultMap">
-		SELECT 
-			   A.REV_NO
-			 , A.ORD_NO
-			 , A.REV_CONTENTS
-			 , A.REV_STATUS
-			 , A.REV_GRADE
-			 , C.MEMBER_NAME ORD_TRN_NAME
-		  FROM TBL_REVIEW A
-		  JOIN TBL_ORDER B ON(A.ORD_NO= B.ORD_NO)
-		  JOIN TBL_MEMBER C ON(B.ORD_TRN_ID = C.MEMBER_ID)
-		 WHERE  A.ORD_NO = #{no}
-		 AND C.MEMBER_NAME LIKE '허승준'
-	</select>
-	
-		<!-- 트레이너 후기 조회(한주은) -->
-	<select id="trainerProfile3" resultMap="reviewResultMap">
-		SELECT 
-			   A.REV_NO
-			 , A.ORD_NO
-			 , A.REV_CONTENTS
-			 , A.REV_STATUS
-			 , A.REV_GRADE
-			 , C.MEMBER_NAME ORD_TRN_NAME
-		  FROM TBL_REVIEW A
-		  JOIN TBL_ORDER B ON(A.ORD_NO = B.ORD_NO)
-		  JOIN TBL_MEMBER C ON(B.ORD_TRN_ID = C.MEMBER_ID)
-		  WHERE A.ORD_NO = #{no}
-		 AND C.MEMBER_NAME LIKE '한주은'
-	</select>
+
 
 </mapper>
 	
