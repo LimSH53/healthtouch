@@ -2,238 +2,307 @@
 
 		
 			
-			
-			updateElements()	
-			makeDeletable();
+updateElements();
+makeDeletable();
 			
 
 			
 			/*
 			이벤트
 			*/
-
+		$(function(){
 			//팝업창 띄우기
 			$(".addNew").on("click", function(){
-			  
-			  $(".popUp").fadeToggle();
-			  console.log("pop");
+					  
+			$(".popUp").fadeToggle();
+			console.log("pop");
 			});
-			
-			
-			$(".addButton").on("click", function(){
-			  
-			  var title = $(".nameInput").val();
-			  
-			  var checkboxValue = []; 
-			  
-			
-			 $.each($("input:checked"), function(){            
-			        checkboxValue.push($(this).val());
-			   });
-			  
-			  var fromTimeHour = $("#fromTimeHour").val();
-			  var fromTimeHalf = $("#fromTimeHalf").val();
-			  
-			  var toTimeHour = $("#toTimeHour").val();
-			  var toTimeHalf = $("#toTimeHalf").val();
-			  
-			  var color = $(this).css('backgroundColor');
-			
-			  
-			  if(title != "") {
-			
-			    for(var i = 0; i < checkboxValue.length; i++) {
-			      
-			      createNew(title, fromTimeHour, fromTimeHalf, toTimeHour, toTimeHalf, Number(checkboxValue[i]), color);
-			     
-			    } 
-			    
-			      makeDeletable();
-			      updateElements()
-			    $(".nameInput").val("");
-			    $(".popUp").fadeToggle();
-			    
-			    
-			  } else {
-			
-			    //흔들어
-			    shake();
-			 
-			    setTimeout(shake,310);
-			  }
-			  
-			});
-			
-			 //컬러선택
-			$(".color").on("click", function() {
-			  
-			  let myColor = $(this).css('backgroundColor');
-			  
-			  $(".addButton").css('backgroundColor', myColor);
-			  
-			});
-			
-			
+		})					
 
 			
 			
 			
 			
 			
-			
-			
-			function shake () {
-			  $(".nameInput").toggleClass("shake");
-			}
-			
-			function createNew(title, fromTimeHour, fromTimeHalf, toTimeHour, toTimeHalf, weekDay, color) {
-			  
-			  
-			  var unit = 40;
-			  //제목+요일을 아이디로
-			  var newElement = '<div id=' + title + weekDay 
-			  + ' class="myClass ui-draggable ui-draggable-handle ui-resizable"><p class="title">' 
-			  + title 
-			  + '<i class="fa fa-trash-o" aria-hidden="true"></i></p><div class="ui-resizable-handle ui-resizable-s" style="z-index:90;"></div></div>';
-			  
-			  //삽입
-			  $(newElement).insertBefore(".tableTimes");
-			   
-			  
-			
-			  $("#" + title + weekDay).css({
-			    "left": weekDay,
-			    "top": getStartHour(fromTimeHour, fromTimeHalf),
-			    "height": getToHour(fromTimeHour, fromTimeHalf, toTimeHour, toTimeHalf),
-			    "background-color": "" + color,
-			    
-			  });
-			  
-			  updateElements();
-			}
-			
-			function makeResizable() {
-			  $( ".myClass" ).resizable({
-			  handles: 's',
-			  grid: [ 0, 20 ]
-			});
-			}
-			
-			
-			function makeDraggable() {
-			  $(".myClass").draggable({
-			  containment: 'parent',
-			    grid: [100,20]
-			});
-			  console.log("draggable");
-			}
-			
-			
-			
-			
-			
-			
-			
-			function updateElements() {
-			  makeDraggable();
-			  makeResizable();
-			  
-			}
-			
-			function makeDeletable() {
-			  
-			  $(".fa-trash-o").on("click", function() {
-			    
-			  $(this).parent().parent().remove();
-			   
-			  
-			});
-			}
-			
-			
-			
-			/* 24시간 단위 */
-			function correctHour(toHour) {
-			  
-			    var result;
-			
-			    if(toHour < 24) {
-			      result = 0 + Number(toHour);
-			    } else {
-			      result = toHour;
-			    }
-			    // alert(result);
-			    return result;
-			  }
-			
-			
-			      /* 시간표 추가의 height를 조정 */
-			function getToHour(fromHour, fromHalf, toHour, toHalf) {
-			
-			  var compensation;
-			  
-			  if(fromHalf == 30 && toHalf == 30) {
-			    
-			    compensation = 0;
-			    
-			  } else if (fromHalf == 30 ){
-			    
-			    compensation = -20;
-			    
-			  } else if(toHalf == 30){
-			    
-			    compensation = 20;
-			    
-			  } else {
-			    
-			    compensation = 0;
-			  }
-			  
-			    var correctedToHour = correctHour(toHour);
-			    var correctedFromHour = correctHour(fromHour);
-			
-			    return ((correctedToHour - correctedFromHour) * 40) + compensation;
-			  
-			}
-			
-			
-			/* 추가되는 시간표의 시작지점을 조정 */
-			function getStartHour(fromHour, fromHalf) {
-			  
-			  let base = 115; //7am
-			  var unitHalf;
-			  
-			  //this rounds down or up
-			  if (fromHalf >= 30) {
-			    /* 시작시간이 30분단위일때 시작지점에서 한칸(20) 내려가게 설정 */
-			    unitHalf = 20; 
-			  
-			  } else {
-			    /* 시작시간이 00분 단위일때 시작지점 조정할 필요없음 */
-			    unitHalf = 0;
-			  }
-			  
-			  
-			  if(fromHour >= 7) {
-			    
-			    return base + ((fromHour - 7) * 40) + unitHalf;
-			    
-			  } else {
-			    //12시 이후엔 높이 260 에서부터 시작
-			    return  400 + (fromHour * 30) + unitHalf;
-			    
-			  }
-			  
-			};
-			
-			function validateInput (number1, number2) {
-			
-			 
-			}
-			
-			
-			
-			
-			
-			
-			
+
+	
+		//pop up menu to add class
+		$(".addNew").on("click", function(){
+		  
+		  $(".popUp").fadeToggle();
+		  
+		});
+
+	
+		
+		
+
+		
+		
+
+
+		$(function(){	
+		//clicking to add class
+		$(".addButton").on("click", function(){
+		  
+		  var title = $(".nameInput").val();
+		  
+		  var checkboxValue = []; 
+		  
+
+	
+		//retrives the values from selected checkboxes and pushes it into array
+		 $.each($("input:checked"), function(){            
+		        checkboxValue.push($(this).val());
+		   });
+		  
+		  var fromTimeHour = $("#fromTimeHour").val();
+		  var fromTimeHalf = $("#fromTimeHalf").val();
+		  
+		  var toTimeHour = $("#toTimeHour").val();
+		  var toTimeHalf = $("#toTimeHalf").val();
+		  
+		  var color = $(this).css('backgroundColor');
+		  // alert(color);
+		  
+		  // alert(checkboxValue + " " + typeof checkboxValue[0] + " " + checkboxValue.length); //string 
+		  
+		  //VALIDADE INPUTS
+		  
+		  if(title != "") {
+		    //create new div with class element and fadeout popup
+		    
+		    //CREATE NEW ELEMENTS
+		    for(var i = 0; i < checkboxValue.length; i++) {
+		      
+		      createNew(title, fromTimeHour, fromTimeHalf, toTimeHour, toTimeHalf, Number(checkboxValue[i]), color);
+		     
+		    } 
+		    
+		      makeDeletable();
+		      updateElements()
+		    $(".nameInput").val("");
+		    $(".popUp").fadeToggle();
+		    
+		    
+		  } else {
+		    //shake textbox
+		    //toggle
+		    shake();
+		    //untoggles after animation is done
+		    setTimeout(shake,310);
+		  }
+		  
+		});
+		
+
+  		})
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	$(function(){	
+		
+		 //clicking colors
+		$(".color").on("click", function() {
+		  
+		  let myColor = $(this).css('backgroundColor');
+		  
+		  $(".addButton").css('backgroundColor', myColor);
+		  
+		});
+		
+		
+		})
+		
+		
+		function shake () {
+		  $(".nameInput").toggleClass("shake");
+		}
+		
+		
+		
+		
+		
+		
+		function createNew(title, fromTimeHour, fromTimeHalf, toTimeHour, toTimeHalf, weekDay, color) {
+		  
+		  
+		  var unit = 20;
+		  //create new element using title+weekday as ID
+		  var newElement = '<div id=' + title + weekDay + ' class="myClass ui-draggable ui-draggable-handle ui-resizable"><p class="title">' + title + '<i class="fa fa-trash-o" aria-hidden="true"></i></p><div class="ui-resizable-handle ui-resizable-s" style="z-index:90;"></div></div>';
+		  
+		  //inserts it
+		  $(newElement).insertBefore(".tableTimes");
+		   
+		  
+		  // html로 삽인되는 구문 좌, 위, 높이, 너비, 색상
+		  $("#" + title + weekDay).css({
+		    "left": weekDay,
+		    "top": getStartHour(fromTimeHour, fromTimeHalf),
+		    "height": getToHour(fromTimeHour, fromTimeHalf, toTimeHour, toTimeHalf),
+		    "width": "160px;",
+		    "background-color": "" + color,
+		    
+		  });
+		  
+		  updateElements();
+		}
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		function makeResizable() {
+		  $( ".myClass" ).resizable({
+		  handles: 's',
+		  grid: [ 160, 15 ]
+		});
+		console.log("makeResizable");
+		}
+		
+		
+		
+
+		
+		function makeDraggable() {
+		  $(".myClass").draggable({
+		  containment: 'parent',
+		    grid: [160,15]
+		});
+		  console.log("dragable");
+		}
+		
+
+		
+		
+		
+		function updateElements() {
+		 
+		  makeDraggable();
+
+		  
+		  makeResizable();
+		  
+		}
+		
+		
+		
+		function makeDeletable() {
+		  
+		  $(".fa-trash-o").on("click", function() {
+		    
+		  $(this).parent().parent().remove();
+		   
+		  
+		});
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		/*
+		NOTE: need to make sure inputs are valid on functions bellow and test more
+		- FROM needs to be smaller than TO
+		- create function validate input
+		*/
+		
+		function correctHour(toHour) {
+		  
+		        var result;
+		
+		        if(toHour < 7) {
+		          result = 12 + Number(toHour);
+		        } else {
+		          result = toHour;
+		        }
+		        // alert(result);
+		        return result;
+		      }
+		
+		function getToHour(fromHour, fromHalf, toHour, toHalf) {
+		  //needs to handle 9am to 1pm types of entry
+		  var compensation;
+		  
+		  if(fromHalf == 30 && toHalf == 30) {
+		    
+		    compensation = 0;
+		    
+		  } else if (fromHalf == 30 ){
+		    
+		    compensation = -15;
+		    
+		  } else if(toHalf == 30){
+		    
+		    compensation = 15;
+		    
+		  } else {
+		    
+		    compensation = 0;
+		  }
+		  
+		    var correctedToHour = correctHour(toHour);
+		    var correctedFromHour = correctHour(fromHour);
+		    // alert(correctedHour);
+		    return ((correctedToHour - correctedFromHour) * 41) + compensation;
+		  
+		}
+		
+		
+		
+		
+		
+		
+		
+		function getStartHour(fromHour, fromHalf) {
+		  
+		  let base = 115; //that gives 7am
+		  var unitHalf;
+		  
+		  //this rounds down or up
+		  if (fromHalf >= 30) {
+		    
+		    unitHalf = 15; //half an hour
+		  
+		  } else {
+		    
+		    unitHalf = 0;
+		  }
+		  
+		  
+		  if(fromHour >= 7) {
+		    
+		    return base + ((fromHour - 7) * 40) + unitHalf;
+		    
+		  } else {
+		    //260 is the base for anything after 12
+		    return  260 + (fromHour * 30) + unitHalf;
+		    
+		  }
+		  
+		};
+		
+		function validateInput (number1, number2) {
+		  //tittle cant be an empty string
+		  //fromHour > toHour
+		  //array of weekdays is not empty
+		  //color with r,g or b lower than 130 makes color of text white
+		  
+		  
+		}
