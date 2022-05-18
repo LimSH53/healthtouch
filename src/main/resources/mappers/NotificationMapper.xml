@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jaspa.healthtouch.common.model.dao.NotificationMapper">
+	<resultMap type="com.jaspa.healthtouch.common.model.dto.NotificationDTO" id="notificationResultMap">
+		<id property="no" column="NTC_NO"/>
+		<result property="title" column="NTC_TITLE"/>
+		<result property="content" column="NTC_CONTENT"/>
+		<result property="reqUrl" column="NTC_REQ_URL"/>
+		<result property="time" column="NTC_TIME"/>
+		<result property="readYn" column="NTC_READ_YN"/>
+		<result property="memberId" column="NTC_MEMBER_ID"/>
+	</resultMap>
+	
+	<insert id="modifyMemberTypeAlert">
+		INSERT INTO TBL_NOTIFICATION
+		(
+		  NTC_NO
+		, NTC_TITLE
+		, NTC_CONTENT
+		, NTC_REQ_URL
+		, NTC_TIME
+		, NTC_READ_YN
+		, NTC_MEMBER_ID
+		)
+		VALUES
+		(
+		  SEQ_NTC_NO.NEXTVAL
+		, #{ title }
+		, #{ content }
+		, #{ reqUrl }
+		, SYSDATE
+		, 'N'
+		, #{ memberId }
+		)
+	</insert>
+</mapper>
