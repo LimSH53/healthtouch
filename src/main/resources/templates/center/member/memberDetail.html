@@ -9,6 +9,7 @@
 <div th:replace="/common/centerHeader.html :: center-header"></div>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 </head>
 <body id="body-pd" class="snippet-body" style="min-height: 80vh">
 	<div th:replace="/common/centerHeader.html :: center-body"></div>
@@ -222,6 +223,27 @@
 							}).then((result) => {
 								location.reload();
 							})
+							
+							var title = "알림";
+							var content = "트레이너로 변경되었습니다. 다시 로그인 하세요.";
+							var reqUrl = "/member/logout";
+							
+							var param = { title: title, memberId: memberId, content: content, reqUrl: reqUrl };
+							
+							$.ajax({
+								url: "/common/modifyMemberTypeAlert",
+								type: "post",
+								async: false,
+								data: JSON.stringify(param),
+								contentType: 'application/json; charset=utf-8',
+								success: function(data) {
+									// 알림 전송 
+									socket.send(title + "," + memberId + "," + content + "," + reqUrl);
+								},
+								error: function(e) {
+									console.log(e);
+								}
+							})
 						},
 						error: function(e) {
 							console.log(e);
@@ -292,6 +314,36 @@
 			})
 		}
 		/*]]>*/
+	</script>
+	<script>
+		var socket = null;
+	
+		$(document).ready(function(){
+			socket = new SockJS('/alert');
+			
+			socket.onopen = function() {
+				console.log('open');
+			};
+			
+			socket.onmessage = function(evt) {
+				console.log("??");
+				
+				var data = evt.data;
+				
+				let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+			    toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
+			    toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
+			    toast += "<span aria-hidden='true'>&times;</span></button>";
+			    toast += "</div> <div class='toast-body'>" + data + "</div></div>";
+			    $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
+			    $(".toast").toast({"animation": true, "autohide": false});
+			    $('.toast').toast('show');
+			};
+			
+			socket.onclose = function() {
+				console.log('close');
+			}
+		});
 	</script>
 </body>
 </html>
