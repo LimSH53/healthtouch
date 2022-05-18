@@ -1,5 +1,7 @@
 package com.jaspa.healthtouch.common.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,16 @@ public class NotificationServiceImpl implements NotificationService {
 	@Override
 	public void modifyMemberTypeAlert(NotificationDTO notification) {
 		notificationMapper.modifyMemberTypeAlert(notification);
+	}
+
+	@Override
+	public List<NotificationDTO> findAllAlert(String id) {
+		return notificationMapper.findAllAlert(id);
+	}
+
+	@Override
+	public void changeStatus(String no) {
+		notificationMapper.changeStatus(no);
 	}
 
 }

@@ -33,4 +33,17 @@
 		, #{ memberId }
 		)
 	</insert>
+	
+	<select id="findAllAlert" resultMap="notificationResultMap">
+		SELECT *
+		  FROM TBL_NOTIFICATION
+		 WHERE NTC_MEMBER_ID = #{ id }
+		   AND NTC_READ_YN = 'N'
+	</select>
+	
+	<update id="changeStatus">
+		UPDATE TBL_NOTIFICATION
+		   SET NTC_READ_YN = 'Y'
+		 WHERE NTC_NO = #{ no }
+	</update>
 </mapper>

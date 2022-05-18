@@ -476,42 +476,5 @@
     		})
     	}
     </script>
-	<script>
-		var socket = null;
-	
-		$(document).ready(function(){
-			socket = new SockJS('/alert');
-			
-			socket.onopen = function() {
-				console.log('open');
-			};
-			
-			socket.onmessage = function(evt) {
-				console.log("??");
-				
-				var data = evt.data;
-			    
-			    const Toast = Swal.mixin({
-			    	toast: true,
-			    	position: 'top-end',
-			    	showConfirmButton: false,
-			    	timer: 10000,
-			    	didOpen: (toast) => {
-			    		toast.addEventListener('mouseenter', Swal.stopTimer);
-			    		toast.addEventListener('mouseleave', Swal.resumeTimer);
-			    	}
-			    })
-			    
-			    Toast.fire({
-			    	icon: 'info',
-			    	html: data,
-			    })
-			};
-			
-			socket.onclose = function() {
-				console.log('close');
-			}
-		});
-	</script>
 </body>
 </html>
