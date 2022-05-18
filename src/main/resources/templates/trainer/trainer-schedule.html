@@ -8,18 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>트레이너 스케줄</title>
 
-
-   
     <!-- 제이쿼리 추가 -->
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css">
+<!--     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,700" rel="stylesheet">
-
-    
-
-   
-
-
+ -->
 
     <!-- 트레이너 스케줄 css -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/trainer/trainer-schedule.css}"/>
@@ -28,20 +21,18 @@
     <div th:replace="/common/trnHeader.html :: trn-header"></div>
     
     <!-- 제이쿼리 -->
+    
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  	 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
-   
-   
+<!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ -->  	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 
-    <script src="/js/trainer/trainer-schedule.js" rel="stylesheet" type="text/javascript"></script>
+
+
+   	<!-- 자바스크립트 -->
+    <script src="/js/trainer/trainer-schedule.js" type="text/javascript"></script>
 	
-		
- 
-
-
+	
 </head>
 
 <body>
@@ -71,13 +62,13 @@
 		     <!--  weekdays   --> 
 		        <div class="week">
 		          
-		          <div class="checkBox">일<input type="checkbox" value="100"></div>
-		          <div class="checkBox">월<input type="checkbox" value="200"></div>
-		          <div class="checkBox">화<input type="checkbox" value="300"></div>
-		           <div class="checkBox">수<input type="checkbox" value="400"></div>
-		           <div class="checkBox">목<input type="checkbox" value="500"></div>
-		           <div class="checkBox">금<input type="checkbox" value="600"></div>
-		           <div class="checkBox">토<input type="checkbox" value="700"></div>
+		          <div class="checkBox">일<input type="checkbox" value="174"></div>
+		          <div class="checkBox">월<input type="checkbox" value="335"></div>
+		          <div class="checkBox">화<input type="checkbox" value="496"></div>
+		           <div class="checkBox">수<input type="checkbox" value="659"></div>
+		           <div class="checkBox">목<input type="checkbox" value="821"></div>
+		           <div class="checkBox">금<input type="checkbox" value="983"></div>
+		           <div class="checkBox">토<input type="checkbox" value="1144"></div>
 		          
 		               
 		        </div>
@@ -116,7 +107,7 @@
 		
 		      
 		      <div class="topHeader"> 
-		        <!-- Trainer Schedule 제목들어가던자리 / 없는게 깔끔해서 뺐음 -->
+		        <!-- Trainer Schedule 제목들어가던자리 / 없는게 깔끔해서 뺌 -->
 		                  
 		        <h1> Trainer Schedule  
 		                 
@@ -124,7 +115,7 @@
 		
 		
 		        <!--일정 추가버튼-->
-		        <button class="addNew">
+		        <button class="addNew" type="button">
 		        일정추가
 		        </button>
 		

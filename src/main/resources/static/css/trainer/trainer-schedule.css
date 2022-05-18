@@ -60,6 +60,9 @@
     
   }
   
+  
+  
+  
 
   /* 트레이너 스케줄 h1 텍스트 */
   .topHeader {
@@ -68,7 +71,7 @@
     background: var(--mainColor);
     height: 85px;
     width: 100%;
-    padding: 15px 0px 15px 0px;
+    padding: 15px 0px 100px 0px;
     text-align: center;
     z-index: 30;
 
@@ -125,9 +128,11 @@
     background: rgba(120,120,255,0.06);
   }
   
+  
+  /* 시간표 너비 넓이 조정 */
   .myClass {
     background-color: var(--mainButtons);
-    width: 100px;
+    width: 160px;
     height: 30px;
   /* !important needed so on resize it doesnt come back to relative   */
     position: absolute !important;
@@ -212,6 +217,15 @@
     font-weight: 700;
     border-radius: 30px;
   }
+  
+  
+  
+  .tableHeader {
+  	margin-bottom : 20px;
+  }
+  
+  
+  
   
 
 
