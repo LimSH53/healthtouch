@@ -89,13 +89,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-       								<tr>
-                                        <td scope="row" class="col-6" th:text="${trainerProfile2.contents}">후기후기</td>
-                                        <td class="col-6" th:if="${trainerProfile2.grade}==1"> ★ </td>
-                                        <td class="col-6" th:if="${trainerProfile2.grade}==2"> ★★ </td>
-                                        <td class="col-6" th:if="${trainerProfile2.grade}==3"> ★★★ </td>
-                                        <td class="col-6" th:if="${trainerProfile2.grade}==4"> ★★★★ </td>
-                                        <td class="col-6" th:if="${trainerProfile2.grade}==5"> ★★★★★ </td>
+       								<tr th:each="tp : ${trainerprofile2}" >
+                                        <td scope="row" class="col-6" th:text="${tp.contents}">후기후기</td>
+                                        <td class="col-6" th:if="${tp.grade}==1"> ★ </td>
+                                        <td class="col-6" th:if="${tp.grade}==2"> ★★ </td>
+                                        <td class="col-6" th:if="${tp.grade}==3"> ★★★ </td>
+                                        <td class="col-6" th:if="${tp.grade}==4"> ★★★★ </td>
+                                        <td class="col-6" th:if="${tp.grade}==5"> ★★★★★ </td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -88,17 +88,15 @@
                                         <th scope="col" class="col-12"> 후기 </th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                    	<td type="hidden" th:text="${trainerProfile.order.no}"></td>
-                                        <td class="col-6" th:text="${trainerProfile.contents}"></td>
-                                        <td class="col-6" th:if="${trainerProfile.grade}==1"> ★ </td>
-                                        <td class="col-6" th:if="${trainerProfile.grade}==2"> ★★ </td>
-                                        <td class="col-6" th:if="${trainerProfile.grade}==3"> ★★★ </td>
-                                        <td class="col-6" th:if="${trainerProfile.grade}==4"> ★★★★ </td>
-                                        <td class="col-6" th:if="${trainerProfile.grade}==5"> ★★★★★ </td>
+            					 <tbody>
+       								<tr>
+                                        <td scope="row" class="col-6" th:text="*{contents}"></td>
+                                        <td class="col-6" th:if="*{grade}==1" value="★"></td>
+                                        <td class="col-6" th:if="*{grade}==2" value="★★"></td>
+                                        <td class="col-6" th:if="*{grade}==3" value="★★★"></td>
+                                        <td class="col-6" th:if="*{grade}==4" value="★★★★"></td>
+                                        <td class="col-6" th:if="*{grade}==5" value="★★★★★"></td>
                                     </tr>
-                                    <tr>      
                                 </tbody>
                             </table>
                         </div>
