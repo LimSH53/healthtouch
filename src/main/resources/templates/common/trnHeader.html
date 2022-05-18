@@ -11,6 +11,9 @@
     <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" th:href="@{/css/common/header-trn.css}"/>
     <script type='text/javascript' src=''></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
    
     </head>
                                  
@@ -18,6 +21,15 @@
     <div th:fragment="trn-body">
     <header class="header" id="header">
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+        <h6 style="color: #6c757d;"><span sec:authentication="principal.name"></span> 트레이너님 환영합니다</h6>
+        <!-- 알림 목록 -->
+        <a type="button" class="btn position-relative" onclick="viewAlertList();">
+        	<i class='bx bxs-bell' style="font-size: 1.5rem;"></i>
+        	<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        	99+
+        		<span class="visually-hidden">unread messages</span>
+        	</span>
+        </a>
         <a type="button" id="outbtn" class="btn btn-sm outline" style="color:#1b1b55 ; border-color: #1b1b55;" onclick="location.href='/member/logout'">로그아웃</a>
     </header>
     <div class="l-navbar" id="nav-bar">
@@ -127,6 +139,102 @@ $(".sub-menu a").click(function () {
   $(this).find(".right").toggleClass("fa-caret-up fa-caret-down");
 });
 </script>
+	<script>
+		var socket = null;
+	
+		$(document).ready(function(){
+			socket = new SockJS('/alert');
+			
+			socket.onopen = function() {
+				console.log('open');
+			};
+			
+			socket.onmessage = function(evt) {
+				console.log("??");
+				
+				var data = evt.data;
+			    
+			    const Toast = Swal.mixin({
+			    	toast: true,
+			    	position: 'top-end',
+			    	showConfirmButton: false,
+			    	timer: 5000,
+			    	didOpen: (toast) => {
+			    		toast.addEventListener('mouseenter', Swal.stopTimer);
+			    		toast.addEventListener('mouseleave', Swal.resumeTimer);
+			    	}
+			    })
+			    
+			    Toast.fire({
+			    	icon: 'info',
+			    	html: data,
+			    })
+			};
+			
+			socket.onclose = function() {
+				console.log('close');
+			}
+		});
+	</script>
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+		function viewAlertList() {
+			let loginId = /*[[ ${#authentication.principal.username} ]]*/
+			
+			$.ajax({
+				type: "post",
+				url: "/common/findAllAlert",
+				data: { loginId: loginId },
+				dataType: 'json',
+				success: function(data) {
+					var html = '';
+					
+					for(var i = 0; i < data.length; i++) {
+						var no = data[i].no;
+						var title = data[i].title;
+						var content = data[i].content;
+						var reqUrl = data[i].reqUrl;
+						var time = data[i].time;
+						
+						html += `<div class="alert alert-info alert-dismissible d-flex align-items-center fade show" style="width: auto; font-size: 0.75rem;">
+						    <i class="bi-info-circle-fill"></i>
+						    <strong class="mx-2">${ title }</strong> ${ content } <br> ${ time }
+						    <a type="button" class="btn" href="${ reqUrl }" style="font-size: 0.75rem;">바로 가기</a>
+						    <button type="button" class="btn-close" data-bs-dismiss="alert" onclick="changeStatus('${ no }');"></button>
+						</div>`;
+					}
+					
+					if(html == '') {
+						html = `<span class="text-center">알림이 없습니다.</span>`;
+					}
+					
+					Swal.fire({
+						position: 'top-end',
+						html: html,
+						showConfirmButton: false,
+					})
+				},
+				error: function(e) {
+					console.log(e);
+				}
+			})
+		}
+		
+		function changeStatus(no) {
+			$.ajax({
+				url: "/common/changeStatus",
+				type: "post",
+				data: { no: no },
+				success: function() {
+					console.log('읽음 처리');
+				},
+				error: function(e) {
+					console.log(e);
+				}
+			})
+		}
+		/*]]*/
+	</script>
 </div>
 </body>
 </html> 
