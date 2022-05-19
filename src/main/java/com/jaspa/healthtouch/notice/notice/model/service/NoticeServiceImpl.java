@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.jaspa.healthtouch.common.paging.PaginationInfo;
 import com.jaspa.healthtouch.notice.notice.model.dao.NoticeMapper;
+import com.jaspa.healthtouch.notice.notice.model.dto.CommentDTO;
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -73,10 +74,10 @@ private final NoticeMapper noticeMapper;
 		}
 	
 	//공지사항 삭제
-		@Override
-		public boolean deleteNotice(int noticeNo){
-			int queryResult = 0;
-			NoticeDTO notice = noticeMapper.selectNoticeDetail(noticeNo);
+	@Override
+	public boolean deleteNotice(int noticeNo){
+		int queryResult = 0;
+		NoticeDTO notice = noticeMapper.selectNoticeDetail(noticeNo);
 			
 			if ( notice != null && "N".equals(notice.getNoticeDelete()) ) {
 				  queryResult = noticeMapper.deleteNotice(noticeNo);
@@ -85,10 +86,34 @@ private final NoticeMapper noticeMapper;
 			 return (queryResult == 1) ? true : false;
 		}
 			
+	
+	
+	//공지사항 댓글목록
+	@Override
+	public List<CommentDTO>commentList(int noticeNo) throws Exception{
+		return noticeMapper.commentList(noticeNo);
 
-			}
+	}
 	
+	//공지사항 댓글등록
+	@Override
+	public int registComment(CommentDTO comment) throws Exception{
+		return noticeMapper.registComment(comment);
+	}
 	
+	//공지사항 댓글수정
+	@Override
+	public int modifyComment(CommentDTO comment) throws Exception{
+		return noticeMapper.modifyComment(comment);
+	}
+	
+	//공지사항 댓글삭제
+	@Override
+	public int deleteComment(int cmtNo) throws Exception{
+		return noticeMapper.deleteComment(cmtNo);
+	}
+
+
  
-	 
+}	 
 	

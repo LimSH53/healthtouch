@@ -31,146 +31,144 @@
  </div>
  <!-- 공지사항 상세조회 -->
 <div class="notice rounded">
-<form th:object="${notice}">
-<div>
+<div th:object="${notice}">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3">
       <span  name="title"  th:text="*{noticeTitle}" class="bd_title" style="font-size: 15px;"></span>
     </div>
     <div class="justify-content-md-center">
-     <i class='bx bx-user' style="font-size: 12px;"><span th:text="*{memberId}" class="mr-1"></span> </i> 
-     <i class='bx bx-time-five'  style="font-size: 12px;"><span th:text="*{#dates.format(noticeDate, 'yyyy-MM-dd')}"class="mr-1"> </span></i> 
-     <i class='bx bx-show-alt' style="font-size: 12px;"> <span th:text="*{noticeView}" class="mr-1"></span> Views　</i> 
+     <i class='bx bx-user' style="font-size: 12px;"><span th:if="*{memberId} == 'admin01'" class="mr-1">김센터</span></i> 
+     <i class='bx bx-time-five'  style="font-size: 12px;"><span th:text="*{#dates.format(noticeDate, 'yyyy-MM-dd')}"class="mr-1"></span></i> 
+     <i class='bx bx-show-alt' style="font-size: 12px;"> <span th:text="*{noticeView}" class="mr-1"></span> Views</i> 
     </div>
-  </div>
+ 
   <hr id="line">
-    <div name="content"  th:text="*{noticeContent}" id="bo_v_con" style="font-size: 12px;">
-    </div>
+    <div name="content" th:text="*{noticeContent}" id="bo_v_con" style="font-size: 12px;"></div>
     <hr id="line">
-       
+ </div>     
 	  <!-- 공지사항 목록, 수정,삭제 버튼 -->
     <div style="display:-webkit-box ">
-      <button th:onclick="'location.href=\''+@{/notice/notice} + '\''"type="button" class="list_btn btn btn-outline-secondary">목록</button>
+      <button th:onclick="'location.href=\''+@{/notice/notice} + '\''"type="button" style="font-size:12px;" class="list_btn btn btn-outline-secondary">목록</button>
       <div sec:authorize="hasRole('ROLE_CENTER')" class=" regist-btn" style="margin-left: 565px; ">
-        <a th:href="@{'/notice/noticemodify?noticeNo=' + ${ notice.noticeNo }}" type="button" class="btn btn-outline-secondary " value="수정">수정</a>
-        <a  th:href="@{'/notice/delete?noticeNo=' + ${ notice.noticeNo }}"type="button" class="btn btn-outline-secondary " value="삭제" id="noticedelete">삭제</a>
-     	    
-		        <script>
-			                $().ready(function () {
-			            $("#noticedelete").click(function () {
-									            Swal.fire({
-						  title: '게시글 삭제',
-						  text: "게시글을 삭제하시겠습니까?",
-						  imageUrl: '/images/checkicon.png',
-						  imageWidth: 100,
-						  imageHeight: 100,
-						  imageAlt: 'Custom image',
-						  showCancelButton: true,
-						  confirmButtonColor: '#1b1b55',
-						  cancelButtonColor: '#e2e2e2',
-						  confirmButtonText: '삭제'
-						  
-						}).then((result) => {
-						  if (result.isConfirmed) {
-						       Swal.fire({
-						     title: '게시글 삭제',
-						 	 text: "게시글이 삭제되었습니다",
-						      imageUrl: '/images/successicon.png',
-							  imageWidth: 100,
-						      imageHeight: 100,
-						      imageAlt: 'Custom image',
-							  confirmButtonColor: '#1b1b55'
-			         })
-                    }
-                })
-            });
-        });
-	            </script>
-      
-      
+        <a th:href="@{'/notice/noticemodify?noticeNo=' + ${ notice.noticeNo }}" style="font-size: 12px;" type="button" class="btn btn-outline-secondary " value="수정">수정</a>
+        <a  th:href="@{'/notice/delete?noticeNo=' + ${ notice.noticeNo }}" style="font-size: 12px;" type="button" class="btn btn-outline-secondary " value="삭제"  onclick="noticedelete()" id="noticedelete">삭제</a>
+     
       </div>
     </div>
-</form>
-  
-
-  
+ <br>
+ 
    <!-- 공지사항 댓글등록 -->
-  <section id="comment">
-    <form id="comment1">
-      <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요." required>
-      <button type="submit" class="btn btn-outline-secondary" id="cmtregist" style="font-size: 10px;">등록</button>
-      <script>
-			$().ready(function () {
-            $("#cmtregist").click(function () {
-                Swal.fire({
-					  title: '댓글등록',
-					  text: "댓글이 등록되었습다.",
-				      imageUrl: '/images/successicon.png',
-					  imageWidth: 100,
-				      imageHeight: 100,
-				      imageAlt: 'Custom image',
-					  confirmButtonColor: '#1b1b55',
-                });
-            });
-        });
-      </script>
-    </form>
-       <!-- 공지사항 댓글내역 -->
-    <ul class="media-list">
-      <li class="media">
-          <div class="media-body row">
-            <div class="col cm" >
-              <span class="cm_writer">헬스헬스****</span>
-              <span class="text-muted">
-                  <small class="text-muted">2022.04.15</small>
-              </span>
-            </div>
-              <p class="cm_content col-6">
-                잘부탁 드립니다!
-              </p>
-              <div class="btn-group col">
-                <a class="nav-link cm_btn pull-right "  data-toggle="modal" >수정</a>
-                <a  type="button" id="cmtdelete" class="nav-link cm_btn pull-right" >삭제</a>
-             
-		        <script>
-			                $().ready(function () {
-			            $("#cmtdelete").click(function () {
-									            Swal.fire({
-						  title: '댓글 삭제',
-						  text: "댓글을 삭제하시겠습니까?",
-						  imageUrl: '../images/checkicon.png',
-						  imageWidth: 100,
-						  imageHeight: 100,
-						  imageAlt: 'Custom image',
-						  showCancelButton: true,
-						  confirmButtonColor: '#1b1b55',
-						  cancelButtonColor: '#e2e2e2',
-						  confirmButtonText: '삭제'
-						}).then((result) => {
-						  if (result.isConfirmed) {
-						       Swal.fire({
-						      title:'댓글 삭제',
-						   	  text: '삭제되었습니다.',
-						      imageUrl: '../images/successicon.png',
-							  imageWidth: 100,
-						      imageHeight: 100,
-						      imageAlt: 'Custom image',
-							  confirmButtonColor: '#1b1b55'
-			         })
-                    }
-                })
-            });
-        });
-	            </script>
-                
-              </div>
-          </div>
-      </li>
-    </ul>
-
-  </section>
+  <th:block id="commentRegist">
+   <label><strong>댓글</strong></label>
+    <form name="cmtRegist" th:action="@{/notice/cmtRegist}"method="post" id="comment1"> 
+    <div class="input-group">
+    <input type="hidden" name="noticeNo" id="noticeNo" th:value="${notice.noticeNo}">
+      <input type="text" class="form-control" id="cmtContent" name="cmtContent" placeholder="내용을 입력하세요." required>
+      <button type="submit" class="btn btn-outline-secondary" name="cmtRegist" id="cmtRegist" style="font-size: 10px;">등록</button>
+    </div>
+    </form>   
+  </thblock>   
+  <br>
+ 
+ 
+  <!-- 공지사항 댓글내역 -->
+    <th:block id="comment"  th:each="cmt : ${commentList}" >
+     <ul class="media-list">
+     <li class="media">
+			<div class="media-body row">
+		             <div class="col cm" >
+		                <span class="cm_writer"  style="font-size: 12px;" th:text="${cmt.memberId}" ></span>
+		                <span class="text-muted"><small class="text-muted" style="font-size: 12px;" th:text="${#dates.format(cmt.cmtDate,'yyyy-MM-dd')}"></small></span>
+		              </div>
+		              <p class="cm_content col-6"  style="font-size: 12px;" th:text="${cmt.cmtContent}"></p>
+		              <div class="btn-group col" th:if="${#authentication.principal.username} == ${cmt.memberId}">
+		                <button type="button" class="nav-link cm_btn pull-right" onclick="cmtModify()">수정</button>
+		                <a type="button" class="nav-link cm_btn pull-right" onclick="cmtDelete()" th:href="@{'/notice/cmtDelete?cmtNo=' + ${ cmt.cmtNo }}">삭제</a>
+		              </div>
+		                </div>
+		             </li>
+		       </ul>
+	<hr id="line">
+  </th:block>
   
+  
+  <!-- 공지사항 댓글수정 -->
+    <script>
+    	function cmtModify() {
+    		Swal.fire({
+    			title: '댓글 수정',
+    			html:
+			      ` <input type="text" class="form-control" id="cmtContent" name="cmtContent" th:value="${comment.cmtContent}" placeholder="내용을 입력하세요." required>`,
+				confirmButtonText:'수정',
+				focusConfirm: false,
+				showDenyButton: true,
+				denyButtonText: '취소',
+				preConfirm: () => {
+					const cmtContent = Swal.getPopup().querySelector('#cmtContent').value
+					
+					if(!cmtContent) {
+						Swal.showValidationMessage('수정할 댓글을 입력하세요.')
+					}
+					
+					return { cmtContent: cmtContent }
+				}
+    		}).then((result) => {
+    			if(result.isConfirmed) {
+    				var cmtContent = result.value.cmtContent;
+        			
+        			var param = { cmtContent: cmtContent }
+        			
+           			$.ajax({
+           				url: "/notice/cmtModify",
+           				type: "post",
+           				async: false,
+       					data: JSON.stringify(param),
+       					contentType: 'application/json; charset=utf-8',
+       					success: function(data) {
+       						if(data) {
+       							Swal.fire({
+       	   							icon: 'success',
+       	       		    			text: '댓글이 수정되었습니다.',
+       	       		    			confirmButtonText: '확인',
+       	   						}).then((result) => {
+       	   							location.reload();
+       	   						})
+       						} else {
+       							Swal.fire({
+       	   							icon: 'error',
+       	       		    			text: '수정이 실패되었습니다.',
+       	   						})
+       						}
+       					},
+       					error: function(e) {
+       						console.log('댓글수정 실패');
+       						console.log(e);
+       					}
+           			});
+				}
+    		})
+    	}
+    </script>
+     <script>
+    	function removeMember() {
+    		Swal.fire({
+    			icon: 'warning',
+    			title: '댓글 삭제',
+    			text: '댓글을 삭제하시겠습니까?',
+    			showDenyButton: true,
+    			confirmButtonText: '삭제',
+    			denyButtonText: '취소',
+    		}).then((result) => {
+    			if(result.isConfirmed) {
+    				Swal.fire({
+    					text: '삭제가 완료되었습니다.',
+    					confirmButtonText: '확인',
+    				}).then((result) => {
+    					location.href = "/notice/cmtDelete?cmtNo=";
+    				})
+    			}
+    		})
+    	}
+    </script>
 </div>
-
-
 </body>
 </html> 
