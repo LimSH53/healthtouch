@@ -29,20 +29,22 @@
     <h2 class="titlename1">공지사항</h2>
  </div>
  <!-- 공지사항 검색 -->
- <th:block layout:fragment="search">
+<th:block layout:fragment="search">
+<div id="adv-search" class="input-group">
  <form id="searchForm"  th:action="@{/notice/notice}" method="get" class="input-group  " style="width: 40%; display:flex" role="form">
-      	<input type="hidden" name="currentPageNo" value="1"/>
-		<input type="hidden" name="recordsPerPage" th:value="${params.recordsPerPage}"/>
-		<input type="hidden" name="pageSize" th:value="${params.pageSize}"/>
-      	<select name="searchType" class="form-select" style="height: 32px;" aria-label="Default select example" required>
+      <input type="hidden" name="currentPageNo" value="1"/>
+	  <input type="hidden" name="recordsPerPage" th:value="${params.recordsPerPage}"/>
+	  <input type="hidden" name="pageSize" th:value="${params.pageSize}"/>
+	  <select name="searchType" class="form-control">
           <option value="title" th:selected="${#strings.equals(params.searchType, 'title')}">제목</option>
           <option value="content" th:selected="${#strings.equals(params.searchType, 'content')}">내용</option>
-        </select>
+      </select>
           <div  class="input-group mb-3" style="width: 200px;"  >
            <input type="text" name="searchKeyword" id="searchKeyword"  th:value="${params.searchKeyword}"  class="form-control input-text" placeholder="검색" >
               <div class="search_btn input-group-append"> <button class="btn btn-sm"  id="searchBtn" type="button" style="height: 32px;"><i class="bx bx-search"></i></button> </div>
           </div>
   </form>
+  </div>
   	</th:block>
  <!-- 공지사항 목록 -->
 <th:block layout:fragment="content">
@@ -57,7 +59,7 @@
 </thead>
 <tbody class="table-body" >
 <tr class="cell-1" th:if="${not #lists.isEmpty( noticeList )}" th:each="list : ${noticeList}"  >
-  <td class="text-center"th:text="${list.noticeNo}"></td>
+  <td class="text-center" th:text="${list.noticeNo}"></td>
  <td class="col-md-auto title" id="title"><a th:href="|@{/notice/noticedetail?noticeNo={no}(no=${ list.noticeNo })}|" th:text="${list.noticeTitle}"></a></td>
   <td th:text="${list.noticeView}"></td>
   <td th:text="${#dates.format(list.noticeDate,'yyyy-MM-dd')}"></td>
@@ -71,21 +73,29 @@
 </th:block>
 <button sec:authorize="hasRole('ROLE_CENTER')" onclick="location.href='/notice/noticeregist'" type="button" class="btn btn-outline-secondary">글작성</button>
  <!-- 공지사항 페이징 -->
-<th:block layout:fragment="paging">
-<nav th:fragment="pagination" th:if="${params != null and params.paginationInfo.totalRecordCount > 0}" th:object="${params.paginationInfo}" th:with="info=${params.paginationInfo}" aria-label="Page navigation" class="text-center">
-  <ul class="pagination flex-wrap d-flex justify-content-center">
-      <li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.firstPage - 1)} ]])"> 
-      	<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true"><i class="bx bxs-chevron-left"></i></span></a>
-      </li>
-      <li class="page-item"  th:each="pageNo : *{#numbers.sequence( firstPage, lastPage )}" th:class="${pageNo == params.currentPageNo} ? 'active'" > 
-      	<a class="page-link" href="javascript:void(0)" th:text="${pageNo}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(pageNo)} ]])"></a>
-      </li>
-      <li class="page-item"  th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.lastPage + 1)} ]])"> 	
-      	<a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true" ><i class='bx bxs-chevron-right'></i></span></a>
-      </li>
-  </ul>
-</nav >
-</th:block>
+	<th:block layout:fragment="paging">
+		<br>
+		<nav th:fragment="pagination" th:if="${params != null and params.paginationInfo.totalRecordCount > 0}" th:object="${params.paginationInfo}" th:with="info=${params.paginationInfo}" aria-label="Page navigation" class="text-center">
+			<ul class="pagination flex-wrap d-flex justify-content-center" style="display: flex; border-radius: 0.25rem;">
+					<li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(1)} ]])">
+						<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+					</li>
+					<li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.firstPage - 1)} ]])">
+						<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&lsaquo;</span></a>
+					</li>
+					<li class="page-item" th:each="pageNo : *{#numbers.sequence( firstPage, lastPage )}" th:class="${pageNo == params.currentPageNo} ? 'active'">
+						<a class="page-link" href="javascript:void(0)" th:text="${pageNo}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(pageNo)} ]])"></a>
+					</li>
+					<li class="page-item" th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.lastPage + 1)} ]])">
+						<a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&rsaquo;</span></a>
+					</li>
+					<li class="page-item" th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.totalPageCount)} ]])">
+						<a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+					</li>
+			</ul>
+		</nav>
+	</th:block>
+	<br>
 </div>
 </div>
 </div>

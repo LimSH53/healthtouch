@@ -1,6 +1,7 @@
 package com.jaspa.healthtouch.notice.notice.model.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -8,8 +9,12 @@ import com.jaspa.healthtouch.common.model.dto.CommonDTO;
 import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
+@Getter
+@Setter
 public class NoticeDTO extends CommonDTO {
   
 	private int noticeNo;
@@ -25,7 +30,8 @@ public class NoticeDTO extends CommonDTO {
 	
 
 	private MemberDTO member;
-
+	private List<CommentDTO> comment;
+	
 
 	
 	 

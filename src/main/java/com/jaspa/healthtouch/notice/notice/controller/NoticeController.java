@@ -3,25 +3,32 @@ package com.jaspa.healthtouch.notice.notice.controller;
 
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
-
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jaspa.healthtouch.login.model.dto.UserImpl;
+import com.jaspa.healthtouch.notice.notice.model.dto.CommentDTO;
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
 import com.jaspa.healthtouch.notice.notice.model.service.NoticeService;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/notice")
 public class NoticeController {
@@ -30,7 +37,7 @@ public class NoticeController {
 	
 	
 	@Autowired
-	public NoticeController(NoticeService noticeService, MessageSource messageSource) {
+	public NoticeController(NoticeService noticeService) {
 		this.noticeService= noticeService;
 	}
 	
@@ -41,6 +48,7 @@ public class NoticeController {
 			List<NoticeDTO> noticeList = noticeService.noticeList(params);
 
 			model.addAttribute("noticeList", noticeList);
+	
 			
 			return "/notice/notice";
 		}
@@ -48,8 +56,15 @@ public class NoticeController {
 	
 	//공지사항 상세조회 
 	@GetMapping("/noticedetail")
-	public String selectNoticeDetail (@ModelAttribute("params") NoticeDTO params, @RequestParam("noticeNo") int noticeNo, Model model) throws Exception {
+	public String selectNoticeDetail (Model model, @RequestParam("noticeNo") int noticeNo) throws Exception {
 		NoticeDTO notice = noticeService.selectNoticeDetail(noticeNo);
+		
+		List<CommentDTO> commentList = noticeService.commentList(noticeNo);
+		
+		log.info(notice.toString());
+		log.info(commentList.toString());
+		
+		model.addAttribute("commentList",commentList);
 		model.addAttribute("notice", notice);
 	
 			return "/notice/noticedetail";	
@@ -121,8 +136,43 @@ public class NoticeController {
 		  return "redirect:/notice/notice";
 		}	
 	
+
+	 
+		//공지사항 댓글등록
+		@RequestMapping("/cmtRegist") 
+		public String registComment(@ModelAttribute CommentDTO comment, @AuthenticationPrincipal UserImpl user)throws Exception{
+			 comment.setMemberId(user.getId());
+			 log.info(comment.toString());
+			 noticeService.registComment(comment);
+			 return "redirect:/notice/noticedetail?noticeNo="+comment.getNoticeNo();
+		 }
+			  
+		//공지사항 댓글수정 
+		@GetMapping("/cmtModify")
+		public void CommentModify(@RequestParam int cmtNo, Model model)throws Exception{
+				List<CommentDTO> comment = noticeService.commentList(cmtNo);
+				model.addAttribute("comment", comment);
+				log.info("comment:{}",comment);
+			 }
+		  
+		//공지사항 댓글수정 
+		@RequestMapping("/cmtModify")
+		@ResponseBody
+		public void modifyComment(@RequestBody CommentDTO comment)throws Exception{
+				 log.info(comment.toString());
+				 noticeService.modifyComment(comment);
+			 }
+				
 		
+		//공지사항 댓글삭제
+		@GetMapping("/cmtDelete")
+		private String deleteComment(@RequestParam("cmtNo") int cmtNo,@ModelAttribute CommentDTO comment ) throws Exception{
+			noticeService.deleteComment(cmtNo);
+			log.info("cmtNo:{}",cmtNo);
+			return "redirect:/notice/noticedetail?noticeNo="+comment.getNoticeNo();
+			    }
+			    
+
 }
 		
-	
 		

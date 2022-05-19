@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.jaspa.healthtouch.notice.notice.model.dto.CommentDTO;
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
 
 
@@ -16,7 +17,7 @@ public interface NoticeMapper {
 	List<NoticeDTO> noticeList(NoticeDTO params);
 	 
 	
-	//공지사항 페이지 조회
+	//공지사항 조회
 	int noticeFind(NoticeDTO params);
 	
 	 
@@ -36,7 +37,21 @@ public interface NoticeMapper {
 	//공지사항 삭제
 	int deleteNotice(int noticeNo);
 	
-
+	
+	//공지사항 댓글목록
+	int commentCount() throws Exception;
+	
+	//공지사항 댓글목록
+	List<CommentDTO>commentList(int noticeNo) throws Exception;
+	
+	//공지사항 댓글등록
+	int registComment(CommentDTO comment) throws Exception;
+	
+	//공지사항 댓글수정
+	int modifyComment(CommentDTO comment) throws Exception;
+	
+	//공지사항 댓글삭제
+	int deleteComment(int cmtNo)throws Exception;
 	
 	
 }

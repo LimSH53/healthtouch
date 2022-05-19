@@ -13,6 +13,7 @@
 		<result property="noticeCategory" column="NOT_CATEGORY"/>
 		
 		<association property="member" resultMap="memberResultMap"/>
+		<collection property="comment" resultMap="commentResultMap"/>
 	</resultMap >
 	  
 	<resultMap type="com.jaspa.healthtouch.notice.notice.model.dto.AttachmentDTO" id="attachmentResultMap" >
@@ -28,14 +29,15 @@
 	</resultMap>
 
 	<resultMap 	type="com.jaspa.healthtouch.notice.notice.model.dto.CommentDTO" id="commentResultMap"  >
-		<id property="no" column="COM_NO"/>
-		<result property="id" column="COM_MEMBER_ID"/>
+		<id property="cmtNo" column="COM_NO"/>
+		<result property="memberId" column="COM_MEMBER_ID"/>
 		<result property="noticeNo" column="COM_NOT_NO"/>
-		<result property="content" column="COM_CONTENT"/>
-		<result property="delete" column="COM_DELETE"/>
-		<result property="createDate" column="COM_DATE"/>
-		<result property="editDate" column="COM_EDIT_DATE"/>
+		<result property="cmtContent" column="COM_CONTENT"/>
+		<result property="cmtDelete" column="COM_DELETE"/>
+		<result property="cmtDate" column="COM_DATE"/>
+		<result property="cmtEditDate" column="COM_EDIT_DATE"/>
 		
+		<association property="member" resultMap="memberResultMap"/>
 	</resultMap>
 	
 		<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberDTO" id="memberResultMap">
@@ -62,7 +64,7 @@
 	
 	
 	<!-- 공지사항 조회 -->
-	<select id="noticeList" resultMap="noticeResultMap" parameterType="com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO" >
+	<select id="noticeList" resultMap="noticeResultMap"  parameterType="com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO" >
   SELECT A.RNUM
   		,A.NOT_NO
   	 	,A.NOT_MEMBER_ID
@@ -89,7 +91,6 @@
 				  	 	,C.NOT_DATE
 				  	 	,C.NOT_EDIT_DATE
 				  	 	,C.NOT_VIEW
-  	 	
     			FROM  TBL_NOTICE C
     	<if test="searchKeyword != null and searchKeyword != ''">
 							<where>
@@ -202,4 +203,72 @@
 	
 	</update>
 	
+	<!-- 공지사항 댓글갯수 -->
+	<select id="commentCount" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM TBL_COMMENT
+        WHERE COM_NOT_NO = ${noticeNo}
+      
+    </select>
+  
+    <!-- 공지사항 댓글목록 -->
+      <select id="commentList" resultMap="commentResultMap">
+         SELECT
+   			COM_NO
+   		   ,COM_MEMBER_ID
+   		   ,COM_NOT_NO
+   		   ,COM_CONTENT
+   		   ,COM_DELETE
+   		   ,COM_DATE
+        FROM TBL_COMMENT
+        WHERE COM_NOT_NO = ${noticeNo}
+        AND COM_DELETE = 'N'
+        ORDER BY COM_NO DESC
+    </select>
+		
+    <!-- 공지사항 댓글등록 -->
+	<insert id="registComment" >
+        INSERT 
+          INTO TBL_COMMENT 
+        ( 
+          COM_NO
+        , COM_MEMBER_ID
+        , COM_NOT_NO
+        , COM_CONTENT
+        , COM_DELETE
+        , COM_DATE
+        )
+        VALUES
+        (
+          SEQ_COM_NO.NEXTVAL
+        , #{memberId}
+        , #{noticeNo}
+        , #{cmtContent}
+       	, 'N'
+        , SYSDATE
+        )
+	</insert>
+	
+	
+    <!-- 공지사항 댓글수정 -->
+      <update id="modifyComment">
+        UPDATE TBL_COMMENT
+            SET
+               COM_EDIT_DATE=SYSDATE
+			 , COM_CONTENT=#{cmtContent}
+        WHERE COM_NO = #{cmtNo}
+    </update>
+    	
+    	
+    <!-- 공지사항 댓글삭제 -->
+      <update id="deleteComment" parameterType="int">
+        UPDATE 
+	 	  TBL_COMMENT
+	 	 SET COM_DELETE = 'Y'
+		WHERE COM_NO=#{cmtNo}
+    </update>
+
+
+
 </mapper>
