@@ -47,20 +47,76 @@
 	    <h2 class="mb-3">락커 관리
 	
 	      <span style="float: right;">
-	        <button type="button" class="btn btn-primary">이동</button>
+	      	<!-- Button trigger modal -->
+	        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#moveModal">이동</button>
 	        <!-- Button trigger modal -->
-	        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-	          등록
-	        </button>
+	        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registModal">등록</button>
 	      </span>
 	    </h2>
 	
-	    <!-- Modal -->
-	    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		
+		
+		
+		<!-- 이동 Modal -->
+		<div class="modal fade" id="moveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">락커 이동</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="row" style="justify-content: center;">
+					<div class="col-sm-5">
+						<select class="form-select" aria-label="Default select example">
+							<option selected disabled>기존 락커 번호</option>
+							<th:block th:each="num : ${ #numbers.sequence(1,20) }">
+	                  		<option th:text="${ num }"></option>
+	                </th:block>
+						</select>
+						
+					</div>
+					<div class="col-sm-1" style="display: table-cell; vertical-align: middle;">
+						<i class='bx bx-right-arrow-alt'></i>
+					</div>
+					<div class="col-sm-5">
+						<select class="form-select" aria-label="Default select example">
+							<option selected disabled>변경 락커 번호</option>
+							<th:block th:each="num : ${ #numbers.sequence(1,20) }">
+			                  <option th:text="${ num }"></option>
+			                </th:block>
+						</select>
+					</div>	
+				</div>
+				<br>
+				<div class="row" style="justify-content: center;" >
+					<div class="mb-1 col-7">
+		              <label for="mId" class="form-label">아이디</label>
+		              <input type="text" class="form-control" name="mId" id="moveId" disabled></input>
+		            </div>
+		            <div class="mb-1 col-7">
+		              <label for="mName" class="form-label">이름</label>
+		              <input type="text" class="form-control" name="mName" id="movaName" disabled></input>
+		            </div>
+		            <div class="mb-1 col-7">
+		              <label for="lDate" class="form-label">이용기간</label>
+		              <input type="text" class="form-control" name="lDate" id="lockerDate" disabled></input>
+		            </div>
+				</div>				
+			  </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+		        <button type="button" class="btn btn-primary">이동</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	    <!-- 등록 Modal -->
+	    <div class="modal fade" id="registModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	      <div class="modal-dialog">
 	        <div class="modal-content">
 	          <div class="modal-header">
-	            <h3 class="modal-title" id="exampleModalLabel">락커 이용 등록</h3>
+	            <h5 class="modal-title" id="exampleModalLabel">락커 이용 등록</h5>
 	            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	          </div>
 	          <div class="modal-body">
@@ -95,8 +151,7 @@
 	          </div>
 	        </div>
 	      </div>
-	    </div>
-	
+	    </div> 
 	
 	
 	    <div class="locker" style="margin-left:50px">
@@ -125,7 +180,7 @@
 	        <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 2].isEmpty() }">
 	
 	          <div class="p-1 text-end">
-	            <div class="text-start fs-5 fw-bolder lockNum">6</div>
+	            <div class="text-start fs-5 fw-bolder lockNum">2</div>
 	            <div class="status_on">사용중</div>
 	            <div th:each="locker : ${ lockerList.?[locNum == 2] }"><span th:text="${locker.member.name}"></span></div>
 	            <div th:each="locker : ${ lockerList.?[locNum == 2] }"><span
