@@ -35,7 +35,7 @@ public class CenterLockerController {
 	public ModelAndView selectAllLockerList(ModelAndView mv) {
 		
 		List<LockerDTO> lockerList = centerLockerService.selectAllLocker();
-		
+		log.info("lockerList : {}", lockerList);
 		mv.addObject("lockerList", lockerList);
 		mv.setViewName("center/locker/lockerList");
 		return mv;
