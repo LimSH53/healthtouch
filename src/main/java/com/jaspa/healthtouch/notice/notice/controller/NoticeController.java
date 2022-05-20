@@ -166,10 +166,10 @@ public class NoticeController {
 		
 		//공지사항 댓글삭제
 		@GetMapping("/cmtDelete")
-		private String deleteComment(@RequestParam("cmtNo") int cmtNo,@ModelAttribute CommentDTO comment ) throws Exception{
+		private String deleteComment(@RequestParam("cmtNo") int cmtNo) throws Exception{
 			noticeService.deleteComment(cmtNo);
 			log.info("cmtNo:{}",cmtNo);
-			return "redirect:/notice/noticedetail?noticeNo="+comment.getNoticeNo();
+			return "redirect:/notice/notice";
 			    }
 			    
 

@@ -57,47 +57,47 @@
  <br>
  
    <!-- 공지사항 댓글등록 -->
-  <th:block id="commentRegist">
+  <div id="commentRegist">
    <label><strong>댓글</strong></label>
     <form name="cmtRegist" th:action="@{/notice/cmtRegist}"method="post" id="comment1"> 
     <div class="input-group">
     <input type="hidden" name="noticeNo" id="noticeNo" th:value="${notice.noticeNo}">
       <input type="text" class="form-control" id="cmtContent" name="cmtContent" placeholder="내용을 입력하세요." required>
-      <button type="submit" class="btn btn-outline-secondary" name="cmtRegist" id="cmtRegist" style="font-size: 10px;">등록</button>
+      <button type="submit" class="btn btn-outline-secondary" name="cmtRegist" id="cmtRegist" style="font-size: 11px;">등록</button>
     </div>
     </form>   
-  </thblock>   
+  </div>   
   <br>
  
  
   <!-- 공지사항 댓글내역 -->
-    <th:block id="comment"  th:each="cmt : ${commentList}" >
+    <div id="comment"  th:each="cmt : ${commentList}" >
      <ul class="media-list">
      <li class="media">
 			<div class="media-body row">
 		             <div class="col cm" >
-		                <span class="cm_writer"  style="font-size: 12px;" th:text="${cmt.memberId}" ></span>
+		                <span class="cm_writer"  style="font-size: 13px;" th:text="${cmt.memberId}" ></span>
 		                <span class="text-muted"><small class="text-muted" style="font-size: 12px;" th:text="${#dates.format(cmt.cmtDate,'yyyy-MM-dd')}"></small></span>
 		              </div>
 		              <p class="cm_content col-6"  style="font-size: 12px;" th:text="${cmt.cmtContent}"></p>
 		              <div class="btn-group col" th:if="${#authentication.principal.username} == ${cmt.memberId}">
-		                <button type="button" class="nav-link cm_btn pull-right" onclick="cmtModify()">수정</button>
-		                <a type="button" class="nav-link cm_btn pull-right" onclick="cmtDelete()" th:href="@{'/notice/cmtDelete?cmtNo=' + ${ cmt.cmtNo }}">삭제</a>
+		                <a type="submit" class="nav-link cm_btn pull-right" id="cmtModify" th:onclick="cmtModify([[ ${cmt.cmtNo} ]])">수정</a>
+		                <a type="submit" class="nav-link cm_btn pull-right" id="cmtDelete" onclick="cmtDelete()">삭제</a>
 		              </div>
 		                </div>
 		             </li>
 		       </ul>
-	<hr id="line">
-  </th:block>
+  </div>
   
   
   <!-- 공지사항 댓글수정 -->
-    <script>
-    	function cmtModify() {
+    <script th:inline="javascript">
+    	function cmtModify(cmtNo) {
     		Swal.fire({
     			title: '댓글 수정',
     			html:
-			      ` <input type="text" class="form-control" id="cmtContent" name="cmtContent" th:value="${comment.cmtContent}" placeholder="내용을 입력하세요." required>`,
+			      ` <input type="text" class="form-control" id="cmtContent" name="cmtContent" th:value="${comment.cmtContent}" placeholder="내용을 입력하세요." required>
+			      `,
 				confirmButtonText:'수정',
 				focusConfirm: false,
 				showDenyButton: true,
@@ -113,10 +113,9 @@
 				}
     		}).then((result) => {
     			if(result.isConfirmed) {
+					var cmtNo = result.value.cmtNo;
     				var cmtContent = result.value.cmtContent;
-        			
-        			var param = { cmtContent: cmtContent }
-        			
+        			var param = { cmtContent: cmtContent,cmtNo: cmtNo}
            			$.ajax({
            				url: "/notice/cmtModify",
            				type: "post",
@@ -149,7 +148,7 @@
     	}
     </script>
      <script>
-    	function removeMember() {
+    	function cmtDelete() {
     		Swal.fire({
     			icon: 'warning',
     			title: '댓글 삭제',
@@ -163,12 +162,11 @@
     					text: '삭제가 완료되었습니다.',
     					confirmButtonText: '확인',
     				}).then((result) => {
-    					location.href = "/notice/cmtDelete?cmtNo=";
+    					location.href = "/notice/cmtDelete";
     				})
     			}
     		})
     	}
     </script>
-</div>
-</body>
+</dody>
 </html> 
