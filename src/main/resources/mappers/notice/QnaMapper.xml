@@ -8,7 +8,7 @@
 		<result property="categoryNo" column="Q_CAT_NO"/>
 		<result property="qContent" column="Q_CONTENT"/>
 		<result property="qDelete" column="Q_DELETE"/>
-		<result property="qDate" column="Q_DATE"/>
+		<result property="qDate" column="Q_DATE"/> 
 		<result property="qEditDate" column="Q_EDIT_DATE"/>
 		<result property="aRead" column="Q_A_READ"/>
 		

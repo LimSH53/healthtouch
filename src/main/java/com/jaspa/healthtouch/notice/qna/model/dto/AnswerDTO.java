@@ -14,7 +14,7 @@ public class AnswerDTO {
 	private int qNo;
 	private String memberId;
 	private String aTitle;
-	private String aContent;
+	private String aContent; 
 	private String aDelete;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date aDate;

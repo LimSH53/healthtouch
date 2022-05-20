@@ -16,7 +16,7 @@ public interface QnaMapper {
 	//문의글 조회
 	List<QuestionDTO> qnaList(QuestionDTO params)throws Exception;
 	
-	
+	 
 	//문의글 페이지 조회
 	int qnaFind(QuestionDTO params)throws Exception;
 	

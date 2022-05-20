@@ -23,7 +23,7 @@ public class QuestionDTO extends CommonDTO {
 	private String qTitle;
 	private String qContent;
 	private String qDelete;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern="yyyy-MM-dd") 
 	private Date qDate;
 	private Date qEditDate;
 	private int  aRead;

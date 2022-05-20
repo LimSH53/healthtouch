@@ -19,7 +19,7 @@ import com.jaspa.healthtouch.notice.qna.model.dto.QuestionCategoryDTO;
 import com.jaspa.healthtouch.notice.qna.model.dto.QuestionDTO;
 
 import lombok.extern.slf4j.Slf4j;
-
+ 
 
 @Slf4j
 @Service("QnaService")

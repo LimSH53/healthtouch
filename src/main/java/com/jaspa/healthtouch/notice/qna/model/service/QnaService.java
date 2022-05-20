@@ -9,7 +9,7 @@ import com.jaspa.healthtouch.notice.qna.model.dto.QuestionDTO;
 
 public interface QnaService {
 
-	
+	 
 	//문의글 조회
 	List<QuestionDTO> qnaList(QuestionDTO params)throws Exception;
 	

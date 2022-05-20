@@ -27,7 +27,7 @@ import com.jaspa.healthtouch.notice.qna.model.dto.QuestionDTO;
 import com.jaspa.healthtouch.notice.qna.model.service.QnaService;
 
 import lombok.extern.slf4j.Slf4j;
- 
+  
 @Slf4j
 @Controller
 @RequestMapping("/notice/*")
