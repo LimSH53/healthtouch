@@ -13,7 +13,7 @@
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     </head>     
    
-  <body id="body-pd" class='snippet-body ' style="min-height:90vh">
+  <body id="body-pd" class='snippet-body ' style="min-height:105vh">
   
    <div sec:authorize="hasRole('ROLE_CENTER')" th:replace="/common/centerHeader.html :: center-body"></div>
   <div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-body"></div>
@@ -28,15 +28,21 @@
     <h2 class="titlename1">1:1문의</h2>
  </div>
   <!-- 1:1문의 검색 -->
- <div  >
-  <div class="row search">
-      <div class="col-md-12" >
-          <div class="input-group mb-3" > <input type="text" class="form-control input-text" placeholder="검색" aria-label="Recipient's username" aria-describedby="basic-addon2">
-              <div class="search_btn input-group-append"> <button class="btn btn-sm" type="button"><i class="bx bx-search"></i></button> </div>
+ <th:block layout:fragment="search">
+ <form id="searchForm"  th:action="@{/notice/qna}" method="get" class="input-group "style="width: 40%; display:flex" role="form">
+      	<input type="hidden" name="currentPageNo" value="1"/>
+		<input type="hidden" name="recordsPerPage" th:value="${params.recordsPerPage}"/>
+		<input type="hidden" name="pageSize" th:value="${params.pageSize}"/>
+      	<select name="searchType" class="form-select" style="height: 32px;" aria-label="Default select example" required>
+          <option value="title" th:selected="${#strings.equals(params.searchType, 'title')}">제목</option>
+          <option value="content" th:selected="${#strings.equals(params.searchType, 'content')}">내용</option>
+        </select>
+          <div  class="input-group mb-3" style="width: 200px;"  >
+           <input type="text" name="searchKeyword" id="searchKeyword"  th:value="${params.searchKeyword}"  class="form-control input-text" placeholder="검색" >
+              <div class="search_btn input-group-append"> <button class="btn btn-sm"  id="searchBtn" type="button" style="height: 32px;"><i class="bx bx-search"></i></button> </div>
           </div>
-      </div>
-  </div>
-</div>
+  </form>
+  	</th:block>
  <!-- 1:1문의 목록 -->
 <table class="table">
 <thead>
@@ -48,90 +54,53 @@
 </tr>
 </thead>
 <tbody class=" table-body">
-<tr class=" cell-1">
-  <td class=" text-center flex-md-nowrap" >5</td>
+<tr class="cell-1" th:if="${not #lists.isEmpty( qnaList )}" th:each="list : ${qnaList}"  >
+  <td class=" text-center flex-md-nowrap" th:text="${list.qNo}"></td>
   <td class="col-md-auto">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center " >
-      <span class="bd_title" style="font-size: 15px;">이용관련 문의</span>
+      <a class="bd_title" style="font-size: 15px; color: #1b1b55;" th:href="|@{/notice/qnadetail?qNo={no}(no=${ list.qNo })}|" th:text="${list.qTitle}" ></a>
     </div>
     <div class="d-flex">
-      <span class="mr-1"><i class='bx bx-time-five' ></i> 22.04.15</span>
-      <span class="mr-1"></i> 이용문의 </span>　
+     <i class='bx bx-time-five' > <span class="mr-1" th:text="${#dates.format(list.qDate,'yyyy-MM-dd')}"></span></i>
+     <i class='bx bx-purchase-tag-alt'><span class="mr-1"th:text="${list.questionCategory.categoryKind }"></span></i> 
     </div>
   </td>
-  <td class=""> <button class="status_n rounded">미답변</button></td>
-  <td class="">use****</td>
-</tr>
-<tr class="cell-1">
-  <td class="text-center">4</td>
   <td>
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center " >
-      <span class="bd_title" style="font-size: 15px;">가격관련 문의</span>
-    </div>
-    <div class="d-flex">
-      <span class="mr-1"><i class='bx bx-time-five' ></i> 22.04.15</span>
-      <span class="mr-1"></i> 가격문의 </span>　
-    </div>
+  	<button type="button" class="status_n rounded" th:if="${ list.aRead == 0 }" >미답변</button>
+  	<button type="button" class="status_y rounded" th:unless="${ list.aRead == 0 }" >답변완료</button>
   </td>
-  <td > <button class="status_y rounded">답변완료</button></td>
-  <td>happ****</td>
+  <td th:text="${list.memberId}"></tdth>
 </tr>
-<tr class="cell-1">
-  <td class="text-center">3</td>
-  <td>
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center " >
-      <span class="bd_title" style="font-size: 15px;">가격관련 문의</span>
-    </div>
-    <div class="d-flex">
-      <span class="mr-1"><i class='bx bx-time-five' ></i> 22.04.15</span>
-      <span class="mr-1"></i> 가격문의 </span>　
-    </div>
-  </td>
-  <td > <button class="status_y rounded">답변완료</button></td>
-  <td>guen****</td>
-</tr>
-<tr class="cell-1">
-  <td class="text-center">2</td>
-  <td>
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center " >
-      <span class="bd_title" style="font-size: 15px;">이용관련 문의</span>
-    </div>
-    <div class="d-flex">
-      <span class="mr-1"><i class='bx bx-time-five' ></i> 22.04.15</span>
-      <span class="mr-1"></i> 이용문의 </span>　
-    </div>
-  </td>
-  <td > <button class="status_y rounded">답변완료</button></td>
-  <td>mus****</td>
-</tr>
-<tr class="cell-1">
-  <td class="text-center">1</td>
-  <td>
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center " >
-      <span class="bd_title" style="font-size: 15px;">이용관련 문의</span>
-    </div>
-    <div class="d-flex">
-      <span class="mr-1"><i class='bx bx-time-five' ></i> 22.04.15</span>
-      <span class="mr-1"></i> 이용문의 </span>　
-    </div>
-  </td>
-  <td > <button class="status_y rounded">답변완료</button></td>
-  <td>단백****</td>
-</tr>
+<tr class="cell-1" th:unless="${not #lists.isEmpty( qnaList )}">
+  <td colspan="4"> 조회된 결과가 없습니다. </td>
+</tr> 
 </tbody>
 </table>
-<button sec:authorize="hasRole('ROLE_MEMBER')" type="button" class="btn btn-outline-secondary">글작성</button>
+<button sec:authorize="hasRole('ROLE_MEMBER')" onclick="location.href='/notice/qnaregist'" type="button" class="btn btn-outline-secondary">글작성</button>
  <!-- 1:1문의 페이징 -->
-<nav>
-   <ul class="pagination flex-wrap d-flex justify-content-center">
-      <li class="page-item"><a class="page-link" href="#" data-abc="true"><i class="bx bxs-chevron-left"></i></a></li>
-      <li class="page-item active"><a class="page-link" href="#" data-abc="true">1</a></li>
-      <li class="page-item"><a class="page-link" href="#" data-abc="true">2</a></li>
-      <li class="page-item"><a class="page-link" href="#" data-abc="true">3</a></li>
-      <li class="page-item"><a class="page-link" href="#" data-abc="true">4</a></li>
-      <li class="page-item"><a class="page-link" href="#" data-abc="true"><i class='bx bxs-chevron-right'></i></a></li>
-  </ul>
-</nav>
+	<th:block layout:fragment="paging">
+		<br>
+		<nav th:fragment="pagination" th:if="${params != null and params.paginationInfo.totalRecordCount > 0}" th:object="${params.paginationInfo}" th:with="info=${params.paginationInfo}" aria-label="Page navigation" class="text-center">
+			<ul class="pagination flex-wrap d-flex justify-content-center" style="display: flex; border-radius: 0.25rem;">
+					<li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(1)} ]])">
+						<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+					</li>
+					<li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.firstPage - 1)} ]])">
+						<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&lsaquo;</span></a>
+					</li>
+					<li class="page-item" th:each="pageNo : *{#numbers.sequence( firstPage, lastPage )}" th:class="${pageNo == params.currentPageNo} ? 'active'">
+						<a class="page-link" href="javascript:void(0)" th:text="${pageNo}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(pageNo)} ]])"></a>
+					</li>
+					<li class="page-item" th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.lastPage + 1)} ]])">
+						<a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&rsaquo;</span></a>
+					</li>
+					<li class="page-item" th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.totalPageCount)} ]])">
+						<a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+					</li>
+			</ul>
+		</nav>
+	</th:block>
+	<br>
 </div>
 </div>
 </div>

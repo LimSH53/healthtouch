@@ -118,6 +118,7 @@ tbody td{
 }
 
 .status_n{
+	height: 25px;
     font-size: 13px;
     border: #1b1b55 solid 0.5px;
     color: #1b1b55;
@@ -126,6 +127,7 @@ tbody td{
 }
 
 .status_y{
+	height: 30px;
     font-size: 13px;
     border: #e2e2e2 solid 0.5px;
     color: #e2e2e2;
