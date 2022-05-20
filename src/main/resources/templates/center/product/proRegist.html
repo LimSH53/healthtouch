@@ -74,18 +74,36 @@
             </form>
         </div>
 </body>
-	<script>
-	$(document).ready(function() {
-		  $('#pro-category').change(function() {
-		    var result = $('#pro-category option:selected').val();
-		    if (result == '20') {
-		      $('#count').show();
-		      $('#period').hide();
-		    } else {
-		      $('#count').hide();
-		      $('#period').show();
-		    }
-		  }); 
-		}); 
+	<script type="text/javascript">
+		// 파라미터로 넘어온 값 추출
+		function getParameterByName(name) { 
+			name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]"); 
+			let regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), 
+			results = regex.exec(location.search); 
+			return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " ")); 
+			}
+		
+		let categoryNo = getParameterByName('categoryNo');
+		console.log("categoryNo :", categoryNo);
+	
+		// 넘어온 파라미터와 동일한 값 선택
+		$(function(){
+			$("#pro-category").val(categoryNo).attr("selected","selected");
+		})
 	</script>
+	<script>
+		$(document).ready(function() {
+			  $('#pro-category').ready(function() {
+			    var result = $('#pro-category option:selected').val();
+			    if (result == '20') {
+			      $('#count').show();
+			      $('#period').hide();
+			    } else {
+			      $('#count').hide();
+			      $('#period').show();
+			    }
+			  }); 
+			}); 
+	</script>
+	
 </html>
