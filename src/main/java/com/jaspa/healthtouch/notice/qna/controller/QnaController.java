@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
   
 @Slf4j
 @Controller
-@RequestMapping("/notice/*")
+@RequestMapping("/notice/*") 
 public class QnaController {
 	private QnaService qnaService;
 	
