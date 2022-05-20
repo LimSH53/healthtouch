@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jaspa.healthtouch.center.revenue.model.service.RevenueService;
-import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 import com.jaspa.healthtouch.member.product.model.dto.PaymentDTO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -39,5 +38,20 @@ public class RevenueController {
 		
 		return mv;
 	}
-
+	
+	@GetMapping("/product")
+	public ModelAndView selectProRevenue(ModelAndView mv, @ModelAttribute("params") PaymentDTO params) {
+		
+		log.info("params:{}", params);
+		
+		List<PaymentDTO> revenueProList = revenueService.selectProRevenue(params);
+		
+		log.info("revenueProList :{}", revenueProList);
+		
+		mv.addObject("revenueProList", revenueProList);
+		mv.setViewName("center/revenue/productRevenue");
+		
+		return mv;
+	}
+	
 }

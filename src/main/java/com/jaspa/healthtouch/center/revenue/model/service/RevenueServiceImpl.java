@@ -46,4 +46,26 @@ public class RevenueServiceImpl implements RevenueService{
 		return revenueList;
 	}
 
+	@Override
+	public List<PaymentDTO> selectProRevenue(PaymentDTO params) {
+		
+		List<PaymentDTO> revenueProList = Collections.emptyList();
+		
+		int revenueProTotalCount = revenueMapper.selectProRevenueTotalCount(params);
+		
+		log.info("revenueProTotalCount :{}", revenueProTotalCount);
+		
+		PaginationInfo paginationInfo = new PaginationInfo(params);
+		paginationInfo.setTotalRecordCount(revenueProTotalCount);
+		
+		params.setPaginationInfo(paginationInfo);
+		
+		if(revenueProTotalCount > 0) {
+			revenueProList = revenueMapper.selectProRevenue(params);
+			log.info("업데이트 된 revenueProList:{}", revenueProList);
+		}
+		
+		return revenueProList;
+	}
+
 }
