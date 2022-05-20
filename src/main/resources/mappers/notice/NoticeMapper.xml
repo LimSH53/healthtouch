@@ -254,9 +254,8 @@
     <!-- 공지사항 댓글수정 -->
       <update id="modifyComment">
         UPDATE TBL_COMMENT
-            SET
-               COM_EDIT_DATE=SYSDATE
-			 , COM_CONTENT=#{cmtContent}
+        SET
+		   COM_CONTENT=#{cmtContent}
         WHERE COM_NO = #{cmtNo}
     </update>
     	
