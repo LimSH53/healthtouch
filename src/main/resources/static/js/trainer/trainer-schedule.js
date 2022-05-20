@@ -26,7 +26,7 @@ makeDeletable();
 			
 
 	
-		//pop up menu to add class
+		/* 일정추가 팝업열기 */
 		$(".addNew").on("click", function(){
 		  
 		  $(".popUp").fadeToggle();
@@ -40,68 +40,53 @@ makeDeletable();
 		
 		
 
+/* 데이터 전송시 사용하는 일정추가 */
+$(function() {
+	//clicking to add class
+	$(".addButton").on("click", function() {
 
-		$(function(){	
-		//clicking to add class
-		$(".addButton").on("click", function(){
-		  
-		  var title = $(".nameInput").val();
-		  
-		  var checkboxValue = []; 
-		  
+		var title = $(".nameInput").val();
 
-	
+		var checkboxValue = '';
+
 		//retrives the values from selected checkboxes and pushes it into array
-		 $.each($("input:checked"), function(){            
-		        checkboxValue.push($(this).val());
-		   });
-		  
-		  var fromTimeHour = $("#fromTimeHour").val();
-		  var fromTimeHalf = $("#fromTimeHalf").val();
-		  
-		  var toTimeHour = $("#toTimeHour").val();
-		  var toTimeHalf = $("#toTimeHalf").val();
-		  
-		  var color = $(this).css('backgroundColor');
-		  // alert(color);
-		  
-		  // alert(checkboxValue + " " + typeof checkboxValue[0] + " " + checkboxValue.length); //string 
-		  
-		  //VALIDADE INPUTS
-		  
-		  if(title != "") {
-		    //create new div with class element and fadeout popup
-		    
-		    //CREATE NEW ELEMENTS
-		    for(var i = 0; i < checkboxValue.length; i++) {
-		      
-		      createNew(title, fromTimeHour, fromTimeHalf, toTimeHour, toTimeHalf, Number(checkboxValue[i]), color);
-		     
-		    } 
-		    
-		      makeDeletable();
-		      updateElements()
-		    $(".nameInput").val("");
-		    $(".popUp").fadeToggle();
-		    
-		    
-		  } else {
-		    //shake textbox
-		    //toggle
-		    shake();
-		    //untoggles after animation is done
-		    setTimeout(shake,310);
-		  }
-		  
+		$.each($("input:checked"), function() {
+			checkboxValue += $(this).val() + " ";
 		});
-		
 
-  		})
+		var fromTimeHour = $("#fromTimeHour").val();
+		var fromTimeHalf = $("#fromTimeHalf").val();
+
+		var toTimeHour = $("#toTimeHour").val();
+		var toTimeHalf = $("#toTimeHalf").val();
+
+		var color = $(this).css('backgroundColor');
+
+		var param = { title: title, fromTimeHour: fromTimeHour, fromTimeHalf: fromTimeHalf, toTimeHour: toTimeHour, toTimeHalf: toTimeHalf, weekDay: checkboxValue, color: color }
+			console.log(param);
 		
 		
-		
-		
-		
+						$.ajax({
+							url: "/trainer/schedule/addschedule",
+							type: "post",
+							async: false,
+							data: JSON.stringify(param),
+							contentType: 'application/json; charset=utf-8',
+							success: function(data) {
+								 alert(data);
+								 location.href = "/trainer/schedule/allschedule";
+							},
+							error: function(fail) {
+								console.log(fail);
+							}
+							
+							
+							
+							
+			});
+	});
+
+})
 		
 		
 		
@@ -109,7 +94,7 @@ makeDeletable();
 		
 	$(function(){	
 		
-		 //clicking colors
+		 //색상 선택
 		$(".color").on("click", function() {
 		  
 		  let myColor = $(this).css('backgroundColor');
@@ -151,6 +136,11 @@ makeDeletable();
 		    "background-color": "" + color,
 		    
 		  });
+		  
+		  
+		  
+		  
+		  
 		  
 		  updateElements();
 		}
@@ -306,3 +296,8 @@ makeDeletable();
 		  
 		  
 		}
+		
+		
+		
+		
+		

@@ -4,13 +4,15 @@
 
 
 	<resultMap type="com.jaspa.healthtouch.trainer.schedule.model.dto.TrainerScheduleDTO" id="trainerScheduleResultMap">
-		<id property="schNum" column="TRN_SCH"/>
-		<result property="id" column="TRN_SCH_MEMBER_ID"/>		
-		<result property="schName" column="TRN_SCH_NAME"/>		
-		<result property="schWeek" column="TRN_SCH_WEEK"/>		
-		<result property="schStart" column="TRN_SCH_START"/>		
-		<result property="schEnd" column="TRN_SCH_END"/>
-		<result property="schColor" column="TRN_SCH_COLOR"/>			
+		<id property="no" column="TRN_SCH_NO"/>
+		<result property="id" column="TRN_ID"/>		
+		<result property="title" column="TRN_SCH_TITLE"/>		
+		<result property="fromTimeHour" column="TRN_FROM_HOUR"/>		
+		<result property="fromTimeHalf" column="TRN_FROM_HALF"/>		
+		<result property="toTimeHour" column="TRN_TO_HOUR"/>
+		<result property="toTimeHalf" column="TRN_TO_HALF"/>
+		<result property="weekDay" column="TRN_SCH_WEEKDAY"/>
+		<result property="color" column="TRN_SCH_COLOR"/>			
 								
 		<association property="member" resultMap="memberResultMap"/>
 	</resultMap>
@@ -38,19 +40,78 @@
 	<!-- 트레이너 정보 조회 -->
 	<select id="selectTrainerSchedule" resultMap="trainerScheduleResultMap">
 	
-		 SELECT 
-			   S.TRN_SCH
-			 , M.MEMBER_ID
-			 , S.TRN_SCH_NAME
-			 , S.TRN_SCH_WEEK
-			 , S.TRN_SCH_START
-			 , S.TRN_SCH_END
+		SELECT 
+			   S.TRN_SCH_TITLE
+			 , S.TRN_FROM_HOUR
+             , S.TRN_FROM_HALF
+             , S.TRN_TO_HOUR
+			 , S.TRN_TO_HALF
+             , S.TRN_SCH_WEEKDAY
 			 , S.TRN_SCH_COLOR
 		  FROM TRN_SCHEDULE S
-		  JOIN TBL_MEMBER M ON(M.MEMBER_ID = S.TRN_SCH_MEMBER_ID)
+		  JOIN TBL_MEMBER M ON(M.MEMBER_ID = S.TRN_ID)
 		 WHERE M.MEMBER_ID = #{ id }
 		 
 	</select>
+
+
+	<!-- 트레이너 정보 인서트 -->
+
+	<insert id="insertSchedule">
+		INSERT INTO TRN_SCHEDULE
+	(
+	      TRN_SCH_NO
+	    , TRN_ID
+	    , TRN_SCH_TITLE
+	    , TRN_FROM_HOUR
+	    , TRN_FROM_HALF
+	    , TRN_TO_HOUR
+	    , TRN_TO_HALF
+	    , TRN_SCH_WEEKDAY
+	    , TRN_SCH_COLOR
+	)
+	VALUES
+	(
+	      SEQ_TRN_SCH_NO.NEXTVAL
+	    , #{ id }
+	    , #{ title }
+	    , #{ fromTimeHour }
+	    , #{ fromTimeHalf }
+	    , #{ toTimeHour }
+	    , #{ toTimeHalf }
+	    , #{ weekDay }
+	    , #{ color }
+	)
+
+	</insert>
+
+
+
+
+	<!-- 트레이너 정보 업데이트 -->
+	<update id="updateSchedule">
+	
+	    UPDATE TRN_SCHEDULE
+	       SET TRN_SCH_TITLE = #{ title }
+	         , TRN_FROM_HOUR = #{ fromTimeHour }
+	         , TRN_FROM_HALF = #{ fromTimeHalf }
+	         , TRN_TO_HOUR = #{ toTimeHour }
+	         , TRN_TO_HALF = #{ toTimeHalf }
+	         , TRN_SCH_WEEKDAY = #{ weekDay }
+	         , TRN_SCH_COLOR = #{ color }
+	     WHERE TRN_SCH_NO = #{ no }
+	
+	
+	</update>
+
+
+
+
+
+
+
+
+
 
 
 

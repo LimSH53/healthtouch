@@ -20,10 +20,17 @@ public class TrainerScheduleServiceImpl implements TrainerScheduleService{
 		this.trainerScheduleMapper = trainerScheduleMapper;
 	}
 	
+	
+	
 	@Transactional
 	@Override
 	public List<TrainerScheduleDTO> selectTrainerSchedule(String id) {
 		return trainerScheduleMapper.selectTrainerSchedule(id);
+	}
+
+	@Override
+	public void insertSchedule(String id) {
+		System.out.println(id);
 	}
 
 }

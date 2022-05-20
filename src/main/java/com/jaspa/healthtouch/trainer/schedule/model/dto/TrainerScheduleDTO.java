@@ -10,13 +10,17 @@ import lombok.ToString;
 public class TrainerScheduleDTO {
 
 	
-	private int schNum; 		// 스케줄 번호
+	private int no; 		// 스케줄 번호
 	private String id; 			// 트레이너 아이디
-	private String schName; 	// 트레이너 이름
-	private String schWeek; 	// 스케줄 요일
-	private int schStart; 		// 시작시간
-	private int schEnd; 		// 종료시간
-	private String schColor; 	// 스케줄 색상
+	private String title; 	// 트레이너 이름
+	
+	private int fromTimeHour; 		// 시작 시간
+	private int fromTimeHalf; 		// 시작 분
+	private int toTimeHour; 		// 종료 시간
+	private int toTimeHalf; 		// 종료 분
+	
+	private String weekDay; 	// 스케줄 요일
+	private String color; 	// 스케줄 색상
 	
 	private MemberDTO member;
 	
