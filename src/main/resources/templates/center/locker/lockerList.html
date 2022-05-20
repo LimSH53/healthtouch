@@ -9,14 +9,21 @@
     <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>  
     <link href="@{/css/header.css}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/center/locker/locker.css}"/>
+    
 	<div th:replace="/common/centerHeader.html :: center-header"></div>
+	
+	
 	
 	<!--  검색어 자동완성에 필요한 라이브러리 -->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
+	
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	
+    
+                              
 	
 	
 	<style>
@@ -35,7 +42,6 @@
 
 	</style>
 
-	
 	
   
 </head>
@@ -68,7 +74,7 @@
 		      <div class="modal-body">
 		      	<div class="row" style="justify-content: center;">
 					<div class="col-sm-5">
-						<select class="form-select" aria-label="Default select example">
+						<select id="beforeLocNum" class="form-select" aria-label="Default select example">
 							<option selected disabled>기존 락커 번호</option>
 							<th:block th:each="num : ${ #numbers.sequence(1,20) }">
 	                  		<option th:text="${ num }"></option>
@@ -80,7 +86,7 @@
 						<i class='bx bx-right-arrow-alt'></i>
 					</div>
 					<div class="col-sm-5">
-						<select class="form-select" aria-label="Default select example">
+						<select id="afterLocNum" class="form-select" aria-label="Default select example" oncl>
 							<option selected disabled>변경 락커 번호</option>
 							<th:block th:each="num : ${ #numbers.sequence(1,20) }">
 			                  <option th:text="${ num }"></option>
@@ -106,7 +112,7 @@
 			  </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-		        <button type="button" class="btn btn-primary">이동</button>
+		        <button type="button" class="btn btn-primary" onclick="moverLocker()">이동</button>
 		      </div>
 		    </div>
 		  </div>
@@ -597,87 +603,10 @@
 	    
 	    </div>
 	  </div>
-	</div>
-	              
-                
-                
-        <script>
-        /* $('#searchName').autocomplete({
-	       	 source : function(request, response) { //source: 입력시 보일 목록
-	       	     $.ajax({
-	       	           url : "/center/locker/regist"   
-	       	         , type : "POST"
-	       	         , dataType: "JSON"
-	       	         , data : {value: request.term}	// 검색 키워드
-	       	         , success : function(data){ 	// 성공
-	       	             response(
-	       	                 $.map(data.resultList, function(name) {
-	       	                     return {
-	       	                    	     label : "이름 "  	// 목록에 표시되는 값
-	       	                           , value : name.MEMBER_NAME		// 선택 시 input창에 표시되는 값
-	       	                          
-	       	                     };
-	       	                 })
-	       	             );    //response
-	       	         }
-	       	         ,error : function(){ //실패
-	       	             alert("오류가 발생했습니다.");
-	       	         }
-	       	     });
-	       	 }
-	       		,focus : function(event, ui) { // 방향키로 자동완성단어 선택 가능하게 만들어줌	
-	       			return false;
-	       		},
-	       		minLength: 1,// 최소 글자수
-	       		delay: 100	//autocomplete 딜레이 시간(ms),
-	       		 , select : function(evt, ui) { 
-	             	// 아이템 선택시 실행 ui.item 이 선택된 항목을 나타내는 객체, lavel/value/idx를 가짐
-	       			console.log(ui.item.label);
-	       			console.log(ui.item.idx); 
-	       	 }
-	       }); */
-        
-        
-        function registLocker() {
-        	
-	    	const locNum = $("#selectBox option:selected").val();
-        	const memberId = $("[name=id]").val();
-        	const startDate = $("[name=start]").val();
-        	const endDate = $("[name=end]").val();
-        	
-        	const obj =  { locNum : locNum, memberId : memberId, startDate : startDate, endDate : endDate};
-        	console.log(obj);
-        	
-        	$.ajax({	
-        		
-				url: "/center/locker/regist",	
-				type: "post",
-				data: { locNum : locNum, id : memberId, startDate : startDate, endDate : endDate},
-				success: function() {
-					Swal.fire({
-						icon: 'success',
-						text: '락커 이용 등록이 완료되었습니다.',
-						confirmButtonText: '확인',
-					}).then((result) => {
-						location.href="/center/locker/list";
-					})
-				},
-				error: function(e) {
-					console.log(e);
-				}
-			});
-		}
-	
-        
-        
-        
-        
-	</script>   
-                    
+	</div>               
                 
               
-         
-
-                 
+    <script src="/js/center/locker/centerLocker.js"></script>    
+	
 </body>
 </html>
