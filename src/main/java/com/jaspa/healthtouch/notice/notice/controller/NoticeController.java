@@ -3,7 +3,6 @@ package com.jaspa.healthtouch.notice.notice.controller;
 
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,9 +37,9 @@ public class NoticeController {
 	@Autowired
 	public NoticeController(NoticeService noticeService) {
 		this.noticeService= noticeService;
-	}
+	} 
 	
-	
+	 
 	//공지사항 조회 
 	@GetMapping("/notice")
 	 public String noticeList(Model model, @ModelAttribute("params") NoticeDTO params)throws Exception {

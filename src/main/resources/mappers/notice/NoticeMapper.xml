@@ -11,7 +11,7 @@
 		<result property="noticeEditDate" column="NOT_EDIT_DATE"/>
 		<result property="noticeView" column="NOT_VIEW"/>
 		<result property="noticeCategory" column="NOT_CATEGORY"/>
-		
+		 
 		<association property="member" resultMap="memberResultMap"/>
 		<collection property="comment" resultMap="commentResultMap"/>
 	</resultMap >

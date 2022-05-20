@@ -30,7 +30,7 @@ private final NoticeMapper noticeMapper;
 		public List<NoticeDTO> noticeList(NoticeDTO params){
 		  List<NoticeDTO> noticeList = Collections.emptyList();
 		  
-		  
+		   
 		  int noticeTotalCount = noticeMapper.noticeFind(params);
 		  	PaginationInfo paginationInfo = new PaginationInfo(params);
 			paginationInfo.setTotalRecordCount(noticeTotalCount);

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jaspa.healthtouch.notice.qna.model.dao.QnaMapper">
+	<resultMap type="com.jaspa.healthtouch.notice.qna.model.dto.QuestionDTO" id="questionResultMap">
+		<id property="qNo" column="Q_NO"/>
+		<result property="memberId" column="Q_MEMBER_ID"/>
+		<result property="qTitle" column="Q_TITLE"/>
+		<result property="categoryNo" column="Q_CAT_NO"/>
+		<result property="qContent" column="Q_CONTENT"/>
+		<result property="qDelete" column="Q_DELETE"/>
+		<result property="qDate" column="Q_DATE"/> 
+		<result property="qEditDate" column="Q_EDIT_DATE"/>
+		<result property="aRead" column="Q_A_READ"/> 
+		 
+		<association property="member" resultMap="memberResultMap"/>
+		<association property="trainer" resultMap="memberResultMap"/>
+		<association property="questionCategory" resultMap="questionCategoryResultMap"/>
+		<collection property="answer" resultMap="answerResultMap"/>
+	</resultMap >
+	  
+	<resultMap type="com.jaspa.healthtouch.notice.qna.model.dto.QuestionCategoryDTO" id="questionCategoryResultMap" >
+		<id property="categoryNo" column="CAT_NO"/>
+		<result property="categoryKind" column="CAT_KIND"/>
+
+	</resultMap>
+
+	<resultMap type="com.jaspa.healthtouch.notice.qna.model.dto.AnswerDTO" id="answerResultMap">
+		<id property="aNo" column="A_NO"/>
+		<result property="qNo" column="A_Q_NO"/>
+		<result property="memberId" column="A_MEMBER_ID"/>
+		<result property="aTitle" column="A_TITLE"/>
+		<result property="aContent" column="A_CONTENT"/>
+		<result property="aDelete" column="A_DELETE"/>
+		<result property="aDate" column="A_DATE"/>
+		<result property="aEditDate" column="A_EDIT_DATE"/>
+		
+		
+		<association property="member" resultMap="memberResultMap"/>
+		<association property="trainer" resultMap="memberResultMap"/>
+		
+	</resultMap>
+	
+		<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberDTO" id="memberResultMap">
+		<id property="id" column="MEMBER_ID"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="contact" column="MEMBER_CONTACT"/>
+		<result property="num" column="MEMBER_NUM"/>
+		<result property="birthday" column="MEMBER_BIRTHDAY"/>
+		<result property="age" column="MEMBER_AGE"/>
+		<result property="gender" column="MEMBER_GENDER"/>
+		<result property="address" column="MEMBER_ADDRESS"/>
+		<result property="type" column="MEMBER_TYPE"/>
+		<result property="status" column="MEMBER_STATUS"/>
+		
+		<association property="memberRole" resultMap="memberRoleResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberRoleDTO" id="memberRoleResultMap">
+		<id property="memberId" column="REF_MEMBER_ID"/>
+		<result property="authorityCode" column="REF_AUTHORITY_CODE"/>
+	</resultMap>
+
+	<!-- 총 문글 갯수 출력 -->
+	<select id="qnaFind" parameterType="com.jaspa.healthtouch.notice.qna.model.dto.QuestionDTO" resultType="int">
+
+		SELECT 
+			COUNT(*)
+		FROM TBL_QNA A
+		WHERE A.Q_DELETE = 'N'
+  			<if test="searchKeyword != null and searchKeyword != ''">
+			<choose>
+				<when test="searchType != null and searchType != ''">
+					<choose>
+						<when test="searchType == 'title'">
+							AND A.Q_TITLE LIKE '%' || #{searchKeyword} || '%'
+						</when>
+						<when test="searchType == 'content'">
+							AND A.Q_CONTENT LIKE '%' || #{searchKeyword} || '%'
+						</when>
+					</choose>
+				</when>
+			</choose>
+		</if>
+	</select>
+	
+
+
+	<!-- 문의글 조회 -->
+ <select id="qnaList" resultMap="questionResultMap" parameterType="com.jaspa.healthtouch.notice.qna.model.dto.QuestionDTO">
+   SELECT A.RNUM
+  		,A.Q_NO
+  	 	,A.Q_MEMBER_ID
+  		,A.Q_TITLE
+  	 	,A.Q_CONTENT
+  	 	,A.Q_DELETE
+  	 	,A.Q_DATE
+  	 	,A.Q_EDIT_DATE
+  	 	,A.Q_CAT_NO
+  	 	,A.Q_A_READ
+  	 	,E.CAT_KIND
+  	FROM(SELECT ROWNUM RNUM
+  				,B.Q_NO
+		  	 	,B.Q_MEMBER_ID
+		  	 	,B.Q_TITLE
+		  	 	,B.Q_CONTENT
+		  	 	,B.Q_DELETE
+		  	 	,B.Q_DATE
+		  	 	,B.Q_EDIT_DATE
+		  	 	,B.Q_CAT_NO
+		  	 	,B.Q_A_READ
+		   	FROM(SELECT  C.Q_NO
+		   				,C.Q_MEMBER_ID
+				  	 	,C.Q_TITLE
+				  	 	,C.Q_CONTENT
+				  	 	,C.Q_DELETE
+				  	 	,C.Q_DATE
+				  	 	,C.Q_EDIT_DATE
+				  	 	,C.Q_CAT_NO		
+				  	 	,C.Q_A_READ
+    			FROM  TBL_QNA C
+    	<if test="searchKeyword != null and searchKeyword != ''">
+							<where>
+								<if test="searchType == 'title'">
+									C.Q_TITLE LIKE '%' || #{searchKeyword} || '%'
+								</if>
+								<if test="searchType == 'content'">
+									C.Q_CONTENT LIKE '%' || #{searchKeyword} || '%'
+								</if>
+							</where>
+						</if>
+					ORDER BY C.Q_NO DESC
+					)B  
+		  		  <![CDATA[ 
+		  		  WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
+		  		  ]]>
+		  		 )A
+	JOIN TBL_MEMBER D ON (A.Q_MEMBER_ID = D.MEMBER_ID)
+	JOIN TBL_QNA_CATEGORY E ON (A.Q_CAT_NO = E.CAT_NO)
+ 	WHERE A.RNUM >  #{ paginationInfo.firstRecordIndex }
+    AND A.Q_DELETE = 'N'
+  </select>  
+	
+	<!-- 문의글 상세조회 -->
+	<select id="selectQnaDetail" resultMap="questionResultMap" >
+	SELECT 
+		 A.Q_NO
+  	 	,A.Q_MEMBER_ID
+  		,A.Q_TITLE
+  	 	,A.Q_CONTENT
+  	 	,A.Q_DELETE
+  	 	,A.Q_DATE
+  	 	,A.Q_EDIT_DATE
+  	 	,A.Q_CAT_NO
+  	 	,A.Q_A_READ
+  	 	,E.CAT_KIND
+	  FROM  TBL_QNA A
+	 JOIN TBL_QNA_CATEGORY E ON (A.Q_CAT_NO = E.CAT_NO)
+	 WHERE  Q_NO = #{qNo}
+	 AND    Q_DELETE = 'N'
+	</select>
+	
+	
+	<!-- 등록페이지 내 카테고리 조회 -->
+		<select id="findCategory" resultMap="questionCategoryResultMap">
+		SELECT
+		       CAT_NO
+		     , CAT_KIND
+		  FROM TBL_QNA_CATEGORY
+		 WHERE CAT_NO IS NOT NULL
+	</select>
+	
+	<!-- 답변여부 표시 -->
+	<update id="readReply" >
+	UPDATE TBL_QNA 
+	SET Q_A_READ = 
+	(SELECT 
+	COUNT(A_NO) 
+	FROM TBL_QNA_REPLY 
+	WHERE Q_NO = A_Q_NO
+	)
+	</update>
+	<!-- 답변여부 표시 -->
+<!-- 		
+	<update id="readReply" parameterType="int">
+	UPDATE TBL_QNA B
+	SET B.Q_A_READ = 
+	(SELECT 
+	COUNT(A_NO) 
+	FROM TBL_QNA_REPLY 
+	WHERE A_Q_NO = B.Q_NO
+	)
+	WHERE B.Q_NO = #{qNo}
+	</update>
+	
+	 -->
+	<!-- 문의글 등록 -->
+	<insert id="registQna" >
+        INSERT 
+          INTO TBL_QNA 
+        ( 
+          Q_NO
+        , Q_MEMBER_ID
+        , Q_TITLE
+        , Q_CONTENT
+        , Q_DELETE
+        , Q_DATE
+        , Q_CAT_NO
+        )
+        VALUES
+        (
+          SEQ_Q_NO.NEXTVAL
+        , #{memberId}
+        , #{qTitle}
+        , #{qContent}
+       	, 'N'
+        , SYSDATE
+        , #{categoryNo}
+        )
+	</insert>
+	
+	<!-- 문의글 수정 -->
+	<update id="modifyQna" >
+	UPDATE TBL_QNA
+	   SET 
+	   Q_EDIT_DATE=SYSDATE
+	 , Q_TITLE=#{qTitle}
+	 , Q_CONTENT=#{qContent}
+	 , Q_CAT_NO=#{categoryNo}
+	WHERE Q_NO=#{qNo}
+	
+	</update>
+	
+	<!-- 문의글 삭제 -->
+	<update id="deleteQna" parameterType="int">
+	 UPDATE 
+	 	  TBL_QNA
+	  SET Q_DELETE = 'Y'
+	WHERE Q_NO=#{qNo}
+	</update>
+
+	
+	<!-- 공지사항 댓글갯수 -->
+	<select id="answerCount" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM TBL_QNA_REPLY
+        WHERE A_Q_NO = ${qNo}
+      
+    </select>
+  
+  
+    <!-- 공지사항 댓글목록 -->
+      <select id="answerList" resultMap="answerResultMap">
+         SELECT
+   			A_NO
+   		   ,A_MEMBER_ID
+   		   ,A_Q_NO
+   		   ,A_CONTENT
+   		   ,A_DELETE
+   		   ,A_DATE
+        FROM TBL_QNA_REPLY
+        WHERE A_Q_NO = ${qNo}
+        AND A_DELETE = 'N'
+        ORDER BY A_NO DESC
+    </select>
+		
+    <!-- 공지사항 댓글등록 -->
+	<insert id="registReply" >
+      	INSERT
+		  INTO TBL_QNA_REPLY
+		(
+		  A_NO
+		, A_Q_NO
+		, A_CONTENT  
+		, A_MEMBER_ID
+		)
+		VALUES
+		(
+		  SEQ_A_NO.NEXTVAL
+		, #{ qNo }
+		, #{ aContent }
+		, #{ memberId }
+		)
+	</insert>
+	
+	
+    <!-- 공지사항 댓글수정 -->
+      <update id="modifyReply">
+        UPDATE TBL_QNA_REPLY
+            SET
+               A_EDIT_DATE = SYSDATE
+			 , A_CONTENT=#{ aContent } 
+        WHERE A_NO = #{aNo}
+    </update>
+    	
+    	
+    <!-- 공지사항 댓글삭제 -->
+      <update id="deleteReply" parameterType="int">
+        UPDATE 
+	 	  	TBL_QNA_REPLY
+	 	 SET A_DELETE = 'Y'
+		WHERE A_NO=#{aNo}
+    </update>
+
+
+	
+</mapper>
