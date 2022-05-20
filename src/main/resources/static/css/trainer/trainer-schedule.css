@@ -31,7 +31,7 @@
         
     /* 전체 창 크기 */
     .height-100 {
-        height: 300vh;
+        height: 100vh;
     }
 
   
@@ -53,12 +53,15 @@
    
 
 
-    /*   centering a fixed element in the middle of screen */
+    /*  높이 */
     margin: -245px -400px;
-    top: 50%;
-    left: 50%;
+    top: 450px;
+    left: 15%;
     
   }
+  
+  
+  
   
 
   /* 트레이너 스케줄 h1 텍스트 */
@@ -68,7 +71,7 @@
     background: var(--mainColor);
     height: 85px;
     width: 100%;
-    padding: 15px 0px 15px 0px;
+    padding: 15px 0px 100px 0px;
     text-align: center;
     z-index: 30;
 
@@ -125,9 +128,11 @@
     background: rgba(120,120,255,0.06);
   }
   
+  
+  /* 시간표 너비 넓이 조정 */
   .myClass {
     background-color: var(--mainButtons);
-    width: 100px;
+    width: 160px;
     height: 30px;
   /* !important needed so on resize it doesnt come back to relative   */
     position: absolute !important;
@@ -205,13 +210,22 @@
 
   /* 수업추가 단추 버튼 */
   .addNew {
-    margin-left: 110px;
+    margin-left: 300px;
     display: inline;
     position: absolute;
     font-size: 15px;
     font-weight: 700;
     border-radius: 30px;
   }
+  
+  
+  
+  .tableHeader {
+  	margin-bottom : 20px;
+  }
+  
+  
+  
   
 
 

@@ -76,7 +76,55 @@
 		   AND LOC_STATUS = 'N'
 		   
 	</update>
+	
+	<!-- 락커 등록시 회원이름 자동완성  -->
+	<select id="autocomplete"  resultMap="lockerResultMap">
+		SELECT
+			 MEMBER_NAME
+		FROM TBL_MEMBER
+		WHERE MEMBER_NAME LIKE '%'|| #{value} || '%'
+	</select>
 
+	<!-- 락커 등록  -->
+	<insert id="insertCenterLockerOrder">
+	INSERT INTO TBL_ORDER
+	(
+		ORD_NO
+	  , ORD_PRO_NO
+	  , ORD_MEMBER_ID
+	  , ORD_START_DATE
+	  , ORD_END_DATE
+	)
+	VALUES
+	(
+		SEQ_ORD_NO.NEXTVAL
+	  , 9
+	  , #{ id }
+	  , #{ startDate }
+	  , #{ endDate }
+	)
+	
+	</insert>
+	
+	<insert id="registLocker">
+	INSERT INTO TBL_LOCKER
+	(
+		LOC_MNG_NUM
+	  , LOC_ORD_NO
+	  , LOC_MEMBER_ID
+	  , LOC_NUM
+	  , LOC_STATUS
+	)
+	VALUES
+	(
+		100 + SEQ_LOC_MNG_NUM.NEXTVAL
+	  , SEQ_ORD_NO.CURRVAL
+	  , #{ id }
+	  , #{ locNum }
+	  , 'Y'
+	)
+	
+	</insert>
 
 
 

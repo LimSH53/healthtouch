@@ -49,7 +49,8 @@ public class CenterProductController {
 	}
 	
 	@GetMapping("proRegist")
-	public void registProduct() {}
+	public void registProduct() {
+	}
 	
 	@PostMapping("proRegist")
 	public String registProduct(@ModelAttribute ProductDTO product, RedirectAttributes rttr, Locale locale) {

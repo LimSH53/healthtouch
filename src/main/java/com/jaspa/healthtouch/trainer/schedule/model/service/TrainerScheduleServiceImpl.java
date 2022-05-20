@@ -10,8 +10,7 @@ import com.jaspa.healthtouch.trainer.schedule.model.dao.TrainerScheduleMapper;
 import com.jaspa.healthtouch.trainer.schedule.model.dto.TrainerScheduleDTO;
 
 
-@Service("trainerScheduleService")
-@Transactional
+@Service
 public class TrainerScheduleServiceImpl implements TrainerScheduleService{
 
 	private TrainerScheduleMapper trainerScheduleMapper;
@@ -21,9 +20,9 @@ public class TrainerScheduleServiceImpl implements TrainerScheduleService{
 		this.trainerScheduleMapper = trainerScheduleMapper;
 	}
 	
-	
+	@Transactional
 	@Override
-	public TrainerScheduleDTO selectTrainerSchedule(String id) {
+	public List<TrainerScheduleDTO> selectTrainerSchedule(String id) {
 		return trainerScheduleMapper.selectTrainerSchedule(id);
 	}
 

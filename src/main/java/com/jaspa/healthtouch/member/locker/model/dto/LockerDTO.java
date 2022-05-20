@@ -23,6 +23,8 @@ public class LockerDTO {
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")   //포맷필요
 	private Date endDate; 	//라커 만료일
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date startDate;
 
 	
 	private MemberDTO member;

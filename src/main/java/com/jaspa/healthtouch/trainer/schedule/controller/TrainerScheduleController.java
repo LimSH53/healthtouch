@@ -24,7 +24,7 @@ public class TrainerScheduleController {
 
 	private TrainerScheduleService trainerScheduleService;
 	
-	public TrainerScheduleController(TrainerScheduleService TrainerScheduleService) {
+	public TrainerScheduleController(TrainerScheduleService trainerScheduleService) {
 		this.trainerScheduleService = trainerScheduleService;
 	}
 	
@@ -34,7 +34,7 @@ public class TrainerScheduleController {
 	public ModelAndView selectTrainerSchedule(TrainerScheduleDTO schedule, ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
 		
 		schedule.setId(user.getId());
-		TrainerScheduleDTO trainerSch = trainerScheduleService.selectTrainerSchedule(user.getId());
+		List<TrainerScheduleDTO> trainerSch = trainerScheduleService.selectTrainerSchedule(user.getId());
 		
 		log.info(trainerSch.toString());
 		

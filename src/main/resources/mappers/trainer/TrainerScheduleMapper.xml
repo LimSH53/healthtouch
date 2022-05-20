@@ -48,7 +48,7 @@
 			 , S.TRN_SCH_COLOR
 		  FROM TRN_SCHEDULE S
 		  JOIN TBL_MEMBER M ON(M.MEMBER_ID = S.TRN_SCH_MEMBER_ID)
-		 WHERE M.MEMBER_ID = #{ schId }
+		 WHERE M.MEMBER_ID = #{ id }
 		 
 	</select>
 

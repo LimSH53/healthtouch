@@ -4,21 +4,33 @@
 font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
 }
 
-#status_on {
+.status_on {
 	background:#007bff;
     color: white;
     text-align: center;
+    float: left; 
+    width:50%;
+    
 }
 
-#status_off {
+.status_off {
 	background:gray;
     color: white;
     text-align: center;
+  /*   margin-left: 80px; */
+    float: left; 
+    width:50%;
+}
+
+.lockNum {
+	 float: left; 
+    width:50%;
 }
 
 .col-2{
     flex:auto;
     background-color : lightgray;
     border-radius: 10px;
-    width: 120px; 
+    width: 180px; 
+    height : 120px;
 }

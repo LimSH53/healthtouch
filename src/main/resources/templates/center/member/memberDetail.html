@@ -9,6 +9,7 @@
 <div th:replace="/common/centerHeader.html :: center-header"></div>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 </head>
 <body id="body-pd" class="snippet-body" style="min-height: 80vh">
 	<div th:replace="/common/centerHeader.html :: center-body"></div>
@@ -221,6 +222,27 @@
 								confirmButtonText: '확인',
 							}).then((result) => {
 								location.reload();
+							})
+							
+							var title = "알림";
+							var content = "트레이너로 변경되었습니다. 다시 로그인 하세요.";
+							var reqUrl = "/member/logout";
+							
+							var param = { title: title, memberId: memberId, content: content, reqUrl: reqUrl };
+							
+							$.ajax({
+								url: "/common/modifyMemberTypeAlert",
+								type: "post",
+								async: false,
+								data: JSON.stringify(param),
+								contentType: 'application/json; charset=utf-8',
+								success: function(data) {
+									// 알림 전송 
+									socket.send(title + "," + memberId + "," + content + "," + reqUrl);
+								},
+								error: function(e) {
+									console.log(e);
+								}
 							})
 						},
 						error: function(e) {

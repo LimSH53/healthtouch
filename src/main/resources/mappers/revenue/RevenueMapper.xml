@@ -37,21 +37,201 @@
 		
 	</resultMap>
 	
-	<select id="selectAllrevenue" resultMap="paymentResultMap">
-		SELECT
-			   A.PAY_NO,
-		       A.PAY_DATE,
-		       A.PAY_AMOUNT,
-		       C.PRO_NAME MEMBER_PRO_NAME,
-		       C.PRO_PRICE MEMBER_PRO_PRICE,
-		       D.MEMBER_NAME ORD_MEMBER_NAME,
-		       D.MEMBER_CONTACT MEMBER_CONTACT
+	<select id="selectAllrevenueTotalCount" parameterType="com.jaspa.healthtouch.member.product.model.dto.PaymentDTO" resultType="int">
+		SELECT COUNT(*)
 		  FROM TBL_PAYMENT A
 		  JOIN TBL_ORDER B ON (A.PAY_ORD_NO = B.ORD_NO)
 		  JOIN TBL_PRODUCT C ON (B.ORD_PRO_NO = C.PRO_NO)
 		  JOIN TBL_MEMBER D ON (B.ORD_MEMBER_ID = D.MEMBER_ID)
-		 ORDER BY A.PAY_NO DESC
+		 WHERE A.PAY_STATUS = 'Y'
+			<choose>
+				<when test="searchType != null and searchType != ''">
+					<choose>
+						<when test="searchType == '2022'">
+							AND A.PAY_DATE BETWEEN '2022-01-01' AND '2022-12-31'
+							AND (D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							 OR  D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%' )
+						</when>
+						<when test="searchType == '2021'">
+							AND A.PAY_DATE BETWEEN '2021-01-01' AND '2021-12-31'
+							AND (D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							 OR  D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%' )
+						</when>
+						<when test="searchType == '2020'">
+							AND A.PAY_DATE BETWEEN '2020-01-01' AND '2020-12-31'
+							AND (D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							 OR  D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%' )
+						</when>
+					</choose>
+				</when>
+			</choose>
 	</select>
+	
+	<select id="selectAllrevenue" resultMap="paymentResultMap">			
+		SELECT 
+			   F.RNUM,
+		       F.PAY_NO,
+		       F.PAY_DATE,
+		       F.PAY_AMOUNT,
+		       F.MEMBER_PRO_NAME,
+		       F.MEMBER_PRO_PRICE,
+		       F.ORD_MEMBER_NAME,
+		       F.MEMBER_CONTACT
+		  FROM (SELECT ROWNUM RNUM,
+				       E.PAY_NO,
+				       E.PAY_DATE,
+				       E.PAY_AMOUNT,
+				       E.MEMBER_PRO_NAME,
+				       E.MEMBER_PRO_PRICE,
+				       E.ORD_MEMBER_NAME,
+				       E.MEMBER_CONTACT
+				  FROM (SELECT
+						       A.PAY_NO,
+						       A.PAY_DATE,
+						       A.PAY_AMOUNT,
+						       C.PRO_NAME MEMBER_PRO_NAME,
+						       C.PRO_PRICE MEMBER_PRO_PRICE,
+						       D.MEMBER_NAME ORD_MEMBER_NAME,
+						       D.MEMBER_CONTACT MEMBER_CONTACT
+						  FROM TBL_PAYMENT A
+						  JOIN TBL_ORDER B ON (A.PAY_ORD_NO = B.ORD_NO)
+						  JOIN TBL_PRODUCT C ON (B.ORD_PRO_NO = C.PRO_NO)
+						  JOIN TBL_MEMBER D ON (B.ORD_MEMBER_ID = D.MEMBER_ID)	
+									<where>
+										<if test="searchType == '2022'">
+											A.PAY_DATE BETWEEN '2022-01-01' AND '2022-12-31'
+							            AND (D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							             OR D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							            )
+										</if>
+										<if test="searchType == '2021'">
+											A.PAY_DATE BETWEEN '2021-01-01' AND '2021-12-31'
+							             AND (D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							             OR D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							            )
+										</if>
+										<if test="searchType == '2020'">
+											A.PAY_DATE BETWEEN '2020-01-01' AND '2020-12-31'
+							             AND (D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							             OR D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							            )
+										</if>
+									</where>
+							ORDER BY A.PAY_NO DESC ) E
+							<![CDATA[
+				  		  	WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
+				  		 	]]> ) F
+			WHERE F.RNUM > #{ paginationInfo.firstRecordIndex }
+			ORDER BY F.RNUM	  						  		  
+	</select>	
+	
+	<select id="selectProRevenueTotalCount" parameterType="com.jaspa.healthtouch.member.product.model.dto.PaymentDTO" resultType="int">
+		SELECT COUNT(*)
+		  FROM TBL_PAYMENT A
+		  JOIN TBL_ORDER B ON (A.PAY_ORD_NO = B.ORD_NO)
+		  JOIN TBL_PRODUCT C ON (B.ORD_PRO_NO = C.PRO_NO)
+		  JOIN TBL_MEMBER D ON (B.ORD_MEMBER_ID = D.MEMBER_ID)
+		 WHERE A.PAY_STATUS = 'Y'
+			<choose>
+				<when test="searchType != null and searchType != ''">
+					<choose>
+						<when test="searchType == '0'">
+							<if test="searchKeyword != null and searchKeyword != ''">
+								AND (D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							 	OR  D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%' )
+							 </if>
+						</when>
+						<when test="searchType == '10'">
+							AND C.PRO_CATE_NO = 10
+							AND (D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							 OR  D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%' )
+						</when>
+						<when test="searchType == '20'">
+							AND C.PRO_CATE_NO = 20
+							AND (D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							 OR  D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%' )
+						</when>
+						<when test="searchType == '30'">
+							AND C.PRO_CATE_NO = 30
+							AND (D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							 OR  D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%' )
+						</when>
+						<when test="searchType == '40'">
+							AND C.PRO_CATE_NO = 40
+							AND (D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							 OR  D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%' )
+						</when>
+					</choose>
+				</when>
+			</choose>
+	</select>
+	
+	<select id="selectProRevenue" resultMap="paymentResultMap">			
+		SELECT 
+			   F.RNUM,
+		       F.PAY_NO,
+		       F.PAY_DATE,
+		       F.PAY_AMOUNT,
+		       F.MEMBER_PRO_NAME,
+		       F.MEMBER_PRO_PRICE,
+		       F.PRO_CATE_NO,
+		       F.ORD_MEMBER_NAME,
+		       F.MEMBER_CONTACT
+		  FROM (SELECT ROWNUM RNUM,
+				       E.PAY_NO,
+				       E.PAY_DATE,
+				       E.PAY_AMOUNT,
+				       E.MEMBER_PRO_NAME,
+				       E.MEMBER_PRO_PRICE,
+				       E.PRO_CATE_NO,
+				       E.ORD_MEMBER_NAME,
+				       E.MEMBER_CONTACT
+				  FROM (SELECT
+						       A.PAY_NO,
+						       A.PAY_DATE,
+						       A.PAY_AMOUNT,
+						       C.PRO_NAME MEMBER_PRO_NAME,
+						       C.PRO_PRICE MEMBER_PRO_PRICE,
+						       C.PRO_CATE_NO,
+						       D.MEMBER_NAME ORD_MEMBER_NAME,
+						       D.MEMBER_CONTACT MEMBER_CONTACT
+						  FROM TBL_PAYMENT A
+						  JOIN TBL_ORDER B ON (A.PAY_ORD_NO = B.ORD_NO)
+						  JOIN TBL_PRODUCT C ON (B.ORD_PRO_NO = C.PRO_NO)
+						  JOIN TBL_MEMBER D ON (B.ORD_MEMBER_ID = D.MEMBER_ID)	
+									<where>
+										<if test="searchType == '0'">
+											     D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							 				 OR  D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%') 
+										</if>
+										<if test="searchType == '10'">
+											     C.PRO_CATE_NO = 10
+							            	AND (D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							 				 OR  D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%')
+										</if>
+										<if test="searchType == '20'">
+											     C.PRO_CATE_NO = 20
+							            	AND (D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							 				 OR  D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%')
+										</if>
+										<if test="searchType == '30'">
+											     C.PRO_CATE_NO = 30
+							            	AND (D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							 				 OR  D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%')
+										</if>
+										<if test="searchType == '40'">
+											     C.PRO_CATE_NO = 40
+							            	AND (D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+							 				 OR  D.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%')
+										</if>
+									</where>
+							ORDER BY A.PAY_NO DESC ) E
+							<![CDATA[
+				  		  	WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
+				  		 	]]> ) F
+			WHERE F.RNUM > #{ paginationInfo.firstRecordIndex }
+			ORDER BY F.RNUM	  						  		  
+	</select>	
 
 
 </mapper>
