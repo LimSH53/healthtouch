@@ -11,6 +11,6 @@ public interface TrainerScheduleService {
 	/* 회원정보 - 조회 */
 	List<TrainerScheduleDTO> selectTrainerSchedule(String id);
 	
-	
-	
+	/* 트레이너 스케줄 삽입 */
+	void insertSchedule(String id);
 }
