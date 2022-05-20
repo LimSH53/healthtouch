@@ -31,7 +31,7 @@ public class NoticeDTO extends CommonDTO {
 
 	private MemberDTO member;
 	private List<CommentDTO> comment;
-	
+	  
 
 	
 	 

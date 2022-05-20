@@ -9,7 +9,7 @@
  	<div th:replace="/common/memberHeader.html :: member-header"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/notice/notice.css}"/>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    </head>     
+    </head>      
   
   <body id="body-pd" class='snippet-body ' >
    
@@ -24,43 +24,55 @@
     <!-- 1:1문의 등록페이지 -->
 <div class="notice rounded">
   <div class="regist">
-   <form class="needs-validation" validate>
+   <form class="needs-validation" th:action="@{/notice/qnaregist}"method="post"validate>
     <div id="regist-title">
-      <label for="firstName" class="form-label" style="font-size: 15px;" >제목</label>
+       <label for="firstName" class="form-label"><strong>제목</strong></label>
       <div style="display: flex;">
-        <input type="text" class="form-control" id="content1" name="content"  placeholder="내용을 입력하세요." required>
-        <select class="form-select" style="height: 33px;" aria-label="Default select example" required>
-          <option selected>문의</option>
-          <option value="1">이용문의</option>
-          <option value="2">가격문의</option>
-          <option value="3">건의사항</option>
-        </select>
+         <input type="text" class="form-control" id="qTitle" name="qTitle"  placeholder="제목을 입력하세요." required>
+        <select  name="categoryNo" id="categoryNo" class="form-select" style="height: 33px; border: 0.5px solid #1b1b55;" required></select>
       </div>
     </div>
     <div class="contentwritebox">
       <label for="firstName" class="form-label"><strong>내용</strong></label>
-   	  <textarea class="regist-content form-control" type="text" placeholder="Tell us about yourself" required> </textarea> 
-      <div class="invalid-feedback">
-          내용을 입력하세요
-      </div>
+   	  <textarea name="qContent" id="qContent" class="regist-content form-control" type="text" required> </textarea> 
   </div>
   <button type="submit" class="btn btn-outline-secondary" id="qnaregist">등록</button>
-  <button type="button" class="btn btn-outline-secondary ">취소</button>
+  <button type="button" class="btn btn-outline-secondary " th:onclick="'location.href=\''+@{/notice/qna} + '\''">취소</button>
       <script>
 			$().ready(function () {
             $("#qnaregist").click(function () {
                 Swal.fire({
-					  title: '문의글 등록',
+					  title: '문의글 등록', 
 					  text: "문의글이 등록되었습다.",
 				      imageUrl: '../images/successicon.png',
 					  imageWidth: 100,
-				      imageHeight: 100,
+				      imageHeight: 100, 
 				      imageAlt: 'Custom image',
 					  confirmButtonColor: '#1b1b55',
                 });
-            });
+            }); 
         });
       </script>
+      
+      <script>
+		$(function(){
+			$.ajax({
+				url : "/notice/categoryNo",
+				success : function(data){
+					const $categoryNo = $("#categoryNo");
+					
+					for(let index in data) {
+						$categoryNo.append($("<option>").val(data[index].categoryNo).text(data[index].categoryKind));
+					}
+				},
+				error : function(xhr) {
+					console.log(xhr);
+				}
+			});
+		});
+	
+	</script>
+      
     </form>
   </div>
 </div>

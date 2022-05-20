@@ -12,7 +12,7 @@ font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, '
 }
 
 .search{
-    margin-bottom: 0;
+    margin-bottom: 0; 
     justify-content: center;
 }
 .input-text:focus {

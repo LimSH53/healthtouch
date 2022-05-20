@@ -20,7 +20,7 @@ public interface NoticeService {
 		//공지사항 수정  
 		void modifyNotice(NoticeDTO notice)throws Exception;
 		
-		//공지사항 삭제
+		//공지사항 삭제 
 		boolean deleteNotice(int noticeNo);
 
 		//공지사항 댓글목록
