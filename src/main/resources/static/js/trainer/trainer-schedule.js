@@ -1,7 +1,4 @@
-
-
-		
-			
+	
 updateElements();
 makeDeletable();
 			
@@ -60,12 +57,12 @@ $(function() {
 		var toTimeHour = $("#toTimeHour").val();
 		var toTimeHalf = $("#toTimeHalf").val();
 
+		
 		var color = $(this).css('backgroundColor');
 
 		var param = { title: title, fromTimeHour: fromTimeHour, fromTimeHalf: fromTimeHalf, toTimeHour: toTimeHour, toTimeHalf: toTimeHalf, weekDay: checkboxValue, color: color }
 			console.log(param);
-		
-		
+	
 						$.ajax({
 							url: "/trainer/schedule/addschedule",
 							type: "post",
@@ -84,6 +81,15 @@ $(function() {
 							
 							
 			});
+			
+				
+				/* HTML에 삽입할 함수 호출 */
+		      createNew(title, fromTimeHour, fromTimeHalf, toTimeHour, toTimeHalf, checkboxValue, color); {
+			
+		  
+		}
+		     
+			
 	});
 
 })
@@ -296,8 +302,6 @@ $(function() {
 		  
 		  
 		}
-		
-		
 		
 		
 		

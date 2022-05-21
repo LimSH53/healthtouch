@@ -16,6 +16,27 @@
 	<!-- css연결 -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/member/product/locker-site.css}"/>
 
+
+
+
+	<style>
+
+	.modal {
+	  position: fixed;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	  width: 700px;
+	  display: block; padding-right: 17px;
+	}
+	
+	.modal-backdrop{height:100%; width:100%;}
+
+
+	</style>
+
+
+
     </head>
          
          
@@ -27,325 +48,511 @@
         
     <!--Container Main start-->
     <div class="height-100 main_size">
+    
+    
             <div class="container" >
+            
                 <h2 class="mb-3">락커 등록
                     <div style="float: right;">
                     
-                    	
-	                 <!--    <form name="updateLocker" id="updateLocker" method="post" th:action="@{/member/product/updateLocker}"> -->
-	                   
-	                    	<!-- <input type="hidden" name="id" id="memberId" th:value="${ UserImpl.id }">
-	                    	<input type="hidden" name="name" id="memberId" th:value="${ UserImpl.name }"> -->
-	                    	<!-- <input type="hidden" name="id" id="memberId" th:value="${ UserImpl.orderList.no }"> -->
-	                    	
-	             <!--        	<input type="number" name="locMngNum" class="locNum" maxlength="5" placeholder="등록할 락커번호를 입력해주세요."> th:value="${ lockerList.locNum }"
-	                        <button type="submit" class="btn btn-primary">등록</button>
-                        
-						</form> -->
-						
-						
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registModal">등록</button>
+        				
                     </div>
                 </h2> 
+                
+               
+                
+
+		
+	    <!-- 등록 Modal -->
+	    <div class="modal fade" id="registModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	      <div class="modal-dialog">
+	        <div class="modal-content">
+	          <div class="modal-header">
+	            <h5 class="modal-title" id="exampleModalLabel">락커 이용 등록</h5>
+	            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	          </div>
+	          <div class="modal-body">
+	            <div class="mb-3">
+	              <select id="selectBox" class="form-select" aria-label="Default select example">
+	                <option selected disabled>락커 번호를 선택하세요</option>
+	                <th:block th:each="num : ${ #numbers.sequence(1,20) }">
+	                  <option th:text="${ num }"></option>
+	                </th:block>
+	              </select>
+	
+	            </div>
+	            <div class="mb-3">
+	              <label for="autoComplete" class="form-label">아이디</label>
+	              <!-- <input type="text" name="searchKeyword" id="autoComplete" class="form-control input-text" value="" placeholder="이름을 입력해 주세요"> -->
+	              <input type="text" class="form-control input-text" name="id" id="memberId" placeholder="아이디를 입력해 주세요">
+	            </div>
+	
+	            <div class="mb-3">
+	              <label for="startDate" class="form-label">이용시작일</label>
+	              <input type="date" class="form-control" name="start" id="startDate"></input>
+	            </div>
+	            <div class="mb-3">
+	              <label for="endDate" class="form-label">이용종료일</label>
+	              <input type="date" class="form-control" name="end" id="endDate"></input>
+	            </div>
+	          </div>
+	
+	          <div class="modal-footer">
+	            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	            <button type="button" class="btn btn-primary" onclick="registLocker();">등록</button>
+	          </div>
+	        </div>
+	      </div>
+	    </div> 
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 
                 
 
                 <div class="row">
                 
                 
-                
-                <!-- 1번락커가 데이터가 있을때 -->
-                  <div class="col-2 ex p-3 m-4" >
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[0].locNum }"></div>
-                        <div id="status_on" style="float: left; width:50%;" 
-	                        th:style="${lockerList[0].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}" 
-	                        >사용중</div>
-                        <div th:text="${ lockerList[0].member.name }"></div>
-                        <div th:text="|~${#dates.format(lockerList[0].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
-                    
-                    </div>    
-                  </div>
-                  
+	    <div class="locker" style="margin-left:50px">
+	      <div class="row">
+	        <!--1번 라커 사용중 -->
+	        <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 1].isEmpty() }">
+	          <div class="p-1 text-end">
+	            <div class="text-start fs-5 fw-bolder lockNum">1</div>
+	            <div class="status_on">사용중</div>
+	            <div th:each="locker : ${ lockerList.?[locNum == 1] }"><span th:text="${locker.member.name}"></span></div>
+	            <div th:each="locker : ${ lockerList.?[locNum == 1] }"></div>
+	
+	          </div>
+	        </div>
+	
+	        <!-- 1번 라커 미사용 -->
+	        <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 1].isEmpty() }">
+	          <div class="p-1 text-end">
+	            <div class="text-start fs-5 fw-bolder lockNum">1</div>
+	            <div class="status_off">사용가능</div>
+	          </div>
+	        </div>
+	
+	        <!-- 2번 라커 사용중 -->
+	        <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 2].isEmpty() }">
+	
+	          <div class="p-1 text-end">
+	            <div class="text-start fs-5 fw-bolder lockNum">2</div>
+	            <div class="status_on">사용중</div>
+	            <div th:each="locker : ${ lockerList.?[locNum == 2] }"><span th:text="${locker.member.name}"></span></div>
+	            <div th:each="locker : ${ lockerList.?[locNum == 2] }"></div>
+	
+	          </div>
+	        </div>
+	
+	        <!-- 2번 라커 미사용 -->
+	        <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 2].isEmpty() }">
+	          <div class="p-1 text-end">
+	            <div class="text-start fs-5 fw-bolder lockNum">2</div>
+	            <div class="status_off">사용가능</div>
+	          </div>
+	        </div>
+	
+	        <!-- 3번 라커 사용중 -->
+	        <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 3].isEmpty() }">
+	
+	          <div class="p-1 text-end">
+	            <div class="text-start fs-5 fw-bolder lockNum">3</div>
+	            <div class="status_on">사용중</div>
+	            <div th:each="locker : ${ lockerList.?[locNum == 3] }"><span th:text="${locker.member.name}"></span></div>
+	            <div th:each="locker : ${ lockerList.?[locNum == 3] }"></div>
+	
+	          </div>
+	        </div>
+	
+	        <!-- 3번 라커 미사용 -->
+	        <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 3].isEmpty() }">
+	          <div class="p-1 text-end">
+	            <div class="text-start fs-5 fw-bolder lockNum">3</div>
+	            <div class="status_off">사용가능</div>
+	          </div>
+	        </div>
+	
+	        <!-- 4번 라커 사용중 -->
+	        <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 4].isEmpty() }">
+	
+	          <div class="p-1 text-end">
+	            <div class="text-start fs-5 fw-bolder lockNum">4</div>
+	            <div class="status_on">사용중</div>
+	            <div th:each="locker : ${ lockerList.?[locNum == 4] }"><span th:text="${locker.member.name}"></span></div>
+	            <div th:each="locker : ${ lockerList.?[locNum == 4] }"></div>
+	
+	          </div>
+	        </div>
+	
+	        <!-- 4번 라커 미사용 -->
+	        <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 4].isEmpty() }">
+	          <div class="p-1 text-end">
+	            <div class="text-start fs-5 fw-bolder lockNum">4</div>
+	            <div class="status_off">사용가능</div>
+	          </div>
+	        </div>
+	
+	        <!--5번 라커 사용중 -->
+	        <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 5].isEmpty() }">
+	
+	          <div class="p-1 text-end">
+	            <div class="text-start fs-5 fw-bolder lockNum">5</div>
+	            <div class="status_on">사용중</div>
+	            <div th:each="locker : ${ lockerList.?[locNum == 5] }"><span th:text="${locker.member.name}"></span></div>
+	            <div th:each="locker : ${ lockerList.?[locNum == 5] }"></div>
+	
+	          </div>
+	        </div>
+	
+	        <!-- 5번 라커 미사용 -->
+	        <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 5].isEmpty() }">
+	          <div class="p-1 text-end">
+	            <div class="text-start fs-5 fw-bolder lockNum">5</div>
+	            <div class="status_off">사용가능</div>
+	          </div>
+	        </div>
+	        </div>
+	
 
-                  
-                  
-                  
-                  <!-- 2번락커가 데이터가 있을때 -->
-                  
-                  <div class="col-2 ex p-3 m-4" >
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[1].locNum }"></div>
-                        <div id="status_on" style="float: left; width:50%;" 
-                        	th:style="${lockerList[1].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}" 
-	                        >사용중</div>
-                        <div th:text="${ lockerList[1].member.name }"></div>
-                        <div th:text="|~${#dates.format(lockerList[1].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
-                    
-                    </div>    
-                  </div>
-                  
-                  
-                  
-                  
-                  
-                  
-                  <!-- 3번락커가 데이터가 있을때 -->
-                  
-                  <div class="col-2 ex p-3 m-4" >
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[2].locNum }"></div>
-                       <div id="status_on" style="float: left; width:50%;" 
-                        	th:style="${lockerList[2].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}" 
-	                        >사용중</div>
-                        <div th:text="${ lockerList[2].member.name }"></div>
-                        <div th:text="|~${#dates.format(lockerList[2].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
-                    
-                    </div>    
-                  </div>
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  <!-- 4번락커가 데이터가 있을때 -->
-                  
-                  <div class="col-2 ex p-3 m-4" >
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[3].locNum }"></div>
-                        <div id="status_on" style="float: left; width:50%;" 
-                        	th:style="${lockerList[3].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}">
-	                        사용중</div>
-                        <div th:text="${ lockerList[3].member.name }"></div>
-                        <div th:text="|~${#dates.format(lockerList[3].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
-                    
-                    </div>    
-                  </div>
-                  
-                  
-                  <!-- 5번락커 데이터가 있을때 -->
-                  
-                  <div class="col-2 ex p-3 m-4" th:if="${ lockerList[4].locStatus == 'Y' }">
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[4].locNum }"></div>
-                        <div id="status_on" style="float: left; width:50%;" 
-                        	th:style="${lockerList[4].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}">
-	                        사용중</div>
-                        <div th:text="${ lockerList[4].member.name }"></div>
-                        <div th:text="|~${#dates.format(lockerList[4].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
-                    
-                    </div>    
-                  </div>
-                  
-                  
-                  <!-- 5번데이터가 없을때 -->
-                  <div class="col-2 ex p-3 m-4" th:unless="${ lockerList[4].locStatus == 'Y' }">
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">5</div>
-                        <div id="status_on" style="float: left; width:50%; background:gray; color: white; text-align: center;">사용가능</div>
-                    </div>    
-                  </div>
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  <!-- ----------------------------------------관리 X--------------------------------------------------- -->
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  <!-- 6번데이터가 있을때 -->
-                  <div class="col-2 ex p-3 m-4" th:if="${ locMngNum == 5 }">
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[4].locNum }"></div>
-                        <div id="status_on" style="float: left; width:50%;" 
-                        	th:style="${lockerList[5].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}" 
-	                        th:text="${ lockerList[5].locStatus }"></div>
-                        <div th:text="${ lockerList[5].member.name }"></div>
-                        <div th:text="|~${#dates.format(lockerList[5].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
-                    
-                    </div>    
-                  </div>
-
-                   <!-- 6번데이터가 없을때 -->
-                  <div class="col-2 ex p-3 m-4" th:unless="${ locMngNum == 5 }">
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">6</div>
-                        <div id="status_on" style="float: left; width:50%; background:gray; color: white; text-align: center;">사용가능</div>
-                    </div>    
-                  </div>
-
-
-
-
-
-
-
-
-
-
-                  
-                  <!-- 7번데이터가 있을때 -->
-                  <div class="col-2 ex p-3 m-4" th:if="${ locMngNum == 5 }">
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[4].locNum }"></div>
-                        <div id="status_on" style="float: left; width:50%;" 
-                        	th:style="${lockerList[5].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}" 
-	                        th:text="${ lockerList[5].locStatus }"></div>
-                        <div th:text="${ lockerList[5].member.name }"></div>
-                        <div th:text="|~${#dates.format(lockerList[5].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
-                    
-                    </div>    
-                  </div>
-
-                   <!-- 7번데이터가 없을때 -->
-                  <div class="col-2 ex p-3 m-4" th:unless="${ locMngNum == 5 }">
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">7</div>
-                        <div id="status_on" style="float: left; width:50%; background:gray; color: white; text-align: center;">사용가능</div>
-                    </div>    
-                  </div>
-                  
-
-                
-                
-                
-                <!-- 8번데이터가 있을때 -->
-                  <div class="col-2 ex p-3 m-4" th:if="${ locMngNum == 5 }">
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[4].locNum }"></div>
-                        <div id="status_on" style="float: left; width:50%;" 
-                        	th:style="${lockerList[5].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}" 
-	                        th:text="${ lockerList[5].locStatus }"></div>
-                        <div th:text="${ lockerList[5].member.name }"></div>
-                        <div th:text="|~${#dates.format(lockerList[5].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
-                    
-                    </div>    
-                  </div>
-
-                   <!-- 8번데이터가 없을때 -->
-                  <div class="col-2 ex p-3 m-4" th:unless="${ locMngNum == 5 }">
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">8</div>
-                        <div id="status_on" style="float: left; width:50%; background:gray; color: white; text-align: center;">사용가능</div>
-                    </div>    
-                  </div>
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                <!-- 9번데이터가 있을때 -->
-                  <div class="col-2 ex p-3 m-4" th:if="${ locMngNum == 5 }">
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[4].locNum }"></div>
-                        <div id="status_on" style="float: left; width:50%;" 
-                        	th:style="${lockerList[5].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}" 
-	                        th:text="${ lockerList[5].locStatus }"></div>
-                        <div th:text="${ lockerList[5].member.name }"></div>
-                        <div th:text="|~${#dates.format(lockerList[5].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
-                    
-                    </div>    
-                  </div>
-
-                   <!-- 9번데이터가 없을때 -->
-                  <div class="col-2 ex p-3 m-4" th:unless="${ locMngNum == 5 }">
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">9</div>
-                        <div id="status_on" style="float: left; width:50%; background:gray; color: white; text-align: center;">사용가능</div>
-                    </div>    
-                  </div>
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                <!-- 10번데이터가 있을때 -->
-                  <div class="col-2 ex p-3 m-4" th:if="${ locMngNum == 5 }">
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;" th:text="${ lockerList[4].locNum }"></div>
-                        <div id="status_on" style="float: left; width:50%;" 
-                        	th:style="${lockerList[5].locStatus == 'Y' ? 'background:#007bff; color: white; text-align: center; margin-left: 70px;' : 'background:#000000;'}" 
-	                        th:text="${ lockerList[5].locStatus }"></div>
-                        <div th:text="${ lockerList[5].member.name }"></div>
-                        <div th:text="|~${#dates.format(lockerList[5].order.endDate, 'yyyy-MM-dd')}까지|" ></div> 
-                    
-                    </div>    
-                  </div>
-
-                   <!-- 10번데이터가 없을때 -->
-                  <div class="col-2 ex p-3 m-4" th:unless="${ locMngNum == 5 }">
-                    <div class="p-1 text-end">   
-                        <div class="text-start fs-5 fw-bolder" style="float: left; width:50%;">10</div>
-                        <div id="status_on" style="float: left; width:50%; background:gray; color: white; text-align: center;">사용가능</div>
-                    </div>    
-                  </div>
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-            </div>
-                      
-    </div>
-
-
-
-
-
-
-
-					        
-        
-        
-                    </div>
+	        <div class="row">
+	          <!-- 6번 라커 사용중 -->
+	          <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 6].isEmpty() }">
+	
+	            <div class="p-1 text-end">
+	              <div class="text-start fs-5 fw-bolder lockNum">6</div>
+	              <div class="status_on">사용중</div>
+	              <div th:each="locker : ${ lockerList.?[locNum == 6] }"><span th:text="${locker.member.name}"></span></div>
+	              <div th:each="locker : ${ lockerList.?[locNum == 6] }"></div>
+	
+	            </div>
+	          </div>
+	
+	          <!-- 6번 라커 미사용 -->
+	          <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 6].isEmpty() }">
+	            <div class="p-1 text-end">
+	              <div class="text-start fs-5 fw-bolder lockNum">6</div>
+	              <div class="status_off">사용가능</div>
+	            </div>
+	          </div>
+	
+	          <!-- 7번 라커 사용중 -->
+	          <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 7].isEmpty() }">
+	
+	            <div class="p-1 text-end">
+	              <div class="text-start fs-5 fw-bolder lockNum">7</div>
+	              <div class="status_on">사용중</div>
+	              <div th:each="locker : ${ lockerList.?[locNum == 7] }"><span th:text="${locker.member.name}"></span></div>
+	              <div th:each="locker : ${ lockerList.?[locNum == 7] }"></div>
+	
+	            </div>
+	          </div>
+	
+	          <!-- 7번 라커 미사용 -->
+	          <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 7].isEmpty() }">
+	            <div class="p-1 text-end">
+	              <div class="text-start fs-5 fw-bolder lockNum">7</div>
+	              <div class="status_off">사용가능</div>
+	            </div>
+	          </div>
+	
+	          <!-- 8번 라커 사용중 -->
+	          <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 8].isEmpty() }">
+	
+	            <div class="p-1 text-end">
+	              <div class="text-start fs-5 fw-bolder lockNum">8</div>
+	              <div class="status_on">사용중</div>
+	              <div th:each="locker : ${ lockerList.?[locNum == 8] }"><span th:text="${locker.member.name}"></span></div>
+	              <div th:each="locker : ${ lockerList.?[locNum == 8] }"></div>
+	
+	            </div>
+	          </div>
+	
+	          <!-- 8번 라커 미사용 -->
+	          <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 8].isEmpty() }">
+	            <div class="p-1 text-end">
+	              <div class="text-start fs-5 fw-bolder lockNum">8</div>
+	              <div class="status_off">사용가능</div>
+	            </div>
+	          </div>
+	
+	          <!-- 9번 라커 사용중 -->
+	          <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 9].isEmpty() }">
+	
+	            <div class="p-1 text-end">
+	              <div class="text-start fs-5 fw-bolder lockNum">9</div>
+	              <div class="status_on">사용중</div>
+	              <div th:each="locker : ${ lockerList.?[locNum == 9] }"><span th:text="${locker.member.name}"></span></div>
+	              <div th:each="locker : ${ lockerList.?[locNum == 9] }"></div>
+	
+	            </div>
+	          </div>
+	
+	          <!-- 9번 라커 미사용 -->
+	          <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 9].isEmpty() }">
+	            <div class="p-1 text-end">
+	              <div class="text-start fs-5 fw-bolder lockNum">9</div>
+	              <div class="status_off">사용가능</div>
+	            </div>
+	          </div>
+	
+	          <!-- 10번 라커 사용중 -->
+	          <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 10].isEmpty() }">
+	
+	            <div class="p-1 text-end">
+	              <div class="text-start fs-5 fw-bolder lockNum">10</div>
+	              <div class="status_on">사용중</div>
+	              <div th:each="locker : ${ lockerList.?[locNum == 10] }"><span th:text="${locker.member.name}"></span>
+	              </div>
+	              <div th:each="locker : ${ lockerList.?[locNum == 10] }"></div>
+	
+	            </div>
+	          </div>
+	
+	          <!-- 10번 라커 미사용 -->
+	          <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 10].isEmpty() }">
+	            <div class="p-1 text-end">
+	              <div class="text-start fs-5 fw-bolder lockNum">10</div>
+	              <div class="status_off">사용가능</div>
+	            </div>
+	          </div>
+	          </div>
+	
+	          <div class="row">
+	            <!-- 11번 라커 사용중 -->
+	            <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 11].isEmpty() }">
+	
+	              <div class="p-1 text-end">
+	                <div class="text-start fs-5 fw-bolder lockNum">11</div>
+	                <div class="status_on">사용중</div>
+	                <div th:each="locker : ${ lockerList.?[locNum == 11] }"><span th:text="${locker.member.name}"></span>
+	                </div>
+	                <div th:each="locker : ${ lockerList.?[locNum == 11] }"></div>
+	
+	              </div>
+	            </div>
+	
+	            <!-- 11번 라커 미사용 -->
+	            <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 11].isEmpty() }">
+	              <div class="p-1 text-end">
+	                <div class="text-start fs-5 fw-bolder lockNum">11</div>
+	                <div class="status_off">사용가능</div>
+	              </div>
+	            </div>
+	
+	            <!-- 12번 라커 사용중 -->
+	            <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 12].isEmpty() }">
+	
+	              <div class="p-1 text-end">
+	                <div class="text-start fs-5 fw-bolder lockNum">12</div>
+	                <div class="status_on">사용중</div>
+	                <div th:each="locker : ${ lockerList.?[locNum == 12] }"><span th:text="${locker.member.name}"></span>
+	                </div>
+	                <div th:each="locker : ${ lockerList.?[locNum == 12] }"></div>
+	
+	              </div>
+	            </div>
+	
+	            <!-- 12번 라커 미사용 -->
+	            <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 12].isEmpty() }">
+	              <div class="p-1 text-end">
+	                <div class="text-start fs-5 fw-bolder lockNum">12</div>
+	                <div class="status_off">사용가능</div>
+	              </div>
+	            </div>
+	
+	            <!-- 13번 라커 사용중 -->
+	            <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 13].isEmpty() }">
+	
+	              <div class="p-1 text-end">
+	                <div class="text-start fs-5 fw-bolder lockNum">13</div>
+	                <div class="status_on">사용중</div>
+	                <div th:each="locker : ${ lockerList.?[locNum == 13] }"><span th:text="${locker.member.name}"></span>
+	                </div>
+	                <div th:each="locker : ${ lockerList.?[locNum == 13] }"></div>
+	
+	              </div>
+	            </div>
+	
+	            <!-- 13번 라커 미사용 -->
+	            <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 13].isEmpty() }">
+	              <div class="p-1 text-end">
+	                <div class="text-start fs-5 fw-bolder lockNum">13</div>
+	                <div class="status_off">사용가능</div>
+	              </div>
+	            </div>
+	
+	            <!-- 14번 라커 사용중 -->
+	            <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 14].isEmpty() }">
+	
+	              <div class="p-1 text-end">
+	                <div class="text-start fs-5 fw-bolder lockNum">14</div>
+	                <div class="status_on">사용중</div>
+	                <div th:each="locker : ${ lockerList.?[locNum == 14] }"><span th:text="${locker.member.name}"></span>
+	                </div>
+	                <div th:each="locker : ${ lockerList.?[locNum == 14] }"></div>
+	
+	              </div>
+	            </div>
+	
+	            <!-- 14번 라커 미사용 -->
+	            <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 14].isEmpty() }">
+	              <div class="p-1 text-end">
+	                <div class="text-start fs-5 fw-bolder lockNum">14</div>
+	                <div class="status_off">사용가능</div>
+	              </div>
+	            </div>
+	
+	            <!-- 15번 라커 사용중 -->
+	            <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 15].isEmpty() }">
+	
+	              <div class="p-1 text-end">
+	                <div class="text-start fs-5 fw-bolder lockNum">15</div>
+	                <div class="status_on">사용중</div>
+	                <div th:each="locker : ${ lockerList.?[locNum == 15] }"><span th:text="${locker.member.name}"></span>
+	                </div>
+	                <div th:each="locker : ${ lockerList.?[locNum == 15] }"></div>
+	
+	              </div>
+	            </div>
+	
+	            <!-- 15번 라커 미사용 -->
+	            <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 15].isEmpty() }">
+	              <div class="p-1 text-end">
+	                <div class="text-start fs-5 fw-bolder lockNum">15</div>
+	                <div class="status_off">사용가능</div>
+	              </div>
+	            </div>
+	            </div>
+	
+	
+	            <div class="row">
+	              <!-- 16번 라커 사용중 -->
+	              <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 16].isEmpty() }">
+	
+	                <div class="p-1 text-end">
+	                  <div class="text-start fs-5 fw-bolder lockNum">16</div>
+	                  <div class="status_on">사용중</div>
+	                  <div th:each="locker : ${ lockerList.?[locNum == 16] }"><span th:text="${locker.member.name}"></span>
+	                  </div>
+	                  <div th:each="locker : ${ lockerList.?[locNum == 16] }"></div>
+	
+	                </div>
+	              </div>
+	
+	              <!-- 16번 라커 미사용 -->
+	              <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 16].isEmpty() }">
+	                <div class="p-1 text-end">
+	                  <div class="text-start fs-5 fw-bolder lockNum">16</div>
+	                  <div class="status_off">사용가능</div>
+	                </div>
+	              </div>
+	
+	              <!-- 17번 라커 사용중 -->
+	              <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 17].isEmpty() }">
+	
+	                <div class="p-1 text-end">
+	                  <div class="text-start fs-5 fw-bolder lockNum">17</div>
+	                  <div class="status_on">사용중</div>
+	                  <div th:each="locker : ${ lockerList.?[locNum == 17] }"><span th:text="${locker.member.name}"></span>
+	                  </div>
+	                  <div th:each="locker : ${ lockerList.?[locNum == 17] }"></div>
+	
+	                </div>
+	              </div>
+	
+	              <!-- 17번 라커 미사용 -->
+	              <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 17].isEmpty() }">
+	                <div class="p-1 text-end">
+	                  <div class="text-start fs-5 fw-bolder lockNum">17</div>
+	                  <div class="status_off">사용가능</div>
+	                </div>
+	              </div>
+	
+	              <!-- 18번 라커 사용중 -->
+	              <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 18].isEmpty() }">
+	
+	                <div class="p-1 text-end">
+	                  <div class="text-start fs-5 fw-bolder lockNum">18</div>
+	                  <div class="status_on">사용중</div>
+	                  <div th:each="locker : ${ lockerList.?[locNum == 18] }"><span th:text="${locker.member.name}"></span>
+	                  </div>
+	                  <div th:each="locker : ${ lockerList.?[locNum == 18] }"></div>
+	
+	                </div>
+	              </div>
+	
+	              <!-- 18번 라커 미사용 -->
+	              <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 18].isEmpty() }">
+	                <div class="p-1 text-end">
+	                  <div class="text-start fs-5 fw-bolder lockNum">18</div>
+	                  <div class="status_off">사용가능</div>
+	                </div>
+	              </div>
+	
+	              <!-- 19번 라커 사용중 -->
+	              <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 19].isEmpty() }">
+	
+	                <div class="p-1 text-end">
+	                  <div class="text-start fs-5 fw-bolder lockNum">19</div>
+	                  <div class="status_on">사용중</div>
+	                  <div th:each="locker : ${ lockerList.?[locNum == 19] }"><span th:text="${locker.member.name}"></span>
+	                  </div>
+	                  <div th:each="locker : ${ lockerList.?[locNum == 19] }"></div>
+	
+	                </div>
+	              </div>
+	
+	              <!-- 19번 라커 미사용 -->
+	              <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 19].isEmpty() }">
+	                <div class="p-1 text-end">
+	                  <div class="text-start fs-5 fw-bolder lockNum">19</div>
+	                  <div class="status_off">사용가능</div>
+	                </div>
+	              </div>
+	
+	              <!-- 20번 라커 사용중 -->
+	              <div class="col-2 ex p-3 m-3" th:if="${ not lockerList.?[locNum == 20].isEmpty() }">
+	
+	                <div class="p-1 text-end">
+	                  <div class="text-start fs-5 fw-bolder lockNum">20</div>
+	                  <div class="status_on">사용중</div>
+	                  <div th:each="locker : ${ lockerList.?[locNum == 20] }"><span th:text="${locker.member.name}"></span>
+	                  </div>
+	                  <div th:each="locker : ${ lockerList.?[locNum == 20] }"></div>
+	
+	                </div>
+	              </div>
+	
+	              <!-- 20번 라커 미사용 -->
+	              <div class="col-2 ex p-3 m-3" th:unless="${ not lockerList.?[locNum == 20].isEmpty() }">
+	                <div class="p-1 text-end">
+	                  <div class="text-start fs-5 fw-bolder lockNum">20</div>
+	                  <div class="status_off">사용가능</div>
+	                </div>
+	                </div>
+	      </div>
+	    
+	    </div>
+	  </div>
+	</div>               
             
         
 
 
 
 
-
+    <script src="/js/member/memberLocker.js"></script>   
 
 
 
