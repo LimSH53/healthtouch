@@ -40,8 +40,9 @@
 	<!-- 트레이너 정보 조회 -->
 	<select id="selectTrainerSchedule" resultMap="trainerScheduleResultMap">
 	
-		SELECT 
-			   S.TRN_SCH_TITLE
+		 SELECT
+               S.TRN_SCH_NO
+             , S.TRN_SCH_TITLE
 			 , S.TRN_FROM_HOUR
              , S.TRN_FROM_HALF
              , S.TRN_TO_HOUR
@@ -55,7 +56,7 @@
 	</select>
 
 
-	<!-- 트레이너 정보 인서트 -->
+	<!-- 트레이너 스케줄 인서트 -->
 
 	<insert id="insertSchedule">
 		INSERT INTO TRN_SCHEDULE

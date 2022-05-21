@@ -37,7 +37,7 @@ public class TrainerScheduleController {
 		schedule.setId(user.getId());
 		List<TrainerScheduleDTO> trainerSch = trainerScheduleService.selectTrainerSchedule(user.getId());
 		
-		log.info("트레이너 정보 :{}", trainerSch.toString());
+		log.info("트레이너 스케줄 정보 :{}", trainerSch.toString());
 		
 		mv.addObject("trainerSch", trainerSch);
 		mv.setViewName("trainer/trainer-schedule");
@@ -56,10 +56,9 @@ public class TrainerScheduleController {
 	public String insertSchedule(@RequestBody TrainerScheduleDTO schedule, @AuthenticationPrincipal UserImpl user) {
 		
 		schedule.setId(user.getId());
-		String id = String.valueOf(user.getId());
-		trainerScheduleService.insertSchedule(id);
+		trainerScheduleService.insertSchedule(schedule);
 		
-		log.info("schedule :{}", schedule);
+		log.info("Controller schedule :{}", schedule);
 		
 		return "스케줄 등록에 성공하였습니다.";
 	}
