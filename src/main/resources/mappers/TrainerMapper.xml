@@ -102,15 +102,15 @@
 							 , B.TRN_CAREER	 
 						  FROM TBL_MEMBER A
 						  JOIN TBL_TRN_INFO B ON(A.MEMBER_ID = B.TRN_INFO_MEMBER_ID)
-						  JOIN TBL_MEMBER_ROLE C ON(A.MEMBER_ID = C.MEMBER_ID)
-						 WHERE C.AUTHORITY_CODE = 2
+						  
+						 
 		  		  		<if test="searchKeyword != null and searchKeyword != ''">
 							<where>
 								<if test="searchType == 'name'">
-									A.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+									A.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%' 
 								</if>
 								<if test="searchType == 'id'">
-									A.MEMBER_ID LIKE '%' || #{searchKeyword} || '%'
+									A.MEMBER_ID LIKE '%' || #{searchKeyword} || '%' 
 								</if>
 								<if test="searchType == 'contact'">
 									A.MEMBER_CONTACT LIKE '%' || #{searchKeyword} || '%'
@@ -122,7 +122,9 @@
 		  		  WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
 		  		  ]]>
 		         ) E
-		    WHERE E.RNUM > #{ paginationInfo.firstRecordIndex }
+		     JOIN TBL_MEMBER_ROLE C ON(E.MEMBER_ID = C.MEMBER_ID)
+            WHERE C.AUTHORITY_CODE = 2
+		      AND E.RNUM > #{ paginationInfo.firstRecordIndex }
 		   ORDER BY E.RNUM
 		 
 	</select>
