@@ -14,6 +14,7 @@ import com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerSalaryDTO;
 import com.jaspa.healthtouch.common.paging.Criteria;
 import com.jaspa.healthtouch.common.paging.PaginationInfo;
+import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 
 @Service("trManagementService")
 public class TrManagementServiceImpl implements TrManagementService {
@@ -26,8 +27,22 @@ public class TrManagementServiceImpl implements TrManagementService {
 	}
 
 	@Override
-	public List<TrainerInfoDTO> selectAllTrainer() {
-		return trainerMapper.selectAllTrainer();
+	public List<TrainerInfoDTO> selectAllTrainer(TrainerInfoDTO params) {
+		
+		  List<TrainerInfoDTO> trainerList = Collections.emptyList();
+		 
+		  int trainerTotalCount = trainerMapper.selectAllTrainerTotalCount(params);
+		  
+		  PaginationInfo paginationInfo = new PaginationInfo(params);
+		  paginationInfo.setTotalRecordCount(trainerTotalCount);
+		  
+		  params.setPaginationInfo(paginationInfo);
+		  
+		  if(trainerTotalCount > 0) { 
+			  trainerList = trainerMapper.selectAllTrainer(params); 
+			  }
+		  
+		  return trainerList; 
 	}
 
 	@Override
@@ -62,22 +77,10 @@ public class TrManagementServiceImpl implements TrManagementService {
 		return trainerMapper.selectAllAttendance();
 	}
 
+
+
 	
-//	 @Override 
-//	 public List<TrainerInfoDTO> searchTrainer(TrainerInfoDTO params, Criteria criteria) {
-//	  
-//		  List<TrainerInfoDTO> trSearchList = Collections.emptyList();
-//		 
-//		  int trainerTotalCount = trainerMapper.searchTrainerTotalCount(criteria);
-//		  
-//		  PaginationInfo paginationInfo = new PaginationInfo(criteria);
-//		  paginationInfo.setTotalRecordCount(trainerTotalCount);
-//		  
-//		  
-//		  if(trainerTotalCount > 0) { 
-//			  trSearchList = trainerMapper.searchTrainer(criteria); }
-//		  
-//		  return trSearchList; }
+
 
 
 }

@@ -1,6 +1,7 @@
 <!doctype html>
                        
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
                            
 <head>     
     <meta charset='utf-8'>
@@ -11,6 +12,8 @@
     <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>  
     <link href="@{/css/header.css}" rel="stylesheet" type="text/css">
 	<div th:replace="/common/centerHeader.html :: center-header"></div>
+	
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
    
 </head>
                                 
@@ -27,35 +30,38 @@
             <div class="container">
             <h2 class="mb-5">트레이너 조회</h2>
 			
-            <!-- <div>
-                selectbox - 전체, 재직, 퇴사
+			<!--  selectbox - 전체, 재직, 퇴사 -->
+            <div>
                 <select class="form-select" aria-label="Default select example" style="width: 10%;">
-                    <option selected>전체</option>
-                    <option value="1">재직</option>
-                    <option value="2">퇴사</option>
+                    <option id="all" selected>전체</option>
+                    <option id="employeed" value="1">재직</option>
+                    <option id="resign" value="2">퇴사</option>
                 </select>
-			</div> -->
+			</div> 
 			
-				<!--  <div id="adv-search" class="input-group">
-						<form id="searchForm" th:action="@{/center/member/search}" method="get" class="input-group mb-3" role="form">
-							<input type="hidden" name="currentPageNo" value="1"/>
-							<input type="hidden" name="recordsPerPage" th:value="${params.recordsPerPage}"/>
-							<input type="hidden" name="pageSize" th:value="${params.pageSize}"/>
-							<select name="searchType" class="form-control">
-								<option value="total" th:selected="${#strings.equals(params.searchType, 'total')}">전체</option>
-								<option value="employee" th:selected="${#strings.equals(params.searchType, 'employee')}">재직</option>
-								<option value="resign" th:selected="${#strings.equals(params.searchType, 'resign')}">퇴사</option>
-							</select>
-							<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-text" th:value="${params.searchKeyword}" placeholder="검색어를 입력해 주세요"/>
-							<div class="search_btn input-group-append">
-								<button type="submit" class="btn btn-primary"><i class="bx bx-search"></i></button>
-							</div>
-						</form>
-				</div> -->
+			<!-- 검색 -->
+			<th:block layout:fragment="search">
+			<div id="adv-search" class="input-group">
+					<form id="searchForm" th:action="@{/center/trainer/list}" method="get" class="input-group mb-3" role="form">
+						<input type="hidden" name="currentPageNo" value="1"/>
+						<input type="hidden" name="recordsPerPage" th:value="${params.recordsPerPage}"/>
+						<input type="hidden" name="pageSize" th:value="${params.pageSize}"/>
+						<select name="searchType" class="form-control">
+							<option value="name" th:selected="${#strings.equals(params.searchType, 'name')}">이름</option>
+							<option value="id" th:selected="${#strings.equals(params.searchType, 'id')}">아이디</option>
+							<option value="contact" th:selected="${#strings.equals(params.searchType, 'contact')}">연락처</option>
+						</select>
+						<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-text" th:value="${params.searchKeyword}" placeholder="검색어를 입력해 주세요"/>
+						<div class="search_btn input-group-append">
+							<button type="submit" class="btn btn-primary"><i class="bx bx-search"></i></button>
+						</div>
+					</form>
+			</div>
+			</th:block>
 			
 			<!-- 트레이너 목록 테이블 -->
             <div class="table-responsive custom-table-responsive">
-            <table class="table custom-table" style="width: 90%; margin:auto">
+            <table class="table custom-table" style="width: 90%; margin:auto; text-align:center;">
             <thead>
             <tr>
             <th>No</th>
@@ -80,10 +86,7 @@
                 <td th:text="${trainer.member.contact}"></td>
                 <td th:text="|${trainer.career}년|"></td>
                 <td th:text="${trainer.trStatus}"></td>
-    			
-    			
-    		
-    	
+
             </tr>
     
             </tbody>
@@ -112,6 +115,9 @@
             </div>
             </div>
     </div>
+   </div>
+   
+   
 
 </body>
 </html> 

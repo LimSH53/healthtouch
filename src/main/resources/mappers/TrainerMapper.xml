@@ -74,22 +74,82 @@
 		
 	</resultMap>
 	
-	<!-- 센터-트레이너 목록 조회 -->
+	<!-- 트레이너 조회 -->
 	<select id="selectAllTrainer" resultMap="trainerInfoResultMap">
-		SELECT 
-			   TI.TRN_NUM
-			 , TI.TRN_HOLD
-			 , M.MEMBER_NAME
-			 , M.MEMBER_GENDER
-			 , M.MEMBER_ID
-			 , M.MEMBER_CONTACT
-			 , TI.TRN_CAREER
-			 
-		  FROM TBL_MEMBER M
-		  JOIN TBL_TRN_INFO TI ON(M.MEMBER_ID = TI.TRN_INFO_MEMBER_ID)
-		  JOIN TBL_MEMBER_ROLE MR ON(M.MEMBER_ID = MR.MEMBER_ID)
-		 WHERE MR.AUTHORITY_CODE = 2
+		
+	 SELECT    E.RNUM
+  			 , E.TRN_NUM
+			 , E.TRN_HOLD
+			 , E.MEMBER_NAME
+			 , E.MEMBER_GENDER
+			 , E.MEMBER_ID
+			 , E.MEMBER_CONTACT
+			 , E.TRN_CAREER
+		  FROM (SELECT ROWNUM RNUM
+		  			 , D.TRN_NUM
+					 , D.TRN_HOLD
+					 , D.MEMBER_NAME
+					 , D.MEMBER_GENDER
+					 , D.MEMBER_ID
+					 , D.MEMBER_CONTACT
+					 , D.TRN_CAREER
+		  		  FROM (SELECT B.TRN_NUM
+							 , B.TRN_HOLD
+							 , A.MEMBER_NAME
+							 , A.MEMBER_GENDER
+							 , A.MEMBER_ID
+							 , A.MEMBER_CONTACT
+							 , B.TRN_CAREER	 
+						  FROM TBL_MEMBER A
+						  JOIN TBL_TRN_INFO B ON(A.MEMBER_ID = B.TRN_INFO_MEMBER_ID)
+						  JOIN TBL_MEMBER_ROLE C ON(A.MEMBER_ID = C.MEMBER_ID)
+						 WHERE C.AUTHORITY_CODE = 2
+		  		  		<if test="searchKeyword != null and searchKeyword != ''">
+							<where>
+								<if test="searchType == 'name'">
+									A.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+								</if>
+								<if test="searchType == 'id'">
+									A.MEMBER_ID LIKE '%' || #{searchKeyword} || '%'
+								</if>
+								<if test="searchType == 'contact'">
+									A.MEMBER_CONTACT LIKE '%' || #{searchKeyword} || '%'
+								</if>
+							</where>
+						</if>
+		  		  ) D
+		  		 <![CDATA[
+		  		  WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
+		  		  ]]>
+		         ) E
+		    WHERE E.RNUM > #{ paginationInfo.firstRecordIndex }
+		   ORDER BY E.RNUM
 		 
+	</select>
+	
+	
+	<select id="selectAllTrainerTotalCount" parameterType="com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO" resultType="int">
+		SELECT COUNT(*)
+		  FROM TBL_TRN_INFO TI
+		  JOIN TBL_MEMBER M ON(M.MEMBER_ID = TI.TRN_INFO_MEMBER_ID)
+		  JOIN TBL_MEMBER_ROLE MR ON(M.MEMBER_ID = MR.MEMBER_ID)
+		<if test="searchKeyword != null and searchKeyword != ''">
+			<choose>
+				<when test="searchType != null and searchType != ''">
+					<choose>
+						<when test="searchType == 'name'">
+							AND M.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+						</when>
+						<when test="searchType == 'id'">
+							AND M.MEMBER_ID LIKE '%' || #{searchKeyword} || '%'
+						</when>
+						<when test="searchType == 'contact'">
+							AND M.MEMBER_CONTACT LIKE '%' || #{searchKeyword} || '%'
+						</when>
+					</choose>
+				</when>
+			</choose>
+		</if>
 	</select>
 	
 	 

@@ -9,14 +9,14 @@ import com.jaspa.healthtouch.center.trainer.model.dto.HolidayDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerSalaryDTO;
 import com.jaspa.healthtouch.common.paging.Criteria;
+import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 
 @Mapper
 public interface TrainerMapper {
  
+	int selectAllTrainerTotalCount(TrainerInfoDTO params);
 
-
-	List<TrainerInfoDTO> selectAllTrainer();
-
+	List<TrainerInfoDTO> selectAllTrainer(TrainerInfoDTO params);	
 
 	TrainerInfoDTO detailTrainerById(String trId);
 
@@ -27,7 +27,7 @@ public interface TrainerMapper {
 	void deleteTrainerMStatus(String id);
 
 
-	int searchTrainerTotalCount(Criteria criteria);
+	
 
 
 	List<TrainerInfoDTO> searchTrainer(Criteria criteria);
@@ -40,6 +40,9 @@ public interface TrainerMapper {
 
 
 	List<AttendanceDTO> selectAllAttendance();
+
+
+	
 
 
 
