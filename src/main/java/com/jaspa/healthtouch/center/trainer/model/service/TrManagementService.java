@@ -18,9 +18,11 @@ public interface TrManagementService {
 
 	List<TrainerSalaryDTO> selectAllSalary();
 
-	List<HolidayDTO> selectAllHdayRequest();
+	List<HolidayDTO> selectAllHdayRequest(HolidayDTO params);
 
 	List<AttendanceDTO> selectAllAttendanceList();
+
+	
 
 
 

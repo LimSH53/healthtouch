@@ -10,7 +10,7 @@
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>  
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-	<div th:replace="/common/centerHeader.html :: center-header"></div>
+	<link th:replace="/common/centerHeader.html :: center-header"></link>
    
 </head>
                                 
@@ -23,32 +23,45 @@
     <div class="height-100 bg-light">
         <div class="content">
             <div class="container">
-            <h2 class="mb-5">트레이너 조회</h2>
+            <a href="/center/trainer/hday" style="color:black;"><h2 class="mb-5">휴가 신청 조회</h2></a>
 
-            <div>
-                <!-- selectbox  -->
-                <select class="form-select" aria-label="Default select example" style="width: 10%;">
-                    <option selected>대기</option>
-                    <option value="1">승인</option>
-                    <option value="2">반려</option>
-                </select>
-<!--                 
-                <form class="example" action="action_page.php">
-                    <input type="text" placeholder="검색어를 입력하세요" name="search">
-                    <button type="submit"><i class="fa fa-search"></i></button>
-                </form> -->
-            </div>
+            <div class="row" style="width: 70%; margin:auto; text-align:center;">
+            
+                	<!-- 검색 -->
+					<div id="adv-search" class="input-group">
+						<form id="searchForm" th:action="@{/center/trainer/hday}" method="get" class="input-group mb-3" role="form">
+							<input type="hidden" name="currentPageNo" value="1"/>
+							<input type="hidden" name="recordsPerPage" th:value="${params.recordsPerPage}"/>
+							<input type="hidden" name="pageSize" th:value="${params.pageSize}"/>
+							<select name="hStatus" class="form-select" style="text-align:center;">
+								<option selected disabled >처리상태</option>
+								<option value="all" th:selected="${#strings.equals(params.hStatus, 'all')}">전체</option>
+	                          	<option value="waiting" th:selected="${#strings.equals(params.hStatus, 'waiting')}">대기</option>
+								<option value="approval" th:selected="${#strings.equals(params.hStatus, 'approval')}">승인</option>
+								<option value="reject" th:selected="${#strings.equals(params.hStatus, 'reject')}">반려</option>
+	                       </select>
+							<select name="searchType" class="form-select" style="text-align:center;">
+								<option selected disabled >검색조건</option>
+								<option value="name" th:selected="${#strings.equals(params.searchType, 'name')}">이름</option>
+								<option value="id" th:selected="${#strings.equals(params.searchType, 'id')}">아이디</option>
+							</select>
+							<input type="text" name="searchKeyword" id="searchKeyword" class="form-control input-text" th:value="${params.searchKeyword}" placeholder="검색어를 입력해 주세요"/>
+							<div class="search_btn input-group-append">
+								<button type="submit" class="btn btn-primary"><i class="bx bx-search"></i></button>
+							</div>
+						</form>
+					</div>
+			</div>
 
 
             <div class="table-responsive custom-table-responsive">
-            <table class="table custom-table">
+            <table class="table custom-table" style="width: 90%; margin:auto; text-align:center;">
             <thead>
             <tr>
+            <th scope="col">No</th>
             <th scope="col">신청일</th>
             <th scope="col">이름</th>
             <th scope="col">ID</th>
-            <th scope="col">근무요일</th>
-            <th scope="col">근무시간</th>
             <th scope="col">휴가사유</th>
             <th scope="col">희망휴가일</th>
             <th scope="col">상태</th>           
@@ -57,11 +70,10 @@
             
             <tbody>
             <tr class="table_hday" th:each="hday : ${ hdayRequestList}">
+            	<td th:text="${hday.hReqNo}"></td>
                 <td th:text="${hday.reqHday}"></td>
                 <td th:text="${hday.trainer.member.name}"></td>
                 <td th:text="${hday.trainer.member.id}"></td>
-                <td></td>
-                <td></td>
                 <td th:text="${hday.hReason}"></td>
                 <td th:text="${hday.hDay}"></td>
                 <td th:text="${hday.hStatus}"></td>
@@ -72,23 +84,25 @@
 
             
             <!-- 페이징-->
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+            <nav th:if="${params != null and params.paginationInfo.totalRecordCount > 0}" th:object="${params.paginationInfo}" th:with="info=${params.paginationInfo}" aria-label="Page navigation" class="text-center">
+				<ul class="pagination flex-wrap d-flex justify-content-center" style="display: flex; border-radius: 0.25rem;">
+					<li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(1)} ]])">
+						<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+					</li>
+					<li class="page-item" th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.firstPage - 1)} ]])">
+						<a class="page-link" href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&lsaquo;</span></a>
+					</li>
+					<li class="page-item" th:each="pageNo : *{#numbers.sequence( firstPage, lastPage )}" th:class="${pageNo == params.currentPageNo} ? 'active'">
+						<a class="page-link" href="javascript:void(0)" th:text="${pageNo}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(pageNo)} ]])"></a>
+					</li>
+					<li class="page-item" th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.lastPage + 1)} ]])">
+						<a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&rsaquo;</span></a>
+					</li>
+					<li class="page-item" th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.totalPageCount)} ]])">
+						<a class="page-link" href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+					</li>
+				</ul>
+			</nav>
             </div>
             </div>
             </div>

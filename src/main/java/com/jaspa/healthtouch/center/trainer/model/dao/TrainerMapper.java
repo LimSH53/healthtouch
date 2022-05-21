@@ -27,19 +27,16 @@ public interface TrainerMapper {
 	void deleteTrainerMStatus(String id);
 
 
-	
-
-
-	List<TrainerInfoDTO> searchTrainer(Criteria criteria);
-
-
 	List<TrainerSalaryDTO> selectAllSalary();
 
 
-	List<HolidayDTO> selectAllHdayRequest();
-
-
 	List<AttendanceDTO> selectAllAttendance();
+
+	int selectAllHolidayTotalCount(HolidayDTO params);
+
+	List<HolidayDTO> selectAllHodlidayRequest(HolidayDTO params);
+
+	
 
 
 	

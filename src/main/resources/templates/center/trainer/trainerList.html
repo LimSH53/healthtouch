@@ -11,7 +11,7 @@
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>  
     <link href="@{/css/header.css}" rel="stylesheet" type="text/css">
-	<div th:replace="/common/centerHeader.html :: center-header"></div>
+	<link th:replace="/common/centerHeader.html :: center-header"></link>
 	
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
    
@@ -28,26 +28,24 @@
     
         <div class="content">
             <div class="container">
-            <h2 class="mb-5">트레이너 조회</h2>
+            <a href="/center/trainer/list" style="color:black;"><h2 class="mb-5">트레이너 조회</h2></a>
 			
-			<!--  selectbox - 전체, 재직, 퇴사 -->
-            <div class="row">
-            	<div class="col-1">
-            		<select class="form-select" aria-label="Default select example">
-	                    <option id="all" selected>전체</option>
-	                    <option id="employeed" value="1">재직</option>
-	                    <option id="resign" value="2">퇴사</option>
-                	</select>
-            	</div>
-                <div class="col-5"></div>
-                <div class="col-6" >
+            <div class="row" style="width: 70%; margin:auto; text-align:center;">
+            
                 	<!-- 검색 -->
 					<div id="adv-search" class="input-group">
 						<form id="searchForm" th:action="@{/center/trainer/list}" method="get" class="input-group mb-3" role="form">
 							<input type="hidden" name="currentPageNo" value="1"/>
 							<input type="hidden" name="recordsPerPage" th:value="${params.recordsPerPage}"/>
 							<input type="hidden" name="pageSize" th:value="${params.pageSize}"/>
-							<select name="searchType" class="form-control">
+							<select name="trStatus" class="form-select" style="text-align:center;">
+								<option selected disabled >재직여부</option>
+	                          	<option value="all" th:selected="${#strings.equals(params.trStatus, 'all')}">전체</option>
+								<option value="employeed" th:selected="${#strings.equals(params.trStatus, 'employeed')}">재직</option>
+								<option value="resign" th:selected="${#strings.equals(params.trStatus, 'resign')}">퇴사</option>
+	                       </select>
+							<select name="searchType" class="form-select" style="text-align:center;">
+								<option selected disabled >검색조건</option>
 								<option value="name" th:selected="${#strings.equals(params.searchType, 'name')}">이름</option>
 								<option value="id" th:selected="${#strings.equals(params.searchType, 'id')}">아이디</option>
 								<option value="contact" th:selected="${#strings.equals(params.searchType, 'contact')}">연락처</option>
@@ -58,10 +56,6 @@
 							</div>
 						</form>
 					</div>
-                </div>
-                
-                
-                
 			</div> 
 			
 			
@@ -124,6 +118,7 @@
     </div>
    </div>
    
+ 
    
 
 </body>
