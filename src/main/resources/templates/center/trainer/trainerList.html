@@ -31,13 +31,14 @@
             <h2 class="mb-5">트레이너 조회</h2>
 			
 			<!--  selectbox - 전체, 재직, 퇴사 -->
-            <div class="row">
+            <div class="row" style="width: 90%; margin:auto; text-align:center;">
+            	
             	<div class="col-1">
-            		<select class="form-select" aria-label="Default select example">
-	                    <option id="all" selected>전체</option>
-	                    <option id="employeed" value="1">재직</option>
-	                    <option id="resign" value="2">퇴사</option>
-                	</select>
+            		 <select id="status" th:onchange="changeStatus()" class="form-control">
+                           <option th:selected="true" th:text="전체"></option>
+                           <option th:text="재직"></option>
+                           <option th:text="퇴사"></option>
+                       </select>
             	</div>
                 <div class="col-5"></div>
                 <div class="col-6" >
@@ -123,6 +124,32 @@
             </div>
     </div>
    </div>
+   
+   <script th:inline="javascript">
+   function changeStatus() {
+	    var trStatus = $("#status option:selected").text();
+	    console.log(trStatus);
+		 
+	    $.ajax({
+	        url:"center/trainer/status",
+	        data:{ stStatus : trStatus},
+	        type:"POST",
+	        success:function(data){
+				if(trStatus == "전체") {
+					location.href="/center/trainer/list";
+				} else {
+					location.href="/center/trainer/status";
+				}
+				
+	           
+	        },error:function (error) {
+	            console.log(error);
+	        }
+
+	    });
+
+	}
+   </script>
    
    
 

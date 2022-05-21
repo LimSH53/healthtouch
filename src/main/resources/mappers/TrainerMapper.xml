@@ -102,10 +102,10 @@
 							 , B.TRN_CAREER	 
 						  FROM TBL_MEMBER A
 						  JOIN TBL_TRN_INFO B ON(A.MEMBER_ID = B.TRN_INFO_MEMBER_ID)
-						  
 						 
 		  		  		<if test="searchKeyword != null and searchKeyword != ''">
 							<where>
+								
 								<if test="searchType == 'name'">
 									A.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%' 
 								</if>
@@ -152,6 +152,31 @@
 				</when>
 			</choose>
 		</if>
+	</select>
+	
+	<!-- 재직여부에 따라 트레이너 조회 -->
+	<select id="selectTrainerByStatus" resultMap="trainerInfoResultMap">
+		SELECT
+				M.MEMBER_NAME
+			  , M.MEMBER_GENDER
+			  , M.MEMBER_ID
+			  , M.MEMBER_CONTACT
+			  , TI.TRN_CAREER
+			  , TI.TRN_HOLD
+		 FROM TBL_MEMBER M
+		 JOIN TBL_TRN_INFO TI ON(M.MEMBER_ID = TI.TRN_INFO_MEMBER_ID)
+		 JOIN TBL_MEMBER_ROLE MR ON(M.MEMBER_ID = MR.MEMBER_ID)
+	 	WHERE MR.AUTHORITY_CODE = 2
+	 	<choose>
+			<when test="trStatus == '재직'">
+				AND TI.TRN_HOLD = "재직"
+			</when>
+			<when test="trStatus == '퇴사'">
+				AND TI.TRN_HOLD = "퇴사"
+			</when>		
+		</choose>
+
+		 
 	</select>
 	
 	 

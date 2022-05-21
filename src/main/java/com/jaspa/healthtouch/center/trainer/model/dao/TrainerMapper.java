@@ -41,6 +41,8 @@ public interface TrainerMapper {
 
 	List<AttendanceDTO> selectAllAttendance();
 
+	List<TrainerInfoDTO> selectTrainerByStatus(String trStatus);
+
 
 	
 

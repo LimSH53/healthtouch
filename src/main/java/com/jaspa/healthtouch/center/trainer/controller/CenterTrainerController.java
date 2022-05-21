@@ -44,7 +44,13 @@ public class CenterTrainerController {
 		return "center/trainer/trainerList";
 	}
 
+	//재직여부에 따라 조회
+	@PostMapping("/status")
+	@ResponseBody
+	public void statusTrainer(@RequestParam("trStatus") String trStatus) {
+		trManagementService.selectTrainerByStatus(trStatus);
 	
+	}
 	
 	//트레이너 상세조회
 	@GetMapping("/detail")
