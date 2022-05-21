@@ -1,6 +1,8 @@
 package com.jaspa.healthtouch.trainer.schedule.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -9,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.jaspa.healthtouch.login.model.dto.UserImpl;
+import com.jaspa.healthtouch.member.reservation.model.dto.ReservationDTO;
 import com.jaspa.healthtouch.trainer.schedule.model.dto.TrainerScheduleDTO;
 import com.jaspa.healthtouch.trainer.schedule.model.service.TrainerScheduleService;
 
@@ -30,20 +32,19 @@ public class TrainerScheduleController {
 	
 	
 	
-
+	@RequestMapping(value = "/allschedule", method = RequestMethod.GET)
+	@ResponseBody
 	@GetMapping("/allschedule")
-	public ModelAndView selectTrainerSchedule(TrainerScheduleDTO schedule, ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
+	public Map<String, TrainerScheduleDTO> selectTrainerSchedule(@AuthenticationPrincipal UserImpl user) {
 		
-		schedule.setId(user.getId());
-		List<TrainerScheduleDTO> trainerSch = trainerScheduleService.selectTrainerSchedule(user.getId());
+		Map<String, TrainerScheduleDTO> schedule = new HashMap<>();
 		
-		log.info("트레이너 스케줄 정보 :{}", trainerSch.toString());
+		user.setId(user.getId());
+		List<TrainerScheduleDTO> scheduleList = trainerScheduleService.selectTrainerSchedule(user.getId());
 		
-		mv.addObject("trainerSch", trainerSch);
-		mv.setViewName("trainer/trainer-schedule");
+		log.info("트레이너 스케줄 정보 :{}", scheduleList.toString());	
 		
-		
-		return mv;
+		return schedule;
 	}
 
 	

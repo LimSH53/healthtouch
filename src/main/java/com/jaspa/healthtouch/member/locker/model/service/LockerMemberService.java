@@ -10,11 +10,14 @@ public interface LockerMemberService {
 	/* 라커 전체조회 */
 	List<LockerDTO> selectAllLocker();
 
-
-	
 	/* 라커 등록 */
-	void updateLocker(LockerDTO locker);
+	void registLocker(LockerDTO locker);
+	
+	
+	/* void updateLocker(LockerDTO locker); */
 	
 	/* 이용권 조회 */
 	/* int selectOrdNum(int no); */
+	
+
 }
