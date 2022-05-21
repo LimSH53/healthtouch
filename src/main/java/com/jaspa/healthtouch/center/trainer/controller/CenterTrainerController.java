@@ -28,7 +28,6 @@ import lombok.extern.slf4j.Slf4j;
 public class CenterTrainerController {
 
 	private TrManagementService trManagementService;
-	private MessageSource messageSource;
 	
 	@Autowired
 	public CenterTrainerController(TrManagementService trManagementService) {
@@ -37,26 +36,14 @@ public class CenterTrainerController {
 	
 	//트레이너 목록 조회
 	@GetMapping("/list")
-	public ModelAndView selectAllTrainerList(ModelAndView mv) {
+	public String trainerList(Model model, @ModelAttribute("params") TrainerInfoDTO params) {
+		List<TrainerInfoDTO> trainerList = trManagementService.selectAllTrainer(params);
 		
-		List<TrainerInfoDTO> trainerList = trManagementService.selectAllTrainer();
+		model.addAttribute("trainerList", trainerList);
 		
-		mv.addObject("trainerList", trainerList);
-		mv.setViewName("center/trainer/trainerList");
-		return mv;
+		return "center/trainer/trainerList";
 	}
-	
-	
-//	@GetMapping("/search")
-//	public String trainerSearh(Model model, @ModelAttribute("params") TrainerInfoDTO params) {
-//		
-//		List<TrainerInfoDTO> trSearchList = trManagementService.searchTrainer(params);
-//		
-//		model.addAttribute("trSearchList", trSearchList);
-//		
-//		return "center/member/search";
-//	} 
-	
+
 	
 	
 	//트레이너 상세조회

@@ -10,7 +10,7 @@ import com.jaspa.healthtouch.common.paging.Criteria;
 
 public interface TrManagementService {
 
-	List<TrainerInfoDTO> selectAllTrainer();
+	List<TrainerInfoDTO> selectAllTrainer(TrainerInfoDTO params);
 
 	TrainerInfoDTO trainerDetail(String trId);
 
@@ -22,7 +22,7 @@ public interface TrManagementService {
 
 	List<AttendanceDTO> selectAllAttendanceList();
 
-//	List<TrainerInfoDTO> searchTrainer(TrainerInfoDTO params, Criteria criteria); 
+
 
 	
 
