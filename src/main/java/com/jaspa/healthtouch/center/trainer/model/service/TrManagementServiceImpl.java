@@ -65,10 +65,29 @@ public class TrManagementServiceImpl implements TrManagementService {
 		return trainerMapper.selectAllSalary();
 	}
 
+	/*
+	 * @Override public List<HolidayDTO> selectAllHdayRequest() {
+	 * 
+	 * return trainerMapper.selectAllHdayRequest(); }
+	 */
+	
 	@Override
-	public List<HolidayDTO> selectAllHdayRequest() {
-		
-		return  trainerMapper.selectAllHdayRequest();
+	public List<HolidayDTO> selectAllHdayRequest(HolidayDTO params) {
+		  
+		  List<HolidayDTO> hdayRequestList = Collections.emptyList();
+		 
+		  int holidayTotalCount = trainerMapper.selectAllHolidayTotalCount(params);
+		  
+		  PaginationInfo paginationInfo = new PaginationInfo(params);
+		  paginationInfo.setTotalRecordCount(holidayTotalCount);
+		  
+		  params.setPaginationInfo(paginationInfo);
+		  
+		  if(holidayTotalCount > 0) { 
+			  hdayRequestList = trainerMapper.selectAllHodlidayRequest(params); 
+			  }
+		  
+		  return hdayRequestList; 
 	}
 
 	@Override
@@ -76,6 +95,8 @@ public class TrManagementServiceImpl implements TrManagementService {
 		
 		return trainerMapper.selectAllAttendance();
 	}
+
+	
 
 	
 

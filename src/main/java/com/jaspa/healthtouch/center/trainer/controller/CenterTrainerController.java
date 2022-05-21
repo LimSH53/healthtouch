@@ -3,7 +3,6 @@ package com.jaspa.healthtouch.center.trainer.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +18,7 @@ import com.jaspa.healthtouch.center.trainer.model.dto.HolidayDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerSalaryDTO;
 import com.jaspa.healthtouch.center.trainer.model.service.TrManagementService;
+import com.jaspa.healthtouch.trainer.schedule.model.dto.TrainerScheduleDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -76,14 +76,15 @@ public class CenterTrainerController {
 	
 	//휴가요청 조회
 	@GetMapping("/hday")
-	public ModelAndView selectAllHdayRequest(ModelAndView mv) {
+	public String hdayRequestList(Model model, @ModelAttribute("params") HolidayDTO params) {
 		
-		List<HolidayDTO> hdayRequestList = trManagementService.selectAllHdayRequest();
+		List<HolidayDTO> hdayRequestList = trManagementService.selectAllHdayRequest(params);
 		
-		mv.addObject("hdayRequestList", hdayRequestList);
-		mv.setViewName("center/trainer/hdayRequestList");
-		return mv;
+		model.addAttribute("hdayRequestList", hdayRequestList);
+		
+		return "center/trainer/hdayRequestList";
 	}
+
 	
 	// 근태 조회
 	@GetMapping("/attendance")

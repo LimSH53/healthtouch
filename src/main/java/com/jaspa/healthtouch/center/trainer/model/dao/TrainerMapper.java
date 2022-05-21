@@ -30,10 +30,11 @@ public interface TrainerMapper {
 	List<TrainerSalaryDTO> selectAllSalary();
 
 
-	List<HolidayDTO> selectAllHdayRequest();
-
-
 	List<AttendanceDTO> selectAllAttendance();
+
+	int selectAllHolidayTotalCount(HolidayDTO params);
+
+	List<HolidayDTO> selectAllHodlidayRequest(HolidayDTO params);
 
 	
 

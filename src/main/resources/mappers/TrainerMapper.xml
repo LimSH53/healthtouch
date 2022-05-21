@@ -41,6 +41,7 @@
 		<result property="trId" column="TRN_INFO_MEMBER_ID"/>
 		
 		<association property="member" resultMap="memberResultMap"/>
+		<association property="schedule" resultMap="scheduleResultMap"/>
 	</resultMap>
 	
 	<resultMap type="com.jaspa.healthtouch.center.trainer.model.dto.AttendanceDTO" id="attendanceResultMap">
@@ -71,6 +72,19 @@
 	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberRoleDTO" id="memberRoleResultMap">
 		<id property="memberId" column="MEMBER_ID"/>
 		<result property="authorityCode" column="AUTHORITY_CODE"/>
+		
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.trainer.schedule.model.dto.TrainerScheduleDTO" id="scheduleResultMap">
+		<id property="no" column="TRN_SCH"/>
+		<result property="title" column="TRN_SCH_NAME"/>
+		<result property="weekday" column="TRN_SCH_WEEK"/>
+		<result property="fromTimeHour" column="TRN_SCH_START"/>
+		<result property="toTimeHour" column="TRN_SCH_END"/>
+		<result property="colre" column="TRN_SCH_COLOR"/>
+		
+		<association property="member" resultMap="memberResultMap"/>
+	
 		
 	</resultMap>
 	
@@ -218,19 +232,90 @@
 	 </select>
 	 
 	 <!-- 휴가 요청 조회 -->
-	 <select id="selectAllHdayRequest" resultMap="holidayResultMap">
-	 	SELECT
-	 		   HR.H_REQ_NO
-	 		 , HR.HDATE_REQ
-	 		 , M.MEMBER_NAME
-	 		 , M.MEMBER_ID
-	 		 , HR.H_REASON
-	 		 , HR.HDATE
-	 		 , HR.H_STATUS
-	     FROM TBL_HDAY_REQ HR
-	     JOIN TBL_TRN_INFO TI ON(HR.H_TRN_NUM = TI.TRN_NUM)
-	     JOIN TBL_MEMBER M ON(TI.TRN_INFO_MEMBER_ID = M.MEMBER_ID)
+	 <select id="selectAllHodlidayRequest" resultMap="holidayResultMap">
+	 	
+     SELECT    E.RNUM
+		 	 , E.H_REQ_NO
+	 		 , E.HDATE_REQ
+	 		 , E.MEMBER_NAME
+	 		 , E.MEMBER_ID
+	 		 , E.H_REASON
+	 		 , E.HDATE
+	 		 , E.H_STATUS
+		  FROM (SELECT ROWNUM RNUM
+		  			 , D.H_REQ_NO
+			 		 , D.HDATE_REQ
+			 		 , D.MEMBER_NAME
+			 		 , D.MEMBER_ID
+			 		 , D.H_REASON
+			 		 , D.HDATE
+			 		 , D.H_STATUS
+		  		  FROM (SELECT
+					 		   A.H_REQ_NO
+					 		 , A.HDATE_REQ
+					 		 , C.MEMBER_NAME
+					 		 , C.MEMBER_ID
+					 		 , A.H_REASON
+					 		 , A.HDATE
+					 		 , A.H_STATUS
+					     FROM TBL_HDAY_REQ A
+					     JOIN TBL_TRN_INFO B ON(A.H_TRN_NUM = B.TRN_NUM)
+					     JOIN TBL_MEMBER C ON(B.TRN_INFO_MEMBER_ID = C.MEMBER_ID)
+						
+							<where>	
+								<if test="hStatus == 'all'">
+									(A.H_STATUS = '대기' OR A.H_STATUS = 'Y' OR A.H_STATUS = 'N')
+								</if>
+								<if test="hStatus == 'waiting'">
+									A.H_STATUS = '대기'
+								</if>
+								<if test="hStatus == 'approval'">
+									A.H_STATUS = 'Y'
+								</if>
+								<if test="hStatus == 'reject'">
+									A.H_STATUS = 'N'
+								</if>
+							</where>
+							<if test="searchKeyword != null and searchKeyword != ''">
+							
+								<if test="searchType == 'name'">
+									AND C.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%' 
+								</if>
+								<if test="searchType == 'id'">
+									AND C.MEMBER_ID LIKE '%' || #{searchKeyword} || '%' 
+								</if>
+						
+							</if>
+		  		  ) D
+		  		 <![CDATA[
+		  		  WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
+		  		  ]]>
+		         ) E
+		   
+            WHERE E.RNUM > #{ paginationInfo.firstRecordIndex }
+		   ORDER BY E.RNUM
 	 </select>
+	 
+	 <select id="selectAllHolidayTotalCount" parameterType="com.jaspa.healthtouch.center.trainer.model.dto.HolidayDTO" resultType="int">
+		SELECT COUNT(*)
+		  FROM TBL_HDAY_REQ A
+	      JOIN TBL_TRN_INFO B ON(A.H_TRN_NUM = B.TRN_NUM)
+	      JOIN TBL_MEMBER C ON(B.TRN_INFO_MEMBER_ID = C.MEMBER_ID)
+		<if test="searchKeyword != null and searchKeyword != ''">
+			<choose>
+				<when test="searchType != null and searchType != ''">
+					<choose>
+						<when test="searchType == 'name'">
+							AND C.MEMBER_NAME LIKE '%' || #{searchKeyword} || '%'
+						</when>
+						<when test="searchType == 'id'">
+							AND C.MEMBER_ID LIKE '%' || #{searchKeyword} || '%'
+						</when>
+					</choose>
+				</when>
+			</choose>
+		</if>
+	</select>
 	 
 	 <!-- 근태 조회 -->
 	 <select id="selectAllAttendance" resultMap="attendanceResultMap">
