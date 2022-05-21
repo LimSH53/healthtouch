@@ -19,7 +19,7 @@ public class TrainerScheduleDTO {
 	private int toTimeHour; 		// 종료 시간
 	private int toTimeHalf; 		// 종료 분
 	
-	private String weekDay; 	// 스케줄 요일
+	private int weekDay; 	// 스케줄 요일
 	private String color; 	// 스케줄 색상
 	
 	private MemberDTO member;

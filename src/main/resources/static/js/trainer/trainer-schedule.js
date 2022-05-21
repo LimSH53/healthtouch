@@ -51,7 +51,7 @@ $(function() {
 
 		//retrives the values from selected checkboxes and pushes it into array
 		$.each($("input:checked"), function() {
-			checkboxValue += $(this).val() + " ";
+			checkboxValue += $(this).val();
 		});
 
 		var fromTimeHour = $("#fromTimeHour").val();
