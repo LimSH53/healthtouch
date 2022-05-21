@@ -77,11 +77,7 @@ public class TrManagementServiceImpl implements TrManagementService {
 		return trainerMapper.selectAllAttendance();
 	}
 
-	@Override
-	public List<TrainerInfoDTO> selectTrainerByStatus(String trStatus) {
-		
-		return trainerMapper.selectTrainerByStatus(trStatus);
-	}
+	
 
 
 

@@ -27,12 +27,6 @@ public interface TrainerMapper {
 	void deleteTrainerMStatus(String id);
 
 
-	
-
-
-	List<TrainerInfoDTO> searchTrainer(Criteria criteria);
-
-
 	List<TrainerSalaryDTO> selectAllSalary();
 
 
@@ -41,7 +35,7 @@ public interface TrainerMapper {
 
 	List<AttendanceDTO> selectAllAttendance();
 
-	List<TrainerInfoDTO> selectTrainerByStatus(String trStatus);
+	
 
 
 	
