@@ -42,6 +42,7 @@
 	
 		 SELECT
                S.TRN_SCH_NO
+             , S.TRN_ID
              , S.TRN_SCH_TITLE
 			 , S.TRN_FROM_HOUR
              , S.TRN_FROM_HALF

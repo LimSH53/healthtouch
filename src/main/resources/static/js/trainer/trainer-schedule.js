@@ -1,6 +1,44 @@
 	
 updateElements();
 makeDeletable();
+
+$('document').ready(function() {
+	var isSuccess = false
+	var list
+
+	$.ajax({
+		url: "/trainer/schedule/ajax/allschedule",
+		type: "get",
+		dataType: "json",
+		// async: true,
+		contentType: "application/json",
+		success: function(db) {
+			console.log(db);
+			list = db.scheduleList
+			console.log("list ", list)
+			
+			$.each(list, function(i, e) {
+				console.log("i : ", i, " e:", e)
+				
+				 createNew(e.title, e.fromTimeHour, e.fromTimeHalf, e.toTimeHour, e.toTimeHalf, e.weekDay, e.color);	
+				
+			});
+
+			
+
+		},
+		error: function(fail) {
+			console.log(fail);
+			alert('실패');
+		}
+	});
+
+	
+
+
+
+
+});	
 			
 
 			
@@ -17,8 +55,7 @@ makeDeletable();
 		})					
 
 			
-			
-			
+
 			
 			
 
@@ -43,10 +80,11 @@ $(function() {
 	$(".addButton").on("click", function() {
 
 		var title = $(".nameInput").val();
-
+		
+		//요일 = checkboxValue = weekDay
 		var checkboxValue = '';
 
-		//retrives the values from selected checkboxes and pushes it into array
+		//요일 = checkboxValue = weekDay
 		$.each($("input:checked"), function() {
 			checkboxValue += $(this).val();
 		});
@@ -71,7 +109,8 @@ $(function() {
 							contentType: 'application/json; charset=utf-8',
 							success: function(data) {
 								 alert(data);
-								 location.href = "/trainer/schedule/allschedule";
+							//	 location.href = "/trainer/schedule/allschedule";
+							//	 createNew(title, fromTimeHour, fromTimeHalf, toTimeHour, toTimeHalf, checkboxValue, color);
 							},
 							error: function(fail) {
 								console.log(fail);
@@ -84,10 +123,7 @@ $(function() {
 			
 				
 				/* HTML에 삽입할 함수 호출 */
-		      createNew(title, fromTimeHour, fromTimeHalf, toTimeHour, toTimeHalf, checkboxValue, color); {
-			
-		  
-		}
+		      createNew(title, fromTimeHour, fromTimeHalf, toTimeHour, toTimeHalf, checkboxValue, color);
 		     
 			
 	});
@@ -100,7 +136,7 @@ $(function() {
 		
 	$(function(){	
 		
-		 //색상 선택
+		 //색상 선택 
 		$(".color").on("click", function() {
 		  
 		  let myColor = $(this).css('backgroundColor');
@@ -123,32 +159,41 @@ $(function() {
 		
 		
 		function createNew(title, fromTimeHour, fromTimeHalf, toTimeHour, toTimeHalf, weekDay, color) {
-		  
-		  
 		  var unit = 20;
-		  //create new element using title+weekday as ID
-		  var newElement = '<div id=' + title + weekDay + ' class="myClass ui-draggable ui-draggable-handle ui-resizable"><p class="title">' + title + '<i class="fa fa-trash-o" aria-hidden="true"></i></p><div class="ui-resizable-handle ui-resizable-s" style="z-index:90;"></div></div>';
 		  
-		  //inserts it
+		  //제목 + 요일 숫자 합쳐서 title
+		  var newElement = '<div id=' + title + weekDay 
+		  + ' class="test myClass ui-draggable ui-draggable-handle ui-resizable"'
+		  + ' style="top: ' + getStartHour(fromTimeHour, fromTimeHalf) + 'px'
+		  + '; height : ' +  getToHour(fromTimeHour, fromTimeHalf, toTimeHour, toTimeHalf) + 'px'
+		  + '; background-color : ' + color
+		  + '; left : ' + weekDay + 'px'
+		  + '; " ><p class="title">' 
+		  + title + '<i class="fa fa-trash-o" aria-hidden="true"></i></p>'
+		  + '<div class="ui-resizable-handle ui-resizable-s" style="z-index:90;"></div></div>';
+		  
+		  //타임테이블에 집어넣어줌 
 		  $(newElement).insertBefore(".tableTimes");
 		   
 		  
 		  // html로 삽인되는 구문 좌, 위, 높이, 너비, 색상
-		  $("#" + title + weekDay).css({
-		    "left": weekDay,
-		    "top": getStartHour(fromTimeHour, fromTimeHalf),
-		    "height": getToHour(fromTimeHour, fromTimeHalf, toTimeHour, toTimeHalf),
-		    "width": "160px;",
-		    "background-color": "" + color,
+		  // left 안읽힘...
+		  
+		  // $("#" + title + weekDay).css({
+		  //  "left": weekDay,
+		  //  "top": getStartHour(fromTimeHour, fromTimeHalf),
+		  //  "height": getToHour(fromTimeHour, fromTimeHalf, toTimeHour, toTimeHalf),
+		  //  "width": "160px;",
+		  //  "background-color": "black"
 		    
-		  });
+		 // });
 		  
 		  
 		  
 		  
 		  
 		  
-		  updateElements();
+		  //updateElements();
 		}
 		
 
@@ -162,10 +207,12 @@ $(function() {
 		
 		
 		function makeResizable() {
-		  $( ".myClass" ).resizable({
+			
+		  /*$( ".myClass" ).resizable({
 		  handles: 's',
 		  grid: [ 160, 15 ]
-		});
+		});*/
+		
 		console.log("makeResizable");
 		}
 		
@@ -174,10 +221,12 @@ $(function() {
 
 		
 		function makeDraggable() {
-		  $(".myClass").draggable({
+			
+		  /*$(".myClass").draggable({
 		  containment: 'parent',
 		    grid: [160,15]
-		});
+		});*/
+		
 		  console.log("dragable");
 		}
 		
@@ -198,12 +247,14 @@ $(function() {
 		
 		function makeDeletable() {
 		  
-		  $(".fa-trash-o").on("click", function() {
+		  
+		  /*$(".fa-trash-o").on("click", function() {
 		    
 		  $(this).parent().parent().remove();
 		   
 		  
-		});
+		});*/
+		
 		}
 		
 		
