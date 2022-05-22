@@ -15,7 +15,7 @@
     </head>      
    
   <body id="body-pd" class='snippet-body '  style="min-height:90vh">
-  
+   
  <div sec:authorize="hasRole('ROLE_CENTER')" th:replace="/common/centerHeader.html :: center-body"></div>
   <div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-body"></div>
   <div sec:authorize="hasRole('ROLE_TRAINER')"th:replace="/common/trnHeader.html :: trn-body"></div>

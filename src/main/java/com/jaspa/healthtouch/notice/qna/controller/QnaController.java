@@ -42,7 +42,7 @@ public class QnaController {
 		this.qnaService= qnaService;
 	}
 	
-	
+	 
 	//문의글 조회
 	@GetMapping("/qna")
 	public String qnaList(@ModelAttribute("params")QuestionDTO params,Model model)throws Exception {

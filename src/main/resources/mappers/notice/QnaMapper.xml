@@ -10,7 +10,7 @@
 		<result property="qDelete" column="Q_DELETE"/>
 		<result property="qDate" column="Q_DATE"/> 
 		<result property="qEditDate" column="Q_EDIT_DATE"/>
-		<result property="aRead" column="Q_A_READ"/> 
+		<result property="aRead" column="Q_A_READ"/>  
 		 
 		<association property="member" resultMap="memberResultMap"/>
 		<association property="trainer" resultMap="memberResultMap"/>

@@ -9,7 +9,7 @@
 	<div sec:authorize="hasRole('ROLE_CENTER')"  th:replace="/common/centerHeader.html :: center-header"></div>
  	<div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-header"></div>
  	<div sec:authorize="hasRole('ROLE_TRAINER')" th:replace="/common/trnHeader.html :: trn-header"></div>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/notice/qna.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/notice/qna.css}"/> 
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
   	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>

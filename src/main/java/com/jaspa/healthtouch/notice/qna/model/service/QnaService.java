@@ -25,7 +25,7 @@ public interface QnaService {
 	//문의글 등록
 	boolean registQna(QuestionDTO qna)throws Exception;;
 
-	//문의글 수정
+	//문의글 수정 
 	void modifyQna(QuestionDTO qna)throws Exception;
 
 	//문의글 삭제

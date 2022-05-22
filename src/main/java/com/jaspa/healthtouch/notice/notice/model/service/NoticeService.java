@@ -12,7 +12,7 @@ public interface NoticeService {
 		List<NoticeDTO> noticeList(NoticeDTO params);
 		 
 		//공지사항 상세 
-		NoticeDTO selectNoticeDetail(int noticeNo);
+		NoticeDTO selectNoticeDetail(int noticeNo); 
 		 
 		//공지사항 등록
 		int registNotice(NoticeDTO notice)throws Exception;

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/notice")
+@RequestMapping("/notice") 
 public class TrainerProfileController {
 	
 	//트레이너 소개 조회

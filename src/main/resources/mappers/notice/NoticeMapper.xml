@@ -8,7 +8,7 @@
 		<result property="noticeContent" column="NOT_CONTENT"/> 
 		<result property="noticeDelete" column="NOT_DELETE"/>
 		<result property="noticeDate" column="NOT_DATE"/>
-		<result property="noticeEditDate" column="NOT_EDIT_DATE"/>
+		<result property="noticeEditDate" column="NOT_EDIT_DATE"/> 
 		<result property="noticeView" column="NOT_VIEW"/>
 		<result property="noticeCategory" column="NOT_CATEGORY"/>
 		 

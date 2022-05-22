@@ -27,7 +27,7 @@ import com.jaspa.healthtouch.notice.notice.model.service.NoticeService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Controller
+@Controller 
 @RequestMapping("/notice")
 public class NoticeController {
 	private NoticeService noticeService;

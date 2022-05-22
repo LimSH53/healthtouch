@@ -28,7 +28,7 @@ public interface QnaMapper {
 	
 	//답변여부 표시
 	void readReply(int qNo) throws Exception;
-	
+	 
 	//문의글 등록
 	int registQna(QuestionDTO q)throws Exception;
 

@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  
 
 @Slf4j
-@Service("QnaService")
+@Service("QnaService") 
 public class QnaServiceImpl implements QnaService {
 	private final QnaMapper qnaMapper;
 	
