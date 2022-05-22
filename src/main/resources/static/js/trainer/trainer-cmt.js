@@ -1,16 +1,19 @@
 
 
-// Setup the calendar with the current date
+// 현재 날짜 화면을 가장 먼저 보여주기
 $(document).ready(function(){
     var date = new Date();
     var today = date.getDate();
 
-    // Set click handlers for DOM elements
+    // 월, 년 움직이는 핸들러
     $(".right-button").click({date: date}, next_year);
     $(".left-button").click({date: date}, prev_year);
     $(".month").click({date: date}, month_click);
+    
+    
+    // 화면속 근태관리 버튼 
     $("#add-button").click({date: date}, new_event);
-    // Set current month as active
+    // 2022년 하단 1월~ 12월 선택
     $(".months-row").children().eq(date.getMonth()).addClass("active-month");
     init_calendar(date);
     var events = check_events(today, date.getMonth()+1, date.getFullYear());
@@ -172,23 +175,34 @@ function new_event(event) {
         }
         else {
             $("#dialog").hide(250);
+            
             console.log("new event");
+            
+            
+            /* 이벤트 추가 */
             new_event_json(name, count, date, day, time);
+            
+            
             date.setDate(day);
             init_calendar(date);
+            
         }
     });
 }
 
+
+
+
+
 // Adds a json event to event_data
 function new_event_json(name, count, date, day, time) {
     var event = {
-        "occasion": name,
-        "invited_count": count,
-        "year": date.getFullYear(),
-        "month": date.getMonth()+1,
-        "day": day,
-        "time": time
+        "occasion": name,		// 퇴근 혹은 출근
+        "invited_count": count,		// 해당 년도
+        "year": date.getFullYear(),		// 년도
+        "month": date.getMonth()+1,		// 해당 월
+        "day": day,						// 해당 일
+        "time": time					// 해당 시간
     };
     event_data["events"].push(event);
 }
@@ -197,7 +211,7 @@ function new_event_json(name, count, date, day, time) {
 
 
 
-// Display all events of the selected date in card views
+// 이벤트 카드 
 function show_events(events, month, day, time) {
     // Clear the dates container
     $(".events-container").empty();
@@ -230,6 +244,23 @@ function show_events(events, month, day, time) {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 반복되는 특정 기념일
 // Checks if a specific date has any events
 function check_events(day, month, year) {
     var events = [];
@@ -244,6 +275,9 @@ function check_events(day, month, year) {
     return events;
 }
 
+
+
+
 // Given data for events in JSON format
 var event_data = {
     "events": [
@@ -255,7 +289,7 @@ var event_data = {
         "day": 10,
         "cancelled": true
     },
-    {
+/*    {
         "occasion": " Repeated Test Event ",
         "invited_count": 120,
         "year": 2017,
@@ -322,7 +356,7 @@ var event_data = {
         "year": 2017,
         "month": 5,
         "day": 10
-    },
+    },*/
     {
         "occasion": " Test Event",
         "invited_count": 120,
@@ -332,6 +366,8 @@ var event_data = {
     }
     ]
 };
+
+
 
 const months = [ 
     "1 /", 

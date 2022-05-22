@@ -90,7 +90,7 @@
 
 
 
-	<!-- 트레이너 정보 업데이트 -->
+	<!-- 트레이너 정보 업데이트 
 	<update id="updateSchedule">
 	
 	    UPDATE TRN_SCHEDULE
@@ -102,11 +102,8 @@
 	         , TRN_SCH_WEEKDAY = #{ weekDay }
 	         , TRN_SCH_COLOR = #{ color }
 	     WHERE TRN_SCH_NO = #{ no }
-	
-	
 	</update>
-
-
+	-->
 
 
 
