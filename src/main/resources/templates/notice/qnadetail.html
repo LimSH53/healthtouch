@@ -51,37 +51,6 @@
       <div th:if="${#authentication.principal.username} == ${qna.memberId}" class=" regist-btn pull-right" style="padding-right: 7px; margin-left: 550px;" >
 	  <a th:href="@{'/notice/qnamodify?qNo=' + ${qna.qNo}}" type="button" class="btn btn-outline-secondary " value="수정">수정</a>
       <a th:href="@{'/notice/qnadelete?qNo=' + ${qna.qNo}}"type="button" class="btn btn-outline-secondary " value="삭제"  id="qnadelete">삭제</a>
-
-		        <script>
-			                $().ready(function () {
-			            $("#inquirydelete").click(function () {
-									            Swal.fire({
-						  title: '문의글 삭제',
-						  text: "문의글을 삭제하시겠습니까?",
-						  imageUrl: '../images/checkicon.png',
-						  imageWidth: 100,
-						  imageHeight: 100,
-						  imageAlt: 'Custom image',
-						  showCancelButton: true,
-						  confirmButtonColor: '#1b1b55',
-						  cancelButtonColor: '#e2e2e2',
-						  confirmButtonText: '삭제'
-						}).then((result) => {
-						  if (result.isConfirmed) {
-						    Swal.fire({
-						      title:'문의글 삭제',
-						   	  text: '삭제되었습니다.',
-						      imageUrl: '../images/successicon.png',
-							  imageWidth: 100,
-						      imageHeight: 100,
-						      imageAlt: 'Custom image',
-							  confirmButtonColor: '#1b1b55'
-			         })
-                    }
-                })
-            });
-        });
-	            </script>
                 
         </div>
 

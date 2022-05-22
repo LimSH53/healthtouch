@@ -39,25 +39,6 @@
     <hr id="line">
    <button type="submit" class="btn btn-outline-secondary" value="등록"  name="submit"  id="noticeregist">등록</button>
   <button th:onclick="'location.href=\''+@{/notice/notice} + '\''"type="button" class="btn btn-outline-secondary "value="취소"  name="cancel"  >취소</button>
-      <script>
-			$().ready(function () {
-            $("#noticeregist").click(function () {
-                Swal.fire({
- 					  type: "post",
-					  url: "url",
-					  processData: false,
-                      contentType: false,
-					  title: '게시글 등록',
-					  text: "게시글이 등록되었습다.",
-				      imageUrl: '../images/successicon.png',
-					  imageWidth: 100,
-				      imageHeight: 100,
-				      imageAlt: 'Custom image',
-					  confirmButtonColor: '#1b1b55',
-                });
-            });
-        });
-      </script>
     </form>
   </div>
 </div>

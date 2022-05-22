@@ -38,21 +38,6 @@
   </div>
   <button type="submit" class="btn btn-outline-secondary" id="qnaregist">등록</button>
   <button type="button" class="btn btn-outline-secondary " th:onclick="'location.href=\''+@{/notice/qna} + '\''">취소</button>
-      <script>
-			$().ready(function () {
-            $("#qnaregist").click(function () {
-                Swal.fire({
-					  title: '문의글 등록', 
-					  text: "문의글이 등록되었습다.",
-				      imageUrl: '../images/successicon.png',
-					  imageWidth: 100,
-				      imageHeight: 100, 
-				      imageAlt: 'Custom image',
-					  confirmButtonColor: '#1b1b55',
-                });
-            }); 
-        });
-      </script>
       
       <script>
 		$(function(){
