@@ -261,8 +261,7 @@
 					     FROM TBL_HDAY_REQ A
 					     JOIN TBL_TRN_INFO B ON(A.H_TRN_NUM = B.TRN_NUM)
 					     JOIN TBL_MEMBER C ON(B.TRN_INFO_MEMBER_ID = C.MEMBER_ID)
-					    ORDER BY A.HDATE_REQ
-						
+					   
 							<where>	
 								<if test="hStatus == 'all'">
 									(A.H_STATUS = '대기' OR A.H_STATUS = 'Y' OR A.H_STATUS = 'N')

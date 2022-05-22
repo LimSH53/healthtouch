@@ -69,13 +69,13 @@
             <a href="/center/trainer/hday" style="color:black"><h2 class="mb-5">휴가 신청 조회</h2></a>
             
              <!-- 달력 아이콘 -->           
-            <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+            <button id="holidayCalendar" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#calendarModal" >
 				<i class='bx bx-calendar bx-lg'></i>	
 			</button>
         	
         	
 			<!-- Modal -->
-			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal fade" id="calendarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog modal-xl">
 			    <div class="modal-content modal-xl">
 			      <div class="modal-header">
@@ -187,7 +187,8 @@
             </div>
     </div>
     <script>
-	    document.addEventListener('DOMContentLoaded', function() {
+	    
+	      $('#holidayCalendar').on('click', function() {
 	        var calendarEl = document.getElementById('calendar');
 	        var calendar = new FullCalendar.Calendar(calendarEl, {
 	          initialView: 'dayGridMonth'
@@ -218,7 +219,7 @@
     		    	  console.log(tr);
     			   	  console.log(trId);    				
     			
-						/* $.ajax({						
+						 $.ajax({						
 							url: "/center/trainer/hday/approval",
 							type: "post",
 							data: { trId : trId},
@@ -237,7 +238,7 @@
 								console.log("에러 발생");
 								
 							}
-						});  */
+						}); 
     			}
 	    
 	    })

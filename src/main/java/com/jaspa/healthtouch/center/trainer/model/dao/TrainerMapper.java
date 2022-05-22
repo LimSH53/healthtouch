@@ -26,9 +26,7 @@ public interface TrainerMapper {
 
 	int deleteTrainerMStatus(String id);
 
-
 	List<TrainerSalaryDTO> selectAllSalary();
-
 
 	List<AttendanceDTO> selectAllAttendance();
 
