@@ -9,15 +9,15 @@ import com.jaspa.healthtouch.notice.notice.model.dto.CommentDTO;
 import com.jaspa.healthtouch.notice.notice.model.dto.NoticeDTO;
 
 
-@Mapper
-public interface NoticeMapper {
+@Mapper 
+public interface NoticeMapper { 
 	 
 	 
 	//공지사항 조회
-	List<NoticeDTO> noticeList(NoticeDTO params);
+	List<NoticeDTO> noticeList(NoticeDTO params); 
 	 
 	
-	//공지사항 조회
+	//공지사항 조회 
 	int noticeFind(NoticeDTO params);
 	 
 	  

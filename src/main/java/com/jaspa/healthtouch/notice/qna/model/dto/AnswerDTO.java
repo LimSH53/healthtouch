@@ -9,7 +9,7 @@ import com.jaspa.healthtouch.login.model.dto.MemberDTO;
 import lombok.Data; 
 
 @Data
-public class AnswerDTO {
+public class AnswerDTO { 
 	private int aNo;
 	private int qNo;
 	private String memberId;
@@ -19,7 +19,7 @@ public class AnswerDTO {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date aDate;
 	private Date aEditDate;
-
+ 
 	private MemberDTO trainer;
 	private MemberDTO member;
 	private QuestionDTO question; 

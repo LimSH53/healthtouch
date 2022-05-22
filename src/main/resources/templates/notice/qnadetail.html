@@ -9,7 +9,7 @@
 	<div sec:authorize="hasRole('ROLE_CENTER')"  th:replace="/common/centerHeader.html :: center-header"></div>
  	<div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-header"></div>
  	<div sec:authorize="hasRole('ROLE_TRAINER')" th:replace="/common/trnHeader.html :: trn-header"></div>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/notice/qna.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/notice/qna.css}"/> 
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
   	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -102,18 +102,84 @@
       <!-- 1:1문의 답글내역 -->
      <div class="comment mt-1 text-justify rounded" th:each="answer: ${answerList}"> 
      <div style="display:flex">
-         <span style="font-size:13px; align-self: center;" th:value="${answer.memberId}">센터측 답변</span> 
+      <div style="display:grid" >
+        <span  style="font-size:13px; align-self: center;" th:value="${answer.memberId}">센터측 답변</span> 
+        <span  style="font-size: 11px;" th:text="${#dates.format(answer.aDate,'yyyy-MM-dd')}"></span>
+      </div>
          <div th:if="${#authentication.principal.username} == ${answer.memberId}" class="btn-group" style="display:flex">
-          <a type="button" class="nav-link cm_btn pull-right " onclick="replyModify()" value="수정">수정</a>
-          <a type="button" class="nav-link cm_btn pull-right " th:href="@{'/notice/replyDelete?aNo=' + ${ answer.aNo }}" value="삭제" id="replydelete">삭제</a>
+          <a type="submit" class="nav-link cm_btn pull-right" id="replyModify" th:onclick="replyModify([[ ${answer.aNo} ]])">수정</a>
+          <a type="button" class="nav-link cm_btn pull-right" th:href="@{/notice/replyDelete(aNo= ${ answer.aNo }, qNo= ${ answer.qNo })}" id="replydelete">삭제</a>
           </div>  
      </div>
-       <span style="font-size: 12px;" th:text="${#dates.format(answer.aDate,'yyyy-MM-dd')}"></span><br>
+     <br>
       <p class="bo_v_con" th:text="${answer.aContent}"></p>
     </div>
     
   </section>
-
+    <!-- 1:1문의 답글수정 -->
+    <script th:inline="javascript">
+    	function replyModify(aNo) {
+    		Swal.fire({
+    			title: '답글 수정',
+    			html:
+			      ` 
+			     <input type="text" class="cmt-content rounded" name="aContent" id="aContent" placeholder="내용을 입력하세요." style="resize: none;" required></input>
+			      `,
+				confirmButtonText:'수정',
+				focusConfirm: false,
+				showDenyButton: true,
+				denyButtonText: '취소',
+				preConfirm: () => {
+					const aContent = Swal.getPopup().querySelector('#aContent').value
+					
+					if(!aContent) {
+						Swal.showValidationMessage('수정할 댓글을 입력하세요.')
+					}
+					
+					return { aNo: aNo, aContent: aContent}
+				}
+    		}).then((result) => {
+    			if(result.isConfirmed) {
+				   alert(JSON.stringify(result));
+					console.log(aNo);
+					var aNo = result.value.aNo;
+    				var aContent = result.value.aContent;
+        			var  param = { aContent: aContent, aNo: aNo } //객체
+        		  alert(JSON.stringify(param));
+           			$.ajax({
+           				url: "/notice/replyModify",
+           				type: "post",
+           				async: false, //비동기 여부 
+       					data: JSON.stringify(param), //데이터 보내는 방식
+       					contentType: 'application/json; charset=utf-8',
+       					success: function(data) {
+							console.log(data);
+       						if(data) {
+       							Swal.fire({
+       	   							icon: 'success',
+       	       		    			text: '댓글이 수정되었습니다.',
+       	       		    			confirmButtonText: '확인',
+       	   						}).then((result) => {
+       	   							location.reload();
+       	   						})
+       						} else {
+       							Swal.fire({
+       	   							icon: 'error',
+       	       		    			text: '수정이 실패되었습니다.',
+       	   						})
+       						}
+       					},
+       					error: function(e) {
+       						console.log('댓글수정 실패');
+       						console.log(e);
+       					}
+           			});
+				}
+    		})
+    	}
+    </script>
+    
+    
 </div>
 </div>
 </body>

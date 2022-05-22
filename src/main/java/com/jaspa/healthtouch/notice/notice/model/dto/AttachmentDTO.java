@@ -7,9 +7,9 @@ public class AttachmentDTO {
 	private int attachNo;
 	private int noticeNo;
 	private String root;
-	private String thumbRoot;
-	private String file;
+	private String thumbRoot; 
+	private String file; 
 	private String editFile;
 	private long fileType;
 }
-  
+   

@@ -16,7 +16,7 @@ import lombok.Setter;
 public class CommentDTO {
 	private int cmtNo;
 	private String memberId;
-	private int noticeNo;
+	private int noticeNo; 
 	private String cmtContent;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date cmtDate;
@@ -26,4 +26,4 @@ public class CommentDTO {
 	private MemberDTO member;
 	private NoticeDTO notice;
 } 
-  
+   

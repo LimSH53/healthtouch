@@ -11,7 +11,7 @@
  	<div sec:authorize="hasRole('ROLE_TRAINER')" th:replace="/common/trnHeader.html :: trn-header"></div>
   	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
   	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/notice/notice.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/notice/notice.css}"/> 
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     </head>       
   
@@ -82,7 +82,7 @@
 		              <p class="cm_content col-6"  style="font-size: 12px;" th:text="${cmt.cmtContent}"></p>
 		              <div class="btn-group col" th:if="${#authentication.principal.username} == ${cmt.memberId}">
 		                <a type="submit" class="nav-link cm_btn pull-right" id="cmtModify" th:onclick="cmtModify([[ ${cmt.cmtNo} ]])">수정</a>
-		                <a type="submit" class="nav-link cm_btn pull-right" id="cmtDelete" onclick="cmtDelete()">삭제</a>
+		                <a type="button" class="nav-link cm_btn pull-right" id="cmtDelete"  th:href="@{/notice/cmtDelete(cmtNo= ${cmt.cmtNo} ,noticeNo=${ cmt.noticeNo }) }">삭제</a>
 		              </div>
 		                </div>
 		             </li>
@@ -96,7 +96,8 @@
     		Swal.fire({
     			title: '댓글 수정',
     			html:
-			      ` <input type="text" class="form-control" id="cmtContent" name="cmtContent" th:value="${comment.cmtContent}" placeholder="내용을 입력하세요." required>
+			      ` 
+			      <input type="text" class="form-control" id="cmtContent" name="cmtContent" th:value="${comment.cmtContent}" placeholder="내용을 입력하세요." required>
 			      `,
 				confirmButtonText:'수정',
 				focusConfirm: false,
@@ -109,20 +110,22 @@
 						Swal.showValidationMessage('수정할 댓글을 입력하세요.')
 					}
 					
-					return { cmtContent: cmtContent }
+					return { cmtNo: cmtNo, cmtContent: cmtContent}
 				}
     		}).then((result) => {
     			if(result.isConfirmed) {
+					console.log(cmtNo);
 					var cmtNo = result.value.cmtNo;
     				var cmtContent = result.value.cmtContent;
-        			var param = { cmtContent: cmtContent,cmtNo: cmtNo}
+        			var param = { cmtContent: cmtContent,cmtNo: cmtNo } //객체
            			$.ajax({
            				url: "/notice/cmtModify",
            				type: "post",
-           				async: false,
-       					data: JSON.stringify(param),
+           				async: false, //비동기 여부 
+       					data: JSON.stringify(param), //데이터 보내는 방식
        					contentType: 'application/json; charset=utf-8',
        					success: function(data) {
+							console.log(data);
        						if(data) {
        							Swal.fire({
        	   							icon: 'success',
@@ -147,26 +150,6 @@
     		})
     	}
     </script>
-     <script>
-    	function cmtDelete() {
-    		Swal.fire({
-    			icon: 'warning',
-    			title: '댓글 삭제',
-    			text: '댓글을 삭제하시겠습니까?',
-    			showDenyButton: true,
-    			confirmButtonText: '삭제',
-    			denyButtonText: '취소',
-    		}).then((result) => {
-    			if(result.isConfirmed) {
-    				Swal.fire({
-    					text: '삭제가 완료되었습니다.',
-    					confirmButtonText: '확인',
-    				}).then((result) => {
-    					location.href = "/notice/cmtDelete";
-    				})
-    			}
-    		})
-    	}
-    </script>
-</dody>
+ 
+</body>
 </html> 

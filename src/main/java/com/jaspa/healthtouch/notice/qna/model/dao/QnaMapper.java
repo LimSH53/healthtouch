@@ -28,7 +28,7 @@ public interface QnaMapper {
 	
 	//답변여부 표시
 	void readReply(int qNo) throws Exception;
-	
+	 
 	//문의글 등록
 	int registQna(QuestionDTO q)throws Exception;
 
@@ -42,16 +42,16 @@ public interface QnaMapper {
 	int answerCount() throws Exception;
 
 	//답글목록조회
-	List<AnswerDTO> answerList(int qNo);
+	List<AnswerDTO> answerList(int qNo) throws Exception;
 
 	//답변등록
-	int registReply(AnswerDTO answer);
+	int registReply(AnswerDTO answer)throws Exception;
 
 	//답변수정 
-	int modifyReply(AnswerDTO answer);
+	int modifyReply(AnswerDTO answer)throws Exception;
 
 	//답글삭제
-	int deleteReply(int aNo);
+	int deleteReply(int aNo)throws Exception;
 
 
 

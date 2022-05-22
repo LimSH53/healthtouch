@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  
 
 @Slf4j
-@Service("QnaService")
+@Service("QnaService") 
 public class QnaServiceImpl implements QnaService {
 	private final QnaMapper qnaMapper;
 	
@@ -117,6 +117,7 @@ public class QnaServiceImpl implements QnaService {
 	//답변수정 
 	@Override
 	public int modifyReply(AnswerDTO answer) throws Exception{
+		log.info("넘어가라:",answer);
 		return qnaMapper.modifyReply(answer);
 	}
 	

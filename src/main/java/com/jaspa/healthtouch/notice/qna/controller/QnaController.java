@@ -3,6 +3,7 @@ package com.jaspa.healthtouch.notice.qna.controller;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -41,7 +42,7 @@ public class QnaController {
 		this.qnaService= qnaService;
 	}
 	
-	
+	 
 	//문의글 조회
 	@GetMapping("/qna")
 	public String qnaList(@ModelAttribute("params")QuestionDTO params,Model model)throws Exception {
@@ -135,30 +136,33 @@ public class QnaController {
 		 return "redirect:/notice/qnadetail?qNo="+answer.getQNo();
 	 }
 		  
+
 	//답변수정 
-	@GetMapping("/replyModify")
-	public void replyModify(@RequestParam int aNo, Model model)throws Exception{
-			List<AnswerDTO>  answer = qnaService.answerList(aNo);
-			model.addAttribute("answer", answer);
-			log.info("answer:{}",answer);
-		 }
-	
-	
-	//답변수정 
-	@RequestMapping("/replyModify")
-	@ResponseBody
-	public void modifyReply(@RequestBody AnswerDTO answer)throws Exception{
-			 log.info(answer.toString());
-			 qnaService.modifyReply(answer);
-		 }
+	   @RequestMapping("/replyModify")
+	   @ResponseBody
+	   public int modifyReply(@RequestBody Map<String, Object> modifyClassInfoMap)throws Exception{
+	          
+		   	  log.info("modifyReply:"+modifyClassInfoMap.toString());
+	         
+	          AnswerDTO answer = new AnswerDTO();
+	          int aNo = (int) modifyClassInfoMap.get("aNo");
+	          String aContent = (String) modifyClassInfoMap.get("aContent");
+	         
+	          log.info("no : " + aNo + ", content : " + aContent);   
+	          
+	          answer.setANo(aNo);
+	          answer.setAContent(aContent);                
+	          return qnaService.modifyReply(answer);
+	       } 
+	         
 			
 	
 	//답글삭제
 	@GetMapping("/replyDelete")
-	private String deleteReply(@RequestParam("aNo") int aNo) throws Exception{
+	private String deleteReply(@RequestParam("aNo") int aNo,@RequestParam("qNo") int qNo) throws Exception{
 		qnaService.deleteReply(aNo);
 		log.info("aNo:{}",aNo);
-		return "redirect:/notice/qna";
+		return "redirect:/notice/qnadetail?qNo="+qNo;
 		    }
 		    
 

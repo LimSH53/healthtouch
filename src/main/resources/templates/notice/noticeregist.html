@@ -8,7 +8,7 @@
     <title>공지사항 등록</title>
  	<div sec:authorize="hasRole('ROLE_CENTER')"  th:replace="/common/centerHeader.html :: center-header"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/notice/notice.css}"/>
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script> 
     </head>      
   
   <body id="body-pd" class='snippet-body ' >
@@ -23,7 +23,7 @@
     <h2 class="titlename1">공지사항 등록</h2>
  </div>
      <!-- 공지사항 등록페이지 -->
-<div class="notice rounded">
+<div class="notice rounded"> 
   <div class="regist">
     <form role="form" th:action="@{/notice/noticeregist}" class="needs-validation" method="post" >
     <div id="regist-title">

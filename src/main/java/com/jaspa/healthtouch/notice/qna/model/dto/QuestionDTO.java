@@ -24,9 +24,9 @@ public class QuestionDTO extends CommonDTO {
 	private String qContent;
 	private String qDelete;
 	@DateTimeFormat(pattern="yyyy-MM-dd") 
-	private Date qDate;
+	private Date qDate; 
 	private Date qEditDate;
-	private int  aRead;
+	private int  aRead; 
 	
 	private MemberDTO member;
 	private MemberDTO trainer;

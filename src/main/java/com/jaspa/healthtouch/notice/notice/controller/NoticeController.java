@@ -27,7 +27,7 @@ import com.jaspa.healthtouch.notice.notice.model.service.NoticeService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Controller
+@Controller 
 @RequestMapping("/notice")
 public class NoticeController {
 	private NoticeService noticeService;
@@ -145,29 +145,23 @@ public class NoticeController {
 			 return "redirect:/notice/noticedetail?noticeNo="+comment.getNoticeNo();
 		 }
 			  
-		//공지사항 댓글수정 
-		@GetMapping("/cmtModify")
-		public void CommentModify(@RequestParam int cmtNo, Model model)throws Exception{
-				List<CommentDTO> comment = noticeService.commentList(cmtNo);
-				model.addAttribute("comment", comment);
-				log.info("comment:{}",comment);
-			 }
 		  
 		//공지사항 댓글수정 
 		@RequestMapping("/cmtModify")
 		@ResponseBody
-		public void modifyComment(@RequestBody CommentDTO comment)throws Exception{
+		public int modifyComment(@RequestBody CommentDTO comment)throws Exception{
 				 log.info(comment.toString());
-				 noticeService.modifyComment(comment);
+				 //업데이트 갯수 확인 
+				 return noticeService.modifyComment(comment);
 			 }
 				
 		
 		//공지사항 댓글삭제
 		@GetMapping("/cmtDelete")
-		private String deleteComment(@RequestParam("cmtNo") int cmtNo) throws Exception{
+		private String deleteComment(@RequestParam("cmtNo") int cmtNo,@RequestParam("noticeNo") int noticeNo) throws Exception{
 			noticeService.deleteComment(cmtNo);
 			log.info("cmtNo:{}",cmtNo);
-			return "redirect:/notice/notice";
+			return "redirect:/notice/noticedetail?noticeNo="+noticeNo;
 			    }
 			    
 

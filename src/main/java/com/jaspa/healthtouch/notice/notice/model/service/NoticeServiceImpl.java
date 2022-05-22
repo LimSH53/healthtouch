@@ -17,14 +17,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service("noticeService")
 public class NoticeServiceImpl implements NoticeService{
-private final NoticeMapper noticeMapper;
+private final NoticeMapper noticeMapper; 
 	
   
 	@Autowired
 	public NoticeServiceImpl(NoticeMapper noticeMapper) {
 		this.noticeMapper = noticeMapper;
 	}
-	//공지사항 조회
+	//공지사항 조회 
 
 	  @Override
 		public List<NoticeDTO> noticeList(NoticeDTO params){

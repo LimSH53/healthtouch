@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NoticeDTO extends CommonDTO {
-  
+   
 	private int noticeNo;
 	private String memberId;
 	private String noticeCategory;
@@ -29,7 +29,7 @@ public class NoticeDTO extends CommonDTO {
 	private int noticeView;
 	
 
-	private MemberDTO member;
+	private MemberDTO member;  
 	private List<CommentDTO> comment;
 	  
 

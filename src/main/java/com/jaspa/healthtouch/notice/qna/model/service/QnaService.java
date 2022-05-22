@@ -20,12 +20,12 @@ public interface QnaService {
 	List<QuestionCategoryDTO> findCategory();
 	
 	//답변여부 표시
-	void readReply(int qNo) throws Exception;
+	void readReply(int qNo) throws Exception; 
 	 
 	//문의글 등록
 	boolean registQna(QuestionDTO qna)throws Exception;;
 
-	//문의글 수정
+	//문의글 수정 
 	void modifyQna(QuestionDTO qna)throws Exception;
 
 	//문의글 삭제
