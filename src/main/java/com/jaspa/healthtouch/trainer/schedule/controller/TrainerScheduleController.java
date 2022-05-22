@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.jaspa.healthtouch.login.model.dto.UserImpl;
 import com.jaspa.healthtouch.member.reservation.model.dto.ReservationDTO;
@@ -32,10 +33,44 @@ public class TrainerScheduleController {
 	
 	
 	
+	// @RequestMapping(value = "/allschedule", method = RequestMethod.GET) // 38행에 있는 코드와 의미 중복
+	@ResponseBody
+	@GetMapping("/allschedule")
+	public ModelAndView selectTrainerSchedule(@AuthenticationPrincipal UserImpl user, ModelAndView mv) {
+		
+		user.setId(user.getId());
+	//	List<TrainerScheduleDTO> scheduleList = trainerScheduleService.selectTrainerSchedule(user.getId());
+		
+	//	log.info("트레이너 스케줄 정보 :{}", scheduleList.toString());	
+		
+	//	mv.addObject("scheduleList", scheduleList);
+		mv.setViewName("trainer/trainer-schedule");
+		
+		return mv;
+	}
+
+	@ResponseBody
+	@GetMapping("/ajax/allschedule")
+	public Map<String, Object> selectTrainerScheduleByAjax(@AuthenticationPrincipal UserImpl user, ModelAndView mv) {
+		
+		Map<String, Object> resultMap = new HashMap<>();
+		
+		user.setId(user.getId());
+		List<TrainerScheduleDTO> scheduleList = trainerScheduleService.selectTrainerSchedule(user.getId());
+		
+		log.info("트레이너 스케줄 정보 by ajax :{}", scheduleList.toString());	
+		
+		resultMap.put("scheduleList", scheduleList);
+		
+		return resultMap;
+	}
+
+	
+/*	
 	@RequestMapping(value = "/allschedule", method = RequestMethod.GET)
 	@ResponseBody
 	@GetMapping("/allschedule")
-	public Map<String, TrainerScheduleDTO> selectTrainerSchedule(@AuthenticationPrincipal UserImpl user) {
+	public ModelAndView selectTrainerSchedule(TrainerScheduleDTO schedule, @AuthenticationPrincipal UserImpl user, ModelAndView mv) {
 		
 		Map<String, TrainerScheduleDTO> schedule = new HashMap<>();
 		
@@ -46,6 +81,7 @@ public class TrainerScheduleController {
 		
 		return schedule;
 	}
+*/
 
 	
 	
