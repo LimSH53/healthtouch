@@ -261,6 +261,7 @@
 					     FROM TBL_HDAY_REQ A
 					     JOIN TBL_TRN_INFO B ON(A.H_TRN_NUM = B.TRN_NUM)
 					     JOIN TBL_MEMBER C ON(B.TRN_INFO_MEMBER_ID = C.MEMBER_ID)
+					    ORDER BY A.HDATE_REQ
 						
 							<where>	
 								<if test="hStatus == 'all'">
@@ -324,8 +325,15 @@
 	 WHERE H.H_TRN_NUM = (SELECT TI.TRN_NUM
 						   FROM TBL_TRN_INFO TI
 						  WHERE TRN_INFO_MEMBER_ID = #{ trId } ) 
-	 
-	 
+	</update>
+	
+	<!-- 휴가 반려 -->
+	<update id="rejectHoliday">
+	UPDATE TBL_HDAY_REQ	H
+	   SET H.H_STATUS = 'N'
+	 WHERE H.H_TRN_NUM = (SELECT TI.TRN_NUM
+						   FROM TBL_TRN_INFO TI
+						  WHERE TRN_INFO_MEMBER_ID = #{ trId } ) 
 	</update>
 	 
 	 <!-- 근태 조회 -->

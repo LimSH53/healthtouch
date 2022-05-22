@@ -24,6 +24,8 @@ public interface TrManagementService {
 
 	void approvalHoliday(String id);
 
+	void rejectHoliday(String id);
+
 	
 
 

@@ -92,6 +92,13 @@ public class CenterTrainerController {
 		trManagementService.approvalHoliday(id);
 	}
 	
+	//휴가 반려
+	@RequestMapping("/hday/reject")
+	@ResponseBody
+	public void rejectHoliday(@RequestParam("trId") String id) {
+		trManagementService.rejectHoliday(id);
+	}
+	
 	
 
 	

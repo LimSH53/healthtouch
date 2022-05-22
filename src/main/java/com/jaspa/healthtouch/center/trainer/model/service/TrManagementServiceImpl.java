@@ -90,12 +90,20 @@ public class TrManagementServiceImpl implements TrManagementService {
 		trainerMapper.approvalHoliday(id);
 		
 	}
+	
+	@Override
+	public void rejectHoliday(String id) {
+		trainerMapper.rejectHoliday(id);
+		
+	}
 
 	@Override
 	public List<AttendanceDTO> selectAllAttendanceList() {
 		
 		return trainerMapper.selectAllAttendance();
 	}
+
+	
 
 	
 
