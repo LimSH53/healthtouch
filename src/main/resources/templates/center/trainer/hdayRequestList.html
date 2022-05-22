@@ -11,7 +11,48 @@
     <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>  
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 	<link th:replace="/common/centerHeader.html :: center-header"></link>
-   
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
+	
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    
+    
+    <style>
+
+	.modal {
+	  position: fixed;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	  width: 700px;
+	  display: block; 
+	  padding-right: 17px;
+	} 
+	
+	.modal-backdrop{
+	height:100%; width:100%;
+	}
+	
+	/* .wrap {
+		display: flex;
+	    flex-direction: column;
+	    height: 100%; 
+	}
+	.bx-calendar {
+	    margin: auto;
+	    font-size: 50px;
+	    margin-bottom:20px;
+	    
+	} */
+	
+	
+
+
+	</style>
+    
 </head>
                                 
 <body id="body-pd">
@@ -20,10 +61,36 @@
 	<div th:replace="/common/centerHeader.html :: center-body"></div>
 	
     <!--Container Main start-->
+   
+    
     <div class="height-100 bg-light">
         <div class="content">
             <div class="container">
-            <a href="/center/trainer/hday" style="color:black;"><h2 class="mb-5">휴가 신청 조회</h2></a>
+            <a href="/center/trainer/hday" style="color:black"><h2 class="mb-5">휴가 신청 조회</h2></a>
+            
+             <!-- 달력 아이콘 -->           
+            <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+				<i class='bx bx-calendar bx-lg'></i>	
+			</button>
+        	
+        	
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-xl">
+			    <div class="modal-content modal-xl">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">휴가 캘린더</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			        	<div id='calendar'></div>
+			      </div>
+			      
+			    </div>
+			  </div>
+			</div>
+            
+            
 
             <div class="row" style="width: 70%; margin:auto; text-align:center;">
             
@@ -70,13 +137,25 @@
             
             <tbody>
             <tr class="table_hday" th:each="hday : ${ hdayRequestList}">
-            	<td th:text="${hday.hReqNo}"></td>
+            	<td><span th:text="${hday.hReqNo}"></span></td>
                 <td th:text="${hday.reqHday}"></td>
                 <td th:text="${hday.trainer.member.name}"></td>
-                <td th:text="${hday.trainer.member.id}"></td>
+                <td ><span th:text="${hday.trainer.member.id}"></span></td>
                 <td th:text="${hday.hReason}"></td>
                 <td th:text="${hday.hDay}"></td>
-                <td th:text="${hday.hStatus}"></td>
+                
+                	<td th:if="${hday.getHStatus().toString().equals('Y')}">
+                		<button  type="button" class="btn btn-secondary" disabled>승인</button>
+                	</td>
+                	<td th:if="${hday.getHStatus().toString().equals('N')}">
+                		<button type="button" class="btn btn-secondary"disabled>반려</button>
+                	</td>
+                	<td th:if="${hday.getHStatus().toString().equals('대기')}">
+                		<button id="approval" type="button" class="btn btn-primary approval" value="Y" th:text="승인" ></button>
+                		<button id="reject" type="button" class="btn btn-danger reject" value="N" th:text="반려" ></button>
+                	</td>
+                
+                
             </tr>
             
             </tbody>
@@ -107,6 +186,83 @@
             </div>
             </div>
     </div>
-    
+    <script>
+	    document.addEventListener('DOMContentLoaded', function() {
+	        var calendarEl = document.getElementById('calendar');
+	        var calendar = new FullCalendar.Calendar(calendarEl, {
+	          initialView: 'dayGridMonth'
+	        });
+	        calendar.render();
+	      });
+	    
+
+		
+	    
+	    
+    		
+    		
+	    $('.approval').on('click', function() {
+	    	
+	    	Swal.fire({
+    			icon: 'question',
+    		 	html :"휴가 신청을 승인하시겠습니까?",
+    			showDenyButton: true,
+    			confirmButtonText: '확인',
+    			denyButtonText: '취소',
+    		}).then((result) => {
+    			if(result.isConfirmed) {
+    				var checkBtn = $(this);
+    				
+    				// checkBtn.parent() : checkBtn의 부모는 <td>이다.
+    				// checkBtn.parent().parent() : <td>의 부모이므로 <tr>이다.
+    				var tr = checkBtn.parent().parent();
+    				var td = tr.children();
+    				
+    				var trId = td.eq(3).text();
+    		    	  console.log(tr);
+    			   	  console.log(trId);    				
+    			
+						$.ajax({						
+							url: "/center/trainer/hday/approval",
+							type: "post",
+							data: { trId : trId},
+							success: function(trId) {
+								
+								Swal.fire({
+									icon: 'success',
+									text: '휴가가 승인되었습니다.',
+									confirmButtonText: '확인',
+								}).then((result) => {
+									location.href="/center/trainer/hday";
+								})
+							
+							},
+							error: function(trId) {
+								console.log("에러 발생");
+								
+							}
+						}); 
+    			}
+	    
+	    })
+	    })
+    		
+	    
+	    
+	    	
+	    
+	    		
+		    	
+		 
+				
+				
+				
+	    	  
+	    	  
+	    	
+		  		
+	    
+	   
+    </script>
 </body>
 </html> 

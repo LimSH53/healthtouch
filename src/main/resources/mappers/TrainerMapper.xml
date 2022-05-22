@@ -316,6 +316,17 @@
 			</choose>
 		</if>
 	</select>
+	
+	<!-- 휴가 승인 -->
+	<update id="approvalHoliday">
+	UPDATE TBL_HDAY_REQ	H
+	   SET H.H_STATUS = 'Y'
+	 WHERE H.H_TRN_NUM = (SELECT TI.TRN_NUM
+						   FROM TBL_TRN_INFO TI
+						  WHERE TRN_INFO_MEMBER_ID = #{ trId } ) 
+	 
+	 
+	</update>
 	 
 	 <!-- 근태 조회 -->
 	 <select id="selectAllAttendance" resultMap="attendanceResultMap">

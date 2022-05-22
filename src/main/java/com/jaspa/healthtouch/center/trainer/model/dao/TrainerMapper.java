@@ -36,6 +36,8 @@ public interface TrainerMapper {
 
 	List<HolidayDTO> selectAllHodlidayRequest(HolidayDTO params);
 
+	void approvalHoliday(String id);
+
 	
 
 

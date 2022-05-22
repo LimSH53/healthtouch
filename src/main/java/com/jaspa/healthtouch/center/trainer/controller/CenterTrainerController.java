@@ -84,6 +84,15 @@ public class CenterTrainerController {
 		
 		return "center/trainer/hdayRequestList";
 	}
+	
+	//휴가 승인
+	@RequestMapping("/hday/approval")
+	@ResponseBody
+	public void approvalHoliday(@RequestParam("trId") String id) {
+		trManagementService.approvalHoliday(id);
+	}
+	
+	
 
 	
 	// 근태 조회
