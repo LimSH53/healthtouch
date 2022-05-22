@@ -78,38 +78,37 @@
                 </div>
             </div>
              <!-- 트레이너 후기조회 -->
-            <div class="counter">
-                <div class="row">
-                    <div >
-                        <div class="table-responsive">
-                            <table class="table table-fixed">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="col-12"> 후기 </th>
-                                    </tr>
-                                </thead>
-            					 <tbody>
-       								<tr>
-                                        <td scope="row" class="col-6" th:text="*{contents}"></td>
-                                        <td class="col-6" th:if="*{grade}==1" value="★"></td>
-                                        <td class="col-6" th:if="*{grade}==2" value="★★"></td>
-                                        <td class="col-6" th:if="*{grade}==3" value="★★★"></td>
-                                        <td class="col-6" th:if="*{grade}==4" value="★★★★"></td>
-                                        <td class="col-6" th:if="*{grade}==5" value="★★★★★"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="counter">-->
+<!--                <div class="row">-->
+<!--                    <div >-->
+<!--                        <div class="table-responsive">-->
+<!--                            <table class="table table-fixed">-->
+<!--                                <thead>-->
+<!--                                    <tr>-->
+<!--                                        <th scope="col" class="col-12"> 후기 </th>-->
+<!--                                    </tr>-->
+<!--                                </thead>-->
+<!--            					 <tbody>-->
+<!--       								<tr>-->
+<!--                                        <td scope="row" class="col-6" th:text="${profile.contents}"></td>-->
+<!--                                        <td class="col-6" th:if="${profile.grade}==1" value="★"></td>-->
+<!--                                        <td class="col-6" th:if="${profile.grade}==2" value="★★"></td>-->
+<!--                                        <td class="col-6" th:if="${profile.grade}==3" value="★★★"></td>-->
+<!--                                        <td class="col-6" th:if="${profile.grade}==4" value="★★★★"></td>-->
+<!--                                        <td class="col-6" th:if="${profile.grade}==5" value="★★★★★"></td>-->
+<!--                                    </tr>-->
+<!--                                </tbody>-->
+<!--                            </table>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </section>
 
 </div>
 	<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js'></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
 
 </body>
 </html> 

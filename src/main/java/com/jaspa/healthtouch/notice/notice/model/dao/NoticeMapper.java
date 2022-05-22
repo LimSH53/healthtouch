@@ -17,7 +17,7 @@ public interface NoticeMapper {
 	List<NoticeDTO> noticeList(NoticeDTO params);
 	 
 	
-	//공지사항 조회
+	//공지사항 조회 
 	int noticeFind(NoticeDTO params);
 	 
 	  

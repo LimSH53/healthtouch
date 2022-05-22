@@ -12,4 +12,4 @@ public class AttachmentDTO {
 	private String editFile;
 	private long fileType;
 }
-  
+   

@@ -19,7 +19,7 @@ public class AnswerDTO {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date aDate;
 	private Date aEditDate;
-
+ 
 	private MemberDTO trainer;
 	private MemberDTO member;
 	private QuestionDTO question; 

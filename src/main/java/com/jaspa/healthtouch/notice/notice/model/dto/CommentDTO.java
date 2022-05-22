@@ -26,4 +26,4 @@ public class CommentDTO {
 	private MemberDTO member;
 	private NoticeDTO notice;
 } 
-  
+   

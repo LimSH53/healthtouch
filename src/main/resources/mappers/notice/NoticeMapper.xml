@@ -5,7 +5,7 @@
 		<id property="noticeNo" column="NOT_NO"/>
 		<result property="memberId" column="NOT_MEMBER_ID"/>
 		<result property="noticeTitle" column="NOT_TITLE"/>
-		<result property="noticeContent" column="NOT_CONTENT"/>
+		<result property="noticeContent" column="NOT_CONTENT"/> 
 		<result property="noticeDelete" column="NOT_DELETE"/>
 		<result property="noticeDate" column="NOT_DATE"/>
 		<result property="noticeEditDate" column="NOT_EDIT_DATE"/>
@@ -18,7 +18,7 @@
 	  
 	<resultMap type="com.jaspa.healthtouch.notice.notice.model.dto.AttachmentDTO" id="attachmentResultMap" >
 		<id property="attachNo" column="ATC_NO"/>
-		<result property="noticeNo" column="ATC_NOT_NO"/>
+		<result property="noticeNo" column="ATC_NOT_NO"/> 
 		<result property="root" column="ATC_ROOT"/>
 		<result property="thumbRoot" column="ATC_THUMB_ROOT"/>
 		<result property="file" column="ATC_ORIGIN_FILE"/>

@@ -29,7 +29,7 @@ public class NoticeDTO extends CommonDTO {
 	private int noticeView;
 	
 
-	private MemberDTO member;
+	private MemberDTO member;  
 	private List<CommentDTO> comment;
 	  
 

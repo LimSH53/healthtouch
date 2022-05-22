@@ -34,7 +34,6 @@
 		<result property="aDate" column="A_DATE"/>
 		<result property="aEditDate" column="A_EDIT_DATE"/>
 		
-		
 		<association property="member" resultMap="memberResultMap"/>
 		<association property="trainer" resultMap="memberResultMap"/>
 		
@@ -286,11 +285,10 @@
 	
 	
     <!-- 공지사항 댓글수정 -->
-      <update id="modifyReply">
+      <update id="modifyReply"  >
         UPDATE TBL_QNA_REPLY
-            SET
-               A_EDIT_DATE = SYSDATE
-			 , A_CONTENT=#{ aContent } 
+        SET 
+			A_CONTENT=#{ aContent } 
         WHERE A_NO = #{aNo}
     </update>
     	

@@ -24,7 +24,7 @@ private final NoticeMapper noticeMapper;
 	public NoticeServiceImpl(NoticeMapper noticeMapper) {
 		this.noticeMapper = noticeMapper;
 	}
-	//공지사항 조회
+	//공지사항 조회 
 
 	  @Override
 		public List<NoticeDTO> noticeList(NoticeDTO params){
