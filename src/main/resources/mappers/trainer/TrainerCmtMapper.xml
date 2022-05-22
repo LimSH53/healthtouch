@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jaspa.healthtouch.trainer.commute.model.dao.TrainerCmtMapper">
+
+
+
+
+
+
+	<resultMap type="com.jaspa.healthtouch.trainer.commute.model.dto.TrainerCmtDTO" id="trainerCmtResultMap">
+		<id property="no" column="TRN_RECORD_NO"/>
+		<result property="id" column="TRN_REC_MEMBER_ID"/>		
+		<result property="attendTime" column="TRN_ATTEND_TIME"/>		
+		<result property="leaveTime" column="TRN_LEAVE_TIME"/>		
+		<result property="title" column="TRN_REC_KIND"/>		
+										
+		<association property="member" resultMap="memberResultMap"/>
+	</resultMap>
+
+
+	<resultMap type="com.jaspa.healthtouch.login.model.dto.MemberDTO" id="memberResultMap">
+		<id property="id" column="MEMBER_ID"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="contact" column="MEMBER_CONTACT"/>
+		<result property="num" column="MEMBER_NUM"/>
+		<result property="birthday" column="MEMBER_BIRTHDAY"/>
+		<result property="age" column="MEMBER_AGE"/>
+		<result property="gender" column="MEMBER_GENDER"/>
+		<result property="address" column="MEMBER_ADDRESS"/>
+		<result property="type" column="MEMBER_TYPE"/>
+		<result property="status" column="MEMBER_STATUS"/>
+
+	</resultMap>
+
+
+
+	<!-- 트레이너 근태 조회 -->
+	<select id="selectTrainerCmt" resultMap="trainerCmtResultMap">
+	
+		 SELECT
+               R.TRN_RECORD_NO
+             , R.TRN_REC_MEMBER_ID
+             , R.TRN_ATTEND_TIME
+			 , R.TRN_LEAVE_TIME
+             , R.TRN_REC_KIND
+		  FROM TBL_TRN_RECORD R
+		  JOIN TBL_MEMBER M ON(M.MEMBER_ID = R.TRN_REC_MEMBER_ID)
+		 WHERE M.MEMBER_ID = #{ id }
+		 
+	</select>
+
+
+	
+	<!-- 트레이너 근태 인서트 -->
+	<insert id="insertTrainerCmt">
+		INSERT INTO TBL_TRN_RECORD
+	(
+	      TRN_RECORD_NO
+	    , TRN_REC_MEMBER_ID
+	    , TRN_ATTEND_TIME
+	    , TRN_LEAVE_TIME
+	    , TRN_REC_KIND	   
+	)
+	VALUES
+	(
+	      SEQ_TRN_RECORD_NO.NEXTVAL
+	    , #{ id }
+	    , #{ title }
+	    , #{ attendTime }
+	    , #{ leaveTime }
+	    , #{ title }
+	)
+
+	</insert>
+
+
+
+
+
+</mapper>
