@@ -18,8 +18,8 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 
 	@Override
-	public void modifyMemberTypeAlert(NotificationDTO notification) {
-		notificationMapper.modifyMemberTypeAlert(notification);
+	public void alert(NotificationDTO notification) {
+		notificationMapper.alert(notification);
 	}
 
 	@Override

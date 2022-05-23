@@ -91,12 +91,11 @@
 		            </div>
 					<br>
 					<th:block th:if="*{memberRole.authorityCode == 1}">
-						<hr>
-						<br>
-						<h4>잔여 기간 및 횟수</h4>
-						<br>
-						<!-- 가데이터 생기면 수정 -->
-						<div th:each="order : ${ orderList }">
+						<div th:each="order : ${ orderList }" th:if="${not #lists.isEmpty( orderList )}">
+							<hr>
+							<br>
+							<h4>잔여 기간 및 횟수</h4>
+							<br>
 							<th:block th:if="${ order.product.categoryNo == 10 }">
 								<div class="form-group row">
 									<!-- 아이콘 삽입하기 -->
@@ -231,7 +230,7 @@
 							var param = { title: title, memberId: memberId, content: content, reqUrl: reqUrl };
 							
 							$.ajax({
-								url: "/common/modifyMemberTypeAlert",
+								url: "/common/alert",
 								type: "post",
 								async: false,
 								data: JSON.stringify(param),

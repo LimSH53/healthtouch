@@ -106,17 +106,15 @@
 		                <button class="btn btn-sm outline" type="button" id="modifyBtn" style="color:#1b1b55 ; border-color: #1b1b55;" onclick="startModify()">수정</button>
 		            </div>
 				</form>
-				<br>
-				<hr>
-				<br>
-				<h4>잔여 기간 및 횟수</h4>
-				<br>
-				<!-- 가데이터 생기면 수정 -->
-				<div th:each="order : ${#authentication.principal.orderList}">
+				<div th:each="order : ${#authentication.principal.orderList}" th:if="${not #lists.isEmpty( #authentication.principal.orderList )}">
+					<br>
+					<hr>
+					<br>
+					<h4>잔여 기간 및 횟수</h4>
+					<br>
 					<form>
 						<th:block th:if="${ order.product.categoryNo == 10 }">
 							<div class="form-group row">
-								<!-- 아이콘 삽입하기 -->
 				                <label class="col-sm-2 col-form-label">회원권</label>
 				                <div class="col-sm-3">
 				                	<input type="text" class="form-control" name="membershipName" id="membershipName" th:value="${ order.product.name }" required readonly>
