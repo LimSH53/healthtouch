@@ -38,6 +38,11 @@ public interface TrainerMapper {
 
 	int rejectHoliday(String id);
 
+	List<HolidayDTO> findAllHoliday();
+
+
+
+
 	
 
 

@@ -334,6 +334,19 @@
 						   FROM TBL_TRN_INFO TI
 						  WHERE TRN_INFO_MEMBER_ID = #{ trId } ) 
 	</update>
+	
+	<select id="findAllHoliday" resultMap="holidayResultMap"> 
+	SELECT H.HDATE
+		 , M.MEMBER_NAME
+	  FROM TBL_HDAY_REQ	H
+	  JOIN TBL_TRN_INFO TI ON (H.H_TRN_NUM = TI.TRN_NUM)
+	  JOIN TBL_MEMBER M ON (TI.TRN_INFO_MEMBER_ID = M.MEMBER_ID)
+	 WHERE H.H_STATUS = 'Y'
+	  
+	 </select>
+
+	
+
 	 
 	 <!-- 근태 조회 -->
 	 <select id="selectAllAttendance" resultMap="attendanceResultMap">

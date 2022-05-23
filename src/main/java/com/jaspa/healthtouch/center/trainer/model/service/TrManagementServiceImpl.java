@@ -96,6 +96,7 @@ public class TrManagementServiceImpl implements TrManagementService {
 		trainerMapper.rejectHoliday(id);
 		
 	}
+	
 
 	@Override
 	public List<AttendanceDTO> selectAllAttendanceList() {
@@ -103,6 +104,23 @@ public class TrManagementServiceImpl implements TrManagementService {
 		return trainerMapper.selectAllAttendance();
 	}
 
+	@Override
+	public List<HolidayDTO> holidayCalendar() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<HolidayDTO> findAllHoliday() {
+		
+		return trainerMapper.findAllHoliday();
+	}
+
+	
+
+	
+	
+	
 	
 
 	

@@ -26,6 +26,13 @@ public interface TrManagementService {
 
 	void rejectHoliday(String id);
 
+	List<HolidayDTO> holidayCalendar();
+
+	List<HolidayDTO> findAllHoliday();
+
+
+
+
 	
 
 
