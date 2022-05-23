@@ -12,12 +12,9 @@ public interface LockerMemberService {
 
 	/* 라커 등록 */
 	void registLocker(LockerDTO locker);
+	/* 구매이력 */
+	void insertCenterLockerOrder(LockerDTO locker);
 	
-	
-	/* void updateLocker(LockerDTO locker); */
-	
-	/* 이용권 조회 */
-	/* int selectOrdNum(int no); */
-	
+
 
 }

@@ -37,10 +37,8 @@ public class LockerMemberController {
 	@GetMapping("/lockerAll")
 	public ModelAndView selectAllLocker(ModelAndView mv) {
 		
-		List<LockerDTO> lockerList = lockerMemberService.selectAllLocker();
-		
-		log.info("lockerList : {}", lockerList);
-		
+		List<LockerDTO> lockerList = lockerMemberService.selectAllLocker();		
+		log.info("lockerList : {}", lockerList);		
 		mv.addObject("lockerList", lockerList);
 		mv.setViewName("member/product/locker-site");
 
@@ -55,7 +53,7 @@ public class LockerMemberController {
 	@ResponseBody
 	public void registLocker(LockerDTO locker) {
 		lockerMemberService.registLocker(locker);
-		
+		lockerMemberService.insertCenterLockerOrder(locker);
 	}
 
 	
