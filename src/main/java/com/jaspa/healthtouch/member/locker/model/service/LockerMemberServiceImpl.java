@@ -27,10 +27,14 @@ public class LockerMemberServiceImpl implements LockerMemberService {
 
 	/* 라커 등록 */
 	@Override
-	public void registLocker(LockerDTO locker) {
-		
-		lockerMapper.insertCenterLockerOrder(locker);
+	public void registLocker(LockerDTO locker) {				
 		lockerMapper.registLocker(locker);
+		
+	}
+
+	@Override
+	public void insertCenterLockerOrder(LockerDTO locker) {
+		lockerMapper.insertCenterLockerOrder(locker);
 		
 	}
 	 
