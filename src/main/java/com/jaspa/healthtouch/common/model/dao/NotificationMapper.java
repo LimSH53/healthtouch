@@ -9,7 +9,7 @@ import com.jaspa.healthtouch.common.model.dto.NotificationDTO;
 @Mapper
 public interface NotificationMapper {
 
-	void modifyMemberTypeAlert(NotificationDTO notification);
+	void alert(NotificationDTO notification);
 
 	List<NotificationDTO> findAllAlert(String id);
 

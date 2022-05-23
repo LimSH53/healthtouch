@@ -65,11 +65,6 @@ public class TrManagementServiceImpl implements TrManagementService {
 		return trainerMapper.selectAllSalary();
 	}
 
-	/*
-	 * @Override public List<HolidayDTO> selectAllHdayRequest() {
-	 * 
-	 * return trainerMapper.selectAllHdayRequest(); }
-	 */
 	
 	@Override
 	public List<HolidayDTO> selectAllHdayRequest(HolidayDTO params) {
@@ -89,12 +84,46 @@ public class TrManagementServiceImpl implements TrManagementService {
 		  
 		  return hdayRequestList; 
 	}
+	
+	@Override
+	public void approvalHoliday(String id) {
+		trainerMapper.approvalHoliday(id);
+		
+	}
+	
+	@Override
+	public void rejectHoliday(String id) {
+		trainerMapper.rejectHoliday(id);
+		
+	}
+	
 
 	@Override
 	public List<AttendanceDTO> selectAllAttendanceList() {
 		
 		return trainerMapper.selectAllAttendance();
 	}
+
+	@Override
+	public List<HolidayDTO> holidayCalendar() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<HolidayDTO> findAllHoliday() {
+		
+		return trainerMapper.findAllHoliday();
+	}
+
+	
+
+	
+	
+	
+	
+
+	
 
 	
 

@@ -11,7 +11,7 @@
 		<result property="memberId" column="NTC_MEMBER_ID"/>
 	</resultMap>
 	
-	<insert id="modifyMemberTypeAlert">
+	<insert id="alert">
 		INSERT INTO TBL_NOTIFICATION
 		(
 		  NTC_NO

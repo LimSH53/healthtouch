@@ -29,16 +29,16 @@ public class CommonController {
 	@GetMapping("/denied")
 	public void deniedPage() {}
 	
-	@PostMapping("/modifyMemberTypeAlert")
+	@PostMapping("/alert")
 	@ResponseBody
-	public void modifyMemberTypeAlert(@RequestBody Map<String, Object> alertMap) {
+	public void alert(@RequestBody Map<String, Object> alertMap) {
 		NotificationDTO notification = new NotificationDTO();
 		notification.setTitle((String)alertMap.get("title"));
 		notification.setContent((String)alertMap.get("content"));
 		notification.setReqUrl((String)alertMap.get("reqUrl"));
 		notification.setMemberId((String)alertMap.get("memberId"));
 		
-		notificationService.modifyMemberTypeAlert(notification);
+		notificationService.alert(notification);
 	}
 	
 	@PostMapping("/findAllAlert")

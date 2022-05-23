@@ -64,7 +64,7 @@
     <form id="comment1" th:action="@{/notice/replyRegist}" sec:authorize="hasAnyRole('ROLE_CENTER', 'ROLE_TRAINER')" method="post">
       <input type="hidden" name="qNo" th:value="${qna.qNo}">
       <input type="text" class="cmt-content rounded" name="aContent" id="aContent" placeholder="내용을 입력하세요." style="resize: none;" required></input>
-      <button type="submit" class="btn_cmt btn-outline-secondary rounded" id="replyregist" style="font-size: 15px;">등록</button>
+      <button type="submit" class="btn_cmt btn-outline-secondary rounded" id="replyregist" style="font-size: 15px;" onsubmit="qnaAlert();">등록</button>
     </form>
   </div>
     
@@ -87,6 +87,7 @@
   </section>
     <!-- 1:1문의 답글수정 -->
     <script th:inline="javascript">
+   		/*<![CDATA[*/
     	function replyModify(aNo) {
     		Swal.fire({
     			title: '답글 수정',
@@ -146,6 +147,31 @@
 				}
     		})
     	}
+    	
+    	function qnaAlert() {
+    		var qNo = "[[${qna.qNo}]]";
+    		var memberId = "[[${qna.memberId}]]";
+    		var title = "알림";
+    		var content = "1:1 문의에 대한 답변이 완료되었습니다.";
+    		var reqUrl = "/notice/qnadetail?qNo=" + qNo;
+
+    		var param = { title: title, content: content, reqUrl: reqUrl, memberId: memberId };
+
+    		$.ajax({
+    		    url: "/common/alert",
+    		    type: "post",
+    		    async: false,
+    		    data: JSON.stringify(param),
+    		    contentType: 'application/json; charset=utf-8',
+    		    success: function(data) {
+    		        socket.send(title + "," + memberId + "," + content + "," + reqUrl);
+    		    },
+    		    error: function(e) {
+    		        console.log(e);
+    		    }
+    		})
+    	}
+    	/*]]>*/
     </script>
     
     

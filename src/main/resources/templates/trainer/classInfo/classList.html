@@ -46,7 +46,7 @@
 							</tr>
 						</thead>
 						<tbody class="table-body">
-							<tr class="cell-1 text-center" th:each="class : ${ classList }">
+							<tr class="cell-1 text-center" th:each="class : ${ classList }" th:if="${not #lists.isEmpty( classList )}">
 								<td th:text="${ classStat.count }"></td>
 								<td th:text="${ #dates.format(class.reservation.datetime, 'yyyy-MM-dd HH:mm') }"></td>
 								<td th:text="${ class.reservation.member.name }"></td>
@@ -60,6 +60,9 @@
 										<button class="btn btn-sm outline" type="button" id="registClassInfoBtn" style="color:#1b1b55 ; border-color: #1b1b55;" th:onclick="|javascript:registClassInfo('${class.reservation.no}')|">내용 등록</button>
 									</td>
 								</th:block>
+							</tr>
+							<tr th:unless="${not #lists.isEmpty( classList )}">
+								<td colspan="4">조회된 결과가 없습니다.</td>
 							</tr>
 						</tbody>
 					</table>

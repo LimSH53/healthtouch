@@ -1,15 +1,18 @@
 package com.jaspa.healthtouch.member.reservation.model.service;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jaspa.healthtouch.center.trainer.model.dto.HolidayDTO;
 import com.jaspa.healthtouch.common.paging.PaginationInfo;
 import com.jaspa.healthtouch.member.reservation.model.dao.MemberReservationMapper;
 import com.jaspa.healthtouch.member.reservation.model.dto.ReservationChangeDTO;
 import com.jaspa.healthtouch.member.reservation.model.dto.ReservationDTO;
+import com.jaspa.healthtouch.trainer.schedule.model.dto.TrainerScheduleDTO;
 
 @Service("memberReservationService")
 public class MemberReservationServiceImpl implements MemberReservationService {
@@ -61,6 +64,36 @@ public class MemberReservationServiceImpl implements MemberReservationService {
 	@Override
 	public List<ReservationDTO> findReservationById(String id) {
 		return memberReservationMapper.findReservationById(id);
+	}
+
+	@Override
+	public String findTrnId(String id) {
+		return memberReservationMapper.findTrnId(id);
+	}
+
+	@Override
+	public List<TrainerScheduleDTO> findScheduleById(String trnId) {
+		return memberReservationMapper.findScheduleById(trnId);
+	}
+
+	@Override
+	public List<HolidayDTO> findHolidyById(String trnId) {
+		return memberReservationMapper.findHolidyById(trnId);
+	}
+
+	@Override
+	public List<ReservationDTO> findReservationByTrnId(String trnId) {
+		return memberReservationMapper.findReservationByTrnId(trnId);
+	}
+
+	@Override
+	public void insertReservation(String memberId, String trnId, Date datetime) {
+		memberReservationMapper.insertReservation(memberId, trnId, datetime);
+	}
+
+	@Override
+	public void insertReservationChange(String memberId, String reservationNo, Date datetime) {
+		memberReservationMapper.insertReservationChange(memberId, reservationNo, datetime);
 	}
 
 }
