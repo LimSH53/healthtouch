@@ -6,7 +6,7 @@ import com.jaspa.healthtouch.common.model.dto.NotificationDTO;
 
 public interface NotificationService {
 
-	void modifyMemberTypeAlert(NotificationDTO notification);
+	void alert(NotificationDTO notification);
 
 	List<NotificationDTO> findAllAlert(String id);
 

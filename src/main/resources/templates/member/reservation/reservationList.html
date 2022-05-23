@@ -44,7 +44,7 @@
 							</tr>
 						</thead>
 						<tbody class="table-body">
-							<tr class="cell-1 text-center" th:each="reservation : ${ reservationList }">
+							<tr class="cell-1 text-center" th:each="reservation : ${ reservationList }" th:if="${not #lists.isEmpty( reservationList )}">
 								<td th:text="${ reservationStat.count }"></td>
 								<td th:text="${ #dates.format(reservation.datetime, 'yyyy-MM-dd HH:mm') }"></td>
 								<td th:text="${ reservation.trainer.name }"></td>
@@ -59,6 +59,9 @@
 								<td>
 									<button class="btn btn-sm outline" type="button" id="viewDetailBtn" style="color:#1b1b55 ; border-color: #1b1b55;" th:onclick="|javascript:viewDetail('${reservation.no}')|">예약 내용 확인</button>
 								</td>
+							</tr>
+							<tr th:unless="${not #lists.isEmpty( reservationList )}">
+								<td colspan="5" class="text-center">조회된 결과가 없습니다.</td>
 							</tr>
 						</tbody>
 					</table>
@@ -87,6 +90,10 @@
 					</nav>
 				</th:block>
 				<br>
+				<!-- 예약하기 -->
+				<div class="d-grid col-2 mx-auto" th:if="${not #lists.isEmpty( #authentication.principal.orderList )}">
+	                <button class="btn btn-sm outline" type="button" id="reservationBtn" style="color:#1b1b55 ; border-color: #1b1b55;" onclick="location.href='/member/reservation/reservation';">예약하기</button>
+	            </div>
 			</div>
 		</div>
 	</div>
@@ -96,6 +103,8 @@
 			function viewDetail(no) {
 				var reservationNo = no;
 				var reservationChangeNo = '';
+				var trainerId = '';
+				var memberName = '';
 				
 				$.ajax({
 					url: "/member/reservation/detail",
@@ -131,6 +140,8 @@
 							}
 							var type = data.reservation.type;
 							var trainerName = data.reservation.trainer.name;
+							trainerId = data.reservation.trainerId;
+							memberName = data.reservation.member.name;
 							
 							var rchReqDatetime = new Date(data.reqDatetime);
 							var rchReqDatetimeText = '';
@@ -242,6 +253,8 @@
 							}
 							var type = data.type;
 							var trainerName = data.trainer.name;
+							trainerId = data.trainerId;
+							memberName = data.member.name;
 							
 							html += 
 								`<br>
@@ -318,7 +331,7 @@
 										}
 									})
 								} else if(check == 'B') { // 예약 변경 요청 
-									// 시간표 가져와야 함 
+									location.href = '/member/reservation/reservationChange?reservationNo=' + reservationNo;
 								} else if(check == 'C') { // 예약 변경 취소 
 									Swal.fire({
 										icon: 'question',

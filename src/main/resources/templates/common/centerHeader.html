@@ -1,5 +1,6 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">                        
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:fragment="center-header">  <!-- fragment 선언 -->   
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
@@ -24,10 +25,6 @@
         <!-- 알림 목록 -->
         <a type="button" class="btn position-relative" onclick="viewAlertList();">
         	<i class='bx bxs-bell' style="font-size: 1.5rem;"></i>
-        	<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-        	99+
-        		<span class="visually-hidden">unread messages</span>
-        	</span>
         </a>
         <a type="button" id="outbtn" class="btn btn-sm outline" style="color:#1b1b55 ; border-color: #1b1b55;" onclick="location.href='/member/logout'">로그아웃</a>
     </header>
@@ -216,11 +213,17 @@
 						var title = data[i].title;
 						var content = data[i].content;
 						var reqUrl = data[i].reqUrl;
-						var time = data[i].time;
+						var time = new Date(data[i].time);
+						
+						var timeText = '';
+						timeText += (time.getMonth() + 1) + "월 ";
+						timeText += time.getDate() + "일 ";
+						timeText += time.getHours() + "시 ";
+						timeText += time.getMinutes() + "분 ";
 						
 						html += `<div class="alert alert-info alert-dismissible d-flex align-items-center fade show" style="width: auto; font-size: 0.75rem;">
 						    <i class="bi-info-circle-fill"></i>
-						    <strong class="mx-2">${ title }</strong> ${ content } <br> ${ time }
+						    <strong class="mx-2">${ title }</strong> ${ content } <br> ${ timeText }
 						    <a type="button" class="btn" href="${ reqUrl }" style="font-size: 0.75rem;">바로 가기</a>
 						    <button type="button" class="btn-close" data-bs-dismiss="alert" onclick="changeStatus('${ no }');"></button>
 						</div>`;

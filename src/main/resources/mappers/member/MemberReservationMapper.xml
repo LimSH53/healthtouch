@@ -68,6 +68,38 @@
 		<association property="reservation" resultMap="reservationResultMap"/>
 	</resultMap>
 	
+	<resultMap type="com.jaspa.healthtouch.trainer.schedule.model.dto.TrainerScheduleDTO" id="trainerScheduleResultMap">
+		<id property="schNum" column="TRN_SCH"/>
+		<result property="id" column="TRN_SCH_MEMBER_ID"/>
+		<result property="schName" column="TRN_SCH_NAME"/>
+		<result property="schWeek" column="TRN_SCH_WEEK"/>
+		<result property="schStart" column="TRN_SCH_START"/>
+		<result property="schEnd" column="TRN_SCH_END"/>
+		<result property="schColor" column="TRN_SCH_COLOR"/>
+		
+		<association property="member" resultMap="memberResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.center.trainer.model.dto.HolidayDTO" id="holidayResultMap">
+		<id property="hReqNo" column="H_REQ_NO"/>
+		<result property="reqHday" column="HDATE_REQ"/>
+		<result property="hReason" column="H_REASON"/>
+		<result property="hStatus" column="H_STATUS"/>
+		<result property="rejReason" column="H_REJ_REASON"/>
+		<result property="hDay" column="HDATE"/>
+		
+		<association property="trainer" resultMap="trainerInfoResultMap"></association>
+	</resultMap>
+	
+	<resultMap type="com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO" id="trainerInfoResultMap">
+		<id property="trNum" column="TRN_NUM"/>
+		<result property="career" column="TRN_CAREER"/>
+		<result property="trStatus" column="TRN_HOLD"/>
+		<result property="trId" column="TRN_INFO_MEMBER_ID"/>
+		
+		<association property="member" resultMap="memberResultMap"></association>
+	</resultMap>
+	
 	<select id="findAllReservationTotalCount" parameterType="com.jaspa.healthtouch.member.reservation.model.dto.ReservationDTO" resultType="int">
 		SELECT COUNT(*)
 		  FROM TBL_RESERVATION
@@ -137,8 +169,10 @@
 			 , A.RSV_MEMBER_ID
 			 , A.RSV_TRAINER_MEMBER_ID
 			 , B.MEMBER_NAME RSV_TRAINER_MEMBER_NAME
+			 , C.MEMBER_NAME RSV_MEMBER_NAME
 		  FROM TBL_RESERVATION A
 		  JOIN TBL_MEMBER B ON (A.RSV_TRAINER_MEMBER_ID = B.MEMBER_ID)
+		  JOIN TBL_MEMBET C ON (A.RSV_MEMBER_ID = C.MEMBER_ID)
 		 WHERE A.RSV_NO = #{ no }
 	</select>
 	
@@ -184,4 +218,58 @@
 		 WHERE RSV_MEMBER_ID = #{ id }
 		   AND RSV_STATE = 'Y'
 	</select>
+	
+	<select id="findTrnId" resultType="java.lang.String">
+		SELECT A.ORD_TRN_ID
+		  FROM TBL_ORDER A
+		  JOIN TBL_PRODUCT B ON (A.ORD_PRO_NO = B.PRO_NO)
+		 WHERE A.ORD_MEMBER_ID = #{ id }
+		   AND B.PRO_CATE_NO = 20
+	</select>
+	
+	<select id="findScheduleById" resultMap="trainerScheduleResultMap">
+		SELECT *
+		  FROM TRN_SCHEDULE
+		 WHERE TRN_SCH_MEMBER_ID = #{ trnId }
+	</select>
+	
+	<select id="findHolidyById" resultMap="holidayResultMap">
+		SELECT A.*
+		  FROM TBL_HDAY_REQ A
+		  JOIN TBL_TRN_INFO B ON(A.H_TRN_NUM = B.TRN_NUM)
+		 WHERE B.TRN_INFO_MEMBER_ID = #{ trnId }
+		   AND A.H_STATUS = 'Y'
+	</select>
+	
+	<select id="findReservationByTrnId" resultMap="reservationResultMap">
+		SELECT *
+		  FROM TBL_RESERVATION
+		 WHERE RSV_TRAINER_MEMBER_ID = #{ trnId }
+	</select>
+	
+	<insert id="insertReservation">
+		INSERT INTO TBL_RESERVATION
+		VALUES
+		(
+		  SEQ_RSV_NO.NEXTVAL
+		, #{ datetime }
+		, SYSDATE
+		, 'N'
+		, '예약'
+		, #{ memberId }
+		, #{ trnId }
+		)
+	</insert>
+	
+	<insert id="insertReservationChange">
+		INSERT INTO TBL_RESERVATION_CHANGE
+		VALUES
+		(
+		  SEQ_RCH_NO.NEXTVAL
+		, #{ reservationNo }
+		, SYSDATE
+		, #{ datetime }
+		, 'N'
+		)
+	</insert>
 </mapper>
