@@ -21,20 +21,27 @@ public interface TrainerMapper {
 	TrainerInfoDTO detailTrainerById(String trId);
 
 
-	void deleteTrainer(String id);
+	int deleteTrainer(String id);
 
 
-	void deleteTrainerMStatus(String id);
-
+	int deleteTrainerMStatus(String id);
 
 	List<TrainerSalaryDTO> selectAllSalary();
-
 
 	List<AttendanceDTO> selectAllAttendance();
 
 	int selectAllHolidayTotalCount(HolidayDTO params);
 
 	List<HolidayDTO> selectAllHodlidayRequest(HolidayDTO params);
+
+	int approvalHoliday(String id);
+
+	int rejectHoliday(String id);
+
+	List<HolidayDTO> findAllHoliday();
+
+
+
 
 	
 

@@ -1,14 +1,23 @@
 package com.jaspa.healthtouch.center.trainer.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.maven.lifecycle.Schedule;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,7 +27,6 @@ import com.jaspa.healthtouch.center.trainer.model.dto.HolidayDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerInfoDTO;
 import com.jaspa.healthtouch.center.trainer.model.dto.TrainerSalaryDTO;
 import com.jaspa.healthtouch.center.trainer.model.service.TrManagementService;
-import com.jaspa.healthtouch.trainer.schedule.model.dto.TrainerScheduleDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -84,6 +92,42 @@ public class CenterTrainerController {
 		
 		return "center/trainer/hdayRequestList";
 	}
+	
+	//휴가 승인
+	@RequestMapping("/hday/approval")
+	@ResponseBody
+	public void approvalHoliday(@RequestParam("trId") String id) {
+		trManagementService.approvalHoliday(id);
+	}
+	
+	//휴가 반려
+	@RequestMapping("/hday/reject")
+	@ResponseBody
+	public void rejectHoliday(@RequestParam("trId") String id) {
+		trManagementService.rejectHoliday(id);
+	}
+	
+	//휴가 캘린더
+	@GetMapping("/hday/calendar")
+    @ResponseBody
+    public List<Map<String, Object>> monthPlan() {
+        List<HolidayDTO> holidayList = trManagementService.findAllHoliday();
+ 
+        JSONObject jsonObj = new JSONObject();
+        JSONArray jsonArr = new JSONArray();
+ 
+        HashMap<String, Object> hash = new HashMap<>();
+ 
+        for (int i = 0; i < holidayList.size(); i++) {
+            hash.put("name", holidayList.get(i).getTrainer().getMember().getName());
+            hash.put("date", holidayList.get(i).getHDay());
+
+            jsonObj = new JSONObject(hash);
+            jsonArr.add(jsonObj);
+        }
+        log.info("jsonArrCheck: {}", jsonArr);
+        return jsonArr;
+    }
 
 	
 	// 근태 조회

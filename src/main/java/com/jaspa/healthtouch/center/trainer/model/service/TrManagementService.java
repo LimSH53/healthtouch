@@ -22,6 +22,17 @@ public interface TrManagementService {
 
 	List<AttendanceDTO> selectAllAttendanceList();
 
+	void approvalHoliday(String id);
+
+	void rejectHoliday(String id);
+
+	List<HolidayDTO> holidayCalendar();
+
+	List<HolidayDTO> findAllHoliday();
+
+
+
+
 	
 
 
