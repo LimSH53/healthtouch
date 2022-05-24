@@ -105,7 +105,6 @@ public class MemberController {
 			System.out.println("임시 비밀번호 : " + sb);
 			
 			// 임시 비밀번호 전송 
-			// 문자 진짜로 전송돼서 일단 주석 
 			// memberService.sendTempPwd(member, sb);
 			
 			// 결과 
@@ -162,7 +161,6 @@ public class MemberController {
 		log.info("수신자 번호 : {}", phoneNumber);
 		log.info("인증번호 : {}", numStr);
 		
-		// 잠깐 주석 처리 
 		// memberService.certifiedPhoneNumnber(phoneNumber, numStr);
 		
 		return numStr;

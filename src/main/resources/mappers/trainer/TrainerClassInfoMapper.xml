@@ -113,6 +113,7 @@
 		  		  			 , C.RSV_MEMBER_ID
 		  		  			 , C.RSV_TRAINER_MEMBER_ID
 		  		  		  FROM TBL_RESERVATION C
+		  		  		 WHERE C.RSV_TRAINER_MEMBER_ID = #{ memberId }
 		  		  		) B
 		<![CDATA[
 		WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
@@ -121,7 +122,6 @@
 		  LEFT JOIN TBL_CLASS E ON (A.RSV_NO = E.CLS_RSV_NO )
 		  JOIN TBL_MEMBER F ON (A.RSV_TRAINER_MEMBER_ID = F.MEMBER_ID)
 		 WHERE A.RNUM > #{ paginationInfo.firstRecordIndex }
-		   AND A.RSV_TRAINER_MEMBER_ID = #{ memberId }
 		   AND A.RSV_STATE = 'Y'
 		   AND TO_CHAR(SYSDATE, 'YYYYMMDD') >= TO_CHAR(RSV_DATETIME, 'YYYYMMDD')
 			<if test="searchKeyword != null and searchKeyword != ''">
