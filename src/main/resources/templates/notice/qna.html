@@ -6,14 +6,14 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>1:1문의</title>
- 	<div sec:authorize="hasRole('ROLE_CENTER')"  th:replace="/common/centerHeader.html :: center-header"></div>
+ 	<div sec:authorize="hasRole('ROLE_CENTER')"  th:replace="/common/centerHeader.html :: center-header"></div> 
  	<div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-header"></div>
  	<div sec:authorize="hasRole('ROLE_TRAINER')" th:replace="/common/trnHeader.html :: trn-header"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/notice/qna.css}"/>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     </head>     
     
-  <body id="body-pd" class='snippet-body ' style="min-height:105vh">
+  <body id="body-pd" class='snippet-body ' style="min-height:100vh">
   
    <div sec:authorize="hasRole('ROLE_CENTER')" th:replace="/common/centerHeader.html :: center-body"></div>
   <div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-body"></div>
@@ -23,7 +23,7 @@
 <div class="d-flex justify-content-center row">
 <div class="col-md-10"> 
 <div class="rounded">
-<div class="table-responsive table-borderless">
+<div class="table-responsive table-borderless" style="width:1000px">
  <div class="titlename rounded">
     <h2 class="titlename1">1:1문의</h2>
  </div>

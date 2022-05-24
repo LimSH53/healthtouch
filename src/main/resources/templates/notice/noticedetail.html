@@ -2,7 +2,7 @@
                        
 <html xmlns:th="http://www.thymeleaf.org">
                            
-<head>     
+<head>      
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>공지사항 상세조회</title>
@@ -15,7 +15,7 @@
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     </head>       
   
-  <body id="body-pd" class='snippet-body ' style='min-height: 80vh;'>
+  <body id="body-pd" class='snippet-body ' style='min-height: 120vh;'>
  <div sec:authorize="hasRole('ROLE_CENTER')" th:replace="/common/centerHeader.html :: center-body"></div>
   <div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-body"></div>
   <div sec:authorize="hasRole('ROLE_TRAINER')"th:replace="/common/trnHeader.html :: trn-body"></div>
@@ -42,13 +42,13 @@
     </div>
  
   <hr id="line">
-    <div name="content" th:text="*{noticeContent}" id="bo_v_con" style="font-size: 12px;"></div>
+    <div name="content" th:text="*{noticeContent}" id="bo_v_con" style="margin: 60px 0; font-size: 12px;"></div>
     <hr id="line">
  </div>     
 	  <!-- 공지사항 목록, 수정,삭제 버튼 -->
     <div style="display:-webkit-box ">
       <button th:onclick="'location.href=\''+@{/notice/notice} + '\''"type="button" style="font-size:12px;" class="list_btn btn btn-outline-secondary">목록</button>
-      <div sec:authorize="hasRole('ROLE_CENTER')" class=" regist-btn" style="margin-left: 565px; ">
+      <div sec:authorize="hasRole('ROLE_CENTER')" class=" regist-btn" style="margin-left: 765px; ">
         <a th:href="@{'/notice/noticemodify?noticeNo=' + ${ notice.noticeNo }}" style="font-size: 12px;" type="button" class="btn btn-outline-secondary " value="수정">수정</a>
         <a  th:href="@{'/notice/delete?noticeNo=' + ${ notice.noticeNo }}" style="font-size: 12px;" type="button" class="btn btn-outline-secondary " value="삭제"  onclick="noticedelete()" id="noticedelete">삭제</a>
      
@@ -60,7 +60,7 @@
   <div id="commentRegist">
    <label><strong>댓글</strong></label>
     <form name="cmtRegist" th:action="@{/notice/cmtRegist}"method="post" id="comment1"> 
-    <div class="input-group">
+    <div class="input-group"style="width: 910px;">
     <input type="hidden" name="noticeNo" id="noticeNo" th:value="${notice.noticeNo}">
       <input type="text" class="form-control" id="cmtContent" name="cmtContent" placeholder="내용을 입력하세요." required>
       <button type="submit" class="btn btn-outline-secondary" name="cmtRegist" id="cmtRegist" style="font-size: 11px;">등록</button>

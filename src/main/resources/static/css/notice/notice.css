@@ -6,7 +6,7 @@ font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, '
 
 .snippet-body{
 	display: flex;
-    justify-content: center;
+    justify-content: center; 
     align-items:center;
     min-height: 100vh;
 }
@@ -46,7 +46,7 @@ font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, '
 body {
     margin: 0;
     padding: 0;
-    background: #eee;
+    background: #ffff;
 }
 
 .title{
@@ -76,7 +76,6 @@ body {
 
 .table-responsive{
     margin:auto;
-    width: 768px;
 }
 
 #line{
