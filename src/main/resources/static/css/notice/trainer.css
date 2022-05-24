@@ -3,12 +3,12 @@
 * {
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
 }
-
+ 
 
 .nav1{
 	display: flex;
     overflow: hidden;
-    list-style: none;
+    list-style: none; 
     margin: 0;
     padding: 0;
 	
@@ -37,7 +37,7 @@
 body {
     margin: 0;
     padding: 0;
-    background: #eee;
+    background: #ffff;
 }
 
 .title{
@@ -55,7 +55,6 @@ body {
 
 .table-responsive{
     margin:auto;
-    width: 80%;
 }
 
 
@@ -91,8 +90,8 @@ body {
 .profile {
     margin: 50px 10px;
     position: relative;
-    width: 150px;
-    height: 200px;
+    width: 200px;
+    height: 300px;
     background: url("/images/trainer-sagong.jpg");
     background-size: cover;
     cursor: pointer;
@@ -104,8 +103,8 @@ body {
 .profile2 {
     margin: 50px 10px;
     position: relative;
-    width: 150px;
-    height: 200px;
+    width: 200px;
+    height: 300px;
     background: url("/images/trainer-qwak.jpg");
     background-size: cover;
     cursor: pointer;
@@ -118,8 +117,8 @@ body {
 .profile3 {
     margin: 50px 10px;
     position: relative;
-    width: 150px;
-    height: 200px;
+    width: 200px;
+    height: 300px;
     background: url("/images/trainer-pyo.png");
     background-size: cover;
     cursor: pointer;
@@ -132,8 +131,8 @@ body {
 .profile4 {
     margin: 50px 10px;
     position: relative;
-    width: 150px;
-    height: 200px;
+    width: 200px;
+    height: 300px;
     background: url("/images/trainer-park.png");
     background-size: cover;
     cursor: pointer;
@@ -143,8 +142,8 @@ body {
 
 
 .overlay {
-    width: 150px;
-    height: 200px;
+    width: 200px;
+    height: 300px;
     background: rgba(27, 27, 85, 0.8);
     border-radius: 12px;
     cursor: pointer;

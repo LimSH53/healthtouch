@@ -14,7 +14,7 @@
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     </head>      
    
-  <body id="body-pd" class='snippet-body '  style="min-height:90vh">
+  <body id="body-pd" class='snippet-body '  style="min-height:100vh">
    
  <div sec:authorize="hasRole('ROLE_CENTER')" th:replace="/common/centerHeader.html :: center-body"></div>
   <div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="/common/memberHeader.html :: member-body"></div>
@@ -47,8 +47,8 @@
   </div>
   	</th:block>
  <!-- 공지사항 목록 -->
-<th:block layout:fragment="content">
-<table class="table">
+<div>
+<table class="table" >
 <thead>
 <tr>
   <th class="text-center">번호</th>
@@ -70,7 +70,7 @@
 
 </tbody>
 </table>
-</th:block>
+</div>
 <button sec:authorize="hasRole('ROLE_CENTER')" onclick="location.href='/notice/noticeregist'" type="button" class="btn btn-outline-secondary">글작성</button>
  <!-- 공지사항 페이징 -->
 	<th:block layout:fragment="paging">

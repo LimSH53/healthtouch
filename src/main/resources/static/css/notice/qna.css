@@ -4,7 +4,7 @@
 font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
 }
 
-
+ 
 .snippet-body{
 	display: flex; 
     justify-content: center;
@@ -48,7 +48,7 @@ font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, '
 body {
     margin: 0;
     padding: 0;
-    background: #eee;
+    background: #ffff;
 }
 
 .title{
@@ -354,7 +354,7 @@ tbody td{
     border:#c4c4c4 solid 0.5px;
     display: flex;
     width: 650px;
-    height: 200px;
+    height: 100px;
     margin-bottom: 20px;
 }
 

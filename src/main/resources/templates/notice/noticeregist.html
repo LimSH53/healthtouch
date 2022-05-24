@@ -6,7 +6,7 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>공지사항 등록</title>
- 	<div sec:authorize="hasRole('ROLE_CENTER')"  th:replace="/common/centerHeader.html :: center-header"></div>
+ 	<div sec:authorize="hasRole('ROLE_CENTER')"  th:replace="/common/centerHeader.html :: center-header"></div> 
     <link rel="stylesheet" type="text/css" th:href="@{/css/notice/notice.css}"/>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script> 
     </head>      
@@ -18,7 +18,7 @@
    
 <div class="d-flex justify-content-center row">
 <div class="rounded">
-<div class="table-responsive table-borderless">
+<div class="table-responsive table-borderless" style="width:786px">
  <div class="titlename rounded">
     <h2 class="titlename1">공지사항 등록</h2>
  </div>
