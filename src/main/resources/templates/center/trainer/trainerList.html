@@ -7,13 +7,9 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>트레이너 조회 </title>
-        
-    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet'>
-    <link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>  
+     
     <link href="@{/css/header.css}" rel="stylesheet" type="text/css">
 	<link th:replace="/common/centerHeader.html :: center-header"></link>
-	
-	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
    
 </head>
                                 
@@ -77,8 +73,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="table_tr" th:each="trainer : ${ trainerList}">
-                <td th:text="${trainer.trNum}"> </td>
+            <tr class="table_tr" th:each="trainer, trainerStat : ${ trainerList}">
+                <td th:text="${trainerStat.count}"> </td>
           		<td>
                 	<a th:href="|@{/center/trainer/detail}${params.makeQueryString(params.currentPageNo)}&id=${ trainer.member.id }|" th:text="${ trainer.member.id }" ></a>
                 </td>   
@@ -117,6 +113,17 @@
             </div>
     </div>
    </div>
+   <th:block layout:fragment="script">
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			function movePage(uri, queryString) {
+				location.href = uri + queryString;
+			}
+			/*[- end of function -]*/
+			
+			/*]]>*/
+		</script>
+	</th:block>
    
  
    

@@ -24,7 +24,7 @@
 	  left: 50%;
 	  transform: translate(-50%, -50%);
 	  width: 700px;
-	  display: block; 
+	  /* display: block;  */
 	  padding-right: 17px;
 	} 
 	
@@ -65,8 +65,7 @@
             <a href="/center/trainer/hday" style="color:black"><h2 class="mb-5">휴가 신청 조회</h2></a>
             
              <!-- 달력 아이콘 -->           
-            <button id="holidayCalendar" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#calendarModal" 
-             		style="margin:auto; display:blcok; text-align:center;">
+            <button id="holidayCalendar" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#calendarModal" style="width:100%;">
 				<i class='bx bx-calendar bx-lg'></i>	
 			</button>
         	
@@ -88,7 +87,11 @@
 			  </div>
 			</div>
             
-            
+            <script>
+            	$("#calendarModal").on('shown.bs.modal', function(){
+            		viewCalendar();
+            	});
+            </script>
 
             <div class="row" style="width: 70%; margin:auto; text-align:center;">
             

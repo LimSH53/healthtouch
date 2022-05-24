@@ -188,9 +188,12 @@
 				M.MEMBER_NAME
 			  , M.MEMBER_GENDER
 			  , M.MEMBER_ID
+			  , M.MEMBER_BIRTHDAY
 			  , M.MEMBER_CONTACT
+			  , M.MEMBER_ADDRESS
 			  , TI.TRN_CAREER
 			  , TI.TRN_HOLD
+			  
 		 FROM TBL_MEMBER M
 		 JOIN TBL_TRN_INFO TI ON(M.MEMBER_ID = TI.TRN_INFO_MEMBER_ID)
 		 JOIN TBL_MEMBER_ROLE MR ON(M.MEMBER_ID = MR.MEMBER_ID)
@@ -261,6 +264,7 @@
 					     FROM TBL_HDAY_REQ A
 					     JOIN TBL_TRN_INFO B ON(A.H_TRN_NUM = B.TRN_NUM)
 					     JOIN TBL_MEMBER C ON(B.TRN_INFO_MEMBER_ID = C.MEMBER_ID)
+					     
 					   
 							<where>	
 								<if test="hStatus == 'all'">
@@ -286,6 +290,7 @@
 								</if>
 						
 							</if>
+							ORDER BY A.HDATE_REQ DESC
 		  		  ) D
 		  		 <![CDATA[
 		  		  WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
