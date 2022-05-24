@@ -97,17 +97,29 @@
 	              <label for="endDate" class="form-label">이용종료일</label>
 	              <input type="date" class="form-control" name="end" id="endDate" th:value="${ #dates.format(order.endDate, 'yyyy-MM-dd') }" readonly></input><!-- th:value="${ #authentication.principal.orderList.endDate }" -->
 	            </div>
-	            </div>
-	          </div>
-	          <div class="mb-3" th:if="${ #authentication.principal.orderList.?[product.categoryNo == 30].isEmpty() }">
-	          	<label for="startDate" class="form-label">락커 이용권 구매 이력이 없습니다.</label>
-	          </div>
-	
-	
-	          <div class="modal-footer">
+	            
+	            
+	            <div class="modal-footer">
 	            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 	            <button type="button" class="btn btn-primary" onclick="registLocker();">등록</button>
 	          </div>
+	            
+	            
+	            </div>
+	          </div>
+	          
+	          
+	          <div class="mb-3" th:if="${ #authentication.principal.orderList.?[product.categoryNo == 30].isEmpty() }">
+	          	<label for="startDate" class="form-label" style="text-align: center; float: center;">&nbsp; &nbsp; &nbsp; 락커 이용권 구매 이력이 없습니다.</label>
+	          </div>
+	
+	
+	         <!--  <div class="modal-footer">
+	            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	            <button type="button" class="btn btn-primary" onclick="registLocker();">등록</button>
+	          </div> -->
+	          
+	          
 	        </div>
 	      </div>
 	    </div> 
