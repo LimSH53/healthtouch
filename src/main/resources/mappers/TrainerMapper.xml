@@ -264,6 +264,7 @@
 					     FROM TBL_HDAY_REQ A
 					     JOIN TBL_TRN_INFO B ON(A.H_TRN_NUM = B.TRN_NUM)
 					     JOIN TBL_MEMBER C ON(B.TRN_INFO_MEMBER_ID = C.MEMBER_ID)
+					     
 					   
 							<where>	
 								<if test="hStatus == 'all'">
@@ -289,6 +290,7 @@
 								</if>
 						
 							</if>
+							ORDER BY A.HDATE_REQ DESC
 		  		  ) D
 		  		 <![CDATA[
 		  		  WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }

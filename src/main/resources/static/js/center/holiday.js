@@ -1,12 +1,30 @@
+/*<![CDATA[*/
+			function movePage(uri, queryString) {
+				location.href = uri + queryString;
+			}
+			/*[- end of function -]*/
+			
+			/*]]>*/
+
+
 //휴가 캘린더
-document.getElementById("holidayCalendar").addEventListener("click", viewCalendar);
+//document.getElementById("holidayCalendar").addEventListener("click", viewCalendar);
+
+$("#calendarModal").on('shown.bs.modal', function(){
+            		viewCalendar();
+            	});
  
 function viewCalendar () {
 	var calendarEl = document.getElementById('calendar');
 		var calendar = new FullCalendar.Calendar(calendarEl, {
 			initialView: 'dayGridMonth',
 			locale: 'ko',
-			themeSystem: 'bootstrap5'
+			themeSystem: 'bootstrap5',
+			 headerToolbar: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                        },
         });
 		
 		var arr = '';

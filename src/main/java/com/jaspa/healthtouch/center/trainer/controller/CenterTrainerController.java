@@ -25,7 +25,6 @@ import com.jaspa.healthtouch.common.model.dto.FullCalendarDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller 
 @RequestMapping("/center/trainer")
 public class CenterTrainerController {
