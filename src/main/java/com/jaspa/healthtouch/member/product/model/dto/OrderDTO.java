@@ -20,6 +20,7 @@ public class OrderDTO {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private java.util.Date endDate;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
+	
 	private java.util.Date modEndDate;
 	private String modReason;
 	private String revStatus;

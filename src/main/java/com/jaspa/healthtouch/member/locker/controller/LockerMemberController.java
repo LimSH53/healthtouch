@@ -32,7 +32,7 @@ public class LockerMemberController {
 	public LockerMemberController(LockerMemberService lockerMemberService) {
 		this.lockerMemberService = lockerMemberService;
 	}
-	
+	/* @AuthenticationPrincipal UserImpl user */
 	
 	@GetMapping("/lockerAll")
 	public ModelAndView selectAllLocker(ModelAndView mv) {
