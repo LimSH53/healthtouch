@@ -8,8 +8,6 @@
 
 
 //휴가 캘린더
-//document.getElementById("holidayCalendar").addEventListener("click", viewCalendar);
-
 $("#calendarModal").on('shown.bs.modal', function(){
             		viewCalendar();
             	});

@@ -101,48 +101,11 @@ public class CenterTrainerController {
 		trManagementService.rejectHoliday(id);
 	}
 	
-	//휴가 캘린더
-//	@GetMapping("/hday/calendar")
-//    @ResponseBody
-//    public List<Map<String, Object>> getCalecdar() {
-//        List<HolidayDTO> holidayList = trManagementService.findAllHoliday();
-// 
-//        JSONObject jsonObj = new JSONObject();
-//        JSONArray jsonArr = new JSONArray();
-// 
-//        HashMap<String, Object> hash = new HashMap<>();
-// 
-//        for (int i = 0; i < holidayList.size(); i++) {
-//            hash.put("name", holidayList.get(i).getTrainer().getMember().getName());
-//            hash.put("date", holidayList.get(i).getHDay());
-//
-//            jsonObj = new JSONObject(hash);
-//            jsonArr.add(jsonObj);
-//        }
-//        log.info("jsonArrCheck: {}", jsonArr);
-//        return jsonArr;
-//    }
-//	
-//	@PostMapping("/hday/calendar")
-//    @ResponseBody
-//    public List<Map<String, Object>> monthPlan() {
-//        List<HolidayDTO> holidayList = trManagementService.findAllHoliday();
-// 
-//        JSONObject jsonObj = new JSONObject();
-//        JSONArray jsonArr = new JSONArray();
-// 
-//        HashMap<String, Object> hash = new HashMap<>();
-// 
-//        for (int i = 0; i < holidayList.size(); i++) {
-//            hash.put("name", holidayList.get(i).getTrainer().getMember().getName());
-//            hash.put("date", holidayList.get(i).getHDay());
-//
-//            jsonObj = new JSONObject(hash);
-//            jsonArr.add(jsonObj);
-//        }
-//        log.info("jsonArrCheck: {}", jsonArr);
-//        return jsonArr;
-//    }
+	//휴가 캘린터
+	@GetMapping("/hday/calendar")
+	public void holidayCalendar() {}
+		
+
 	@PostMapping("/hday/calendar")
 	@ResponseBody
 	public Map<String, FullCalendarDTO> holidayCalen() {
@@ -160,9 +123,6 @@ public class CenterTrainerController {
 		return hdayMap;
 	}
 	
-	//휴가 캘린터
-	@GetMapping("/hday/calendar")
-	public void holidayCalendar() {}
 	
 	
 	
