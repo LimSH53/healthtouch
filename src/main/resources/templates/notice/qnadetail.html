@@ -87,6 +87,7 @@
   </section>
     <!-- 1:1문의 답글수정 -->
     <script th:inline="javascript">
+   		/*<![CDATA[*/
     	function replyModify(aNo) {
     		Swal.fire({
     			title: '답글 수정',
@@ -146,6 +147,31 @@
 				}
     		})
     	}
+    	
+    	function qnaAlert() {
+    		var qNo = "[[${qna.qNo}]]";
+    		var memberId = "[[${qna.memberId}]]";
+    		var title = "알림";
+    		var content = "1:1 문의에 대한 답변이 완료되었습니다.";
+    		var reqUrl = "/notice/qnadetail?qNo=" + qNo;
+
+    		var param = { title: title, content: content, reqUrl: reqUrl, memberId: memberId };
+
+    		$.ajax({
+    		    url: "/common/alert",
+    		    type: "post",
+    		    async: false,
+    		    data: JSON.stringify(param),
+    		    contentType: 'application/json; charset=utf-8',
+    		    success: function(data) {
+    		        socket.send(title + "," + memberId + "," + content + "," + reqUrl);
+    		    },
+    		    error: function(e) {
+    		        console.log(e);
+    		    }
+    		})
+    	}
+    	/*]]>*/
     </script>
     
     

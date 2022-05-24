@@ -1,5 +1,3 @@
-@charset "UTF-8";       /* 인코딩 문자 깨짐 방지 */
-
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 * { 
@@ -10,51 +8,29 @@ font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, '
 	background:#007bff;
     color: white;
     text-align: center;
+    float: left; 
+    width:50%;
+    
 }
 
 #status_off {
 	background:gray;
     color: white;
     text-align: center;
+  /*   margin-left: 80px; */
+    float: left; 
+    width:50%;
 }
 
-
-.locNum {
-	border-radius: 20px;
-    margin: 5px 5px;
-	background: white;
-	width:300px;
-	font-size : 18px;
-	padding: 5px 10px;
-}
-
-
-
-
-.main_size {
-    margin-top: 100px;margin-bottom: 100px;margin-left: 100px;margin-right: 100px;
-
+.lockNum {
+	 float: left; 
+    width:50%;
 }
 
 .col-2{
-    flex:auto;
+    flex:0 0 auto;
     background-color : lightgray;
     border-radius: 10px;
-    width: 180px; 
+    width: 16%; 
     height : 120px;
 }
-
-
-.row {
-    --bs-gutter-x: 1.5rem;
-    --bs-gutter-y: 0;
-/*     display: inline-block; */
-    flex-wrap: wrap;
-    margin-top: calc(var(--bs-gutter-y) * -1);
-    margin-right: calc(var(--bs-gutter-x)/ -2);
-    margin-left: calc(var(--bs-gutter-x)/ -2);
-}
-
-
-
-

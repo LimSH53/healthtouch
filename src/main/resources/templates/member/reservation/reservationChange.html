@@ -1,0 +1,239 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>healthtouch</title>
+<link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
+<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+<div th:replace="/common/memberHeader.html :: member-header"></div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet'/>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+	var dateStr = '';
+	var color = '';
+	var events = '';
+	var groupId = '';
+	var datetime = '';
+
+	document.addEventListener('DOMContentLoaded', function() {
+		var schduleArr = '';
+		var holidayArr = '';
+		var reservationArr = '';
+		
+		$.ajax({
+			dataType: 'json',
+			url: '/member/reservation/selectSchedule',
+			type: 'post',
+			async: false,
+			success: function(map) {
+				console.log("스케줄 불러옴");
+				schduleArr = map;
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		})
+		
+		$.ajax({
+			dataType: 'json',
+			url: '/member/reservation/selectHoliday',
+			type: 'post',
+			async: false,
+			success: function(map) {
+				console.log("휴가 불러옴");
+				holidayArr = map;
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		})
+		
+		$.ajax({
+			dataType: 'json',
+			url: '/member/reservation/selectReservation',
+			type: 'post',
+			async: false,
+			success: function(map) {
+				console.log("예약 불러옴");
+				reservationArr = map;
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		})
+		
+		var calendarEl = document.getElementById('calendar');
+		var calendar = new FullCalendar.Calendar(calendarEl, {
+			initialView: 'timeGridWeek',
+			locale: 'ko',
+			themeSystem: 'bootstrap5',
+			allDaySlot: false,
+			contentHeight: 'auto',
+			selectable: true,
+			slotMinTime: "07:00:00",
+			slotMaxTime: "23:00:00",
+			slotDuration: '01:00:00',
+			dateClick: function(info) {
+				events = calendar.getEvents();
+				
+				datetime += info.date.getFullYear() + "년 ";
+				datetime += (info.date.getMonth() + 1) + "월 ";
+				datetime += info.date.getDate() + "일 ";
+				datetime += info.date.getHours() + "시";
+				
+				if(info.dayEl.classList.contains("fc-day-past")) {
+					Swal.fire({
+						icon: 'warning',
+						text: '지난 날짜는 선택할 수 없습니다.',
+					});
+				} else if(info.dayEl.classList.contains("fc-day-today")) {
+					Swal.fire({
+						icon: 'warning',
+						text: '당일은 선택할 수 없습니다.',
+					});
+				} else {
+					// groupId 얻어옴 
+					for(var i = 0; i < events.length; i++) {
+						if(Number(events[i].start) <= Number(info.date) && Number(info.date) < Number(events[i].end)) {
+							groupId = events[i].groupId;
+						}
+					}
+					
+					console.log(groupId);
+					
+					if(groupId == 'able') {
+						dateStr = info.dateStr;
+						$("#selectTime").html(datetime);
+					}
+				}
+			}
+        });
+		
+		$.each(schduleArr, function(index, item) {
+			calendar.addEvent(item);
+		});
+		
+		$.each(holidayArr, function(index, item) {
+			calendar.addEvent(item);
+		});
+		
+		$.each(reservationArr, function(index, item) {
+			calendar.addEvent(item);
+		});
+		
+		calendar.render();
+	});
+</script>
+</head>
+<body id="body-pd" class="snippet-body" style="min-height: 80vh">
+	<div th:replace="/common/memberHeader.html :: member-body"></div>
+	<div class="container mt-5">
+		<div class="d-flex justify-content-center row">
+			<div class="col-md-10">
+				<br>
+				<div id="calendar"></div>
+				<br>
+				선택한 시간: <span id="selectTime"></span>
+				<br>
+				<br>
+				<div class="d-grid col-2 mx-auto">
+	                <button class="btn btn-sm outline" type="button" id="reservationChangeBtn" style="color:#1b1b55 ; border-color: #1b1b55;" onclick="insertReservationChange();">예약하기</button>
+	            </div>
+			</div>
+		</div>
+	</div>
+	<script>
+		var memberId = ''; // 트레이너 아이디 
+		var userId = '';
+		var userName = '';
+		
+		$.ajax({
+			url: "/member/reservation/findAlertInfo",
+			type: "post",
+			data: {},
+			success: function(data) {
+				memberId = data.memberId;
+				userId = data.userId;
+				userName = data.userName;
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		})
+	
+		function insertReservationChange() {
+			var rsvDatetime = dateStr;
+
+			if(groupId == 'able') {
+				Swal.fire({
+					icon: 'question',
+					text: datetime + "로 예약을 변경하시겠습니까?",
+					showDenyButton: true,
+					confirmButtonText: '예',
+					denyButtonText: '아니오',
+				}).then((result) => {
+					if(result.isConfirmed) {
+						$.ajax({
+							url: "/member/reservation/insertReservationChange",
+							type: "post",
+							data: { rsvDatetime: rsvDatetime, reservationNo, reservationNo },
+							success: function() {
+								Swal.fire({
+									icon: 'success',
+									text: '예약 변경 신청이 완료되었습니다.',
+								}).then((result) => {
+									if(result.isConfirmed) {
+										location.href="/member/reservation/reservationList";
+									}
+								})
+								
+								var title = "알림";
+								var content = userName + " 님이 예약 신청하였습니다.";
+								var reqUrl = "/trainer/reservation/reservationList";
+								
+								var param = { title: title, memberId: memberId, content: content, reqUrl: reqUrl };
+								
+								$.ajax({
+								    url: "/common/alert",
+								    type: "post",
+								    async: false,
+								    data: JSON.stringify(param),
+								    contentType: 'application/json; charset=utf-8',
+								    success: function(data) {
+								        // 알림 전송 
+								        socket.send(title + "," + memberId + "," + content + "," + reqUrl);
+								    },
+								    error: function(e) {
+								        console.log(e);
+								    }
+								})
+							},
+							error: function(e) {
+								console.log(e);
+							}
+						})
+					}
+				})
+			} else {
+				Swal.fire({
+					icon: 'warning',
+					text: '선택할 수 없는 날짜입니다. 다시 선택해 주세요.',
+				})
+			}
+		}
+		
+		function getParameterByName(name) {
+			name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+			var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+			results = regex.exec(location.search);
+			return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+		}
+	</script>
+</body>
+</html>

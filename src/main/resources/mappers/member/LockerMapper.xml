@@ -61,21 +61,6 @@
       	   AND L.LOC_MEMBER_ID = M.MEMBER_ID
 
 	</select>
-
-
-	<!-- 락커 상태 업데이트 -->
-	<!-- 조건 : 현재 락커 이용상태가 n이며 락커 관리번호가 longMngNum 인곳에 
-		 수정 : 주문번호, 아이디를 로그인한 아이디로 수정하고 락커 상태를 y로 수정하기 -->
-<!--  	<update id="updateLocker">
-
-		UPDATE TBL_LOCKER
-		   SET LOC_ORD_NO = #{ no }
-		     , LOC_MEMBER_ID = #{ id }
-		     , LOC_STATUS = 'Y'
-		 WHERE LOC_NUM = #{ locNum }
-		   AND LOC_STATUS = 'N'
-		   
-	</update> -->
 	
 	<!-- 락커 등록시 회원이름 자동완성  -->
 	<select id="autocomplete"  resultMap="lockerResultMap">
