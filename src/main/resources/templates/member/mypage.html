@@ -106,12 +106,12 @@
 		                <button class="btn btn-sm outline" type="button" id="modifyBtn" style="color:#1b1b55 ; border-color: #1b1b55;" onclick="startModify()">수정</button>
 		            </div>
 				</form>
+				<br>
+				<hr>
+				<br>
+				<h4>잔여 기간 및 횟수</h4>
+				<br>
 				<div th:each="order : ${#authentication.principal.orderList}" th:if="${not #lists.isEmpty( #authentication.principal.orderList )}">
-					<br>
-					<hr>
-					<br>
-					<h4>잔여 기간 및 횟수</h4>
-					<br>
 					<form>
 						<th:block th:if="${ order.product.categoryNo == 10 }">
 							<div class="form-group row">
@@ -195,6 +195,9 @@
 				            <br>
 			            </th:block>
 					</form>
+				</div>
+				<div th:unless="${not #lists.isEmpty( #authentication.principal.orderList )}">
+					<h6 class="text-center">구매 정보가 없습니다.</h6>
 				</div>
 	            <br>
 	            <hr>

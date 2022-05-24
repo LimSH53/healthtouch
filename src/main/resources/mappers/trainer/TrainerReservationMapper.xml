@@ -156,6 +156,7 @@
 		  		  			 , C.RSV_MEMBER_ID
 		  		  			 , C.RSV_TRAINER_MEMBER_ID
 		  		  		  FROM TBL_RESERVATION C
+		  		  		 WHERE C.RSV_TRAINER_MEMBER_ID = #{ memberId }
 		  		  ) B
 		  <![CDATA[
 		  WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
@@ -176,7 +177,6 @@
 					</when>
 				</choose>
 			</if>
-		      AND A.RSV_TRAINER_MEMBER_ID = #{ memberId }
 		    ORDER BY A.RSV_NO ASC
 	</select>
 	

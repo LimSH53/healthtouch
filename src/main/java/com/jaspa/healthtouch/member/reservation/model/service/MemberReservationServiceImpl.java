@@ -31,6 +31,7 @@ public class MemberReservationServiceImpl implements MemberReservationService {
 		
 		PaginationInfo paginationInfo = new PaginationInfo(params);
 		paginationInfo.setTotalRecordCount(reservationTotalCount);
+		System.out.println("총 개수 : " + reservationTotalCount);
 		
 		params.setPaginationInfo(paginationInfo);
 		

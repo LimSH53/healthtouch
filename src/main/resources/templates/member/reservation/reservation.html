@@ -82,10 +82,13 @@
 			dateClick: function(info) {
 				events = calendar.getEvents();
 				
-				datetime += info.date.getFullYear() + "년 ";
-				datetime += (info.date.getMonth() + 1) + "월 ";
-				datetime += info.date.getDate() + "일 ";
-				datetime += info.date.getHours() + "시";
+				var datetimeStr = '';
+				datetimeStr += info.date.getFullYear() + "년 ";
+				datetimeStr += (info.date.getMonth() + 1) + "월 ";
+				datetimeStr += info.date.getDate() + "일 ";
+				datetimeStr += info.date.getHours() + "시";
+				
+				datetime = datetimeStr;
 				
 				if(info.dayEl.classList.contains("fc-day-past")) {
 					Swal.fire({

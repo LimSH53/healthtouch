@@ -90,12 +90,12 @@
 		            	</div>
 		            </div>
 					<br>
+					<hr>
+					<br>
+					<h4>잔여 기간 및 횟수</h4>
+					<br>
 					<th:block th:if="*{memberRole.authorityCode == 1}">
 						<div th:each="order : ${ orderList }" th:if="${not #lists.isEmpty( orderList )}">
-							<hr>
-							<br>
-							<h4>잔여 기간 및 횟수</h4>
-							<br>
 							<th:block th:if="${ order.product.categoryNo == 10 }">
 								<div class="form-group row">
 									<!-- 아이콘 삽입하기 -->
@@ -178,6 +178,9 @@
 					            </div>
 					            <br>
 				            </th:block>
+						</div>
+						<div th:unless="${not #lists.isEmpty( orderList )}">
+							<h6 class="text-center">구매 정보가 없습니다.</h6>
 						</div>
 		            </th:block>
 		            <br>

@@ -45,7 +45,6 @@ public class MemberServiceImpl implements MemberService {
 		
 		if(member == null) member = new MemberDTO();
 		
-		// 리스트는 아니긴 한데 일단 넣어 봅니다...
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		
 		if(member != null && member.getMemberRole() != null) {

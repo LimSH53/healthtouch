@@ -69,6 +69,8 @@ public class MemberReservationController {
 		params.setMemberId(user.getId());
 		List<ReservationDTO> reservationList = memberReservationService.findAllReservation(params);
 		
+		System.out.println(reservationList);
+		
 		model.addAttribute("reservationList", reservationList);
 		
 		return "member/reservation/reservationList";
@@ -187,6 +189,7 @@ public class MemberReservationController {
 		Map<String, ReservationTimegridDTO> reservationMap = new HashMap<>();
 	
 		String trnId = memberReservationService.findTrnId(user.getId());
+		System.out.println("트레이너 아이디: " + trnId);
 		
 		// 예약 이미 된 것 조회 
 		List<ReservationDTO> reservationList = memberReservationService.findReservationByTrnId(trnId);
@@ -196,13 +199,16 @@ public class MemberReservationController {
 			Date datetime = reservation.getDatetime();
 			int datetimeYear = datetime.getYear() + 1900;
 			String datetimeMonth = "0" + (datetime.getMonth() + 1);
-			datetimeMonth = datetimeMonth.substring(0, 2);
+			datetimeMonth = datetimeMonth.substring(datetimeMonth.length()-2, datetimeMonth.length());
 			String datetimeDay = "0" + datetime.getDate();
-			datetimeDay = datetimeDay.substring(0, 2);
-			int datetimeHour = (int)datetime.getHours();
+			datetimeDay = datetimeDay.substring(datetimeDay.length()-2, datetimeDay.length());
+			String datetimeHour = "0" + datetime.getHours();
+			datetimeHour = datetimeHour.substring(datetimeHour.length()-2, datetimeHour.length());
 			
 			String start = datetimeYear + "-" + datetimeMonth + "-" + datetimeDay + "T" + datetimeHour + ":00:00";
 			String end = datetimeYear + "-" + datetimeMonth + "-" + datetimeDay + "T" + (datetimeHour + 1) + ":00:00";
+			
+			System.out.println(start);
 			
 			reservationMap.put("rsvEvent" + i, new ReservationTimegridDTO(start, end, "background", "red", "disable"));
 		}

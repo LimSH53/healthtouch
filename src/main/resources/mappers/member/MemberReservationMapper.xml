@@ -143,20 +143,24 @@
 		  		  			 , C.RSV_MEMBER_ID
 		  		  			 , C.RSV_TRAINER_MEMBER_ID
 		  		  		  FROM TBL_RESERVATION C
+		  		  		 WHERE C.RSV_MEMBER_ID = #{ memberId }
 		  		  		 <if test="searchKeyword != null and searchKeyword != ''">
-		  		  		 	<where>
-		  		  		 		<if test="searchType == 'datetime'">
-		  		  		 			RSV_DATETIME BETWEEN TO_DATE(#{searchKeyword}, 'YYYY-MM-DD') AND TO_DATE(#{searchKeyword}, 'YYYY-MM-DD') + 1
-		  		  		 		</if>
-		  		  		 	</where>
-		  		  		 </if>
+							<choose>
+								<when test="searchType != null and searchType != ''">
+									<choose>
+										<when test="searchType == 'datetime'">
+											AND RSV_DATETIME BETWEEN TO_DATE(#{searchKeyword}, 'YYYY-MM-DD') AND TO_DATE(#{searchKeyword}, 'YYYY-MM-DD') + 1
+										</when>
+									</choose>
+								</when>
+							</choose>
+						</if>
 		  		  ) B
 		  <![CDATA[
 		  WHERE ROWNUM <= #{ paginationInfo.firstRecordIndex } + #{ recordsPerPage }
 		  ]]>) A
 		     JOIN TBL_MEMBER D ON (A.RSV_TRAINER_MEMBER_ID = D.MEMBER_ID)
 		    WHERE A.RNUM > #{ paginationInfo.firstRecordIndex }
-		      AND A.RSV_MEMBER_ID = #{ memberId }
 		    ORDER BY A.RSV_NO ASC
 	</select>
 	
@@ -172,7 +176,7 @@
 			 , C.MEMBER_NAME RSV_MEMBER_NAME
 		  FROM TBL_RESERVATION A
 		  JOIN TBL_MEMBER B ON (A.RSV_TRAINER_MEMBER_ID = B.MEMBER_ID)
-		  JOIN TBL_MEMBET C ON (A.RSV_MEMBER_ID = C.MEMBER_ID)
+		  JOIN TBL_MEMBER C ON (A.RSV_MEMBER_ID = C.MEMBER_ID)
 		 WHERE A.RSV_NO = #{ no }
 	</select>
 	

@@ -162,7 +162,7 @@
 							if(rchState == 'Y') {
 								// 변경 요청 승인 된 후 
 								rchState = '승인';
-								html += '<input type="hidden" id="check" value="D">';
+								html += '<input type="hidden" id="check" value="B">';
 								buttonText = '예약 변경 재요청';
 							} else if(rchState == 'N') {
 								// 변경 요청 승인 되기 전 
@@ -251,6 +251,7 @@
 								html += '<input type="hidden" id="check" value="A">';
 								buttonText = '예약 취소';
 							}
+							
 							var type = data.type;
 							var trainerName = data.trainer.name;
 							trainerId = data.trainerId;
@@ -357,9 +358,7 @@
 											});
 										}
 									})
-								} else if(check == 'D') {
-									// 예약 변경 요청 이미 있는 걸 바꿔야 함 
-								}
+								} 
 							}
 						})
 					},
