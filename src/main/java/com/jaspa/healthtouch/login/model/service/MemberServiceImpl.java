@@ -107,14 +107,13 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void certifiedPhoneNumnber(String phoneNumber, String numStr) {
-		String api_key = "NCSP5NWYHNBUTMSK";
-		String api_secret = "P4TYH6AJIKFQXS7IUSEHXY7TWKE9NIMZ";
+		String api_key = ""; // api_key
+		String api_secret = ""; // api_secret
 		Message coolsms = new Message(api_key, api_secret);
 		
 		HashMap<String, String> params = new HashMap<>();
 		params.put("to", phoneNumber);
-		// 테스트용으로 박서영 번호 넣음...
-		params.put("from", "010-9961-3357");
+		params.put("from", "010"); // 번호
 		params.put("type", "SMS");
 		params.put("text", "헬스터치 연락처 인증 테스트 메시지 : 인증번호는 [" + numStr + "]입니다.");
 		params.put("app_version", "test app 1.2");
@@ -156,14 +155,13 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void sendTempPwd(MemberDTO member, StringBuffer sb) {
-		String api_key = "NCSP5NWYHNBUTMSK";
-		String api_secret = "P4TYH6AJIKFQXS7IUSEHXY7TWKE9NIMZ";
+		String api_key = ""; // api_key
+		String api_secret = ""; // api_secret
 		Message coolsms = new Message(api_key, api_secret);
 		
 		HashMap<String, String> params = new HashMap<>();
 		params.put("to", member.getContact());
-		// 테스트용으로 박서영 번호 넣음...
-		params.put("from", "010-9961-3357");
+		params.put("from", "010"); // 번호 
 		params.put("type", "SMS");
 		params.put("text", "헬스터치 비밀번호 찾기 테스트 메시지 : 임시 비밀번호는 [" + sb + "]입니다.");
 		params.put("app_version", "test app 1.2");
