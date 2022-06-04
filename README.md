@@ -10,3 +10,13 @@
   * 담당기능 : 트레이너 근태/급여/휴가 관리, 센터 락커 관리
 #### 팀원 : 김태경
   * 담당기능 : 게시판 관리, 트레이너 소개 관리
+
+개발 환경
+프로그래밍 언어: Java
+통합 개발 환경: SpringToolSuite4
+마크업 언어: HTML5, CSS3, JavaScript
+Framework: SpringBoot, MyBatis
+DBMS: Oracle
+Library: JDBC, AJAX, Bootstrap
+Server: APACHE TOMCAT
+형상 관리: GitHub
