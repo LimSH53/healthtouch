@@ -35,7 +35,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.csrf().disable()
 			.authorizeHttpRequests()
 				/* 관리자 페이지는 관리자만 */
-				.antMatchers("/center/**").hasRole("ADMIN")
+				.antMatchers("/center/**").hasRole("CENTER")
 				.antMatchers("/trainer/**").hasRole("TRAINER")
 			.and()
 				.formLogin()
